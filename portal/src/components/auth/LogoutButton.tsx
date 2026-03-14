@@ -10,11 +10,23 @@ export function LogoutButton() {
   const [loading, setLoading] = useState(false);
 
   async function handleLogout() {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    await supabase.auth.signOut();
-    router.replace("/");
-    router.refresh();
+      const { error } = await supabase.auth.signOut();
+
+      if (error) {
+        console.error("Logout error:", error.message);
+        return;
+      }
+
+      router.replace("/");
+      router.refresh();
+    } catch (err) {
+      console.error("Unexpected logout error:", err);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
