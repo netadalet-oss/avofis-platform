@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   BadgeCheck,
@@ -22,6 +25,7 @@ import { SectionTitle } from "@/components/section-title";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { stats } from "@/lib/site";
+import { supabase } from "@/lib/supabase";
 
 const featurePills = [
   "İçtihat araştırma",
@@ -77,7 +81,42 @@ const officeHighlights = [
   "Ofis ekip yapısı ve rol modeli"
 ];
 
+type HomeCmsContent = {
+  hero?: {
+    title?: string;
+    subtitle?: string;
+  };
+};
+
 export default function HomePage() {
+  const [cmsContent, setCmsContent] = useState<HomeCmsContent | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadCMS() {
+      const { data, error } = await supabase
+        .from("pages")
+        .select("content")
+        .eq("slug", "home")
+        .single();
+
+      if (!mounted) return;
+
+      if (error || !data?.content) {
+        return;
+      }
+
+      setCmsContent(data.content as HomeCmsContent);
+    }
+
+    loadCMS();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <main className="min-h-screen">
       <SiteHeader />
@@ -91,11 +130,13 @@ export default function HomePage() {
             </div>
 
             <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-white md:text-6xl md:leading-[1.05]">
-              Hukuk araştırması, belge üretimi ve kariyer ağı tek platformda.
+              {cmsContent?.hero?.title ||
+                "Hukuk araştırması, belge üretimi ve kariyer ağı tek platformda."}
             </h1>
 
             <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300 md:text-lg">
-              İçtihat, mevzuat, dosya analizi, taslak üretimi, forum, ofis profilleri, staj eşleşmeleri ve profesyonel workspace deneyimini tek bir modern hukuk arayüzünde birleştirin.
+              {cmsContent?.hero?.subtitle ||
+                "İçtihat, mevzuat, dosya analizi, taslak üretimi, forum, ofis profilleri, staj eşleşmeleri ve profesyonel workspace deneyimini tek bir modern hukuk arayüzünde birleştirin."}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
