@@ -97,6 +97,167 @@ export default function Page() {
     window.open("https://avofis.com", "_blank");
   }
 
+  async function loadDefaults() {
+    try {
+      setSaving(true);
+      setMessage("");
+
+      const defaultHeroTitle =
+        "Hukuk araştırması, belge üretimi ve kariyer ağı tek platformda.";
+      const defaultHeroSubtitle =
+        "İçtihat, mevzuat, dosya analizi, taslak üretimi, forum, ofis profilleri, staj eşleşmeleri ve profesyonel workspace deneyimini tek bir modern hukuk arayüzünde birleştirin.";
+
+      const defaultNavigation: NavItem[] = [
+        { label: "Modüller", href: "#moduller" },
+        { label: "İçtihat", href: "#arastirma" },
+        { label: "Mevzuat", href: "#arastirma" },
+        { label: "Kariyer", href: "#kariyer" },
+        { label: "Forum", href: "#topluluk" },
+        { label: "Ofisler", href: "#ofisler" },
+        { label: "İstatistikler", href: "#istatistikler" },
+      ];
+
+      const defaultModules: ModuleItem[] = [
+        {
+          title: "İçtihat Araştırma",
+          text: "Karar arama, filtreleme ve emsal kümeleri.",
+        },
+        {
+          title: "Mevzuat Modülü",
+          text: "Madde bazlı görüntüleme ve değişiklik geçmişi.",
+        },
+        {
+          title: "Dosya Analizi",
+          text: "Belge yükleme ve hukuki sorun tespiti.",
+        },
+        {
+          title: "Taslak Üretim",
+          text: "Dilekçe, savunma ve sözleşme üretimi.",
+        },
+        {
+          title: "Kariyer ve Staj",
+          text: "Stajyer ve ofis eşleşme sistemi.",
+        },
+        {
+          title: "Forum ve Topluluk",
+          text: "Mesleki tartışma ve bilgi paylaşımı.",
+        },
+        {
+          title: "Profesyonel Workspace",
+          text: "Dosya, görev ve ekip yönetimi.",
+        },
+        {
+          title: "Analitik ve Yönetim",
+          text: "Platform ve içerik performansı.",
+        },
+        {
+          title: "Güvenlik ve Uyum",
+          text: "Rol bazlı erişim ve audit log.",
+        },
+        {
+          title: "Ofis Profilleri",
+          text: "Doğrulanmış hukuk bürosu profilleri.",
+        },
+        {
+          title: "Bildirim Sistemi",
+          text: "Platform içi ve e-posta bildirimleri.",
+        },
+        {
+          title: "Connect Ekonomisi",
+          text: "Platform içi kredi ve görünürlük sistemi.",
+        },
+      ];
+
+      const defaultFooter: FooterColumn[] = [
+        {
+          title: "Platform",
+          links: [
+            "Ana Sayfa",
+            "Modüller",
+            "İçtihat",
+            "Mevzuat",
+            "Forum",
+            "Kariyer",
+          ],
+        },
+        {
+          title: "Kurumsal",
+          links: [
+            "Hakkında",
+            "Yayın İlkeleri",
+            "Güvenlik",
+            "Gizlilik",
+            "İletişim",
+          ],
+        },
+        {
+          title: "Destek",
+          links: [
+            "Yardım Merkezi",
+            "Sık Sorulan Sorular",
+            "Kullanım Şartları",
+            "KVKK",
+          ],
+        },
+      ];
+
+      const { error: heroError } = await supabase.from("pages").upsert({
+        slug: "home",
+        content: {
+          hero: {
+            title: defaultHeroTitle,
+            subtitle: defaultHeroSubtitle,
+          },
+        },
+      });
+
+      if (heroError) {
+        setMessage(`Varsayılan hero yüklenemedi: ${heroError.message}`);
+        return;
+      }
+
+      const { error: navigationError } = await supabase.from("site_settings").upsert({
+        key: "navigation",
+        value: defaultNavigation,
+      });
+
+      if (navigationError) {
+        setMessage(`Varsayılan menü yüklenemedi: ${navigationError.message}`);
+        return;
+      }
+
+      const { error: modulesError } = await supabase.from("site_settings").upsert({
+        key: "modules",
+        value: defaultModules,
+      });
+
+      if (modulesError) {
+        setMessage(`Varsayılan modüller yüklenemedi: ${modulesError.message}`);
+        return;
+      }
+
+      const { error: footerError } = await supabase.from("site_settings").upsert({
+        key: "footer",
+        value: defaultFooter,
+      });
+
+      if (footerError) {
+        setMessage(`Varsayılan footer yüklenemedi: ${footerError.message}`);
+        return;
+      }
+
+      setHeroTitle(defaultHeroTitle);
+      setHeroSubtitle(defaultHeroSubtitle);
+      setNavigation(defaultNavigation);
+      setModules(defaultModules);
+      setFooterColumns(defaultFooter);
+
+      setMessage("Varsayılan içerikler başarıyla yüklendi.");
+    } finally {
+      setSaving(false);
+    }
+  }
+
   async function saveHero() {
     try {
       setSaving(true);
@@ -268,6 +429,14 @@ export default function Page() {
                 className="rounded-xl bg-emerald-600 px-5 py-3 text-white"
               >
                 Portalı Aç
+              </button>
+
+              <button
+                onClick={loadDefaults}
+                disabled={saving}
+                className="rounded-xl bg-orange-600 px-5 py-3 text-white disabled:opacity-60"
+              >
+                {saving ? "Yükleniyor..." : "Varsayılan Verileri Yükle"}
               </button>
             </div>
 
