@@ -1,0 +1,17 @@
+{
+  "name": "avofis-platform",
+  "private": true,
+  "workspaces": [
+    "portal",
+    "admin",
+    "api"
+  ],
+  "scripts": {
+    "dev:portal": "npm --workspace portal run dev",
+    "dev:admin": "npm --workspace admin run dev",
+    "dev:api": "npm --workspace api run dev",
+    "build:portal": "npm --workspace portal run build",
+    "build:admin": "npm --workspace admin run build",
+    "build:api": "npm --workspace api run build"
+  }
+}

@@ -1,0 +1,7 @@
+import { Router } from "express";
+
+export const casesRouter = Router();
+
+casesRouter.get("/", (_req, res) => {
+  res.json({ module: "cases", actions: ["search", "detail", "filters", "related", "bookmark", "notes"] });
+});
