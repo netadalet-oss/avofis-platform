@@ -85,6 +85,18 @@ export default function Page() {
     }
   }
 
+  function reloadAll() {
+    loadHero();
+    loadNavigation();
+    loadModules();
+    loadFooter();
+    setMessage("İçerik yeniden yüklendi.");
+  }
+
+  function openPortal() {
+    window.open("https://avofis.com", "_blank");
+  }
+
   async function saveHero() {
     try {
       setSaving(true);
@@ -242,6 +254,22 @@ export default function Page() {
             <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300">
               Portal ana sayfasındaki temel içerikler buradan yönetilir.
             </p>
+
+            <div className="mt-6 flex flex-wrap gap-4">
+              <button
+                onClick={reloadAll}
+                className="rounded-xl bg-slate-700 px-5 py-3 text-white"
+              >
+                İçeriği Yeniden Yükle
+              </button>
+
+              <button
+                onClick={openPortal}
+                className="rounded-xl bg-emerald-600 px-5 py-3 text-white"
+              >
+                Portalı Aç
+              </button>
+            </div>
 
             {message ? (
               <div className="mt-6 rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-slate-200">
