@@ -1,17 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { useUser } from "@/hooks/useUser";
 
 export default function Page() {
+  const router = useRouter();
+  const { isAuthenticated, loading: authLoading } = useUser();
+
   const [role, setRole] = useState("user");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!authLoading && isAuthenticated) {
+      router.replace("/dashboard");
+    }
+  }, [authLoading, isAuthenticated, router]);
 
   async function handleRegister(e: React.FormEvent) {
     e.preventDefault();
@@ -38,14 +49,21 @@ export default function Page() {
     const userId = data.user?.id;
 
     if (userId) {
-      await supabase.from("profiles").upsert({
+      const { error: profileError } = await supabase.from("profiles").upsert({
         id: userId,
         full_name: fullName,
         role,
+        email,
       });
+
+      if (profileError) {
+        setMessage(profileError.message);
+        setLoading(false);
+        return;
+      }
     }
 
-    setMessage("Kayıt başarılı. Giriş yapabilirsiniz.");
+    setMessage("Kayıt başarılı. E-posta doğrulaması açıksa kutunuzu kontrol edin, ardından giriş yapın.");
     setLoading(false);
   }
 
@@ -53,8 +71,8 @@ export default function Page() {
     <main>
       <SiteHeader />
 
-      <section className="container-shell py-24">
-        <div className="mx-auto max-w-md rounded-[28px] border border-white/10 bg-white/5 p-8">
+      <section className="container-shell py-16 sm:py-20 md:py-24">
+        <div className="mx-auto max-w-md rounded-[28px] border border-white/10 bg-white/5 p-6 sm:p-8">
           <h1 className="text-3xl font-semibold text-white">Hesap Oluştur</h1>
 
           <p className="mt-4 text-sm leading-7 text-slate-300">
@@ -103,15 +121,13 @@ export default function Page() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-lg bg-blue-600 py-3 text-sm font-medium text-white hover:bg-blue-500"
+              className="w-full rounded-lg bg-blue-600 py-3 text-sm font-medium text-white hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading ? "Kayıt oluşturuluyor..." : "Hesap Oluştur"}
             </button>
           </form>
 
-          {message && (
-            <p className="mt-4 text-sm text-slate-300">{message}</p>
-          )}
+          {message && <p className="mt-4 text-sm text-slate-300">{message}</p>}
         </div>
       </section>
 
