@@ -2,11 +2,54 @@
 
 import Link from "next/link";
 import { Gavel, Menu, X } from "lucide-react";
-import { useState } from "react";
-import { navigation } from "@/lib/site";
+import { useEffect, useState } from "react";
+import { navigation as defaultNavigation, type NavigationItem } from "@/lib/site";
+import { supabase } from "@/lib/supabase";
+
+type NavigationSettingRow = {
+  value?: NavigationItem[];
+};
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [menuItems, setMenuItems] = useState<NavigationItem[]>(defaultNavigation);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadNavigation() {
+      const { data, error } = await supabase
+        .from("site_settings")
+        .select("value")
+        .eq("key", "navigation")
+        .single();
+
+      if (!mounted) return;
+
+      if (error || !data?.value || !Array.isArray(data.value)) {
+        return;
+      }
+
+      const normalizedItems = (data.value as NavigationItem[]).filter(
+        (item) =>
+          item &&
+          typeof item.label === "string" &&
+          item.label.trim() &&
+          typeof item.href === "string" &&
+          item.href.trim(),
+      );
+
+      if (normalizedItems.length > 0) {
+        setMenuItems(normalizedItems);
+      }
+    }
+
+    loadNavigation();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#07111f]/80 backdrop-blur-xl">
@@ -22,19 +65,33 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-7 text-sm text-slate-300 lg:flex">
-          {navigation.map((item) => (
-            <a key={item.label} href={item.href} className="hover:text-white">
+          {menuItems.map((item) => (
+            <a key={`${item.label}-${item.href}`} href={item.href} className="hover:text-white">
               {item.label}
             </a>
           ))}
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <a href="/auth/login" className="rounded-xl border border-white/10 px-4 py-2.5 text-sm font-medium text-slate-200 hover:border-white/20 hover:bg-white/5">Giriş Yap</a>
-          <a href="/auth/register" className="rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-slate-950 hover:bg-slate-100">Hesap Oluştur</a>
+          <a
+            href="/auth/login"
+            className="rounded-xl border border-white/10 px-4 py-2.5 text-sm font-medium text-slate-200 hover:border-white/20 hover:bg-white/5"
+          >
+            Giriş Yap
+          </a>
+          <a
+            href="/auth/register"
+            className="rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-slate-950 hover:bg-slate-100"
+          >
+            Hesap Oluştur
+          </a>
         </div>
 
-        <button aria-label="Menü" className="inline-flex rounded-xl border border-white/10 p-2 text-slate-200 md:hidden" onClick={() => setOpen((v) => !v)}>
+        <button
+          aria-label="Menü"
+          className="inline-flex rounded-xl border border-white/10 p-2 text-slate-200 md:hidden"
+          onClick={() => setOpen((v) => !v)}
+        >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
@@ -42,14 +99,29 @@ export function SiteHeader() {
       {open && (
         <div className="border-t border-white/10 bg-[#081321] md:hidden">
           <div className="container-shell flex flex-col gap-3 py-4">
-            {navigation.map((item) => (
-              <a key={item.label} href={item.href} className="rounded-xl px-3 py-2 text-sm text-slate-200 hover:bg-white/5">
+            {menuItems.map((item) => (
+              <a
+                key={`${item.label}-${item.href}`}
+                href={item.href}
+                className="rounded-xl px-3 py-2 text-sm text-slate-200 hover:bg-white/5"
+                onClick={() => setOpen(false)}
+              >
                 {item.label}
               </a>
             ))}
             <div className="mt-2 grid grid-cols-2 gap-3">
-              <a href="/auth/login" className="rounded-xl border border-white/10 px-4 py-3 text-center text-sm font-medium text-slate-100">Giriş Yap</a>
-              <a href="/auth/register" className="rounded-xl bg-white px-4 py-3 text-center text-sm font-semibold text-slate-950">Hesap Oluştur</a>
+              <a
+                href="/auth/login"
+                className="rounded-xl border border-white/10 px-4 py-3 text-center text-sm font-medium text-slate-100"
+              >
+                Giriş Yap
+              </a>
+              <a
+                href="/auth/register"
+                className="rounded-xl bg-white px-4 py-3 text-center text-sm font-semibold text-slate-950"
+              >
+                Hesap Oluştur
+              </a>
             </div>
           </div>
         </div>
