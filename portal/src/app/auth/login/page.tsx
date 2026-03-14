@@ -68,6 +68,15 @@ export default function LoginPage() {
 
   return (
     <main className="container-shell py-24">
+      <div className="mx-auto mb-6 w-full max-w-md">
+        <Link
+          href="/"
+          className="inline-flex items-center text-sm text-white/70 transition hover:text-white"
+        >
+          ← Ana sayfaya dön
+        </Link>
+      </div>
+
       <div className="mx-auto w-full max-w-md rounded-2xl border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-semibold tracking-tight text-white">
