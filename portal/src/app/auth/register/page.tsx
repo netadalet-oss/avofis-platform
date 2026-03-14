@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { SiteFooter } from "@/components/site-footer";
@@ -72,6 +73,15 @@ export default function Page() {
       <SiteHeader />
 
       <section className="container-shell py-16 sm:py-20 md:py-24">
+        <div className="mx-auto mb-6 max-w-md">
+          <Link
+            href="/"
+            className="inline-flex items-center text-sm text-white/70 transition hover:text-white"
+          >
+            ← Ana sayfaya dön
+          </Link>
+        </div>
+
         <div className="mx-auto max-w-md rounded-[28px] border border-white/10 bg-white/5 p-6 sm:p-8">
           <h1 className="text-3xl font-semibold text-white">Hesap Oluştur</h1>
 
