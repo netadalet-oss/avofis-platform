@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -21,6 +22,8 @@ type FooterColumn = {
 };
 
 export default function Page() {
+  const router = useRouter();
+
   const [heroTitle, setHeroTitle] = useState("");
   const [heroSubtitle, setHeroSubtitle] = useState("");
   const [navigation, setNavigation] = useState<NavItem[]>([]);
@@ -28,13 +31,69 @@ export default function Page() {
   const [footerColumns, setFooterColumns] = useState<FooterColumn[]>([]);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+  const [authChecking, setAuthChecking] = useState(true);
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
-    loadHero();
-    loadNavigation();
-    loadModules();
-    loadFooter();
+    checkAccess();
   }, []);
+
+  async function checkAccess() {
+    try {
+      setAuthChecking(true);
+
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session?.user) {
+        router.replace("/auth/login");
+        return;
+      }
+
+      const userId = session.user.id;
+      let allowed = false;
+
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", userId)
+        .single();
+
+      const profileRole =
+        typeof profile?.role === "string" ? profile.role.toLowerCase() : "";
+      const metaRole =
+        typeof session.user.user_metadata?.role === "string"
+          ? String(session.user.user_metadata.role).toLowerCase()
+          : "";
+
+      if (
+        profileRole === "admin" ||
+        profileRole === "super_admin" ||
+        metaRole === "admin" ||
+        metaRole === "super_admin"
+      ) {
+        allowed = true;
+      }
+
+      if (!allowed) {
+        setIsAuthorized(false);
+        setAuthChecking(false);
+        return;
+      }
+
+      setIsAuthorized(true);
+
+      await Promise.all([
+        loadHero(),
+        loadNavigation(),
+        loadModules(),
+        loadFooter(),
+      ]);
+    } finally {
+      setAuthChecking(false);
+    }
+  }
 
   async function loadHero() {
     const { data } = await supabase
@@ -216,30 +275,36 @@ export default function Page() {
         return;
       }
 
-      const { error: navigationError } = await supabase.from("site_settings").upsert({
-        key: "navigation",
-        value: defaultNavigation,
-      });
+      const { error: navigationError } = await supabase
+        .from("site_settings")
+        .upsert({
+          key: "navigation",
+          value: defaultNavigation,
+        });
 
       if (navigationError) {
         setMessage(`Varsayılan menü yüklenemedi: ${navigationError.message}`);
         return;
       }
 
-      const { error: modulesError } = await supabase.from("site_settings").upsert({
-        key: "modules",
-        value: defaultModules,
-      });
+      const { error: modulesError } = await supabase
+        .from("site_settings")
+        .upsert({
+          key: "modules",
+          value: defaultModules,
+        });
 
       if (modulesError) {
         setMessage(`Varsayılan modüller yüklenemedi: ${modulesError.message}`);
         return;
       }
 
-      const { error: footerError } = await supabase.from("site_settings").upsert({
-        key: "footer",
-        value: defaultFooter,
-      });
+      const { error: footerError } = await supabase
+        .from("site_settings")
+        .upsert({
+          key: "footer",
+          value: defaultFooter,
+        });
 
       if (footerError) {
         setMessage(`Varsayılan footer yüklenemedi: ${footerError.message}`);
@@ -402,6 +467,37 @@ export default function Page() {
     const copy = [...footerColumns];
     copy.splice(index, 1);
     setFooterColumns(copy);
+  }
+
+  if (authChecking) {
+    return (
+      <main>
+        <SiteHeader />
+        <section className="container-shell py-24">
+          <div className="rounded-[28px] border border-white/10 bg-white/5 p-8 text-sm text-slate-300">
+            Yetki kontrol ediliyor...
+          </div>
+        </section>
+        <SiteFooter />
+      </main>
+    );
+  }
+
+  if (!isAuthorized) {
+    return (
+      <main>
+        <SiteHeader />
+        <section className="container-shell py-24">
+          <div className="rounded-[28px] border border-red-500/20 bg-red-500/10 p-8">
+            <h1 className="text-2xl font-semibold text-white">Erişim Reddedildi</h1>
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300">
+              Bu alan yalnızca admin yetkisine sahip kullanıcılar içindir.
+            </p>
+          </div>
+        </section>
+        <SiteFooter />
+      </main>
+    );
   }
 
   return (
