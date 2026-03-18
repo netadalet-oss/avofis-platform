@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Gavel, Menu, Pencil, Plus, Save, Trash2, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { useEditMode } from "@/components/providers/EditModeProvider";
 import { useUser } from "@/hooks/useUser";
 import {
   navigation as defaultNavigation,
@@ -16,10 +17,10 @@ type NavigationSettingRow = {
 
 export function SiteHeader() {
   const { session, loading: authLoading } = useUser();
+  const { editMode, setEditMode } = useEditMode();
 
   const [open, setOpen] = useState(false);
   const [menuItems, setMenuItems] = useState<NavigationItem[]>(defaultNavigation);
-  const [editMode, setEditMode] = useState(false);
   const [menuDraft, setMenuDraft] = useState<NavigationItem[]>(defaultNavigation);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
@@ -72,16 +73,23 @@ export function SiteHeader() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!editMode) {
+      setMessage("");
+      setMenuDraft(menuItems.length > 0 ? menuItems : defaultNavigation);
+    }
+  }, [editMode, menuItems]);
+
   function openEditMode() {
-    setEditMode(true);
     setMessage("");
     setMenuDraft(menuItems.length > 0 ? menuItems : defaultNavigation);
+    setEditMode(true);
   }
 
   function cancelEditMode() {
-    setEditMode(false);
     setMessage("");
     setMenuDraft(menuItems.length > 0 ? menuItems : defaultNavigation);
+    setEditMode(false);
   }
 
   function updateDraftItem(
@@ -182,7 +190,7 @@ export function SiteHeader() {
               className="inline-flex items-center gap-2 rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-2.5 text-sm font-medium text-amber-200 hover:bg-amber-400/15"
             >
               {editMode ? <X className="h-4 w-4" /> : <Pencil className="h-4 w-4" />}
-              {editMode ? "Menü Düzenlemeyi Kapat" : "Menüyü Düzenle"}
+              {editMode ? "Düzenleme Modunu Kapat" : "Düzenleme Modu"}
             </button>
           ) : null}
 
