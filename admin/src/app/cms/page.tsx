@@ -33,6 +33,7 @@ export default function Page() {
   const [message, setMessage] = useState("");
   const [authChecking, setAuthChecking] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const [needsLogin, setNeedsLogin] = useState(false);
 
   useEffect(() => {
     checkAccess();
@@ -41,15 +42,18 @@ export default function Page() {
   async function checkAccess() {
     try {
       setAuthChecking(true);
+      setNeedsLogin(false);
 
       const {
         data: { session },
       } = await supabase.auth.getSession();
 
-if (!session?.user) {
-  router.replace("https://avofis.com/auth/login");
-  return;
-}
+      if (!session?.user) {
+        setNeedsLogin(true);
+        setIsAuthorized(false);
+        setAuthChecking(false);
+        return;
+      }
 
       const userId = session.user.id;
       let allowed = false;
@@ -483,13 +487,52 @@ if (!session?.user) {
     );
   }
 
+  if (needsLogin) {
+    return (
+      <main>
+        <SiteHeader />
+        <section className="container-shell py-24">
+          <div className="rounded-[28px] border border-amber-500/20 bg-amber-500/10 p-8">
+            <h1 className="text-2xl font-semibold text-white">Giriş Gerekli</h1>
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300">
+              CMS paneline erişmek için önce giriş yapmanız gerekir.
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-4">
+              <button
+                onClick={() => {
+                  window.location.href = "https://avofis.com/auth/login";
+                }}
+                className="rounded-xl bg-blue-600 px-6 py-3 text-white"
+              >
+                Giriş Sayfasına Git
+              </button>
+
+              <button
+                onClick={() => {
+                  window.location.href = "https://avofis.com";
+                }}
+                className="rounded-xl bg-slate-700 px-6 py-3 text-white"
+              >
+                Portala Dön
+              </button>
+            </div>
+          </div>
+        </section>
+        <SiteFooter />
+      </main>
+    );
+  }
+
   if (!isAuthorized) {
     return (
       <main>
         <SiteHeader />
         <section className="container-shell py-24">
           <div className="rounded-[28px] border border-red-500/20 bg-red-500/10 p-8">
-            <h1 className="text-2xl font-semibold text-white">Erişim Reddedildi</h1>
+            <h1 className="text-2xl font-semibold text-white">
+              Erişim Reddedildi
+            </h1>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300">
               Bu alan yalnızca admin yetkisine sahip kullanıcılar içindir.
             </p>
@@ -544,7 +587,9 @@ if (!session?.user) {
           </div>
 
           <div className="rounded-[28px] border border-white/10 bg-white/5 p-8">
-            <h2 className="text-2xl font-semibold text-white">Ana Sayfa Hero</h2>
+            <h2 className="text-2xl font-semibold text-white">
+              Ana Sayfa Hero
+            </h2>
 
             <div className="mt-6 max-w-xl space-y-6">
               <div>
@@ -583,14 +628,21 @@ if (!session?.user) {
           </div>
 
           <div className="rounded-[28px] border border-white/10 bg-white/5 p-8">
-            <h2 className="text-2xl font-semibold text-white">Menü Yönetimi</h2>
+            <h2 className="text-2xl font-semibold text-white">
+              Menü Yönetimi
+            </h2>
 
             <div className="mt-6 space-y-4">
               {navigation.map((item, index) => (
-                <div key={index} className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div
+                  key={index}
+                  className="grid grid-cols-1 gap-4 md:grid-cols-3"
+                >
                   <input
                     value={item.label}
-                    onChange={(e) => updateNav(index, "label", e.target.value)}
+                    onChange={(e) =>
+                      updateNav(index, "label", e.target.value)
+                    }
                     placeholder="Başlık"
                     className="rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white"
                   />
@@ -631,21 +683,30 @@ if (!session?.user) {
           </div>
 
           <div className="rounded-[28px] border border-white/10 bg-white/5 p-8">
-            <h2 className="text-2xl font-semibold text-white">Modül Kartları</h2>
+            <h2 className="text-2xl font-semibold text-white">
+              Modül Kartları
+            </h2>
 
             <div className="mt-6 space-y-4">
               {modules.map((item, index) => (
-                <div key={index} className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div
+                  key={index}
+                  className="grid grid-cols-1 gap-4 md:grid-cols-3"
+                >
                   <input
                     value={item.title}
-                    onChange={(e) => updateModule(index, "title", e.target.value)}
+                    onChange={(e) =>
+                      updateModule(index, "title", e.target.value)
+                    }
                     placeholder="Başlık"
                     className="rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white"
                   />
 
                   <input
                     value={item.text}
-                    onChange={(e) => updateModule(index, "text", e.target.value)}
+                    onChange={(e) =>
+                      updateModule(index, "text", e.target.value)
+                    }
                     placeholder="Açıklama"
                     className="rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white"
                   />
@@ -679,15 +740,22 @@ if (!session?.user) {
           </div>
 
           <div className="rounded-[28px] border border-white/10 bg-white/5 p-8">
-            <h2 className="text-2xl font-semibold text-white">Footer Yönetimi</h2>
+            <h2 className="text-2xl font-semibold text-white">
+              Footer Yönetimi
+            </h2>
 
             <div className="mt-6 space-y-6">
               {footerColumns.map((column, index) => (
-                <div key={index} className="rounded-2xl border border-white/10 bg-black/20 p-5">
+                <div
+                  key={index}
+                  className="rounded-2xl border border-white/10 bg-black/20 p-5"
+                >
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_auto]">
                     <input
                       value={column.title}
-                      onChange={(e) => updateFooterTitle(index, e.target.value)}
+                      onChange={(e) =>
+                        updateFooterTitle(index, e.target.value)
+                      }
                       placeholder="Kolon başlığı"
                       className="rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white"
                     />
@@ -707,7 +775,9 @@ if (!session?.user) {
 
                     <textarea
                       value={column.links.join("\n")}
-                      onChange={(e) => updateFooterLinks(index, e.target.value)}
+                      onChange={(e) =>
+                        updateFooterLinks(index, e.target.value)
+                      }
                       rows={5}
                       className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white"
                     />
