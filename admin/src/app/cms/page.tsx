@@ -46,10 +46,10 @@ export default function Page() {
         data: { session },
       } = await supabase.auth.getSession();
 
-      if (!session?.user) {
-        router.replace("/auth/login");
-        return;
-      }
+if (!session?.user) {
+  router.replace("https://avofis.com/auth/login");
+  return;
+}
 
       const userId = session.user.id;
       let allowed = false;
