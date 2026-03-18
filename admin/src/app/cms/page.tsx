@@ -501,7 +501,7 @@ export default function Page() {
             <div className="mt-6 flex flex-wrap gap-4">
               <button
                 onClick={() => {
-                  window.location.href = "https://avofis.com/auth/login";
+                  window.location.href = "/auth/login";
                 }}
                 className="rounded-xl bg-blue-600 px-6 py-3 text-white"
               >
