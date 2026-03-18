@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { AuthProvider } from "@/components/providers/AuthProvider";
+import { EditModeProvider } from "@/components/providers/EditModeProvider";
 
 export const metadata: Metadata = {
   title: "AvOfis",
@@ -11,7 +12,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="tr">
       <body>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <EditModeProvider>{children}</EditModeProvider>
+        </AuthProvider>
       </body>
     </html>
   );
