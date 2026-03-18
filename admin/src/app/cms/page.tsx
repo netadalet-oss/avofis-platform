@@ -341,36 +341,33 @@ export default function Page() {
     }
   }
 
-  async function saveHero() {
-    try {
-      setSaving(true);
-      setMessage("");
+async function saveHero() {
+  try {
+    setSaving(true);
+    setMessage("");
 
-      const { error } = await supabase
-        .from("pages")
-        .upsert(
-          {
-            slug: "home",
-            content: {
-              hero: {
-                title: heroTitle,
-                subtitle: heroSubtitle,
-              },
-            },
+    const { error } = await supabase
+      .from("pages")
+      .update({
+        content: {
+          hero: {
+            title: heroTitle,
+            subtitle: heroSubtitle,
           },
-          { onConflict: "slug" }
-        );
+        },
+      })
+      .eq("slug", "home");
 
-      if (error) {
-        setMessage(`Hero kaydedilemedi: ${error.message}`);
-        return;
-      }
-
-      setMessage("Hero başarıyla kaydedildi.");
-    } finally {
-      setSaving(false);
+    if (error) {
+      setMessage(`Hero kaydedilemedi: ${error.message}`);
+      return;
     }
+
+    setMessage("Hero başarıyla kaydedildi.");
+  } finally {
+    setSaving(false);
   }
+}
 
   async function saveNavigation() {
     try {
