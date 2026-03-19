@@ -21,6 +21,7 @@ import {
   Workflow
 } from "lucide-react";
 import { EditableCardGrid, type EditableCardItem } from "@/components/cms/EditableCardGrid";
+import { EditableColumnList, type EditableColumnItem } from "@/components/cms/EditableColumnList";
 import { EditableList } from "@/components/cms/EditableList";
 import { EditableText } from "@/components/cms/EditableText";
 import { useEditMode } from "@/components/providers/EditModeProvider";
@@ -58,7 +59,7 @@ const researchCards: EditableCardItem[] = [
   }
 ];
 
-const careerColumns = [
+const careerColumns: EditableColumnItem[] = [
   {
     title: "Stajyerler için",
     points: [
@@ -99,6 +100,7 @@ type HomeCmsContent = {
   };
   featurePills?: string[];
   researchCards?: EditableCardItem[];
+  careerColumns?: EditableColumnItem[];
   sections?: {
     research?: {
       eyebrow?: string;
@@ -297,6 +299,10 @@ export default function HomePage() {
   const currentResearchCards = cmsContent?.researchCards?.length
     ? cmsContent.researchCards
     : researchCards;
+
+  const currentCareerColumns = cmsContent?.careerColumns?.length
+    ? cmsContent.careerColumns
+    : careerColumns;
 
   return (
     <main className="min-h-screen">
@@ -813,35 +819,45 @@ export default function HomePage() {
           />
 
           <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_1fr_0.9fr]">
-            {careerColumns.map((column, index) => (
-              <div
-                key={column.title}
-                className="rounded-[28px] border border-white/10 bg-white/5 p-7"
-              >
-                <div className="mb-5 flex items-center gap-3">
-                  <div className="rounded-2xl border border-white/10 bg-slate-950/50 p-3">
-                    {index === 0 ? (
-                      <GraduationCap className="h-5 w-5 text-sky-300" />
-                    ) : (
-                      <Building2 className="h-5 w-5 text-sky-300" />
-                    )}
-                  </div>
-                  <div className="text-xl font-semibold text-white">
-                    {column.title}
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  {column.points.map((point) => (
-                    <div
-                      key={point}
-                      className="rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-4 text-sm leading-7 text-slate-200"
-                    >
-                      {point}
+            <div className="lg:col-span-2">
+              <EditableColumnList
+                items={currentCareerColumns}
+                className="grid gap-6 lg:grid-cols-2"
+                renderColumn={(column, index) => (
+                  <div
+                    key={column.title}
+                    className="rounded-[28px] border border-white/10 bg-white/5 p-7"
+                  >
+                    <div className="mb-5 flex items-center gap-3">
+                      <div className="rounded-2xl border border-white/10 bg-slate-950/50 p-3">
+                        {index === 0 ? (
+                          <GraduationCap className="h-5 w-5 text-sky-300" />
+                        ) : (
+                          <Building2 className="h-5 w-5 text-sky-300" />
+                        )}
+                      </div>
+                      <div className="text-xl font-semibold text-white">
+                        {column.title}
+                      </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-            ))}
+
+                    <div className="space-y-3">
+                      {column.points.map((point, pointIndex) => (
+                        <div
+                          key={`${point}-${pointIndex}`}
+                          className="rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-4 text-sm leading-7 text-slate-200"
+                        >
+                          {point}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                onSave={async (nextItems) => {
+                  await saveContentField(["careerColumns"], nextItems);
+                }}
+              />
+            </div>
 
             <div className="rounded-[28px] border border-white/10 bg-gradient-to-b from-sky-400/10 to-white/5 p-7">
               <div className="text-xl font-semibold text-white">
