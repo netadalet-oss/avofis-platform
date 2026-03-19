@@ -60,12 +60,18 @@ export function SectionTitle({
           tag="h2"
           value={title}
           className={
-            titleClassName || "text-3xl font-semibold tracking-tight text-white md:text-4xl"
+            titleClassName ||
+            "text-3xl font-semibold tracking-tight text-white md:text-4xl"
           }
           onSave={onSaveTitle}
         />
       ) : (
-        <h2 className={titleClassName || "text-3xl font-semibold tracking-tight text-white md:text-4xl"}>
+        <h2
+          className={
+            titleClassName ||
+            "text-3xl font-semibold tracking-tight text-white md:text-4xl"
+          }
+        >
           {title}
         </h2>
       )}
@@ -77,12 +83,18 @@ export function SectionTitle({
           multiline
           rows={4}
           className={
-            textClassName || "mt-4 max-w-2xl text-sm leading-7 text-slate-300 md:text-base"
+            textClassName ||
+            "mt-4 max-w-2xl text-sm leading-7 text-slate-300 md:text-base"
           }
           onSave={onSaveText}
         />
       ) : (
-        <p className={textClassName || "mt-4 max-w-2xl text-sm leading-7 text-slate-300 md:text-base"}>
+        <p
+          className={
+            textClassName ||
+            "mt-4 max-w-2xl text-sm leading-7 text-slate-300 md:text-base"
+          }
+        >
           {text}
         </p>
       )}
