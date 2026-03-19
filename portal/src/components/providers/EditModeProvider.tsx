@@ -4,7 +4,7 @@ import { createContext, useContext, useState } from "react";
 
 type EditModeContextType = {
   editMode: boolean;
-  setEditMode: (v: boolean) => void;
+  setEditMode: (value: boolean) => void;
 };
 
 const EditModeContext = createContext<EditModeContextType | null>(null);
@@ -24,9 +24,11 @@ export function EditModeProvider({
 }
 
 export function useEditMode() {
-  const ctx = useContext(EditModeContext);
-  if (!ctx) {
+  const context = useContext(EditModeContext);
+
+  if (!context) {
     throw new Error("useEditMode must be used within EditModeProvider");
   }
-  return ctx;
+
+  return context;
 }
