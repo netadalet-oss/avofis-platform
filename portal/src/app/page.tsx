@@ -20,6 +20,7 @@ import {
   Users2,
   Workflow
 } from "lucide-react";
+import { EditableCardGrid, type EditableCardItem } from "@/components/cms/EditableCardGrid";
 import { EditableList } from "@/components/cms/EditableList";
 import { EditableText } from "@/components/cms/EditableText";
 import { useEditMode } from "@/components/providers/EditModeProvider";
@@ -42,7 +43,7 @@ const featurePills = [
   "Connect ekonomisi"
 ];
 
-const researchCards = [
+const researchCards: EditableCardItem[] = [
   {
     title: "Merkezi hukuk araştırması",
     text: "İçtihat, mevzuat, rehber içerik ve topluluk tartışmalarını aynı araştırma deneyiminde birleştirir."
@@ -97,6 +98,7 @@ type HomeCmsContent = {
     subtitle?: string;
   };
   featurePills?: string[];
+  researchCards?: EditableCardItem[];
   sections?: {
     research?: {
       eyebrow?: string;
@@ -291,6 +293,10 @@ export default function HomePage() {
   const currentFeaturePills = cmsContent?.featurePills?.length
     ? cmsContent.featurePills
     : featurePills;
+
+  const currentResearchCards = cmsContent?.researchCards?.length
+    ? cmsContent.researchCards
+    : researchCards;
 
   return (
     <main className="min-h-screen">
@@ -595,25 +601,19 @@ export default function HomePage() {
               }}
             />
 
-            <div className="mt-8 space-y-4">
-              {researchCards.map((card) => (
-                <div
-                  key={card.title}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-5"
-                >
-                  <div className="flex items-start gap-3">
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 text-emerald-300" />
-                    <div>
-                      <div className="text-base font-semibold text-white">
-                        {card.title}
-                      </div>
-                      <p className="mt-2 text-sm leading-7 text-slate-300">
-                        {card.text}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div className="mt-8">
+              <EditableCardGrid
+                items={currentResearchCards}
+                className="space-y-4"
+                cardClassName="rounded-2xl border border-white/10 bg-white/5 p-5"
+                titleClassName="text-base font-semibold text-white"
+                textClassName="mt-2 text-sm leading-7 text-slate-300"
+                titlePlaceholder="Araştırma kartı başlığı"
+                textPlaceholder="Araştırma kartı açıklaması"
+                onSave={async (nextItems) => {
+                  await saveContentField(["researchCards"], nextItems);
+                }}
+              />
             </div>
           </div>
 
