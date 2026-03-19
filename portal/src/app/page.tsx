@@ -20,6 +20,7 @@ import {
   Users2,
   Workflow
 } from "lucide-react";
+import { EditableText } from "@/components/cms/EditableText";
 import { useEditMode } from "@/components/providers/EditModeProvider";
 import { ModuleGrid } from "@/components/module-grid";
 import { SectionTitle } from "@/components/section-title";
@@ -156,7 +157,20 @@ export default function HomePage() {
     };
   }, []);
 
-  async function saveHeroInline() {
+  async function saveHeroField(field: "title" | "subtitle", value: string) {
+    const nextHero = {
+      title:
+        field === "title"
+          ? value
+          : (cmsContent?.hero?.title || heroDraft.title || defaultHeroTitle),
+      subtitle:
+        field === "subtitle"
+          ? value
+          : (cmsContent?.hero?.subtitle ||
+              heroDraft.subtitle ||
+              defaultHeroSubtitle),
+    };
+
     try {
       setHeroSaving(true);
       setHeroMessage("");
@@ -164,10 +178,7 @@ export default function HomePage() {
       const { error } = await supabase.from("pages").upsert({
         slug: "home",
         content: {
-          hero: {
-            title: heroDraft.title,
-            subtitle: heroDraft.subtitle
-          }
+          hero: nextHero
         }
       });
 
@@ -178,14 +189,11 @@ export default function HomePage() {
 
       setCmsContent((prev) => ({
         ...(prev || {}),
-        hero: {
-          title: heroDraft.title,
-          subtitle: heroDraft.subtitle
-        }
+        hero: nextHero
       }));
 
+      setHeroDraft(nextHero);
       setHeroMessage("Hero başarıyla kaydedildi.");
-      setEditMode(false);
     } finally {
       setHeroSaving(false);
     }
@@ -237,6 +245,12 @@ export default function HomePage() {
                   {editMode ? "Düzenlemeyi Kapat" : "Düzenleme Modu"}
                 </button>
 
+                {heroSaving ? (
+                  <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200">
+                    Kaydediliyor...
+                  </div>
+                ) : null}
+
                 {heroMessage ? (
                   <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200">
                     {heroMessage}
@@ -245,58 +259,35 @@ export default function HomePage() {
               </div>
             ) : null}
 
-            {isAdmin && editMode ? (
-              <div className="max-w-4xl space-y-4">
-                <input
-                  value={heroDraft.title}
-                  onChange={(e) =>
-                    setHeroDraft((prev) => ({ ...prev, title: e.target.value }))
-                  }
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-3xl font-semibold tracking-tight text-white outline-none md:text-5xl"
-                />
+            <EditableText
+              value={cmsContent?.hero?.title || ""}
+              defaultValue={defaultHeroTitle}
+              tag="h1"
+              className="max-w-4xl text-4xl font-semibold tracking-tight text-white md:text-6xl md:leading-[1.05]"
+              inputClassName="w-full max-w-4xl rounded-2xl border border-amber-400/30 bg-white/5 px-5 py-4 text-3xl font-semibold tracking-tight text-white outline-none md:text-5xl"
+              placeholder="Hero başlık"
+              onSave={async (nextValue) => {
+                if (!editMode) return;
+                await saveHeroField("title", nextValue);
+              }}
+            />
 
-                <textarea
-                  value={heroDraft.subtitle}
-                  onChange={(e) =>
-                    setHeroDraft((prev) => ({
-                      ...prev,
-                      subtitle: e.target.value
-                    }))
-                  }
-                  rows={5}
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-base leading-8 text-slate-200 outline-none"
-                />
-
-                <div className="flex flex-wrap gap-3">
-                  <button
-                    type="button"
-                    onClick={saveHeroInline}
-                    disabled={heroSaving}
-                    className="rounded-2xl bg-white px-6 py-3 text-sm font-semibold text-slate-950 disabled:opacity-60"
-                  >
-                    {heroSaving ? "Kaydediliyor..." : "Hero Kaydet"}
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={cancelHeroEditMode}
-                    className="rounded-2xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white"
-                  >
-                    Vazgeç
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-white md:text-6xl md:leading-[1.05]">
-                {cmsContent?.hero?.title || defaultHeroTitle}
-              </h1>
-            )}
-
-            {!editMode ? (
-              <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300 md:text-lg">
-                {cmsContent?.hero?.subtitle || defaultHeroSubtitle}
-              </p>
-            ) : null}
+            <div className="mt-6">
+              <EditableText
+                value={cmsContent?.hero?.subtitle || ""}
+                defaultValue={defaultHeroSubtitle}
+                tag="p"
+                multiline
+                rows={5}
+                className="max-w-2xl text-base leading-8 text-slate-300 md:text-lg"
+                inputClassName="w-full max-w-2xl rounded-2xl border border-amber-400/30 bg-white/5 px-5 py-4 text-base leading-8 text-slate-200 outline-none"
+                placeholder="Hero açıklama"
+                onSave={async (nextValue) => {
+                  if (!editMode) return;
+                  await saveHeroField("subtitle", nextValue);
+                }}
+              />
+            </div>
 
             <div className="mt-8 flex flex-wrap gap-3">
               {featurePills.map((item) => (
