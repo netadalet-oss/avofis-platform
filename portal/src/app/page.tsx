@@ -20,6 +20,7 @@ import {
   Users2,
   Workflow
 } from "lucide-react";
+import { useEditMode } from "@/components/providers/EditModeProvider";
 import { ModuleGrid } from "@/components/module-grid";
 import { SectionTitle } from "@/components/section-title";
 import { SiteFooter } from "@/components/site-footer";
@@ -102,9 +103,9 @@ type EditableHero = {
 
 export default function HomePage() {
   const { session, loading: authLoading } = useUser();
+  const { editMode, setEditMode } = useEditMode();
 
   const [cmsContent, setCmsContent] = useState<HomeCmsContent | null>(null);
-  const [editMode, setEditMode] = useState(false);
   const [heroDraft, setHeroDraft] = useState<EditableHero>({
     title: "",
     subtitle: ""
