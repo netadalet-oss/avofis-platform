@@ -95,12 +95,55 @@ type HomeCmsContent = {
     title?: string;
     subtitle?: string;
   };
+  sections?: {
+    research?: {
+      eyebrow?: string;
+      title?: string;
+      text?: string;
+    };
+    career?: {
+      eyebrow?: string;
+      title?: string;
+      text?: string;
+    };
+    community?: {
+      eyebrow?: string;
+      title?: string;
+      text?: string;
+    };
+    offices?: {
+      eyebrow?: string;
+      title?: string;
+      text?: string;
+    };
+    stats?: {
+      eyebrow?: string;
+      title?: string;
+      text?: string;
+    };
+  };
 };
 
 type EditableHero = {
   title: string;
   subtitle: string;
 };
+
+function setDeepValue<T extends Record<string, any>>(obj: T, path: string[], value: string): T {
+  const clone: T = JSON.parse(JSON.stringify(obj || {}));
+  let current: any = clone;
+
+  for (let i = 0; i < path.length - 1; i += 1) {
+    const key = path[i];
+    if (!current[key] || typeof current[key] !== "object") {
+      current[key] = {};
+    }
+    current = current[key];
+  }
+
+  current[path[path.length - 1]] = value;
+  return clone;
+}
 
 export default function HomePage() {
   const { session, loading: authLoading } = useUser();
@@ -157,18 +200,50 @@ export default function HomePage() {
     };
   }, []);
 
+  async function saveContentField(path: string[], value: string) {
+    try {
+      setHeroSaving(true);
+      setHeroMessage("");
+
+      const currentContent: HomeCmsContent = cmsContent || {};
+      const nextContent = setDeepValue(currentContent, path, value);
+
+      const { error } = await supabase.from("pages").upsert({
+        slug: "home",
+        content: nextContent
+      });
+
+      if (error) {
+        setHeroMessage(`İçerik kaydedilemedi: ${error.message}`);
+        return;
+      }
+
+      setCmsContent(nextContent);
+      setHeroMessage("İçerik başarıyla kaydedildi.");
+    } finally {
+      setHeroSaving(false);
+    }
+  }
+
   async function saveHeroField(field: "title" | "subtitle", value: string) {
+    const currentContent: HomeCmsContent = cmsContent || {};
+
     const nextHero = {
       title:
         field === "title"
           ? value
-          : (cmsContent?.hero?.title || heroDraft.title || defaultHeroTitle),
+          : (currentContent?.hero?.title || heroDraft.title || defaultHeroTitle),
       subtitle:
         field === "subtitle"
           ? value
-          : (cmsContent?.hero?.subtitle ||
+          : (currentContent?.hero?.subtitle ||
               heroDraft.subtitle ||
               defaultHeroSubtitle),
+    };
+
+    const nextContent: HomeCmsContent = {
+      ...currentContent,
+      hero: nextHero
     };
 
     try {
@@ -177,9 +252,7 @@ export default function HomePage() {
 
       const { error } = await supabase.from("pages").upsert({
         slug: "home",
-        content: {
-          hero: nextHero
-        }
+        content: nextContent
       });
 
       if (error) {
@@ -187,11 +260,7 @@ export default function HomePage() {
         return;
       }
 
-      setCmsContent((prev) => ({
-        ...(prev || {}),
-        hero: nextHero
-      }));
-
+      setCmsContent(nextContent);
       setHeroDraft(nextHero);
       setHeroMessage("Hero başarıyla kaydedildi.");
     } finally {
@@ -498,9 +567,25 @@ export default function HomePage() {
         <div className="container-shell grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
           <div>
             <SectionTitle
-              eyebrow="Araştırma katmanı"
-              title="İçtihat ve mevzuat erişimini çalışılabilir bir hukuk deneyimine dönüştürür."
-              text="Karar arama, mevzuat görüntüleme, konu filtreleri, benzer içerikler, notlar, kayıt listeleri ve ilişkili topluluk tartışmaları tek düzende sunulur."
+              eyebrow={cmsContent?.sections?.research?.eyebrow || "Araştırma katmanı"}
+              title={
+                cmsContent?.sections?.research?.title ||
+                "İçtihat ve mevzuat erişimini çalışılabilir bir hukuk deneyimine dönüştürür."
+              }
+              text={
+                cmsContent?.sections?.research?.text ||
+                "Karar arama, mevzuat görüntüleme, konu filtreleri, benzer içerikler, notlar, kayıt listeleri ve ilişkili topluluk tartışmaları tek düzende sunulur."
+              }
+              editable
+              onSaveEyebrow={async (nextValue) => {
+                await saveContentField(["sections", "research", "eyebrow"], nextValue);
+              }}
+              onSaveTitle={async (nextValue) => {
+                await saveContentField(["sections", "research", "title"], nextValue);
+              }}
+              onSaveText={async (nextValue) => {
+                await saveContentField(["sections", "research", "text"], nextValue);
+              }}
             />
 
             <div className="mt-8 space-y-4">
@@ -699,9 +784,25 @@ export default function HomePage() {
       <section id="kariyer" className="bg-black/20 py-24">
         <div className="container-shell">
           <SectionTitle
-            eyebrow="Kariyer ağı"
-            title="Stajyerler ve hukuk büroları için güçlü, şeffaf ve ölçülebilir bir eşleşme alanı."
-            text="İlan yayınlama, başvuru, aday değerlendirme, ofis görünürlüğü, kariyer içerikleri ve profil bazlı eşleşme önerileri aynı modülde ilerler."
+            eyebrow={cmsContent?.sections?.career?.eyebrow || "Kariyer ağı"}
+            title={
+              cmsContent?.sections?.career?.title ||
+              "Stajyerler ve hukuk büroları için güçlü, şeffaf ve ölçülebilir bir eşleşme alanı."
+            }
+            text={
+              cmsContent?.sections?.career?.text ||
+              "İlan yayınlama, başvuru, aday değerlendirme, ofis görünürlüğü, kariyer içerikleri ve profil bazlı eşleşme önerileri aynı modülde ilerler."
+            }
+            editable
+            onSaveEyebrow={async (nextValue) => {
+              await saveContentField(["sections", "career", "eyebrow"], nextValue);
+            }}
+            onSaveTitle={async (nextValue) => {
+              await saveContentField(["sections", "career", "title"], nextValue);
+            }}
+            onSaveText={async (nextValue) => {
+              await saveContentField(["sections", "career", "text"], nextValue);
+            }}
           />
 
           <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_1fr_0.9fr]">
@@ -772,9 +873,25 @@ export default function HomePage() {
         <div className="grid gap-10 lg:grid-cols-[0.92fr_1.08fr]">
           <div>
             <SectionTitle
-              eyebrow="Forum ve topluluk"
-              title="Hukuk profesyonelleri, akademisyenler ve öğrenciler için yaşayan bilgi ağı."
-              text="Soru-cevap, mevzuat yorumları, içtihat değerlendirmeleri, staj deneyimleri ve mesleki tartışmalar kontrollü moderasyon yapısıyla gelişir."
+              eyebrow={cmsContent?.sections?.community?.eyebrow || "Forum ve topluluk"}
+              title={
+                cmsContent?.sections?.community?.title ||
+                "Hukuk profesyonelleri, akademisyenler ve öğrenciler için yaşayan bilgi ağı."
+              }
+              text={
+                cmsContent?.sections?.community?.text ||
+                "Soru-cevap, mevzuat yorumları, içtihat değerlendirmeleri, staj deneyimleri ve mesleki tartışmalar kontrollü moderasyon yapısıyla gelişir."
+              }
+              editable
+              onSaveEyebrow={async (nextValue) => {
+                await saveContentField(["sections", "community", "eyebrow"], nextValue);
+              }}
+              onSaveTitle={async (nextValue) => {
+                await saveContentField(["sections", "community", "title"], nextValue);
+              }}
+              onSaveText={async (nextValue) => {
+                await saveContentField(["sections", "community", "text"], nextValue);
+              }}
             />
             <div className="mt-8 space-y-4">
               {[
@@ -842,9 +959,25 @@ export default function HomePage() {
       <section id="ofisler" className="bg-black/20 py-24">
         <div className="container-shell">
           <SectionTitle
-            eyebrow="Ofis profilleri"
-            title="Hukuk büroları için modern, güvenilir ve görünür bir profesyonel vitrin."
-            text="Ofis uzmanlık alanları, ekip yapısı, staj ilanları, doğrulanmış profil bilgileri ve işbirliği olanakları tek profilde sunulur."
+            eyebrow={cmsContent?.sections?.offices?.eyebrow || "Ofis profilleri"}
+            title={
+              cmsContent?.sections?.offices?.title ||
+              "Hukuk büroları için modern, güvenilir ve görünür bir profesyonel vitrin."
+            }
+            text={
+              cmsContent?.sections?.offices?.text ||
+              "Ofis uzmanlık alanları, ekip yapısı, staj ilanları, doğrulanmış profil bilgileri ve işbirliği olanakları tek profilde sunulur."
+            }
+            editable
+            onSaveEyebrow={async (nextValue) => {
+              await saveContentField(["sections", "offices", "eyebrow"], nextValue);
+            }}
+            onSaveTitle={async (nextValue) => {
+              await saveContentField(["sections", "offices", "title"], nextValue);
+            }}
+            onSaveText={async (nextValue) => {
+              await saveContentField(["sections", "offices", "text"], nextValue);
+            }}
           />
 
           <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_1fr_1fr]">
@@ -915,9 +1048,25 @@ export default function HomePage() {
 
       <section id="istatistikler" className="container-shell py-24">
         <SectionTitle
-          eyebrow="Şeffaf istatistikler"
-          title="Platform kullanımını görünür, anlaşılır ve ölçülebilir hale getirir."
-          text="Kullanıcı sayısı, içerik performansı, forum hareketliliği, kariyer dönüşümü ve belge üretim yoğunluğu panel ve public alan arasında tutarlı bir veri akışına bağlanır."
+          eyebrow={cmsContent?.sections?.stats?.eyebrow || "Şeffaf istatistikler"}
+          title={
+            cmsContent?.sections?.stats?.title ||
+            "Platform kullanımını görünür, anlaşılır ve ölçülebilir hale getirir."
+          }
+          text={
+            cmsContent?.sections?.stats?.text ||
+            "Kullanıcı sayısı, içerik performansı, forum hareketliliği, kariyer dönüşümü ve belge üretim yoğunluğu panel ve public alan arasında tutarlı bir veri akışına bağlanır."
+          }
+          editable
+          onSaveEyebrow={async (nextValue) => {
+            await saveContentField(["sections", "stats", "eyebrow"], nextValue);
+          }}
+          onSaveTitle={async (nextValue) => {
+            await saveContentField(["sections", "stats", "title"], nextValue);
+          }}
+          onSaveText={async (nextValue) => {
+            await saveContentField(["sections", "stats", "text"], nextValue);
+          }}
         />
         <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {stats.map((item) => (
