@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Pencil, Plus, Save, Trash2, X } from "lucide-react";
+import { useEditMode } from "@/components/providers/EditModeProvider";
 import { useUser } from "@/hooks/useUser";
 import {
   footerColumns as defaultFooterColumns,
@@ -11,9 +12,9 @@ import { supabase } from "@/lib/supabase";
 
 export function SiteFooter() {
   const { session, loading: authLoading } = useUser();
+  const { editMode, setEditMode } = useEditMode();
 
   const [columns, setColumns] = useState<FooterColumn[]>(defaultFooterColumns);
-  const [editMode, setEditMode] = useState(false);
   const [footerDraft, setFooterDraft] =
     useState<FooterColumn[]>(defaultFooterColumns);
   const [saving, setSaving] = useState(false);
@@ -65,6 +66,13 @@ export function SiteFooter() {
       mounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (!editMode) {
+      setMessage("");
+      setFooterDraft(columns.length > 0 ? columns : defaultFooterColumns);
+    }
+  }, [editMode, columns]);
 
   function openEditMode() {
     setEditMode(true);
