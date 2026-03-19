@@ -13,12 +13,27 @@ export type EditableColumnItem = {
 type Props = {
   items: EditableColumnItem[];
   className?: string;
+
+  // ✅ YENİ: stil kontrolü
+  columnClassName?: string;
+  titleClassName?: string;
+  pointClassName?: string;
+  pointsWrapperClassName?: string;
+
+  // ✅ YENİ: render override (en kritik kısım)
+  renderColumn?: (column: EditableColumnItem, index: number) => React.ReactNode;
+
   onSave: (next: EditableColumnItem[]) => Promise<void> | void;
 };
 
 export function EditableColumnList({
   items,
   className = "",
+  columnClassName = "",
+  titleClassName = "",
+  pointClassName = "",
+  pointsWrapperClassName = "",
+  renderColumn,
   onSave,
 }: Props) {
   const { session, loading } = useUser();
@@ -97,26 +112,39 @@ export function EditableColumnList({
     setIsEditing(false);
   }
 
+  // ✅ VIEW MODE
   if (!canEdit) {
     return (
       <div className={className}>
-        {items.map((col, i) => (
-          <div key={i}>
-            <div>{col.title}</div>
-            {col.points.map((p, j) => (
-              <div key={j}>{p}</div>
-            ))}
-          </div>
-        ))}
+        {items.map((col, i) =>
+          renderColumn ? (
+            <div key={i}>{renderColumn(col, i)}</div>
+          ) : (
+            <div key={i} className={columnClassName}>
+              <div className={titleClassName}>{col.title}</div>
+              <div className={pointsWrapperClassName}>
+                {col.points.map((p, j) => (
+                  <div key={j} className={pointClassName}>
+                    {p}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
+        )}
       </div>
     );
   }
 
+  // ✅ EDIT MODE
   if (isEditing) {
     return (
       <div className="space-y-6">
         {draft.map((col, colIndex) => (
-          <div key={colIndex} className="rounded-2xl border border-white/10 bg-white/5 p-4">
+          <div
+            key={colIndex}
+            className="rounded-2xl border border-white/10 bg-white/5 p-4"
+          >
             <input
               value={col.title}
               onChange={(e) => updateTitle(colIndex, e.target.value)}
@@ -163,10 +191,16 @@ export function EditableColumnList({
         </button>
 
         <div className="flex gap-2">
-          <button onClick={handleSave} className="bg-white text-black px-4 py-2 rounded-xl">
+          <button
+            onClick={handleSave}
+            className="bg-white text-black px-4 py-2 rounded-xl"
+          >
             {saving ? "Kaydediliyor..." : "Kaydet"}
           </button>
-          <button onClick={handleCancel} className="px-4 py-2 rounded-xl border">
+          <button
+            onClick={handleCancel}
+            className="px-4 py-2 rounded-xl border"
+          >
             Vazgeç
           </button>
         </div>
@@ -174,17 +208,26 @@ export function EditableColumnList({
     );
   }
 
+  // ✅ HOVER EDIT BUTTON
   return (
     <div className="group relative">
       <div className={className}>
-        {items.map((col, i) => (
-          <div key={i}>
-            <div>{col.title}</div>
-            {col.points.map((p, j) => (
-              <div key={j}>{p}</div>
-            ))}
-          </div>
-        ))}
+        {items.map((col, i) =>
+          renderColumn ? (
+            <div key={i}>{renderColumn(col, i)}</div>
+          ) : (
+            <div key={i} className={columnClassName}>
+              <div className={titleClassName}>{col.title}</div>
+              <div className={pointsWrapperClassName}>
+                {col.points.map((p, j) => (
+                  <div key={j} className={pointClassName}>
+                    {p}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
+        )}
       </div>
 
       <button
