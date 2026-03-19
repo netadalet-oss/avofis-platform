@@ -20,6 +20,7 @@ import {
   Users2,
   Workflow
 } from "lucide-react";
+import { EditableList } from "@/components/cms/EditableList";
 import { EditableText } from "@/components/cms/EditableText";
 import { useEditMode } from "@/components/providers/EditModeProvider";
 import { ModuleGrid } from "@/components/module-grid";
@@ -95,6 +96,7 @@ type HomeCmsContent = {
     title?: string;
     subtitle?: string;
   };
+  featurePills?: string[];
   sections?: {
     research?: {
       eyebrow?: string;
@@ -129,7 +131,7 @@ type EditableHero = {
   subtitle: string;
 };
 
-function setDeepValue<T extends Record<string, any>>(obj: T, path: string[], value: string): T {
+function setDeepValue<T extends Record<string, any>>(obj: T, path: string[], value: any): T {
   const clone: T = JSON.parse(JSON.stringify(obj || {}));
   let current: any = clone;
 
@@ -200,7 +202,7 @@ export default function HomePage() {
     };
   }, []);
 
-  async function saveContentField(path: string[], value: string) {
+  async function saveContentField(path: string[], value: any) {
     try {
       setHeroSaving(true);
       setHeroMessage("");
@@ -286,6 +288,10 @@ export default function HomePage() {
     });
   }
 
+  const currentFeaturePills = cmsContent?.featurePills?.length
+    ? cmsContent.featurePills
+    : featurePills;
+
   return (
     <main className="min-h-screen">
       <SiteHeader />
@@ -358,15 +364,16 @@ export default function HomePage() {
               />
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              {featurePills.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200"
-                >
-                  {item}
-                </span>
-              ))}
+            <div className="mt-8">
+              <EditableList
+                items={currentFeaturePills}
+                className="flex flex-wrap gap-3"
+                itemClassName="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200"
+                placeholder="Özellik etiketi"
+                onSave={async (nextItems) => {
+                  await saveContentField(["featurePills"], nextItems);
+                }}
+              />
             </div>
 
             <div className="mt-10 flex flex-wrap gap-4">
