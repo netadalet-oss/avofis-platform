@@ -9,6 +9,7 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import { useEditMode } from "@/components/providers/EditModeProvider";
 import { useUser } from "@/hooks/useUser";
 import { modules as defaultModules, type ModuleItem } from "@/lib/site";
 import { SectionTitle } from "@/components/section-title";
@@ -21,9 +22,9 @@ type CmsModuleItem = {
 
 export function ModuleGrid() {
   const { session, loading: authLoading } = useUser();
+  const { editMode, setEditMode } = useEditMode();
 
   const [moduleItems, setModuleItems] = useState<ModuleItem[]>(defaultModules);
-  const [editMode, setEditMode] = useState(false);
   const [moduleDraft, setModuleDraft] = useState<CmsModuleItem[]>(
     defaultModules.map((item) => ({
       title: item.title,
@@ -114,6 +115,18 @@ export function ModuleGrid() {
       mounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (!editMode) {
+      setMessage("");
+      setModuleDraft(
+        moduleItems.map((item) => ({
+          title: item.title,
+          text: item.text,
+        })),
+      );
+    }
+  }, [editMode, moduleItems]);
 
   function openEditMode() {
     setEditMode(true);
