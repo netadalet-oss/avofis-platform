@@ -33,25 +33,33 @@ export default function Page() {
   const [message, setMessage] = useState("");
   const [authChecking, setAuthChecking] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [needsLogin, setNeedsLogin] = useState(false);
 
   useEffect(() => {
     checkAccess();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session?.user) {
+        router.replace("/login");
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   async function checkAccess() {
     try {
       setAuthChecking(true);
-      setNeedsLogin(false);
 
       const {
         data: { session },
       } = await supabase.auth.getSession();
 
       if (!session?.user) {
-        setNeedsLogin(true);
-        setIsAuthorized(false);
-        setAuthChecking(false);
+        router.replace("/login");
         return;
       }
 
@@ -62,7 +70,7 @@ export default function Page() {
         .from("profiles")
         .select("role")
         .eq("id", userId)
-        .single();
+        .maybeSingle();
 
       const profileRole =
         typeof profile?.role === "string" ? profile.role.toLowerCase() : "";
@@ -158,6 +166,11 @@ export default function Page() {
 
   function openPortal() {
     window.open("https://avofis.com", "_blank");
+  }
+
+  async function signOut() {
+    await supabase.auth.signOut();
+    router.replace("/login");
   }
 
   async function loadDefaults() {
@@ -341,33 +354,36 @@ export default function Page() {
     }
   }
 
-async function saveHero() {
-  try {
-    setSaving(true);
-    setMessage("");
+  async function saveHero() {
+    try {
+      setSaving(true);
+      setMessage("");
 
-    const { error } = await supabase
-      .from("pages")
-      .update({
-        content: {
-          hero: {
-            title: heroTitle,
-            subtitle: heroSubtitle,
+      const { error } = await supabase
+        .from("pages")
+        .upsert(
+          {
+            slug: "home",
+            content: {
+              hero: {
+                title: heroTitle,
+                subtitle: heroSubtitle,
+              },
+            },
           },
-        },
-      })
-      .eq("slug", "home");
+          { onConflict: "slug" }
+        );
 
-    if (error) {
-      setMessage(`Hero kaydedilemedi: ${error.message}`);
-      return;
+      if (error) {
+        setMessage(`Hero kaydedilemedi: ${error.message}`);
+        return;
+      }
+
+      setMessage("Hero başarıyla kaydedildi.");
+    } finally {
+      setSaving(false);
     }
-
-    setMessage("Hero başarıyla kaydedildi.");
-  } finally {
-    setSaving(false);
   }
-}
 
   async function saveNavigation() {
     try {
@@ -518,27 +534,20 @@ async function saveHero() {
     );
   }
 
-  if (needsLogin) {
+  if (!isAuthorized) {
     return (
       <main>
         <SiteHeader />
         <section className="container-shell py-24">
-          <div className="rounded-[28px] border border-amber-500/20 bg-amber-500/10 p-8">
-            <h1 className="text-2xl font-semibold text-white">Giriş Gerekli</h1>
+          <div className="rounded-[28px] border border-red-500/20 bg-red-500/10 p-8">
+            <h1 className="text-2xl font-semibold text-white">
+              Erişim Reddedildi
+            </h1>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300">
-              CMS paneline erişmek için önce giriş yapmanız gerekir.
+              Bu alan yalnızca admin yetkisine sahip kullanıcılar içindir.
             </p>
 
-            <div className="mt-6 flex flex-wrap gap-4">
-              <button
-                onClick={() => {
-                  window.location.href = "/auth/login";
-                }}
-                className="rounded-xl bg-blue-600 px-6 py-3 text-white"
-              >
-                Giriş Sayfasına Git
-              </button>
-
+            <div className="mt-6">
               <button
                 onClick={() => {
                   window.location.href = "https://avofis.com";
@@ -555,25 +564,6 @@ async function saveHero() {
     );
   }
 
-  if (!isAuthorized) {
-    return (
-      <main>
-        <SiteHeader />
-        <section className="container-shell py-24">
-          <div className="rounded-[28px] border border-red-500/20 bg-red-500/10 p-8">
-            <h1 className="text-2xl font-semibold text-white">
-              Erişim Reddedildi
-            </h1>
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300">
-              Bu alan yalnızca admin yetkisine sahip kullanıcılar içindir.
-            </p>
-          </div>
-        </section>
-        <SiteFooter />
-      </main>
-    );
-  }
-
   return (
     <main>
       <SiteHeader />
@@ -581,10 +571,23 @@ async function saveHero() {
       <section className="container-shell py-24">
         <div className="space-y-16">
           <div className="rounded-[28px] border border-white/10 bg-white/5 p-8">
-            <h1 className="text-3xl font-semibold text-white">CMS Yönetimi</h1>
-            <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300">
-              Portal ana sayfasındaki temel içerikler buradan yönetilir.
-            </p>
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <h1 className="text-3xl font-semibold text-white">
+                  CMS Yönetimi
+                </h1>
+                <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300">
+                  Portal ana sayfasındaki temel içerikler buradan yönetilir.
+                </p>
+              </div>
+
+              <button
+                onClick={signOut}
+                className="rounded-xl bg-red-600 px-5 py-3 text-white"
+              >
+                Çıkış Yap
+              </button>
+            </div>
 
             <div className="mt-6 flex flex-wrap gap-4">
               <button
