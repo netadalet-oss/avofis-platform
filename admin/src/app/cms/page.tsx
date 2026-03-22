@@ -1,3 +1,6 @@
+Bunu aynen güncellenmiş haliyle değiştir:
+
+```tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -35,7 +38,13 @@ export default function Page() {
   const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
-    checkAccess();
+    let isMounted = true;
+
+    async function init() {
+      await checkAccess(isMounted);
+    }
+
+    init();
 
     const {
       data: { subscription },
@@ -46,63 +55,68 @@ export default function Page() {
     });
 
     return () => {
+      isMounted = false;
       subscription.unsubscribe();
     };
-  }, []);
+  }, [router]);
 
-  async function checkAccess() {
-    try {
-      setAuthChecking(true);
+  async function checkAccess(isMounted = true) {
+    if (isMounted) setAuthChecking(true);
 
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
-      if (!session?.user) {
-        router.replace("/login");
-        return;
-      }
+    if (!session?.user) {
+      router.replace("/login");
+      return;
+    }
 
-      const userId = session.user.id;
-      let allowed = false;
+    const userId = session.user.id;
+    let allowed = false;
 
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("role")
-        .eq("id", userId)
-        .maybeSingle();
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", userId)
+      .maybeSingle();
 
-      const profileRole =
-        typeof profile?.role === "string" ? profile.role.toLowerCase() : "";
-      const metaRole =
-        typeof session.user.user_metadata?.role === "string"
-          ? String(session.user.user_metadata.role).toLowerCase()
-          : "";
+    const profileRole =
+      typeof profile?.role === "string" ? profile.role.toLowerCase() : "";
+    const metaRole =
+      typeof session.user.user_metadata?.role === "string"
+        ? String(session.user.user_metadata.role).toLowerCase()
+        : "";
 
-      if (
-        profileRole === "admin" ||
-        profileRole === "super_admin" ||
-        metaRole === "admin" ||
-        metaRole === "super_admin"
-      ) {
-        allowed = true;
-      }
+    if (
+      profileRole === "admin" ||
+      profileRole === "super_admin" ||
+      metaRole === "admin" ||
+      metaRole === "super_admin"
+    ) {
+      allowed = true;
+    }
 
-      if (!allowed) {
+    if (!allowed) {
+      if (isMounted) {
         setIsAuthorized(false);
         setAuthChecking(false);
-        return;
       }
+      return;
+    }
 
+    if (isMounted) {
       setIsAuthorized(true);
+    }
 
-      await Promise.all([
-        loadHero(),
-        loadNavigation(),
-        loadModules(),
-        loadFooter(),
-      ]);
-    } finally {
+    await Promise.all([
+      loadHero(),
+      loadNavigation(),
+      loadModules(),
+      loadFooter(),
+    ]);
+
+    if (isMounted) {
       setAuthChecking(false);
     }
   }
@@ -844,3 +858,4 @@ export default function Page() {
     </main>
   );
 }
+```
