@@ -6,7 +6,6 @@ import {
   BadgeCheck,
   BookOpen,
   Building2,
-  CheckCircle2,
   ChevronRight,
   Clock3,
   FileSearch,
@@ -22,6 +21,10 @@ import {
 } from "lucide-react";
 import { EditableCardGrid, type EditableCardItem } from "@/components/cms/EditableCardGrid";
 import { EditableColumnList, type EditableColumnItem } from "@/components/cms/EditableColumnList";
+import {
+  EditableMetaCardGrid,
+  type EditableMetaCardItem
+} from "@/components/cms/EditableMetaCardGrid";
 import { EditableList } from "@/components/cms/EditableList";
 import { EditableText } from "@/components/cms/EditableText";
 import { useEditMode } from "@/components/providers/EditModeProvider";
@@ -87,6 +90,29 @@ const officeHighlights = [
   "Ofis ekip yapısı ve rol modeli"
 ];
 
+const communityCards: EditableMetaCardItem[] = [
+  {
+    title: "İçtihat Tartışmaları",
+    meta: "248 başlık",
+    text: "Kararların gerekçesi, uygulama alanı ve emsal etkisi üzerine uzman görüşleri."
+  },
+  {
+    title: "Mevzuat Değerlendirmeleri",
+    meta: "182 başlık",
+    text: "Madde değişiklikleri, yorum farkları ve uygulamaya etkiler."
+  },
+  {
+    title: "Staj ve Kariyer Deneyimleri",
+    meta: "331 başlık",
+    text: "Ofis kültürü, başvuru süreci ve mesleğe geçiş deneyimleri."
+  },
+  {
+    title: "Mesleki Uygulama",
+    meta: "416 başlık",
+    text: "Ofis yönetimi, süreç verimliliği ve profesyonel iş akışı önerileri."
+  }
+];
+
 const defaultHeroTitle =
   "Hukuk araştırması, belge üretimi ve kariyer ağı tek platformda.";
 
@@ -101,6 +127,7 @@ type HomeCmsContent = {
   featurePills?: string[];
   researchCards?: EditableCardItem[];
   careerColumns?: EditableColumnItem[];
+  communityCards?: EditableMetaCardItem[];
   sections?: {
     research?: {
       eyebrow?: string;
@@ -303,6 +330,10 @@ export default function HomePage() {
   const currentCareerColumns = cmsContent?.careerColumns?.length
     ? cmsContent.careerColumns
     : careerColumns;
+
+  const currentCommunityCards = cmsContent?.communityCards?.length
+    ? cmsContent.communityCards
+    : communityCards;
 
   return (
     <main className="min-h-screen">
@@ -934,47 +965,20 @@ export default function HomePage() {
           </div>
 
           <div className="rounded-[28px] border border-white/10 bg-white/5 p-6">
-            <div className="grid gap-5 md:grid-cols-2">
-              {[
-                {
-                  title: "İçtihat Tartışmaları",
-                  meta: "248 başlık",
-                  text: "Kararların gerekçesi, uygulama alanı ve emsal etkisi üzerine uzman görüşleri."
-                },
-                {
-                  title: "Mevzuat Değerlendirmeleri",
-                  meta: "182 başlık",
-                  text: "Madde değişiklikleri, yorum farkları ve uygulamaya etkiler."
-                },
-                {
-                  title: "Staj ve Kariyer Deneyimleri",
-                  meta: "331 başlık",
-                  text: "Ofis kültürü, başvuru süreci ve mesleğe geçiş deneyimleri."
-                },
-                {
-                  title: "Mesleki Uygulama",
-                  meta: "416 başlık",
-                  text: "Ofis yönetimi, süreç verimliliği ve profesyonel iş akışı önerileri."
-                }
-              ].map((item) => (
-                <article
-                  key={item.title}
-                  className="rounded-[24px] border border-white/10 bg-slate-950/50 p-5"
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="text-base font-semibold text-white">
-                      {item.title}
-                    </div>
-                    <div className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">
-                      {item.meta}
-                    </div>
-                  </div>
-                  <p className="mt-3 text-sm leading-7 text-slate-300">
-                    {item.text}
-                  </p>
-                </article>
-              ))}
-            </div>
+            <EditableMetaCardGrid
+              items={currentCommunityCards}
+              className="grid gap-5 md:grid-cols-2"
+              cardClassName="rounded-[24px] border border-white/10 bg-slate-950/50 p-5"
+              titleClassName="text-base font-semibold text-white"
+              metaClassName="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300"
+              textClassName="mt-3 text-sm leading-7 text-slate-300"
+              titlePlaceholder="Topluluk kartı başlığı"
+              metaPlaceholder="Kart meta bilgisi"
+              textPlaceholder="Topluluk kartı açıklaması"
+              onSave={async (nextItems) => {
+                await saveContentField(["communityCards"], nextItems);
+              }}
+            />
           </div>
         </div>
       </section>
