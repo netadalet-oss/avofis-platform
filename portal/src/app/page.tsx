@@ -128,6 +128,7 @@ type HomeCmsContent = {
   researchCards?: EditableCardItem[];
   careerColumns?: EditableColumnItem[];
   communityCards?: EditableMetaCardItem[];
+  officeHighlights?: string[];
   sections?: {
     research?: {
       eyebrow?: string;
@@ -334,6 +335,10 @@ export default function HomePage() {
   const currentCommunityCards = cmsContent?.communityCards?.length
     ? cmsContent.communityCards
     : communityCards;
+
+  const currentOfficeHighlights = cmsContent?.officeHighlights?.length
+    ? cmsContent.officeHighlights
+    : officeHighlights;
 
   return (
     <main className="min-h-screen">
@@ -1034,16 +1039,15 @@ export default function HomePage() {
                     İstanbul · Ticaret Hukuku · İş Hukuku
                   </div>
                 </div>
-                <div className="grid gap-3">
-                  {officeHighlights.map((item) => (
-                    <div
-                      key={item}
-                      className="rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-4 text-sm text-slate-200"
-                    >
-                      {item}
-                    </div>
-                  ))}
-                </div>
+                <EditableList
+                  items={currentOfficeHighlights}
+                  className="grid gap-3"
+                  itemClassName="rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-4 text-sm text-slate-200"
+                  placeholder="Ofis öne çıkan maddesi"
+                  onSave={async (nextItems) => {
+                    await saveContentField(["officeHighlights"], nextItems);
+                  }}
+                />
               </div>
             </div>
 
