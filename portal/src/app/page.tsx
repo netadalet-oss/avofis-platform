@@ -26,6 +26,10 @@ import {
   type EditableMetaCardItem
 } from "@/components/cms/EditableMetaCardGrid";
 import { EditableList } from "@/components/cms/EditableList";
+import {
+  EditableStatGrid,
+  type EditableStatItem
+} from "@/components/cms/EditableStatGrid";
 import { EditableText } from "@/components/cms/EditableText";
 import { useEditMode } from "@/components/providers/EditModeProvider";
 import { ModuleGrid } from "@/components/module-grid";
@@ -113,6 +117,11 @@ const communityCards: EditableMetaCardItem[] = [
   }
 ];
 
+const defaultStatsItems: EditableStatItem[] = stats.map((item) => ({
+  value: item.value,
+  label: item.label
+}));
+
 const defaultHeroTitle =
   "Hukuk araştırması, belge üretimi ve kariyer ağı tek platformda.";
 
@@ -129,6 +138,7 @@ type HomeCmsContent = {
   careerColumns?: EditableColumnItem[];
   communityCards?: EditableMetaCardItem[];
   officeHighlights?: string[];
+  statsItems?: EditableStatItem[];
   sections?: {
     research?: {
       eyebrow?: string;
@@ -340,6 +350,10 @@ export default function HomePage() {
     ? cmsContent.officeHighlights
     : officeHighlights;
 
+  const currentStatsItems = cmsContent?.statsItems?.length
+    ? cmsContent.statsItems
+    : defaultStatsItems;
+
   return (
     <main className="min-h-screen">
       <SiteHeader />
@@ -442,9 +456,9 @@ export default function HomePage() {
             </div>
 
             <div className="mt-12 grid max-w-2xl grid-cols-2 gap-4 md:grid-cols-4">
-              {stats.slice(0, 4).map((item) => (
+              {currentStatsItems.slice(0, 4).map((item, index) => (
                 <div
-                  key={item.label}
+                  key={`${item.label}-${index}`}
                   className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm"
                 >
                   <div className="text-2xl font-semibold text-white">
@@ -1099,19 +1113,18 @@ export default function HomePage() {
             await saveContentField(["sections", "stats", "text"], nextValue);
           }}
         />
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-          {stats.map((item) => (
-            <div
-              key={item.label}
-              className="rounded-[26px] border border-white/10 bg-white/5 p-6"
-            >
-              <div className="text-3xl font-semibold text-white">
-                {item.value}
-              </div>
-              <div className="mt-2 text-sm text-slate-400">{item.label}</div>
-            </div>
-          ))}
-        </div>
+        <EditableStatGrid
+          items={currentStatsItems}
+          className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
+          cardClassName="rounded-[26px] border border-white/10 bg-white/5 p-6"
+          valueClassName="text-3xl font-semibold text-white"
+          labelClassName="mt-2 text-sm text-slate-400"
+          valuePlaceholder="İstatistik değeri"
+          labelPlaceholder="İstatistik etiketi"
+          onSave={async (nextItems) => {
+            await saveContentField(["statsItems"], nextItems);
+          }}
+        />
       </section>
 
       <section className="bg-gradient-to-r from-sky-400/15 via-white/5 to-indigo-400/15 py-20">
