@@ -41,7 +41,7 @@ export function EditableCTA({
   const [saving, setSaving] = useState(false);
 
   const role = useMemo(() => {
-    const rawRole = session?.user?.user_metadata?.role;
+    const rawRole = session?.user?.app_metadata?.role;
     return typeof rawRole === "string" ? rawRole.toLowerCase() : "";
   }, [session]);
 
