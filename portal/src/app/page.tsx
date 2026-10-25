@@ -202,7 +202,7 @@ export default function HomePage() {
   const [heroMessage, setHeroMessage] = useState("");
 
   const role = useMemo(() => {
-    const rawRole = session?.user?.user_metadata?.role;
+    const rawRole = session?.user?.app_metadata?.role;
     return typeof rawRole === "string" ? rawRole.toLowerCase() : "";
   }, [session]);
 
