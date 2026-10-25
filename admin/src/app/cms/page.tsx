@@ -73,7 +73,7 @@ export default function Page() {
     let allowed = false;
     const metaRole =
       typeof session.user.app_metadata?.role === "string"
-        ? String(session.user.user_metadata.role).toLowerCase()
+        ? String(session.user.app_metadata.role).toLowerCase()
         : "";
 
     if (
