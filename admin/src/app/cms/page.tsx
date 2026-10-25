@@ -1,6 +1,3 @@
-Bunu aynen güncellenmiş haliyle değiştir:
-
-```tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -74,23 +71,12 @@ export default function Page() {
 
     const userId = session.user.id;
     let allowed = false;
-
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", userId)
-      .maybeSingle();
-
-    const profileRole =
-      typeof profile?.role === "string" ? profile.role.toLowerCase() : "";
     const metaRole =
-      typeof session.user.user_metadata?.role === "string"
+      typeof session.user.app_metadata?.role === "string"
         ? String(session.user.user_metadata.role).toLowerCase()
         : "";
 
     if (
-      profileRole === "admin" ||
-      profileRole === "super_admin" ||
       metaRole === "admin" ||
       metaRole === "super_admin"
     ) {
@@ -858,4 +844,3 @@ export default function Page() {
     </main>
   );
 }
-```
