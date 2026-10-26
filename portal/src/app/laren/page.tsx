@@ -1,6 +1,4 @@
 import Link from "next/link";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 
 export const metadata = {
   title: "LAREN | Hukuki ve İdari Hizmetler",
@@ -10,37 +8,36 @@ export const metadata = {
 export default function LarenHome() {
   return (
     <main>
-      <SiteHeader />
-      <section className="container-shell py-16 sm:py-24">
-        <div className="rounded-[28px] border border-white/10 bg-white/5 p-8 md:p-12">
+      <section className="container-shell py-8 sm:py-20">
+        <div className="rounded-[24px] border border-white/10 bg-white/5 p-5 sm:p-8 md:p-12">
           <p className="text-sm font-semibold tracking-[0.2em] text-sky-300">LAREN</p>
-          <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-tight text-white md:text-5xl">
+          <h1 className="mt-4 max-w-4xl text-[30px] font-semibold leading-[1.16] tracking-tight text-white sm:text-4xl md:text-5xl">
             Hollanda ve Türkiye arasında işlem koordinasyonu
           </h1>
           <p className="mt-5 max-w-3xl text-base leading-8 text-slate-300">
             İdari başvurularınızı düzenleyin, belgelerinizi güvenli şekilde paylaşın ve
             dosyanızın durumunu tek panelden takip edin.
           </p>
-          <div className="mt-9 flex flex-wrap gap-3">
-            <Link href="/laren/new" className="rounded-xl bg-white px-6 py-3 font-semibold text-slate-950">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <Link href="/laren/new" className="flex min-h-12 items-center justify-center rounded-xl bg-white px-6 py-3 text-center font-semibold text-slate-950">
               Yeni başvuru oluştur
             </Link>
-            <Link href="/laren/my" className="rounded-xl border border-white/20 px-6 py-3 text-white">
+            <Link href="/laren/my" className="flex min-h-12 items-center justify-center rounded-xl border border-white/20 px-6 py-3 text-center text-white">
               Dosyalarımı görüntüle
             </Link>
-            <Link href="/laren/staff" className="rounded-xl border border-white/20 px-6 py-3 text-white">
+            <Link href="/laren/staff" className="flex min-h-12 items-center justify-center rounded-xl border border-white/20 px-6 py-3 text-center text-white">
               Personel paneli
             </Link>
           </div>
         </div>
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {[
             ["İdari hizmet", "Belge, başvuru ve işlem organizasyonu."],
             ["Ticari süreç", "Avukatlık dışı ticari operasyonların koordinasyonu."],
             ["Hukuki koordinasyon", "Türkiye'de avukatlık gerektiren işler bağımsız ve yetkili avukatça yürütülür."],
           ].map(([title, body]) => (
-            <div key={title} className="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <h2 className="text-xl font-medium text-white">{title}</h2>
+            <div key={title} className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-6">
+              <h2 className="break-words text-lg font-medium text-white sm:text-xl">{title}</h2>
               <p className="mt-3 text-sm leading-7 text-slate-300">{body}</p>
             </div>
           ))}
@@ -51,7 +48,7 @@ export default function LarenHome() {
           Başvuru oluşturmak tek başına hukuki temsil ilişkisi kurmaz.
         </p>
       </section>
-      <SiteFooter />
+      
     </main>
   );
 }
