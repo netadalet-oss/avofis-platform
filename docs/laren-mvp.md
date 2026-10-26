@@ -57,3 +57,16 @@ Bu dal AvOfis portalına `/laren` müşteri başvurusu ve personel iş akışın
 - Var olan `database/schema.sql` ile gerçek Supabase şemasının uyumu başka bir iş kalemi olarak kalır.
 - Güncelleme almayan dosya yüklemeleri için arşivleme/silme ve saklama süreleri henüz tasarlanmadı.
 - İlk sürüm Türkçe arayüze sahiptir; Hollandaca yerelleştirme tamamlanmadı.
+
+## Mobil öncelikli web portalı
+
+LAREN bir native iOS/Android uygulaması değildir. Mevcut AvOfis Next.js portalı içinde mobil öncelikli bir responsive web uygulamasıdır.
+
+- LAREN sayfalarında AvOfis üst menüsü yerine ayrı LAREN marka başlığı gösterilir.
+- Telefon ekranlarında alt bölümde sabit gezinme: Ana sayfa / Başvuru / Dosyalarım. Yetkili personele Yönetim bağlantısı eklenir.
+- iPhone safe-area boşlukları dikkate alınır; form kontrolleri en az 16px yazı ve yaklaşık 48px dokunma hedefleri kullanır.
+- Dar ekranlarda başvuru alanları tek sütundur, butonlar tam genişliktedir; geniş ekranda kartlar ve alanlar çok sütunlu olur.
+- Telefonun sanal klavyesi ile çakışmalar ve 320px, 375px, 390px, 430px, 768px ve 1280px genişliklerinde yatay taşma ayrıca tarayıcıda test edilmelidir.
+- Portalın masaüstü görünümü korunur; mobil web bağlantısı uygulama mağazası gerektirmez.
+
+Mobil test henüz fiziksel cihazlarda ve tarayıcı otomasyonunda tamamlanmamıştır. GitHub Actions yalnızca derleme doğrulaması yapmaktadır.
