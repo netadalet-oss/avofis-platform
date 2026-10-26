@@ -20,6 +20,8 @@ function StaffDashboard() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState<string | null>(null);
   const [error, setError] = useState("");
+  const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState<LarenStatus | "all">("all");
 
   const refresh = useCallback(async () => {
     if (!user) return;
@@ -64,6 +66,14 @@ function StaffDashboard() {
     setSaving(null);
   }
 
+  const filtered = items.filter(item => {
+    const matchesStatus = filter === "all" || item.status === filter;
+    const term = query.trim().toLocaleLowerCase("tr");
+    const matchesQuery = !term || [item.subject, item.contact_name, item.contact_email]
+      .some(part => part.toLocaleLowerCase("tr").includes(term));
+    return matchesStatus && matchesQuery;
+  });
+
   return (
     <section className="container-shell py-12">
       <Link href="/laren" className="text-sm text-slate-400 hover:text-white">← LAREN</Link>
@@ -75,7 +85,23 @@ function StaffDashboard() {
       {authorized && !loading && items.length === 0 ? <p className="mt-8 text-slate-300">Henüz başvuru bulunmuyor.</p> : null}
       {authorized && (
         <div className="mt-8 space-y-4">
-          {items.map(item => (
+          <div className="grid gap-3 md:grid-cols-[1fr_240px]">
+            <label className="text-sm text-slate-300">Başvurularda ara
+              <input value={query} onChange={event=>setQuery(event.target.value)}
+                placeholder="Konu, isim veya e-posta"
+                className="mt-2 w-full rounded-xl border border-white/15 bg-slate-950 p-3 text-white"/>
+            </label>
+            <label className="text-sm text-slate-300">Duruma göre filtrele
+              <select value={filter} onChange={event=>setFilter(event.target.value as LarenStatus | "all")}
+                className="mt-2 w-full rounded-xl border border-white/15 bg-slate-950 p-3 text-white">
+                <option value="all">Tüm durumlar</option>
+                {options.map(value=><option key={value} value={value}>{LAREN_STATUS[value]}</option>)}
+              </select>
+            </label>
+          </div>
+          <p className="text-sm text-slate-400">Gösterilen: {filtered.length} / {items.length} (son 100 başvuru)</p>
+          {filtered.length === 0 ? <p className="text-sm text-slate-300">Bu filtreyle eşleşen başvuru bulunamadı.</p> : null}
+          {filtered.map(item => (
             <article key={item.id} className="rounded-2xl border border-white/10 bg-white/5 p-6">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <h2 className="text-xl font-semibold text-white">{item.subject}</h2>
@@ -85,6 +111,7 @@ function StaffDashboard() {
                 {item.contact_name} · {item.contact_email} · {LAREN_CATEGORY[item.category]} · {larenDate(item.created_at)}
               </p>
               <p className="mt-4 whitespace-pre-wrap text-sm leading-7 text-slate-200">{item.description}</p>
+              <Link href={`/laren/staff/${item.id}`} className="mt-4 inline-block rounded-lg border border-sky-500/30 px-4 py-2 text-sm text-sky-200 hover:bg-sky-900/20">Dosyayı, belgeleri ve yazışmaları aç →</Link>
               <div className="mt-6 grid gap-3 md:grid-cols-[240px_1fr_auto] md:items-end">
                 <label className="text-sm text-slate-200">Yeni durum
                   <select className="mt-2 w-full rounded-lg border border-white/15 bg-slate-950 p-3 text-white"
