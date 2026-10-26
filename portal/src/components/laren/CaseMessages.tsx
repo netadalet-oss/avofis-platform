@@ -63,10 +63,10 @@ export function CaseMessages({ requestId, currentUserId, clientUserId, status }:
   }
 
   return (
-    <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
+    <section className="min-w-0 rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-xl font-semibold text-white">Dosya yazışmaları</h2>
-        <button type="button" onClick={() => void refresh()} className="rounded-lg border border-white/15 px-3 py-2 text-sm text-slate-200">
+        <button type="button" onClick={() => void refresh()} className="min-h-11 rounded-lg border border-white/15 px-3 py-2 text-sm text-slate-200">
           Yenile
         </button>
       </div>
@@ -99,7 +99,7 @@ export function CaseMessages({ requestId, currentUserId, clientUserId, status }:
           <label className="block text-sm font-medium text-slate-200" htmlFor={`laren-message-${requestId}`}>Yeni mesaj</label>
           <textarea
             id={`laren-message-${requestId}`}
-            className="w-full rounded-xl border border-white/15 bg-slate-950 p-3 text-white"
+            className="min-h-12 w-full rounded-xl border border-white/15 bg-slate-950 p-3 text-base text-white"
             minLength={1}
             maxLength={3000}
             rows={3}
@@ -109,7 +109,7 @@ export function CaseMessages({ requestId, currentUserId, clientUserId, status }:
             placeholder="Bu dosyaya ilişkin sorunuz veya işlem bilginiz..."
           />
           <button disabled={sending || !draft.trim()} type="submit"
-            className="rounded-xl bg-white px-5 py-3 font-semibold text-slate-950 disabled:opacity-50">
+            className="min-h-12 w-full rounded-xl bg-white px-5 py-3 text-base font-semibold text-slate-950 disabled:opacity-50 sm:w-auto">
             {sending ? "Gönderiliyor..." : "Mesaj gönder"}
           </button>
         </form>
