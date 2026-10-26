@@ -17,3 +17,54 @@ a { @apply transition-colors; }
 .container-shell { @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8; }
 
 .panel { @apply rounded-[28px] border border-white/10 bg-white/5 backdrop-blur-sm; }
+
+/* LAREN: mobile-first web portal; scoped so the existing AvOfis pages are unchanged. */
+.laren-shell {
+  min-width: 0;
+  overflow-x: clip;
+  padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+}
+
+.laren-shell main,
+.laren-shell section,
+.laren-shell article {
+  min-width: 0;
+}
+
+.laren-shell input:not([type="checkbox"]),
+.laren-shell select,
+.laren-shell textarea {
+  max-width: 100%;
+  font-size: 16px;
+}
+
+.laren-shell textarea {
+  resize: vertical;
+}
+
+.laren-shell button,
+.laren-shell a,
+.laren-shell input,
+.laren-shell select,
+.laren-shell textarea {
+  touch-action: manipulation;
+}
+
+.laren-shell :is(a, button, input, textarea, select):focus-visible {
+  outline: 2px solid #7dd3fc;
+  outline-offset: 3px;
+}
+
+@media (min-width: 768px) {
+  .laren-shell {
+    padding-bottom: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .laren-shell *, .laren-shell *::before, .laren-shell *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
