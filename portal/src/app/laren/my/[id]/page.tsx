@@ -7,6 +7,7 @@ import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { useUser } from "@/hooks/useUser";
+import { CaseMessages } from "@/components/laren/CaseMessages";
 import { supabase } from "@/lib/supabase";
 import { LAREN_CATEGORY, LAREN_STATUS, larenDate, type LarenDocument, type LarenEvent, type LarenRequest } from "@/lib/laren";
 
@@ -121,6 +122,7 @@ function RequestDetails() {
               {documents.length === 0 ? <p className="text-sm text-slate-400">Henüz belge yüklenmedi.</p> : null}
             </div>
           </div>
+          {user && <CaseMessages requestId={item.id} currentUserId={user.id} clientUserId={item.owner_user_id} status={item.status} />}
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
             <h2 className="text-xl font-semibold text-white">İşlem geçmişi</h2>
             <div className="mt-4 space-y-3">
