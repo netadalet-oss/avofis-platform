@@ -36,7 +36,7 @@ export default function Page() {
       options: {
         data: {
           full_name: fullName,
-          role,
+          requested_account_type: role,
         },
       },
     });
@@ -47,22 +47,9 @@ export default function Page() {
       return;
     }
 
-    const userId = data.user?.id;
-
-    if (userId) {
-      const { error: profileError } = await supabase.from("profiles").upsert({
-        id: userId,
-        full_name: fullName,
-        role,
-        email,
-      });
-
-      if (profileError) {
-        setMessage(profileError.message);
-        setLoading(false);
-        return;
-      }
-    }
+    // Supabase Auth is authoritative for account creation.
+    // Professional qualifications and privileged roles require separate verification.
+    // Do not write user-selected roles into authorization tables from the browser.
 
     setMessage("Kayıt başarılı. E-posta doğrulaması açıksa kutunuzu kontrol edin, ardından giriş yapın.");
     setLoading(false);
@@ -86,7 +73,7 @@ export default function Page() {
           <h1 className="text-3xl font-semibold text-white">Hesap Oluştur</h1>
 
           <p className="mt-4 text-sm leading-7 text-slate-300">
-            Avukat, stajyer ve ofis hesabı için rol seçimi destekli kayıt ekranı.
+            Kullanım amacı seçimi; avukatlık veya yönetici yetkisi bu ekranda verilmez.
           </p>
 
           <form onSubmit={handleRegister} className="mt-8 space-y-4">

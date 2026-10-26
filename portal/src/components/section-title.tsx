@@ -33,7 +33,7 @@ export function SectionTitle({
   const { editMode } = useEditMode();
   const { session, loading } = useUser();
 
-  const rawRole = session?.user?.user_metadata?.role;
+  const rawRole = session?.user?.app_metadata?.role;
   const role = typeof rawRole === "string" ? rawRole.toLowerCase() : "";
   const isAdmin = role === "admin" || role === "super_admin";
   const canEdit = editable && editMode && !loading && isAdmin;

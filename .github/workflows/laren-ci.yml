@@ -1,0 +1,31 @@
+name: AvOfis / LAREN builds
+
+on:
+  pull_request:
+  push:
+    branches:
+      - feature/laren-mvp-20261025
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install workspace dependencies
+        run: npm install --no-audit --no-fund
+      - name: Build API
+        run: npm run build:api
+      - name: Build portal
+        run: npm run build:portal
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: testing-only-placeholder
+      - name: Build admin
+        run: npm run build:admin
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: testing-only-placeholder
