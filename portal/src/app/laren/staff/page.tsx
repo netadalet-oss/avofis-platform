@@ -3,8 +3,6 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 import { useUser } from "@/hooks/useUser";
 import { supabase } from "@/lib/supabase";
 import { LAREN_CATEGORY, LAREN_STATUS, larenDate, type LarenRequest, type LarenStatus } from "@/lib/laren";
@@ -75,7 +73,7 @@ function StaffDashboard() {
   });
 
   return (
-    <section className="container-shell py-12">
+    <section className="container-shell py-6 sm:py-12">
       <Link href="/laren" className="text-sm text-slate-400 hover:text-white">← LAREN</Link>
       <h1 className="mt-6 text-3xl font-semibold text-white">LAREN personel paneli</h1>
       <p className="mt-2 text-sm text-slate-300">Başvuruların durumunu güncelleyin. Her güncelleme müşteri dosyasına zaman damgasıyla işlenir.</p>
@@ -102,19 +100,19 @@ function StaffDashboard() {
           <p className="text-sm text-slate-400">Gösterilen: {filtered.length} / {items.length} (son 100 başvuru)</p>
           {filtered.length === 0 ? <p className="text-sm text-slate-300">Bu filtreyle eşleşen başvuru bulunamadı.</p> : null}
           {filtered.map(item => (
-            <article key={item.id} className="rounded-2xl border border-white/10 bg-white/5 p-6">
+            <article key={item.id} className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-6">
               <div className="flex flex-wrap items-start justify-between gap-3">
-                <h2 className="text-xl font-semibold text-white">{item.subject}</h2>
+                <h2 className="break-words text-lg font-semibold text-white sm:text-xl">{item.subject}</h2>
                 <span className="rounded-lg border border-white/10 px-3 py-1 text-sm text-slate-200">{LAREN_STATUS[item.status]}</span>
               </div>
               <p className="mt-2 text-sm text-slate-400">
                 {item.contact_name} · {item.contact_email} · {LAREN_CATEGORY[item.category]} · {larenDate(item.created_at)}
               </p>
-              <p className="mt-4 whitespace-pre-wrap text-sm leading-7 text-slate-200">{item.description}</p>
-              <Link href={`/laren/staff/${item.id}`} className="mt-4 inline-block rounded-lg border border-sky-500/30 px-4 py-2 text-sm text-sky-200 hover:bg-sky-900/20">Dosyayı, belgeleri ve yazışmaları aç →</Link>
+              <p className="mt-4 whitespace-pre-wrap break-words text-sm leading-7 text-slate-200">{item.description}</p>
+              <Link href={`/laren/staff/${item.id}`} className="mt-4 flex min-h-12 items-center justify-center rounded-lg border border-sky-500/30 px-4 py-2 text-center text-sm text-sky-200 hover:bg-sky-900/20 sm:inline-flex">Dosyayı, belgeleri ve yazışmaları aç →</Link>
               <div className="mt-6 grid gap-3 md:grid-cols-[240px_1fr_auto] md:items-end">
                 <label className="text-sm text-slate-200">Yeni durum
-                  <select className="mt-2 w-full rounded-lg border border-white/15 bg-slate-950 p-3 text-white"
+                  <select className="mt-2 min-h-12 w-full rounded-lg border border-white/15 bg-slate-950 p-3 text-base text-white"
                     value={selected[item.id] || item.status}
                     onChange={event=>setSelected(prev=>({ ...prev,[item.id]:event.target.value as LarenStatus }))}>
                     {options.map(opt=><option key={opt} value={opt}>{LAREN_STATUS[opt]}</option>)}
@@ -128,7 +126,7 @@ function StaffDashboard() {
                 </label>
                 <button type="button" disabled={saving===item.id}
                   onClick={()=>void update(item)}
-                  className="rounded-lg bg-white px-5 py-3 font-semibold text-slate-950 disabled:opacity-50">
+                  className="min-h-12 w-full rounded-lg bg-white px-5 py-3 font-semibold text-slate-950 disabled:opacity-50 md:w-auto">
                   {saving===item.id?"Kaydediliyor...":"Durumu kaydet"}
                 </button>
               </div>
@@ -141,5 +139,5 @@ function StaffDashboard() {
 }
 
 export default function LarenStaffPage() {
-  return <main><SiteHeader/><ProtectedRoute><StaffDashboard/></ProtectedRoute><SiteFooter/></main>;
+  return <main><ProtectedRoute><StaffDashboard/></ProtectedRoute></main>;
 }
