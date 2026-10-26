@@ -5,8 +5,6 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { CaseMessages } from "@/components/laren/CaseMessages";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 import { useUser } from "@/hooks/useUser";
 import { supabase } from "@/lib/supabase";
 import {
@@ -93,7 +91,7 @@ function StaffCase() {
   }
 
   return (
-    <section className="container-shell py-12">
+    <section className="container-shell py-6 sm:py-12">
       <Link href="/laren/staff" className="text-sm text-slate-400 hover:text-white">← Başvurular</Link>
       {loading ? <p className="mt-8 text-slate-300">Dosya kontrol ediliyor...</p> : null}
       {authorized === false && !loading ? (
@@ -105,9 +103,9 @@ function StaffCase() {
       {notice ? <p role="status" className="mt-6 text-emerald-300">{notice}</p> : null}
       {authorized && item ? (
         <div className="mt-7 space-y-6">
-          <div className="rounded-[28px] border border-white/10 bg-white/5 p-8">
+          <div className="rounded-[24px] border border-white/10 bg-white/5 p-5 sm:p-8">
             <div className="flex flex-wrap items-start justify-between gap-4">
-              <h1 className="text-3xl font-semibold text-white">{item.subject}</h1>
+              <h1 className="break-words text-2xl font-semibold leading-tight text-white sm:text-3xl">{item.subject}</h1>
               <span className="rounded-xl border border-sky-500/30 px-4 py-2 text-sm text-sky-200">
                 {LAREN_STATUS[item.status]}
               </span>
@@ -119,12 +117,12 @@ function StaffCase() {
             <p className="mt-6 whitespace-pre-wrap text-slate-200">{item.description}</p>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <h2 className="text-xl font-semibold text-white">İşlem durumunu güncelle</h2>
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-6">
+            <h2 className="break-words text-lg font-semibold text-white sm:text-xl">İşlem durumunu güncelle</h2>
             <div className="mt-5 grid gap-4 md:grid-cols-[220px_1fr_auto] md:items-end">
               <label className="text-sm text-slate-200">Durum
                 <select value={status} onChange={e=>setStatus(e.target.value as LarenStatus)}
-                  className="mt-2 w-full rounded-xl border border-white/15 bg-slate-950 p-3 text-white">
+                  className="mt-2 min-h-12 w-full rounded-xl border border-white/15 bg-slate-950 p-3 text-base text-white">
                   {statusValues.map(s=><option key={s} value={s}>{LAREN_STATUS[s]}</option>)}
                 </select>
               </label>
@@ -134,20 +132,20 @@ function StaffCase() {
                   className="mt-2 w-full rounded-xl border border-white/15 bg-slate-950 p-3 text-white"/>
               </label>
               <button type="button" disabled={saving} onClick={()=>void saveStatus()}
-                className="rounded-xl bg-white px-5 py-3 font-semibold text-slate-950 disabled:opacity-50">
+                className="min-h-12 w-full rounded-xl bg-white px-5 py-3 font-semibold text-slate-950 disabled:opacity-50 md:w-auto">
                 {saving ? "Kaydediliyor..." : "Güncelle"}
               </button>
             </div>
           </div>
 
-          <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <h2 className="text-xl font-semibold text-white">Dosya belgeleri</h2>
+          <section className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-6">
+            <h2 className="break-words text-lg font-semibold text-white sm:text-xl">Dosya belgeleri</h2>
             <p className="mt-2 text-sm text-slate-400">Belge bağlantıları 60 saniye geçerlidir.</p>
             <div className="mt-4 space-y-3">
               {docs.length === 0 ? <p className="text-sm text-slate-400">Bu dosyada belge yok.</p> : null}
               {docs.map(doc=>(
                 <button type="button" key={doc.id}
-                  className="block text-left text-sm text-sky-300 hover:underline"
+                  className="flex min-h-11 w-full items-center break-all text-left text-sm text-sky-300 hover:underline"
                   onClick={()=>void openFile(doc.storage_path)}>
                   {doc.file_name} · {Math.ceil(doc.size_bytes / 1024)} KB · {larenDate(doc.created_at)}
                 </button>
@@ -157,8 +155,8 @@ function StaffCase() {
 
           {user && <CaseMessages requestId={item.id} currentUserId={user.id} clientUserId={item.owner_user_id} status={item.status} />}
 
-          <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <h2 className="text-xl font-semibold text-white">İşlem geçmişi</h2>
+          <section className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-6">
+            <h2 className="break-words text-lg font-semibold text-white sm:text-xl">İşlem geçmişi</h2>
             <div className="mt-4 space-y-3">
               {history.map(e=>(
                 <div key={e.id} className="border-l border-white/20 pl-4">
@@ -176,5 +174,5 @@ function StaffCase() {
 }
 
 export default function LarenStaffCasePage() {
-  return <main><SiteHeader /><ProtectedRoute><StaffCase /></ProtectedRoute><SiteFooter /></main>;
+  return <main><ProtectedRoute><StaffCase /></ProtectedRoute></main>;
 }
