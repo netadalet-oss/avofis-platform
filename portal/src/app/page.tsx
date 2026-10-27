@@ -119,23 +119,23 @@ export default function HomePage() {
             <span className="avofis-logo-icon"><Scale aria-hidden="true" className="h-[21px] w-[21px]" strokeWidth={1.75} /></span>
             <span className="text-[22px] font-semibold tracking-[-.065em] text-[#F2F5FF]">AV<span className="font-normal">Ofis</span><span className="text-[#dfbf59]">.</span></span>
           </Link>
-          <nav className="hidden items-center gap-6 xl:gap-7 lg:flex" aria-label="Main navigation">
+          <nav className="hidden items-center gap-6 xl:gap-7 xl:flex" aria-label="Main navigation">
             {nav.map(item => item.href.startsWith("#") ?
               <a key={item.href} className="avofis-nav-link" href={item.href}>{item.label}</a> :
               <Link key={item.href} className="avofis-nav-link" href={item.href}>{item.label}</Link>)}
             <Link className="avofis-nav-link" href="/musteri">{t.navClient}</Link>
           </nav>
-          <div className="hidden shrink-0 items-center gap-3 lg:flex">
+          <div className="hidden shrink-0 items-center gap-3 xl:flex">
             <div className="inline-flex items-center gap-0.5 rounded-lg border border-[#dfbf59]/25 p-1" aria-label="Language">
               {languages.map(item => <button key={item} type="button" onClick={()=>setLang(item)} aria-pressed={lang===item} className={"avofis-lang " + (lang===item?"avofis-lang-active":"")}>{item.toUpperCase()}</button>)}
             </div>
             <Link href={"/basvuru?lang="+lang} className="avofis-cta avofis-btn">{t.navContact}<ArrowUpRight aria-hidden="true" className="h-4 w-4"/></Link>
           </div>
-          <button type="button" className="avofis-icon-btn lg:hidden" onClick={()=>setMenuOpen(v=>!v)} aria-label={menuOpen?"Menüyü kapat":"Menüyü aç"} aria-expanded={menuOpen} aria-controls="mobile-nav">
+          <button type="button" className="avofis-icon-btn xl:hidden" onClick={()=>setMenuOpen(v=>!v)} aria-label={menuOpen?"Menüyü kapat":"Menüyü aç"} aria-expanded={menuOpen} aria-controls="mobile-nav">
             {menuOpen?<X aria-hidden="true" className="h-5 w-5"/>:<Menu aria-hidden="true" className="h-5 w-5"/>}
           </button>
         </div>
-        {menuOpen && <nav id="mobile-nav" className="avofis-container grid gap-1 border-t border-[#dfbf59]/15 py-3 lg:hidden" aria-label="Mobile navigation">
+        {menuOpen && <nav id="mobile-nav" className="avofis-container grid gap-1 border-t border-[#dfbf59]/15 py-3 xl:hidden" aria-label="Mobile navigation">
           {nav.map(item=>item.href.startsWith("#")?
             <a key={item.href} href={item.href} className="avofis-mobile-link" onClick={()=>setMenuOpen(false)}>{item.label}</a> :
             <Link key={item.href} href={item.href} className="avofis-mobile-link" onClick={()=>setMenuOpen(false)}>{item.label}</Link>)}
@@ -151,7 +151,7 @@ export default function HomePage() {
         <div className="avofis-container grid items-center gap-9 py-14 sm:py-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(310px,.85fr)] lg:gap-12 lg:py-[84px]">
           <div className="min-w-0">
             <p className="avofis-eyebrow"><span className="h-px w-7 bg-[#dfbf59]"/>{t.kicker}</p>
-            <h1 className="mt-5 max-w-2xl text-[clamp(2.55rem,5.1vw,4.45rem)] font-semibold leading-[1.12] tracking-[-.055em] text-[#F2F5FF]">
+            <h1 className="mt-5 max-w-2xl text-[clamp(2.25rem,4.7vw,4.1rem)] font-semibold leading-[1.12] tracking-[-.055em] text-[#F2F5FF]">
               {t.titleA}<br/><span className="text-[#dfbf59]">{t.titleB}</span><br/>{t.titleC}
             </h1>
             <p className="mt-6 max-w-[565px] text-[15px] leading-[1.8] text-[#B9C5DF] sm:text-base">{t.lead}</p>
