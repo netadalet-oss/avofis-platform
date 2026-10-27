@@ -1,16 +1,71 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-:root { color-scheme: dark; }
+
+/* Official AVOfis Gold + Navy visual identity. */
+:root {
+  color-scheme: dark;
+  --ref-panel: #030A22;
+  --ref-panel-2: #04102C;
+  --ref-panel-3: #071738;
+  --ref-gold: #dfbf59;
+  --ref-gold-strong: #f0d56d;
+  --ref-text: #F2F5FF;
+  --ref-muted: #B9C5DF;
+  --ref-line: rgba(223, 191, 89, .24);
+}
 html { scroll-behavior: smooth; }
 body {
-  @apply bg-[#07111f] text-white antialiased;
+  @apply bg-[#030A22] text-[#F2F5FF] antialiased;
   min-height: 100vh;
 }
 a, button { @apply transition-colors; }
-button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid #C5A16C; outline-offset: 3px; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--ref-gold-strong);
+  outline-offset: 3px;
+}
 .container-shell { @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8; }
-.panel { @apply rounded-[28px] border border-white/10 bg-white/5 backdrop-blur-sm; }
+.panel { @apply rounded-[28px] border backdrop-blur-sm; border-color: var(--ref-line); background:var(--ref-panel-2); }
+
+/* Keep the full public and client experience in the same AVOfis theme. */
+.avofis-theme {
+  color: var(--ref-text);
+  background-color: var(--ref-panel);
+  background-image: radial-gradient(ellipse at 80% 7%, rgba(7,23,56,.84), transparent 52%);
+}
+.avofis-theme .avofis-card {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(4,13,38,.99),
+      rgba(1,4,15,.998)
+    );
+  border-color: var(--ref-line);
+  color: var(--ref-text);
+}
+.avofis-theme .avofis-cta {
+  background: var(--ref-gold);
+  color: var(--ref-panel) !important;
+  border-color: var(--ref-gold);
+  box-shadow: 0 8px 25px rgba(223,191,89,.13);
+}
+.avofis-theme .avofis-cta:hover:not(:disabled) {
+  background: var(--ref-gold-strong);
+  border-color: var(--ref-gold-strong);
+  color: var(--ref-panel) !important;
+}
+.avofis-theme :is(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),select,textarea) {
+  background:var(--ref-panel-2) !important;
+  color:var(--ref-text) !important;
+  border:1px solid rgba(223,191,89,.38) !important;
+  color-scheme:dark;
+}
+.avofis-theme input::placeholder,
+.avofis-theme textarea::placeholder { color:#A7B5D0; opacity:1; }
+.avofis-theme input[type="checkbox"] { accent-color:var(--ref-gold); }
+.avofis-theme :is(a,button):not(.avofis-cta):hover { color: var(--ref-gold-strong); }
+.avofis-theme .avofis-card :is(a,button):not(.avofis-cta):hover { color:var(--ref-gold-strong); }
+.avofis-theme ::selection { background:var(--ref-gold); color:var(--ref-panel); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }

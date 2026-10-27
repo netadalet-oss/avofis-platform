@@ -62,29 +62,29 @@ export default function IntakePage() {
     } catch {setError(t.fail);setToken("");window.turnstile?.reset();}
     finally {setSubmitting(false);}
   }
-  return <main className="min-h-screen bg-[#F7F6F2] text-[#173943]">
+  return <main className="avofis-theme min-h-screen bg-[#030A22] text-[#dfbf59]">
     {enabled && sitekey && <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" strategy="afterInteractive" onLoad={initCaptcha}/>}
     <div className="mx-auto max-w-3xl px-5 pb-24 pt-12 md:pt-20">
-      <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-[#436C6B]"><ArrowLeft className="h-4 w-4"/>{t.back}</Link>
-      <div className="mt-14 rounded-[30px] border border-[#DDE6DF] bg-white p-7 shadow-sm md:p-12">
-        <span className="text-xs font-semibold tracking-[.2em] text-[#B18A5A]">{t.eyebrow}</span>
+      <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-[#dfbf59]"><ArrowLeft className="h-4 w-4"/>{t.back}</Link>
+      <div className="mt-14 rounded-[30px] border border-[#dfbf59]/25 avofis-card p-7 shadow-sm md:p-12">
+        <span className="text-xs font-semibold tracking-[.2em] text-[#dfbf59]">{t.eyebrow}</span>
         <h1 className="mt-4 text-3xl font-semibold tracking-[-.05em] md:text-5xl">{t.title}</h1>
-        <p className="mt-5 text-sm leading-7 text-[#617C7A]">{t.lead}</p>
-        {!enabled || !sitekey ? <div className="mt-10 rounded-2xl border border-[#D7E0D8] bg-[#F0F4F0] p-6" role="status"><LockKeyhole className="h-7 w-7 text-[#37756E]"/><h2 className="mt-4 text-lg font-semibold">{t.closed}</h2><p className="mt-2 text-sm leading-7 text-[#647B77]">{t.closedDesc}</p></div>
-        : reference ? <div className="mt-10 rounded-2xl bg-[#EAF3EC] p-7" role="status"><CheckCircle2 className="h-8 w-8 text-[#2B7565]"/><h2 className="mt-4 text-xl font-semibold">{t.success}</h2><p className="mt-3 text-sm">{t.successD}</p><p className="mt-5 rounded-lg bg-white p-3 font-mono text-sm">{t.ref}: {reference}</p></div>
+        <p className="mt-5 text-sm leading-7 text-[#B9C5DF]">{t.lead}</p>
+        {!enabled || !sitekey ? <div className="mt-10 rounded-2xl border border-[#dfbf59]/25 bg-[#071738] p-6" role="status"><LockKeyhole className="h-7 w-7 text-[#dfbf59]"/><h2 className="mt-4 text-lg font-semibold">{t.closed}</h2><p className="mt-2 text-sm leading-7 text-[#B9C5DF]">{t.closedDesc}</p></div>
+        : reference ? <div className="mt-10 rounded-2xl bg-[#071738] p-7" role="status"><CheckCircle2 className="h-8 w-8 text-[#dfbf59]"/><h2 className="mt-4 text-xl font-semibold">{t.success}</h2><p className="mt-3 text-sm">{t.successD}</p><p className="mt-5 rounded-lg avofis-card p-3 font-mono text-sm">{t.ref}: {reference}</p></div>
         : <form onSubmit={submit} className="mt-10 space-y-5">
           <div className="grid gap-5 md:grid-cols-2">
-            <label className="block text-sm font-semibold">{t.name}<input autoComplete="name" required maxLength={100} value={name} onChange={e=>setName(e.target.value)} className="mt-2 w-full rounded-xl border border-[#CADBD1] bg-white p-3.5 font-normal outline-none"/></label>
-            <label className="block text-sm font-semibold">{t.email}<input autoComplete="email" type="email" required maxLength={254} value={email} onChange={e=>setEmail(e.target.value)} className="mt-2 w-full rounded-xl border border-[#CADBD1] bg-white p-3.5 font-normal outline-none"/></label>
-            <label className="block text-sm font-semibold">{t.country}<select value={country} onChange={e=>setCountry(e.target.value)} className="mt-2 w-full rounded-xl border border-[#CADBD1] bg-white p-3.5 font-normal outline-none">{countries.map(c=><option key={c} value={c}>{c}</option>)}</select></label>
-            <label className="block text-sm font-semibold">{t.service}<select required value={service} onChange={e=>setService(e.target.value)} className="mt-2 w-full rounded-xl border border-[#CADBD1] bg-white p-3.5 font-normal outline-none"><option value="">{t.choose}</option>{services.map(c=><option key={c} value={c}>{serviceNames[c][lang]}</option>)}</select></label>
+            <label className="block text-sm font-semibold">{t.name}<input autoComplete="name" required maxLength={100} value={name} onChange={e=>setName(e.target.value)} className="mt-2 w-full rounded-xl border border-[#dfbf59]/25 avofis-card p-3.5 font-normal outline-none"/></label>
+            <label className="block text-sm font-semibold">{t.email}<input autoComplete="email" type="email" required maxLength={254} value={email} onChange={e=>setEmail(e.target.value)} className="mt-2 w-full rounded-xl border border-[#dfbf59]/25 avofis-card p-3.5 font-normal outline-none"/></label>
+            <label className="block text-sm font-semibold">{t.country}<select value={country} onChange={e=>setCountry(e.target.value)} className="mt-2 w-full rounded-xl border border-[#dfbf59]/25 avofis-card p-3.5 font-normal outline-none">{countries.map(c=><option key={c} value={c}>{c}</option>)}</select></label>
+            <label className="block text-sm font-semibold">{t.service}<select required value={service} onChange={e=>setService(e.target.value)} className="mt-2 w-full rounded-xl border border-[#dfbf59]/25 avofis-card p-3.5 font-normal outline-none"><option value="">{t.choose}</option>{services.map(c=><option key={c} value={c}>{serviceNames[c][lang]}</option>)}</select></label>
           </div>
-          <label className="block text-sm font-semibold">{t.message}<textarea rows={4} maxLength={500} value={message} onChange={e=>setMessage(e.target.value)} className="mt-2 w-full rounded-xl border border-[#CADBD1] bg-white p-3.5 font-normal outline-none"/></label>
-          <p className="flex items-center gap-2 text-xs text-[#617C7A]"><ShieldCheck className="h-4 w-4"/>{t.noFiles}</p>
-          <label className="flex cursor-pointer items-start gap-3 text-sm leading-6 text-[#405F5F]"><input type="checkbox" required checked={agreed} onChange={e=>setAgreed(e.target.checked)} className="mt-1 h-4 w-4 shrink-0"/><span>{t.consent} <Link className="font-semibold underline" href="/gizlilik">{t.privacy}</Link></span></label>
+          <label className="block text-sm font-semibold">{t.message}<textarea rows={4} maxLength={500} value={message} onChange={e=>setMessage(e.target.value)} className="mt-2 w-full rounded-xl border border-[#dfbf59]/25 avofis-card p-3.5 font-normal outline-none"/></label>
+          <p className="flex items-center gap-2 text-xs text-[#B9C5DF]"><ShieldCheck className="h-4 w-4"/>{t.noFiles}</p>
+          <label className="flex cursor-pointer items-start gap-3 text-sm leading-6 text-[#dfbf59]"><input type="checkbox" required checked={agreed} onChange={e=>setAgreed(e.target.checked)} className="mt-1 h-4 w-4 shrink-0"/><span>{t.consent} <Link className="font-semibold underline" href="/gizlilik">{t.privacy}</Link></span></label>
           <div ref={captchaRef} aria-label="Security verification"/>
           {error && <p className="rounded-xl bg-red-50 p-4 text-sm text-red-700" role="alert">{error}</p>}
-          <button disabled={submitting || !token || !agreed} className="rounded-full bg-[#173A43] px-8 py-4 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50">{submitting?t.sending:t.send}</button>
+          <button disabled={submitting || !token || !agreed} className="rounded-full avofis-cta px-8 py-4 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50">{submitting?t.sending:t.send}</button>
         </form>}
       </div>
     </div>
