@@ -6,6 +6,8 @@ import { CaseTracking } from "@/components/avofis/CaseTracking";
 import { ClientDeliverables } from "@/components/avofis/ClientDeliverables";
 import { supabase } from "@/lib/supabase";
 import { useUser } from "@/hooks/useUser";
+import { usePortalLanguage } from "@/hooks/usePortalLanguage";
+import { clientText } from "@/lib/client-text";
 import { ArrowLeft, CreditCard, FileCheck2, FileUp, FolderLock, LockKeyhole, MessageSquare, RefreshCw, ShieldCheck } from "lucide-react";
 
 type Matter={id:string;title:string;service_key:string;status:string;price_eur_cents:number;created_at:string;};
@@ -13,10 +15,10 @@ type Agreement={id:string;case_id:string;legal_text:string;agreement_version:str
 type Payment={id:string;case_id:string;status:string;amount_eur_cents:number;checkout_url:string;};
 type Message={id:string;case_id:string;sender_id:string;body:string;created_at:string;};
 type Document={name:string;id:string|null;created_at:string;};
-const matterStatuses:Record<string,string>={review:"İncelemede",awaiting_agreement:"Sözleşme bekleniyor",open:"İşlemde",completed:"Tamamlandı",closed:"Kapandı"};
 const live=process.env.NEXT_PUBLIC_AVOFIS_CLIENT_PORTAL_ENABLED==="true";
 export default function ClientPage(){
  const {user,session,loading:authLoading}=useUser();
+ const lang=usePortalLanguage(),t=clientText[lang],locale=lang==="nl"?"nl-NL":lang==="en"?"en-GB":"tr-TR";
  const [cases,setCases]=useState<Matter[]>([]);
  const [agreements,setAgreements]=useState<Agreement[]>([]);
  const [payments,setPayments]=useState<Payment[]>([]);
@@ -42,7 +44,7 @@ export default function ClientPage(){
    supabase.from("avofis_payments").select("id,case_id,status,amount_eur_cents,checkout_url"),
    supabase.from("avofis_messages").select("id,case_id,sender_id,body,created_at").order("created_at",{ascending:true})
   ]);
-  if(results.some(r=>r.error))setFeedback("Dosya bilgileri alınamadı. Lütfen tekrar deneyin.");
+  if(results.some(r=>r.error))setFeedback(t.fetchFailed);
   else {const list=(results[0].data||[]) as Matter[];setCases(list);setAgreements(results[1].data as Agreement[]||[]);setPayments(results[2].data as Payment[]||[]);setMessages(results[3].data as Message[]||[]);setSelected(old=>list.some(c=>c.id===old)?old:(list[0]?.id||""));}
   setLoading(false);
  }
@@ -55,17 +57,17 @@ export default function ClientPage(){
    if(!current||!agreement||!accepted||signedName.trim().length<3)return;
    setBusy(true);setFeedback("");
    const {error}=await supabase.rpc("avofis_accept_agreement",{p_case:current.id,p_signature:signedName.trim()});
-   setFeedback(error?"Sözleşme kaydedilemedi: "+error.message:"Sözleşme kabulü kaydedildi.");await refresh();setBusy(false);
+   setFeedback(error?t.agreementFailed:t.agreementSaved);await refresh();setBusy(false);
  }
  async function uploadDocument(e:React.ChangeEvent<HTMLInputElement>){
   const file=e.target.files?.[0];if(!file||!user||!current||!agreement?.signed_at)return;
   e.target.value="";
-  if(file.size>10*1024*1024||!["application/pdf","image/png","image/jpeg","image/webp"].includes(file.type)){setFeedback("Yalnızca 10 MB altındaki PDF/JPG/PNG/WEBP dosyaları kabul edilir.");return;}
+  if(file.size>10*1024*1024||!["application/pdf","image/png","image/jpeg","image/webp"].includes(file.type)){setFeedback(t.fileInvalid);return;}
   setBusy(true);setFeedback("");
   const ext=file.type==="application/pdf"?"pdf":file.type==="image/png"?"png":file.type==="image/webp"?"webp":"jpg";
   const path=current.id+"/"+user.id+"/"+crypto.randomUUID()+"."+ext;
   const {error}=await supabase.storage.from("avofis-private").upload(path,file,{contentType:file.type,upsert:false});
-  setFeedback(error?"Dosya yüklenemedi: "+error.message:"Dosya güvenli alana yüklendi.");
+  setFeedback(error?t.fileFailed:t.fileSaved);
   const {data}=await supabase.storage.from("avofis-private").list(current.id+"/"+user.id,{limit:100});
   setDocuments((data||[]) as Document[]);
   setBusy(false);
@@ -73,14 +75,14 @@ export default function ClientPage(){
  async function download(name:string){
    if(!user||!current)return;
    const {data,error}=await supabase.storage.from("avofis-private").createSignedUrl(current.id+"/"+user.id+"/"+name,60);
-   if(error||!data?.signedUrl){setFeedback("Belge bağlantısı oluşturulamadı.");return;}
+   if(error||!data?.signedUrl){setFeedback(t.downloadFailed);return;}
    window.open(data.signedUrl,"_blank","noopener,noreferrer");
  }
  async function sendMessage(e:FormEvent){
   e.preventDefault();if(!user||!current||!note.trim())return;
   setBusy(true);
   const {error}=await supabase.from("avofis_messages").insert({case_id:current.id,sender_id:user.id,body:note.trim().slice(0,1500)});
-  setFeedback(error?"Mesaj gönderilemedi.":"Mesaj kaydedildi.");
+  setFeedback(error?t.messageFailed:t.messageSaved);
   if(!error)setNote("");
   await refresh();setBusy(false);
  }
@@ -92,24 +94,24 @@ export default function ClientPage(){
    const result=await response.json();
    if(!response.ok||typeof result.checkoutUrl!=="string"||!result.checkoutUrl.startsWith("https://www.mollie.com/"))throw new Error(result.error||"Payment unavailable");
    window.location.assign(result.checkoutUrl);
-  }catch(e){setFeedback(e instanceof Error?e.message:"Ödeme bağlantısı oluşturulamadı.");setBusy(false);}
+  }catch(e){setFeedback(t.paymentFailed);setBusy(false);}
  }
- return <PageFrame wide eyebrow="MÜŞTERİ ALANI" title="Dosyalarım" description="Dosya durumunuzu, hizmet sözleşmelerinizi, güvenli belgelerinizi ve mesajlarınızı bu alandan yönetebilirsiniz.">
-   {!live?<div className="mt-7 rounded-2xl avofis-card p-6"><LockKeyhole className="h-7 w-7 text-[#dfbf59]"/><p className="mt-4 font-semibold">Müşteri alanı henüz açılmadı.</p><p className="mt-2 text-sm text-[#B9C5DF]">Gerekli kuruluş ve veri koruma kontrolleri tamamlanınca dosya işlemleri açılacaktır.</p></div>
-   :authLoading?<p className="mt-7">Oturum kontrol ediliyor…</p>
-   :!user?<div className="mt-7 rounded-2xl avofis-card p-6"><p className="mb-4">Dosyalarınızı görmek için giriş yapın.</p><Link href="/auth/login" className="inline-flex rounded-xl avofis-cta avofis-btn text-sm font-semibold text-white">Giriş yap</Link></div>
+ return <PageFrame wide lang={lang} eyebrow={t.eyebrow} title={t.title} description={t.intro}>
+   {!live?<div className="mt-7 rounded-2xl avofis-card p-6"><LockKeyhole className="h-7 w-7 text-[#dfbf59]"/><p className="mt-4 font-semibold">{t.closed}</p><p className="mt-2 text-sm text-[#B9C5DF]">{t.closedDetail}</p></div>
+   :authLoading?<p className="mt-7">{t.authChecking}</p>
+   :!user?<div className="mt-7 rounded-2xl avofis-card p-6"><p className="mb-4">{t.signInInfo}</p><Link href="/auth/login" className="inline-flex rounded-xl avofis-cta avofis-btn text-sm font-semibold text-white">{t.signIn}</Link></div>
    :<div className="mt-9 grid gap-4 lg:grid-cols-[280px_1fr]">
-     <aside className="rounded-[18px] border border-[#dfbf59]/25 avofis-card p-5"><div className="flex items-center justify-between"><h2 className="font-semibold">Dosyalar</h2><button aria-label="Yenile" onClick={()=>void refresh()}><RefreshCw className="h-4 w-4"/></button></div><div className="mt-5 space-y-2">{cases.map(c=><button key={c.id} onClick={()=>{setSelected(c.id);setFeedback("");}} className={"w-full rounded-xl px-3 py-4 text-left "+(selected===c.id?"bg-[#071738] ring-1 ring-[#dfbf59]/50":"bg-[#04102C]")}><span className="block text-sm font-semibold">{c.title}</span><span className="mt-1 block text-xs text-[#B9C5DF]">{matterStatuses[c.status]||c.status}</span></button>)}</div>{!cases.length&&!loading&&<p className="mt-5 text-sm text-[#B9C5DF]">Henüz hesabınıza atanmış dosya bulunmuyor.</p>}</aside>
+     <aside className="rounded-[18px] border border-[#dfbf59]/25 avofis-card p-5"><div className="flex items-center justify-between"><h2 className="font-semibold">{t.cases}</h2><button aria-label={t.refresh} onClick={()=>void refresh()}><RefreshCw className="h-4 w-4"/></button></div><div className="mt-5 space-y-2">{cases.map(c=><button key={c.id} onClick={()=>{setSelected(c.id);setFeedback("");}} className={"w-full rounded-xl px-3 py-4 text-left "+(selected===c.id?"bg-[#071738] ring-1 ring-[#dfbf59]/50":"bg-[#04102C]")}><span className="block text-sm font-semibold">{c.title}</span><span className="mt-1 block text-xs text-[#B9C5DF]">{t.statuses[c.status as keyof typeof t.statuses]||c.status}</span></button>)}</div>{!cases.length&&!loading&&<p className="mt-5 text-sm text-[#B9C5DF]">{t.noCases}</p>}</aside>
      <section className="space-y-4">
        {feedback&&<div role="status" className="rounded-xl border border-[#dfbf59]/25 bg-[#071738] p-4 text-sm">{feedback}</div>}
        {current&&<>
-         <article className="rounded-[18px] border border-[#dfbf59]/25 avofis-card p-5 sm:p-6"><div className="flex flex-wrap justify-between gap-3"><div><h2 className="text-lg font-semibold">{current.title}</h2><p className="mt-2 text-xs text-[#B9C5DF]">Durum: {matterStatuses[current.status]||current.status} · Dosya no: {current.id.slice(0,8).toUpperCase()}</p></div><span className="font-semibold">{(current.price_eur_cents/100).toFixed(2)} €</span></div></article>
-         <CaseTracking caseId={current.id} status={current.status} hasAgreement={!!agreement} agreementSigned={!!agreement?.signed_at} priceEurCents={current.price_eur_cents} paid={!!payment}/>
-         <ClientDeliverables caseId={current.id}/>
-         <article className="rounded-[18px] border border-[#dfbf59]/25 avofis-card p-6"><div className="flex items-center gap-2"><FileCheck2 className="h-5 w-5 text-[#dfbf59]"/><h2 className="text-lg font-semibold">Hizmet sözleşmesi</h2></div>{agreement?<><p className="mt-3 text-xs text-[#B9C5DF]">Sürüm: {agreement.agreement_version}</p><div className="mt-4 max-h-60 overflow-y-auto whitespace-pre-wrap rounded-xl bg-[#071738] p-4 text-sm leading-7">{agreement.legal_text}</div>{agreement.signed_at?<p className="mt-4 text-sm font-medium text-[#dfbf59]">Kabul edildi: {new Date(agreement.signed_at).toLocaleString("tr-TR")} · {agreement.client_signature}</p>:<div className="mt-5 space-y-3"><p className="text-xs text-[#B9C5DF]">Bu yöntem, ad-soyad yazılarak verilen basit elektronik sözleşme kabulüdür; nitelikli elektronik imza yerine geçmez.</p><label className="block text-sm">Adınız ve soyadınız<input value={signedName} onChange={e=>setSignedName(e.target.value)} className="avofis-field mt-2 w-full rounded-lg border border-[#dfbf59]/25 p-3"/></label><label className="flex gap-2 text-sm"><input type="checkbox" checked={accepted} onChange={e=>setAccepted(e.target.checked)}/> Sözleşme metnini okudum ve bu sürümünü kabul ediyorum.</label><button onClick={()=>void acceptContract()} disabled={busy||!accepted||signedName.trim().length<3} className="rounded-xl avofis-cta avofis-btn text-sm font-semibold text-white disabled:opacity-50">Sözleşmeyi kabul et</button></div>}</>:<p className="mt-4 text-sm text-[#B9C5DF]">Henüz sözleşme hazırlanmadı.</p>}</article>
-         <article className="rounded-[18px] border border-[#dfbf59]/25 avofis-card p-6"><div className="flex items-center gap-2"><FolderLock className="h-5 w-5 text-[#dfbf59]"/><h2 className="text-lg font-semibold">Belgeler</h2></div><p className="mt-3 text-sm leading-6 text-[#B9C5DF]">Yalnızca gerekli belgeleri, sözleşme kabul edildikten sonra yükleyin. Dosyalar genel erişime açık değildir.</p>{agreement?.signed_at&&<label className="mt-5 inline-flex cursor-pointer items-center gap-2 rounded-xl avofis-cta avofis-btn text-sm font-semibold text-white"><FileUp className="h-4 w-4"/>{busy?"İşleniyor...":"Belge seç ve yükle"}<input type="file" accept="application/pdf,image/png,image/jpeg,image/webp" className="sr-only" disabled={busy} onChange={uploadDocument}/></label>}{!agreement?.signed_at&&<p className="mt-3 text-sm text-[#dfbf59]">Belge yüklemek için önce sözleşme kabul edilmelidir.</p>}<ul className="mt-5 space-y-2">{documents.map(d=><li key={d.name} className="flex items-center justify-between gap-2 rounded-xl bg-[#071738] p-3 text-xs"><span className="truncate">{d.name}</span><button onClick={()=>void download(d.name)} className="font-semibold text-[#dfbf59]">Aç</button></li>)}</ul></article>
-         <article className="rounded-[18px] border border-[#dfbf59]/25 avofis-card p-6"><div className="flex items-center gap-2"><CreditCard className="h-5 w-5 text-[#dfbf59]"/><h2 className="text-lg font-semibold">Ödeme</h2></div><p className="mt-3 text-sm">Hizmet bedeli: {(current.price_eur_cents/100).toFixed(2)} € · Resmî harç ve üçüncü taraf ücretleri kapsam dışı olabilir.</p>{payment?<p className="mt-4 text-sm font-semibold text-[#dfbf59]">Ödeme alındı (sağlayıcı teyidi).</p>:disputedPayment?<p className="mt-4 text-sm text-[#B9C5DF]">Ödemeye ilişkin iade veya uyuşmazlık kaydı var. Lütfen yetkili çalışanla iletişime geçin.</p>:agreement?.signed_at&&current.price_eur_cents>0?<button onClick={()=>void pay()} disabled={busy} className="mt-5 rounded-xl avofis-cta avofis-btn text-sm font-semibold text-white disabled:opacity-50">Güvenli ödemeye geç</button>:<p className="mt-3 text-xs text-[#B9C5DF]">Ödeme sözleşme kabulünden sonra açılır. Ödeme sağlayıcısı yapılandırılmalıdır.</p>}</article>
-         <article className="rounded-[18px] border border-[#dfbf59]/25 avofis-card p-6"><div className="flex items-center gap-2"><MessageSquare className="h-5 w-5 text-[#dfbf59]"/><h2 className="text-lg font-semibold">Mesajlar</h2></div><div className="mt-5 max-h-64 space-y-3 overflow-y-auto">{messages.filter(m=>m.case_id===selected).map(m=><div key={m.id} className="rounded-xl bg-[#071738] p-3 text-sm"><p className="text-xs font-medium text-[#B9C5DF]">{m.sender_id===user.id?"Siz":"AVOfis"} · {new Date(m.created_at).toLocaleString("tr-TR")}</p><p className="mt-2 whitespace-pre-wrap break-words">{m.body}</p></div>)}</div><form onSubmit={sendMessage} className="mt-4"><textarea value={note} maxLength={1500} onChange={e=>setNote(e.target.value)} rows={3} placeholder="Mesajınızı yazın (hassas bilgi göndermeyin)" className="w-full rounded-xl border border-[#dfbf59]/25 p-3 text-sm"/><button disabled={busy||!note.trim()} className="mt-3 rounded-xl avofis-cta avofis-btn text-sm font-semibold text-white disabled:opacity-50">Mesaj gönder</button></form></article>
+         <article className="rounded-[18px] border border-[#dfbf59]/25 avofis-card p-5 sm:p-6"><div className="flex flex-wrap justify-between gap-3"><div><h2 className="text-lg font-semibold">{current.title}</h2><p className="mt-2 text-xs text-[#B9C5DF]">{t.status}: {t.statuses[current.status as keyof typeof t.statuses]||current.status} · {t.caseNumber}: {current.id.slice(0,8).toUpperCase()}</p></div><span className="font-semibold">{(current.price_eur_cents/100).toFixed(2)} €</span></div></article>
+         <CaseTracking lang={lang} caseId={current.id} status={current.status} hasAgreement={!!agreement} agreementSigned={!!agreement?.signed_at} priceEurCents={current.price_eur_cents} paid={!!payment}/>
+         <ClientDeliverables lang={lang} caseId={current.id}/>
+         <article className="rounded-[18px] border border-[#dfbf59]/25 avofis-card p-6"><div className="flex items-center gap-2"><FileCheck2 className="h-5 w-5 text-[#dfbf59]"/><h2 className="text-lg font-semibold">{t.agreement}</h2></div>{agreement?<><p className="mt-3 text-xs text-[#B9C5DF]">{t.version}: {agreement.agreement_version}</p><div className="mt-4 max-h-60 overflow-y-auto whitespace-pre-wrap rounded-xl bg-[#071738] p-4 text-sm leading-7">{agreement.legal_text}</div>{agreement.signed_at?<p className="mt-4 text-sm font-medium text-[#dfbf59]">{t.acceptedAt}: {new Date(agreement.signed_at).toLocaleString(locale)} · {agreement.client_signature}</p>:<div className="mt-5 space-y-3"><p className="text-xs text-[#B9C5DF]">{t.signatureInfo}</p><label className="block text-sm">{t.signature}<input value={signedName} onChange={e=>setSignedName(e.target.value)} className="avofis-field mt-2 w-full rounded-lg border border-[#dfbf59]/25 p-3"/></label><label className="flex gap-2 text-sm"><input type="checkbox" checked={accepted} onChange={e=>setAccepted(e.target.checked)}/> {t.acceptCheck}</label><button onClick={()=>void acceptContract()} disabled={busy||!accepted||signedName.trim().length<3} className="rounded-xl avofis-cta avofis-btn text-sm font-semibold text-white disabled:opacity-50">{t.accept}</button></div>}</>:<p className="mt-4 text-sm text-[#B9C5DF]">{t.noAgreement}</p>}</article>
+         <article className="rounded-[18px] border border-[#dfbf59]/25 avofis-card p-6"><div className="flex items-center gap-2"><FolderLock className="h-5 w-5 text-[#dfbf59]"/><h2 className="text-lg font-semibold">{t.documents}</h2></div><p className="mt-3 text-sm leading-6 text-[#B9C5DF]">{t.docInfo}</p>{agreement?.signed_at&&<label className="mt-5 inline-flex cursor-pointer items-center gap-2 rounded-xl avofis-cta avofis-btn text-sm font-semibold text-white"><FileUp className="h-4 w-4"/>{busy?t.processing:t.upload}<input type="file" accept="application/pdf,image/png,image/jpeg,image/webp" className="sr-only" disabled={busy} onChange={uploadDocument}/></label>}{!agreement?.signed_at&&<p className="mt-3 text-sm text-[#dfbf59]">{t.agreementFirst}</p>}<ul className="mt-5 space-y-2">{documents.map(d=><li key={d.name} className="flex items-center justify-between gap-2 rounded-xl bg-[#071738] p-3 text-xs"><span className="truncate">{d.name}</span><button onClick={()=>void download(d.name)} className="font-semibold text-[#dfbf59]">{t.open}</button></li>)}</ul></article>
+         <article className="rounded-[18px] border border-[#dfbf59]/25 avofis-card p-6"><div className="flex items-center gap-2"><CreditCard className="h-5 w-5 text-[#dfbf59]"/><h2 className="text-lg font-semibold">{t.payment}</h2></div><p className="mt-3 text-sm">{t.serviceFee}: {(current.price_eur_cents/100).toFixed(2)} € · {t.charges}</p>{payment?<p className="mt-4 text-sm font-semibold text-[#dfbf59]">{t.paid}</p>:disputedPayment?<p className="mt-4 text-sm text-[#B9C5DF]">{t.paymentDispute}</p>:agreement?.signed_at&&current.price_eur_cents>0?<button onClick={()=>void pay()} disabled={busy} className="mt-5 rounded-xl avofis-cta avofis-btn text-sm font-semibold text-white disabled:opacity-50">{t.pay}</button>:<p className="mt-3 text-xs text-[#B9C5DF]">{t.paymentInfo}</p>}</article>
+         <article className="rounded-[18px] border border-[#dfbf59]/25 avofis-card p-6"><div className="flex items-center gap-2"><MessageSquare className="h-5 w-5 text-[#dfbf59]"/><h2 className="text-lg font-semibold">{t.messages}</h2></div><div className="mt-5 max-h-64 space-y-3 overflow-y-auto">{messages.filter(m=>m.case_id===selected).map(m=><div key={m.id} className="rounded-xl bg-[#071738] p-3 text-sm"><p className="text-xs font-medium text-[#B9C5DF]">{m.sender_id===user.id?t.you:"AVOfis"} · {new Date(m.created_at).toLocaleString(locale)}</p><p className="mt-2 whitespace-pre-wrap break-words">{m.body}</p></div>)}</div><form onSubmit={sendMessage} className="mt-4"><textarea value={note} maxLength={1500} onChange={e=>setNote(e.target.value)} rows={3} placeholder={t.messagePlaceholder} className="w-full rounded-xl border border-[#dfbf59]/25 p-3 text-sm"/><button disabled={busy||!note.trim()} className="mt-3 rounded-xl avofis-cta avofis-btn text-sm font-semibold text-white disabled:opacity-50">{t.send}</button></form></article>
        </>}
      </section>
    </div>}
