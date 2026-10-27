@@ -6,7 +6,7 @@ import { EditModeProvider } from "@/components/providers/EditModeProvider";
 export const metadata: Metadata = {
   title: { default: "AVOfis | Belge ve idarî işlem hazırlığı", template: "%s | AVOfis" },
   description: "AVOfis, Hollanda ve Türkiye bağlantılı belge temini, başvuru hazırlığı ve yetkili uzman koordinasyonuna yönelik hizmetler için kuruluş aşamasındadır.",
-  robots: { index: true, follow: true },
+  robots: { index: process.env.AVOFIS_LEGAL_READY==="true" && process.env.VERCEL_ENV==="production", follow: process.env.AVOFIS_LEGAL_READY==="true" && process.env.VERCEL_ENV==="production" },
 };
 
 export default function RootLayout({children}:{children:React.ReactNode}){

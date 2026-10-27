@@ -21,6 +21,10 @@ jobs:
           NEXT_PUBLIC_AVOFIS_CLIENT_PORTAL_ENABLED: 'false'
       - run: npm run lint --workspace portal
       - run: npm run test:content
+      - run: npm run smoke --workspace portal
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ci-public-test-key
   admin:
     runs-on: ubuntu-latest
     steps:

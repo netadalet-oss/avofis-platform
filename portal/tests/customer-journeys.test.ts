@@ -39,6 +39,14 @@ test("next action follows actual agreement, payment and document state",()=>{
  assert.match(nextCaseAction({...base,paid:true,hasPendingDocuments:true}),/belge/);
  assert.match(nextCaseAction({...base,hasAgreement:false}),/Sözleşme/);
  assert.match(nextCaseAction({...base,agreementSigned:false}),/Sözleşmenizi/);
- assert.match(nextCaseAction({...base,status:"review"}),/ön inceleme/);
+ assert.match(nextCaseAction({...base,status:"review"}),/ön inceleme/i);
  assert.match(nextCaseAction({...base,status:"completed"}),/tamamlandı/);
+});
+
+test("next actions are comprehensible for all three languages",()=>{
+ const s={status:"open",hasAgreement:true,agreementSigned:true,priceEurCents:2000,paid:false,hasPendingDocuments:true};
+ for(const lang of ["tr","nl","en"] as const){
+  assert.ok(nextCaseAction(s,lang).length>40);
+  assert.notEqual(nextCaseAction(s,lang),nextCaseAction(s,lang==="tr"?"en":"tr"));
+ }
 });
