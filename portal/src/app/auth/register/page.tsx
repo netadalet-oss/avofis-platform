@@ -1,147 +1,38 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { ArrowLeft, ShieldCheck } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
-import { useUser } from "@/hooks/useUser";
 
-export default function Page() {
-  const router = useRouter();
-  const { isAuthenticated, loading: authLoading } = useUser();
-
-  const [role, setRole] = useState("user");
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (!authLoading && isAuthenticated) {
-      router.replace("/dashboard");
-    }
-  }, [authLoading, isAuthenticated, router]);
-
-  async function handleRegister(e: React.FormEvent) {
-    e.preventDefault();
-    setLoading(true);
-    setMessage("");
-
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: fullName,
-          role,
-        },
-      },
-    });
-
-    if (error) {
-      setMessage(error.message);
-      setLoading(false);
-      return;
-    }
-
-    const userId = data.user?.id;
-
-    if (userId) {
-      const { error: profileError } = await supabase.from("profiles").upsert({
-        id: userId,
-        full_name: fullName,
-        role,
-        email,
-      });
-
-      if (profileError) {
-        setMessage(profileError.message);
-        setLoading(false);
-        return;
-      }
-    }
-
-    setMessage("Kayıt başarılı. E-posta doğrulaması açıksa kutunuzu kontrol edin, ardından giriş yapın.");
-    setLoading(false);
-  }
-
-  return (
-    <main>
-      <SiteHeader />
-
-      <section className="container-shell py-16 sm:py-20 md:py-24">
-        <div className="mx-auto mb-6 max-w-md">
-          <Link
-            href="/"
-            className="inline-flex items-center text-sm text-white/70 transition hover:text-white"
-          >
-            ← Ana sayfaya dön
-          </Link>
-        </div>
-
-        <div className="mx-auto max-w-md rounded-[28px] border border-white/10 bg-white/5 p-6 sm:p-8">
-          <h1 className="text-3xl font-semibold text-white">Hesap Oluştur</h1>
-
-          <p className="mt-4 text-sm leading-7 text-slate-300">
-            Avukat, stajyer ve ofis hesabı için rol seçimi destekli kayıt ekranı.
-          </p>
-
-          <form onSubmit={handleRegister} className="mt-8 space-y-4">
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none"
-            >
-              <option value="user">Genel Kullanıcı</option>
-              <option value="lawyer">Avukat</option>
-              <option value="intern">Stajyer</option>
-              <option value="office">Ofis</option>
-            </select>
-
-            <input
-              type="text"
-              placeholder="Ad Soyad"
-              required
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none"
-            />
-
-            <input
-              type="email"
-              placeholder="E-posta"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none"
-            />
-
-            <input
-              type="password"
-              placeholder="Şifre"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none"
-            />
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full rounded-lg bg-blue-600 py-3 text-sm font-medium text-white hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {loading ? "Kayıt oluşturuluyor..." : "Hesap Oluştur"}
-            </button>
-          </form>
-
-          {message && <p className="mt-4 text-sm text-slate-300">{message}</p>}
-        </div>
-      </section>
-
-      <SiteFooter />
-    </main>
-  );
+export default function RegisterPage(){
+ const router=useRouter();
+ const [name,setName]=useState(""),[email,setEmail]=useState(""),[password,setPassword]=useState(""),[agree,setAgree]=useState(false);
+ const [loading,setLoading]=useState(false),[message,setMessage]=useState(""),[successful,setSuccessful]=useState(false);
+ async function submit(e:FormEvent<HTMLFormElement>){
+  e.preventDefault();if(!agree||name.trim().length<2||password.length<12)return;
+  setLoading(true);setMessage("");
+  const {data,error}=await supabase.auth.signUp({
+   email:email.trim().toLowerCase(),
+   password,
+   options:{data:{full_name:name.trim(),role:"client"},emailRedirectTo:window.location.origin+"/musteri"}
+  });
+  if(error){setMessage("Hesap oluşturulamadı: "+error.message);}
+  else if(data.session){setSuccessful(true);router.replace("/musteri");}
+  else {setSuccessful(true);setMessage("Hesabınızı etkinleştirmek için e-postanızdaki doğrulama bağlantısını kullanın.");}
+  setLoading(false);
+ }
+ return <main className="min-h-screen bg-[#F7F6F2] text-[#193A43]"><div className="mx-auto max-w-lg px-5 py-12 md:py-20"><Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold"><ArrowLeft className="h-4 w-4"/> AVOfis</Link>
+ <div className="mt-12 rounded-[28px] border border-[#D8E4DC] bg-white p-7 md:p-10"><p className="text-xs font-bold tracking-[.2em] text-[#AA8254]">MÜŞTERİ HESABI</p><h1 className="mt-4 text-3xl font-semibold tracking-[-.05em]">Hesap oluşturun.</h1><p className="mt-4 text-sm leading-7 text-[#627D79]">Kayıt hesabınızı oluşturur; dosya kabulü ve ücretli hizmet sözleşmesi yerine geçmez. Hizmetler yalnızca açılış koşulları tamamlandığında etkinleştirilir.</p>
+ {successful?<div className="mt-7 rounded-xl bg-[#EAF4ED] p-5 text-sm text-[#326A5A]" role="status">{message||"Kayıt tamamlandı. Müşteri alanına yönlendiriliyorsunuz."}</div>:<form onSubmit={submit} className="mt-7 space-y-5">
+ <label className="block text-sm font-semibold">Ad soyad<input autoComplete="name" value={name} onChange={e=>setName(e.target.value)} maxLength={100} required className="mt-2 w-full rounded-xl border border-[#CBDCD0] bg-white p-3.5 font-normal"/></label>
+ <label className="block text-sm font-semibold">E-posta<input autoComplete="email" type="email" value={email} onChange={e=>setEmail(e.target.value)} maxLength={254} required className="mt-2 w-full rounded-xl border border-[#CBDCD0] bg-white p-3.5 font-normal"/></label>
+ <label className="block text-sm font-semibold">Parola (en az 12 karakter)<input autoComplete="new-password" type="password" value={password} onChange={e=>setPassword(e.target.value)} minLength={12} required className="mt-2 w-full rounded-xl border border-[#CBDCD0] bg-white p-3.5 font-normal"/></label>
+ <label className="flex items-start gap-3 text-sm leading-6"><input type="checkbox" checked={agree} required onChange={e=>setAgree(e.target.checked)} className="mt-1 h-4 w-4"/><span><Link href="/gizlilik" className="font-semibold underline">Gizlilik açıklamasını</Link> okudum. Hesap oluşturulması için gerekli verilerin işlenmesi hakkında bilgilendirildim.</span></label>
+ {message&&<p role="alert" className="rounded-xl bg-red-50 p-4 text-sm text-red-700">{message}</p>}
+ <button disabled={loading||!agree} className="w-full rounded-full bg-[#173A43] px-5 py-4 text-sm font-semibold text-white disabled:opacity-50">{loading?"Kaydediliyor...":"Hesap oluştur"}</button>
+ </form>}
+ <p className="mt-7 text-center text-sm text-[#627C76]">Zaten hesabınız var mı? <Link href="/auth/login" className="font-semibold underline">Giriş yapın</Link></p>
+ </div><p className="mt-6 flex items-start gap-2 text-xs leading-6 text-[#627C76]"><ShieldCheck className="mt-1 h-4 w-4 shrink-0"/> Hukukî hizmet yetkisi ve müşteri dosya sistemi birbirinden ayrı değerlendirilir.</p>
+ </div></main>;
 }
