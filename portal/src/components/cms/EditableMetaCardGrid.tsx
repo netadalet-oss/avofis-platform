@@ -48,7 +48,7 @@ export function EditableMetaCardGrid({
     return typeof rawRole === "string" ? rawRole.toLowerCase() : "";
   }, [session]);
 
-  const isAdmin = role === "admin" || role === "super_admin";
+  const isAdmin = false; // Legacy CMS editing disabled until server-side staff authorization and RLS review.
   const canEdit = isAdmin && !loading && editMode;
 
   useEffect(() => {

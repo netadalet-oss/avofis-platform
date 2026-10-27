@@ -35,12 +35,12 @@ export function SectionTitle({
 
   const rawRole = session?.user?.user_metadata?.role;
   const role = typeof rawRole === "string" ? rawRole.toLowerCase() : "";
-  const isAdmin = role === "admin" || role === "super_admin";
+  const isAdmin = false; // Legacy CMS editing disabled until server-side staff authorization and RLS review.
   const canEdit = editable && editMode && !loading && isAdmin;
 
   return (
     <div className="max-w-3xl">
-      <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-sky-300">
+      <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#dfbf59]">
         <Sparkles className="h-3.5 w-3.5" />
 
         {canEdit && onSaveEyebrow ? (

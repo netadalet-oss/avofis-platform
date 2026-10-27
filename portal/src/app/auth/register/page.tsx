@@ -1,147 +1,47 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import { useState,type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
-import { useUser } from "@/hooks/useUser";
+import { PageFrame } from "@/components/avofis/PageFrame";
+import { usePortalLanguage } from "@/hooks/usePortalLanguage";
+import { accountText } from "@/lib/account-text";
 
-export default function Page() {
-  const router = useRouter();
-  const { isAuthenticated, loading: authLoading } = useUser();
-
-  const [role, setRole] = useState("user");
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (!authLoading && isAuthenticated) {
-      router.replace("/dashboard");
-    }
-  }, [authLoading, isAuthenticated, router]);
-
-  async function handleRegister(e: React.FormEvent) {
-    e.preventDefault();
-    setLoading(true);
-    setMessage("");
-
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: fullName,
-          role,
-        },
-      },
+const enabled=process.env.NEXT_PUBLIC_AVOFIS_CLIENT_PORTAL_ENABLED==="true";
+export default function RegisterPage(){
+ const router=useRouter();
+ const lang=usePortalLanguage(),t=accountText[lang].register;
+ const [name,setName]=useState(""),[email,setEmail]=useState(""),[password,setPassword]=useState("");
+ const [agreed,setAgreed]=useState(false),[busy,setBusy]=useState(false);
+ const [error,setError]=useState(""),[success,setSuccess]=useState("");
+ async function submit(e:FormEvent<HTMLFormElement>){
+  e.preventDefault();if(!enabled||!agreed||name.trim().length<2||password.length<12)return;
+  setBusy(true);setError("");
+  try{
+    const {data,error}=await supabase.auth.signUp({
+      email:email.trim().toLowerCase(),password,
+      options:{data:{full_name:name.trim(),role:"client"},emailRedirectTo:window.location.origin+"/musteri"}
     });
-
-    if (error) {
-      setMessage(error.message);
-      setLoading(false);
-      return;
-    }
-
-    const userId = data.user?.id;
-
-    if (userId) {
-      const { error: profileError } = await supabase.from("profiles").upsert({
-        id: userId,
-        full_name: fullName,
-        role,
-        email,
-      });
-
-      if (profileError) {
-        setMessage(profileError.message);
-        setLoading(false);
-        return;
-      }
-    }
-
-    setMessage("Kayıt başarılı. E-posta doğrulaması açıksa kutunuzu kontrol edin, ardından giriş yapın.");
-    setLoading(false);
-  }
-
-  return (
-    <main>
-      <SiteHeader />
-
-      <section className="container-shell py-16 sm:py-20 md:py-24">
-        <div className="mx-auto mb-6 max-w-md">
-          <Link
-            href="/"
-            className="inline-flex items-center text-sm text-white/70 transition hover:text-white"
-          >
-            ← Ana sayfaya dön
-          </Link>
-        </div>
-
-        <div className="mx-auto max-w-md rounded-[28px] border border-white/10 bg-white/5 p-6 sm:p-8">
-          <h1 className="text-3xl font-semibold text-white">Hesap Oluştur</h1>
-
-          <p className="mt-4 text-sm leading-7 text-slate-300">
-            Avukat, stajyer ve ofis hesabı için rol seçimi destekli kayıt ekranı.
-          </p>
-
-          <form onSubmit={handleRegister} className="mt-8 space-y-4">
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none"
-            >
-              <option value="user">Genel Kullanıcı</option>
-              <option value="lawyer">Avukat</option>
-              <option value="intern">Stajyer</option>
-              <option value="office">Ofis</option>
-            </select>
-
-            <input
-              type="text"
-              placeholder="Ad Soyad"
-              required
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none"
-            />
-
-            <input
-              type="email"
-              placeholder="E-posta"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none"
-            />
-
-            <input
-              type="password"
-              placeholder="Şifre"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none"
-            />
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full rounded-lg bg-blue-600 py-3 text-sm font-medium text-white hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {loading ? "Kayıt oluşturuluyor..." : "Hesap Oluştur"}
-            </button>
-          </form>
-
-          {message && <p className="mt-4 text-sm text-slate-300">{message}</p>}
-        </div>
-      </section>
-
-      <SiteFooter />
-    </main>
-  );
+    if(error){setError(t.error);return;}
+    if(data.session){router.replace("/musteri?lang="+lang);router.refresh();return;}
+    setSuccess(t.success);
+  }catch{setError(t.error);}
+  finally{setBusy(false);}
+ }
+ return <PageFrame lang={lang} eyebrow={t.eyebrow} title={t.title} description={t.description}>
+   <div className="avofis-card max-w-lg rounded-[18px] border p-5 sm:p-7">
+    {!enabled?<div role="status" className="rounded-xl border border-[#dfbf59]/20 bg-[#071738] p-5">
+      <p className="text-[15px] font-semibold text-[#F2F5FF]">{t.closed}</p>
+      <p className="mt-2 text-[13px] leading-[1.8] text-[#B9C5DF]">{t.closedDetail}</p>
+    </div>:success?<p role="status" className="rounded-lg border border-[#dfbf59]/20 bg-[#071738] p-4 text-[13px] leading-6 text-[#F2F5FF]">{success}</p>:<form onSubmit={submit} className="space-y-4">
+      <label className="block text-[13px] font-semibold text-[#E6ECF7]">{t.name}<input type="text" autoComplete="name" required maxLength={100} value={name} onChange={e=>setName(e.target.value)} className="avofis-field"/></label>
+      <label className="block text-[13px] font-semibold text-[#E6ECF7]">{t.email}<input type="email" autoComplete="email" required maxLength={254} value={email} onChange={e=>setEmail(e.target.value)} className="avofis-field"/></label>
+      <label className="block text-[13px] font-semibold text-[#E6ECF7]">{t.password}<input type="password" autoComplete="new-password" minLength={12} required value={password} onChange={e=>setPassword(e.target.value)} className="avofis-field"/></label>
+      <label className="flex items-start gap-3 text-[13px] leading-[1.7] text-[#DCE3F1]"><input className="mt-1 h-4 w-4 shrink-0" type="checkbox" checked={agreed} required onChange={e=>setAgreed(e.target.checked)}/><span><Link href={"/gizlilik?lang="+lang} className="font-semibold text-[#dfbf59] underline">{t.privacy}</Link> {t.consent}</span></label>
+      {error&&<p role="alert" className="rounded-lg border border-red-400/30 bg-red-950/30 p-3 text-[13px] text-red-200">{error}</p>}
+      <button disabled={busy||!agreed} className="avofis-cta avofis-btn w-full disabled:cursor-not-allowed disabled:opacity-50">{busy?t.busy:t.submit}</button>
+    </form>}
+    <p className="mt-5 border-t border-[#dfbf59]/15 pt-4 text-[13px] text-[#B9C5DF]">{t.existing} <Link href={"/auth/login?lang="+lang} className="font-semibold text-[#dfbf59]">{t.login}</Link></p>
+   </div>
+ </PageFrame>;
 }

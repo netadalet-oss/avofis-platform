@@ -25,7 +25,7 @@ export function SiteFooter() {
     return typeof rawRole === "string" ? rawRole.toLowerCase() : "";
   }, [session]);
 
-  const isAdmin = role === "admin" || role === "super_admin";
+  const isAdmin = false; // Legacy CMS editing disabled until server-side staff authorization and RLS review.
 
   useEffect(() => {
     let mounted = true;
@@ -165,7 +165,7 @@ export function SiteFooter() {
     <footer className="border-t border-white/10 bg-black/30">
       {isAdmin && !authLoading ? (
         <div className="container-shell pt-6">
-          <div className="rounded-[24px] border border-amber-400/20 bg-amber-400/10 p-4">
+          <div className="rounded-[24px] border border-[#dfbf59]/20 bg-[#dfbf59]/10 p-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <div className="text-sm font-semibold text-white">
@@ -182,7 +182,7 @@ export function SiteFooter() {
                   <button
                     type="button"
                     onClick={openEditMode}
-                    className="inline-flex items-center gap-2 rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-2 text-sm font-medium text-amber-200"
+                    className="inline-flex items-center gap-2 rounded-xl border border-[#dfbf59]/30 bg-[#dfbf59]/10 px-4 py-2 text-sm font-medium text-[#f0d56d]"
                   >
                     <Pencil className="h-4 w-4" />
                     Footer Düzenle
@@ -202,7 +202,7 @@ export function SiteFooter() {
                       type="button"
                       onClick={saveFooterInline}
                       disabled={saving}
-                      className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950 disabled:opacity-60"
+                      className="inline-flex items-center gap-2 rounded-xl bg-[#dfbf59] px-4 py-2 text-sm font-semibold text-slate-950 disabled:opacity-60"
                     >
                       <Save className="h-4 w-4" />
                       {saving ? "Kaydediliyor..." : "Footer Kaydet"}
@@ -269,7 +269,7 @@ export function SiteFooter() {
                       updateColumnTitle(index, e.target.value)
                     }
                     placeholder="Kolon başlığı"
-                    className="rounded-xl border border-white/10 bg-slate-950/50 px-4 py-3 text-sm text-white outline-none"
+                    className="rounded-xl border border-white/10 bg-[#04102C]/80 px-4 py-3 text-sm text-white outline-none"
                   />
 
                   <button
@@ -292,7 +292,7 @@ export function SiteFooter() {
                       updateColumnLinks(index, e.target.value)
                     }
                     rows={5}
-                    className="w-full rounded-xl border border-white/10 bg-slate-950/50 px-4 py-3 text-sm text-white outline-none"
+                    className="w-full rounded-xl border border-white/10 bg-[#04102C]/80 px-4 py-3 text-sm text-white outline-none"
                   />
                 </div>
               </div>

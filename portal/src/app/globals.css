@@ -2,18 +2,239 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { color-scheme: dark; }
-
+/* Official AVOfis Gold + Navy visual identity. */
+:root {
+  color-scheme: dark;
+  --ref-panel: #030A22;
+  --ref-panel-2: #04102C;
+  --ref-panel-3: #071738;
+  --ref-gold: #dfbf59;
+  --ref-gold-strong: #f0d56d;
+  --ref-text: #F2F5FF;
+  --ref-muted: #B9C5DF;
+  --ref-line: rgba(223, 191, 89, .24);
+}
 html { scroll-behavior: smooth; }
-
 body {
-  @apply bg-[#07111f] text-white antialiased;
-  background-image: radial-gradient(circle at top, rgba(24, 52, 91, 0.9) 0%, rgba(11, 21, 36, 0.96) 44%, rgba(7, 17, 31, 1) 74%);
+  @apply bg-[#030A22] text-[#F2F5FF] antialiased;
   min-height: 100vh;
 }
-
-a { @apply transition-colors; }
-
+a, button { @apply transition-colors; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--ref-gold-strong);
+  outline-offset: 3px;
+}
 .container-shell { @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8; }
+.panel { @apply rounded-[28px] border backdrop-blur-sm; border-color: var(--ref-line); background:var(--ref-panel-2); }
 
-.panel { @apply rounded-[28px] border border-white/10 bg-white/5 backdrop-blur-sm; }
+/* Keep the full public and client experience in the same AVOfis theme. */
+.avofis-theme {
+  color: var(--ref-text);
+  background-color: var(--ref-panel);
+  background-image: radial-gradient(ellipse at 80% 7%, rgba(7,23,56,.84), transparent 52%);
+}
+.avofis-theme .avofis-card,
+.avofis-theme .card {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(4,13,38,.99),
+      rgba(1,4,15,.998)
+    );
+  border-color: var(--ref-line);
+  color: var(--ref-text);
+}
+.avofis-theme .avofis-cta {
+  background: var(--ref-gold);
+  color: var(--ref-panel) !important;
+  border-color: var(--ref-gold);
+  box-shadow: 0 8px 25px rgba(223,191,89,.13);
+}
+.avofis-theme .avofis-cta:hover:not(:disabled) {
+  background: var(--ref-gold-strong);
+  border-color: var(--ref-gold-strong);
+  color: var(--ref-panel) !important;
+}
+.avofis-theme :is(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),select,textarea) {
+  background:var(--ref-panel-2) !important;
+  color:var(--ref-text) !important;
+  border:1px solid rgba(223,191,89,.38) !important;
+  color-scheme:dark;
+}
+.avofis-theme input::placeholder,
+.avofis-theme textarea::placeholder { color:#A7B5D0; opacity:1; }
+.avofis-theme input[type="checkbox"] { accent-color:var(--ref-gold); }
+.avofis-theme :is(a,button):not(.avofis-cta):hover { color: var(--ref-gold-strong); }
+.avofis-theme .avofis-card :is(a,button):not(.avofis-cta):hover { color:var(--ref-gold-strong); }
+.avofis-theme ::selection { background:var(--ref-gold); color:var(--ref-panel); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+
+/* Compact, symmetric, accessible AVOfis interface system */
+.avofis-container {
+  width: 100%;
+  max-width: 1184px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+.avofis-theme { color: var(--ref-text); }
+.avofis-theme .avofis-card {
+  border: 1px solid rgba(223,191,89,.20);
+  box-shadow: 0 8px 28px rgba(0,0,0,.14);
+}
+.avofis-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ref-gold);
+  font-size: 11px;
+  line-height: 1.5;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.avofis-h2 {
+  max-width: 710px;
+  color: #F2F5FF;
+  font-size: clamp(1.65rem,2.5vw,2.1rem);
+  line-height: 1.2;
+  letter-spacing: -.045em;
+  font-weight: 650;
+}
+.avofis-section-heading {
+  display: grid;
+  align-items: end;
+  gap: 14px 32px;
+  grid-template-columns: minmax(0,1fr);
+}
+.avofis-section-desc {
+  max-width: 445px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--ref-muted);
+}
+.avofis-logo-icon {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(223,191,89,.35);
+  border-radius: 12px;
+  color: var(--ref-gold);
+  background: var(--ref-panel-3);
+}
+.avofis-nav-link {
+  font-size: 13px;
+  font-weight: 550;
+  line-height: 1.35;
+  color: #C8D2E5;
+  white-space: nowrap;
+}
+.avofis-nav-link:hover { color:var(--ref-gold-strong); }
+.avofis-mobile-link {
+  display: flex;
+  width: 100%;
+  min-height: 42px;
+  align-items: center;
+  padding-inline: 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #E3E9F5;
+}
+.avofis-mobile-link:hover { background:var(--ref-panel-3);color:var(--ref-gold-strong); }
+.avofis-lang {
+  display: inline-flex;
+  height: 31px;
+  min-width: 38px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color:var(--ref-muted);
+}
+.avofis-lang-active {
+  background:var(--ref-gold);
+  color:var(--ref-panel) !important;
+}
+.avofis-btn {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 10px 17px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+  white-space: normal;
+}
+.avofis-btn svg, .avofis-icon-btn svg, .avofis-icon-tile svg { flex-shrink: 0; }
+.avofis-outline {
+  border-color:rgba(223,191,89,.42);
+  color:var(--ref-gold);
+  background:rgba(4,16,44,.4);
+}
+.avofis-outline:hover {background:var(--ref-panel-3);color:var(--ref-gold-strong); }
+.avofis-icon-btn {
+  display:inline-flex;
+  height:44px;
+  width:44px;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(223,191,89,.25);
+  border-radius:11px;
+  color:var(--ref-gold);
+  background:var(--ref-panel-2);
+}
+.avofis-icon-tile {
+  display:inline-flex;
+  height:42px;
+  width:42px;
+  flex:0 0 42px;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(223,191,89,.24);
+  border-radius:12px;
+  color:var(--ref-gold);
+  background:var(--ref-panel-3);
+}
+.avofis-service-card {
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
+}
+.avofis-service-card:hover {
+  transform:translateY(-2px);
+  border-color:rgba(223,191,89,.52);
+  box-shadow:0 14px 32px rgba(0,0,0,.2);
+}
+.avofis-page-head {margin-top:32px;}
+.avofis-page-title {
+  max-width: 750px;
+  color:var(--ref-text);
+  font-size:clamp(1.85rem,3.8vw,2.75rem);
+  letter-spacing:-.045em;
+  line-height:1.2;
+  font-weight:650;
+}
+.avofis-form-label {font-size:13px;font-weight:600;color:#E6ECF7;}
+.avofis-field {width:100%; min-height:44px; margin-top:7px; border-radius:10px; padding:10px 12px; font-size:14px;}
+.avofis-theme :is(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),select,textarea) {min-height:44px;}
+.avofis-theme :is(button,a,input,textarea,select):focus-visible {outline:2px solid var(--ref-gold-strong);outline-offset:3px;}
+@media(min-width:640px) {.avofis-container {padding-inline:28px;}}
+@media(min-width:1024px) {
+  .avofis-container {padding-inline:32px;}
+  .avofis-section-heading {grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);}
+  .avofis-section-desc {justify-self:end;}
+}
+@media(max-width:380px) {
+  .avofis-container {padding-inline:16px;}
+  .avofis-eyebrow {font-size:10px;letter-spacing:.11em;}
+  .avofis-btn {padding-inline:13px;font-size:12px;}
+}

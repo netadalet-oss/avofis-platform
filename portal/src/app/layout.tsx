@@ -4,18 +4,11 @@ import { AuthProvider } from "@/components/providers/AuthProvider";
 import { EditModeProvider } from "@/components/providers/EditModeProvider";
 
 export const metadata: Metadata = {
-  title: "AvOfis",
-  description: "Hukuk araştırması, belge üretimi, topluluk ve kariyer platformu",
+  title: { default: "AVOfis | Belge ve idarî işlem hazırlığı", template: "%s | AVOfis" },
+  description: "AVOfis, Hollanda ve Türkiye bağlantılı belge temini, başvuru hazırlığı ve yetkili uzman koordinasyonuna yönelik hizmetler için kuruluş aşamasındadır.",
+  robots: { index: process.env.AVOFIS_LEGAL_READY==="true" && process.env.VERCEL_ENV==="production", follow: process.env.AVOFIS_LEGAL_READY==="true" && process.env.VERCEL_ENV==="production" },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="tr">
-      <body>
-        <AuthProvider>
-          <EditModeProvider>{children}</EditModeProvider>
-        </AuthProvider>
-      </body>
-    </html>
-  );
+export default function RootLayout({children}:{children:React.ReactNode}){
+  return <html lang="tr"><body><AuthProvider><EditModeProvider>{children}</EditModeProvider></AuthProvider></body></html>;
 }
