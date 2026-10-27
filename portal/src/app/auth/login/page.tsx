@@ -1,159 +1,25 @@
 "use client";
-
-import { FormEvent, useEffect, useState } from "react";
+import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { ArrowLeft, LockKeyhole } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
-export default function LoginPage() {
-  const router = useRouter();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    let mounted = true;
-
-    async function checkSession() {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-
-      if (!mounted) return;
-
-      if (session) {
-        router.replace("/dashboard");
-      }
-    }
-
-    checkSession();
-
-    return () => {
-      mounted = false;
-    };
-  }, [router]);
-
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-
-    try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        setError(error.message);
-        return;
-      }
-
-      const next =
-        typeof window !== "undefined"
-          ? new URLSearchParams(window.location.search).get("next")
-          : null;
-
-      router.replace(next || "/dashboard");
-      router.refresh();
-    } catch (err) {
-      setError("Giriş sırasında beklenmeyen bir hata oluştu.");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  return (
-    <main className="container-shell py-24">
-
-      {/* Ana sayfaya dönüş */}
-      <div className="mx-auto mb-6 w-full max-w-md">
-        <Link
-          href="/"
-          className="text-sm text-white/70 hover:text-white transition"
-        >
-          ← Ana sayfaya dön
-        </Link>
-      </div>
-
-      <div className="mx-auto w-full max-w-md rounded-2xl border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur">
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-semibold tracking-tight text-white">
-            Giriş Yap
-          </h1>
-          <p className="mt-2 text-sm text-white/70">
-            AvOfis hesabınızla giriş yapın.
-          </p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label
-              htmlFor="email"
-              className="mb-2 block text-sm font-medium text-white/85"
-            >
-              E-posta
-            </label>
-            <input
-              id="email"
-              type="email"
-              autoComplete="email"
-              inputMode="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-white/35 focus:border-white/25"
-              placeholder="ornek@avofis.com"
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="password"
-              className="mb-2 block text-sm font-medium text-white/85"
-            >
-              Şifre
-            </label>
-            <input
-              id="password"
-              type="password"
-              autoComplete="current-password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-white/35 focus:border-white/25"
-              placeholder="••••••••"
-            />
-          </div>
-
-          {error ? (
-            <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
-              {error}
-            </div>
-          ) : null}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-xl bg-white px-4 py-3 font-medium text-black transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {loading ? "Giriş yapılıyor..." : "Giriş Yap"}
-          </button>
-        </form>
-
-        <div className="mt-6 text-center text-sm text-white/65">
-          Hesabınız yok mu?{" "}
-          <Link
-            href="/auth/register"
-            className="font-medium text-white underline underline-offset-4"
-          >
-            Kayıt olun
-          </Link>
-        </div>
-      </div>
-    </main>
-  );
+export default function LoginPage(){
+ const router=useRouter();
+ const [email,setEmail]=useState(""),[password,setPassword]=useState(""),[busy,setBusy]=useState(false),[error,setError]=useState("");
+ async function submit(e:FormEvent<HTMLFormElement>){
+  e.preventDefault();setBusy(true);setError("");
+  try{const {error}=await supabase.auth.signInWithPassword({email:email.trim(),password});if(error){setError(error.message);return;}
+    router.replace("/musteri");router.refresh();
+  }catch{setError("Giriş yapılamadı. Lütfen tekrar deneyin.");}
+  finally{setBusy(false);}
+ }
+ return <main className="min-h-screen bg-[#F7F6F2] text-[#193A43]"><div className="mx-auto max-w-lg px-5 py-12 md:py-20">
+ <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold"><ArrowLeft className="h-4 w-4"/>AVOfis</Link>
+ <div className="mt-12 rounded-[28px] border border-[#D8E4DC] bg-white p-7 md:p-10"><LockKeyhole className="h-7 w-7 text-[#39756C]"/><h1 className="mt-5 text-3xl font-semibold tracking-[-.05em]">Güvenli giriş</h1><p className="mt-3 text-sm leading-7 text-[#627D79]">Müşteri dosyalarınıza, sözleşmelerinize ve mesajlarınıza hesabınızla erişin.</p>
+ <form onSubmit={submit} className="mt-7 space-y-5"><label className="block text-sm font-semibold">E-posta<input type="email" autoComplete="email" value={email} onChange={e=>setEmail(e.target.value)} required className="mt-2 w-full rounded-xl border border-[#CBDBD0] bg-white p-3.5 font-normal"/></label><label className="block text-sm font-semibold">Parola<input type="password" autoComplete="current-password" value={password} onChange={e=>setPassword(e.target.value)} required className="mt-2 w-full rounded-xl border border-[#CBDBD0] bg-white p-3.5 font-normal"/></label>
+ {error&&<p role="alert" className="rounded-xl bg-red-50 p-4 text-sm text-red-700">{error}</p>}
+ <button disabled={busy} className="w-full rounded-full bg-[#173A43] px-5 py-4 text-sm font-semibold text-white disabled:opacity-50">{busy?"Giriş yapılıyor...":"Giriş yap"}</button></form>
+ <div className="mt-7 flex flex-wrap justify-between gap-4 text-sm"><Link className="font-semibold underline" href="/auth/register">Yeni hesap oluştur</Link><Link className="font-semibold underline" href="/auth/forgot-password">Parolamı unuttum</Link></div></div></div></main>;
 }
