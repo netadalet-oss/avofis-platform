@@ -1,25 +1,36 @@
 "use client";
-import { useState, type FormEvent } from "react";
+import { useState,type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, LockKeyhole } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { PageFrame } from "@/components/avofis/PageFrame";
 
 export default function LoginPage(){
  const router=useRouter();
- const [email,setEmail]=useState(""),[password,setPassword]=useState(""),[busy,setBusy]=useState(false),[error,setError]=useState("");
- async function submit(e:FormEvent<HTMLFormElement>){
-  e.preventDefault();setBusy(true);setError("");
-  try{const {error}=await supabase.auth.signInWithPassword({email:email.trim(),password});if(error){setError(error.message);return;}
-    router.replace("/musteri");router.refresh();
-  }catch{setError("Giriş yapılamadı. Lütfen tekrar deneyin.");}
-  finally{setBusy(false);}
+ const [email,setEmail]=useState("");
+ const [password,setPassword]=useState("");
+ const [busy,setBusy]=useState(false);
+ const [error,setError]=useState("");
+ async function submit(event:FormEvent<HTMLFormElement>){
+   event.preventDefault();setBusy(true);setError("");
+   try{
+     const {error}=await supabase.auth.signInWithPassword({email:email.trim(),password});
+     if(error){setError("Giriş bilgileri doğrulanamadı. E-posta ve parolanızı kontrol edin.");return;}
+     router.replace("/musteri");router.refresh();
+   }catch{setError("Giriş şu anda tamamlanamadı. Lütfen tekrar deneyin.");}
+   finally{setBusy(false);}
  }
- return <main className="avofis-theme min-h-screen text-[#F2F5FF]"><div className="mx-auto max-w-lg px-5 py-9 sm:py-12">
- <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold"><ArrowLeft className="h-4 w-4"/>AVOfis</Link>
- <div className="mt-8 rounded-[20px] border border-[#dfbf59]/25 avofis-card p-5 sm:p-6"><LockKeyhole className="h-7 w-7 text-[#dfbf59]"/><h1 className="mt-5 text-3xl font-semibold tracking-[-.05em]">Güvenli giriş</h1><p className="mt-3 text-sm leading-7 text-[#B9C5DF]">Müşteri dosyalarınıza, sözleşmelerinize ve mesajlarınıza hesabınızla erişin.</p>
- <form onSubmit={submit} className="mt-7 space-y-4"><label className="block text-sm font-semibold">E-posta<input type="email" autoComplete="email" value={email} onChange={e=>setEmail(e.target.value)} required className="avofis-field mt-2 w-full rounded-xl border border-[#dfbf59]/25 avofis-card p-3.5 font-normal"/></label><label className="block text-sm font-semibold">Parola<input type="password" autoComplete="current-password" value={password} onChange={e=>setPassword(e.target.value)} required className="avofis-field mt-2 w-full rounded-xl border border-[#dfbf59]/25 avofis-card p-3.5 font-normal"/></label>
- {error&&<p role="alert" className="rounded-xl bg-red-50 p-4 text-sm text-red-700">{error}</p>}
- <button disabled={busy} className="w-full rounded-xl avofis-cta avofis-btn text-sm font-semibold text-white disabled:opacity-50">{busy?"Giriş yapılıyor...":"Giriş yap"}</button></form>
- <div className="mt-7 flex flex-wrap justify-between gap-4 text-sm"><Link className="font-semibold underline" href="/auth/register">Yeni hesap oluştur</Link><Link className="font-semibold underline" href="/auth/forgot-password">Parolamı unuttum</Link></div></div></div></main>;
+ return <PageFrame eyebrow="MÜŞTERİ ALANI" title="Hesabınıza giriş yapın" description="Hizmete açılışın ardından dosyalarınıza, sözleşmelerinize ve belgelerinize bu hesap üzerinden erişebilirsiniz.">
+   <div className="avofis-card max-w-lg rounded-[18px] border p-5 sm:p-7">
+     <form onSubmit={submit} className="space-y-4">
+       <label className="block text-[13px] font-semibold text-[#E6ECF7]">E-posta adresi<input type="email" autoComplete="email" value={email} required maxLength={254} onChange={e=>setEmail(e.target.value)} className="avofis-field"/></label>
+       <label className="block text-[13px] font-semibold text-[#E6ECF7]">Parola<input type="password" autoComplete="current-password" value={password} required onChange={e=>setPassword(e.target.value)} className="avofis-field"/></label>
+       {error&&<p role="alert" className="rounded-lg border border-red-400/30 bg-red-950/30 p-3 text-[13px] leading-6 text-red-200">{error}</p>}
+       <button disabled={busy} className="avofis-cta avofis-btn w-full disabled:cursor-not-allowed disabled:opacity-50">{busy?"Giriş yapılıyor…":"Giriş yap"}</button>
+     </form>
+     <div className="mt-5 flex flex-wrap justify-between gap-3 border-t border-[#dfbf59]/15 pt-4 text-[13px] font-medium text-[#dfbf59]">
+       <Link href="/auth/register">Hesap oluştur</Link><Link href="/auth/forgot-password">Parolamı unuttum</Link>
+     </div>
+   </div>
+ </PageFrame>;
 }

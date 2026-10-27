@@ -26,7 +26,7 @@ export function PageFrame({eyebrow,title,description,children,wide=false,lang="t
     <div className={"mx-auto w-full px-5 pb-14 pt-9 sm:px-7 sm:pt-12 "+(wide?"max-w-6xl":"max-w-4xl")}>
       <div className="max-w-3xl">
         <p className="text-[11px] font-semibold uppercase tracking-[.13em] text-[#dfbf59]">{eyebrow}</p>
-        <h1 className="mt-2 text-[clamp(1.9rem,3.4vw,2.75rem)] font-semibold leading-[1.2] tracking-[-.04em] text-[#F2F5FF]">{title}</h1>
+        <h1 className="mt-2 text-[clamp(1.85rem,3vw,2.4rem)] font-semibold leading-[1.2] tracking-[-.04em] text-[#F2F5FF]">{title}</h1>
         {description&&<p className="mt-3 max-w-[690px] text-[14px] leading-[1.8] text-[#B9C5DF]">{description}</p>}
       </div>
       <div className="mt-8">{children}</div>

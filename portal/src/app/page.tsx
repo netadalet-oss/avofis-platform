@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect,useState } from "react";
 import {
-  ArrowRight, ArrowUpRight, BookOpenText, Building2, Check,
-  ClipboardCheck, FileCheck2, FileText, GraduationCap, Languages,
+  ArrowRight, ArrowUpRight, Building2, Check,
+  ClipboardCheck, FileText, GraduationCap, Languages,
   Landmark, Menu, Scale, ShieldCheck, UserRoundCheck, X,
   type LucideIcon,
 } from "lucide-react";
@@ -23,6 +23,10 @@ const isIntakeOpen = process.env.NEXT_PUBLIC_AVOFIS_INTAKE_ENABLED === "true";
 
 export default function HomePage() {
   const [lang,setLang] = useState<Language>("tr");
+  useEffect(()=>{
+    const requested=new URLSearchParams(window.location.search).get("lang");
+    if(requested==="tr"||requested==="nl"||requested==="en") setLang(requested);
+  },[]);
   const [mobileOpen,setMobileOpen] = useState(false);
   const c = copy[lang];
   const to = (pathname:string) => pathname + "?lang=" + lang;
@@ -78,7 +82,7 @@ export default function HomePage() {
         <div className="avofis-container grid items-center gap-9 py-14 sm:py-16 lg:grid-cols-[minmax(0,1.25fr)_minmax(310px,.75fr)] lg:gap-12 lg:py-[76px]">
           <div className="min-w-0">
             <p className="avofis-eyebrow">{c.eyebrow}</p>
-            <h1 className="mt-4 max-w-[685px] text-[clamp(2.05rem,4.1vw,3.5rem)] font-semibold leading-[1.17] tracking-[-.047em] text-[#F2F5FF]">{c.headline}</h1>
+            <h1 className="mt-4 max-w-[685px] text-[clamp(2rem,3.6vw,2.9rem)] font-semibold leading-[1.17] tracking-[-.047em] text-[#F2F5FF]">{c.headline}</h1>
             <p className="mt-5 max-w-[620px] text-[15px] leading-[1.85] text-[#B9C5DF]">{c.intro}</p>
             <div className="mt-7 flex flex-wrap gap-3">
               <a href="#services" className="avofis-cta avofis-btn">{c.browse}<ArrowRight className="h-4 w-4" aria-hidden="true"/></a>
@@ -158,7 +162,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-11 sm:py-13">
+      <section className="py-11 sm:py-12">
         <div className="avofis-container">
           <div className="avofis-card flex flex-col gap-5 rounded-[18px] border p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
             <div><h2 className="text-[22px] font-semibold leading-snug tracking-[-.025em] text-[#F2F5FF]">{c.closeHeading}</h2><p className="mt-2 max-w-[680px] text-[13px] leading-[1.8] text-[#B9C5DF]">{c.closeText}</p></div>

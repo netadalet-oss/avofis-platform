@@ -98,7 +98,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .avofis-h2 {
   max-width: 710px;
   color: #F2F5FF;
-  font-size: clamp(1.85rem,3.2vw,2.55rem);
+  font-size: clamp(1.65rem,2.5vw,2.1rem);
   line-height: 1.2;
   letter-spacing: -.045em;
   font-weight: 650;
