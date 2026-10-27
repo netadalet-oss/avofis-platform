@@ -23,8 +23,13 @@ export default function IntakePage(){
  const [service,setService]=useState(services[0].slug),[country,setCountry]=useState("Netherlands"),[applicantRole,setApplicantRole]=useState("self"),[stage,setStage]=useState("new");
  const [decisionDate,setDecisionDate]=useState(""),[name,setName]=useState(""),[email,setEmail]=useState(""),[message,setMessage]=useState(""),[accepted,setAccepted]=useState(false);
  const [token,setToken]=useState(""),[sending,setSending]=useState(false),[error,setError]=useState(""),[reference,setReference]=useState("");
- const [step,setStep]=useState(1),captchaRef=useRef<HTMLDivElement>(null),rendered=useRef(false);
+ const [step,setStep]=useState(1),[captchaReady,setCaptchaReady]=useState(false),captchaRef=useRef<HTMLDivElement>(null),rendered=useRef(false);
  useEffect(()=>{const s=new URLSearchParams(window.location.search).get("service");if(services.some(item=>item.slug===s))setService(s!);},[]);
+ useEffect(()=>{
+  if(step!==2||!captchaReady||rendered.current||!window.turnstile||!captchaRef.current)return;
+  rendered.current=true;
+  window.turnstile.render(captchaRef.current,{sitekey,callback:setToken,"expired-callback":()=>setToken("")});
+ },[step,captchaReady]);
  function initCaptcha(){
   if(!enabled||!sitekey||!captchaRef.current||!window.turnstile||rendered.current)return;
   rendered.current=true;window.turnstile.render(captchaRef.current,{sitekey,callback:setToken,"expired-callback":()=>setToken("")});
@@ -42,7 +47,7 @@ export default function IntakePage(){
  }
  const deadlineSensitive=stage==="decision"||stage==="dispute"||service==="resmi-basvuru-itiraz"||service==="uluslararasi-insan-haklari";
  return <PageFrame lang={lang} eyebrow={u.intake} title={t.title} description={t.intro} wide>
-   {enabled&&sitekey&&<Script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" strategy="afterInteractive" onLoad={initCaptcha}/>}
+   {enabled&&sitekey&&<Script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" strategy="afterInteractive" onLoad={()=>{setCaptchaReady(true);initCaptcha();}}/>}
    <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_300px]">
     <div className="avofis-card rounded-[18px] border p-5 sm:p-7">
       {reference?<div role="status" className="flex items-start gap-3"><span className="avofis-icon-tile"><CheckCircle2 className="h-5 w-5"/></span><div><h2 className="text-[17px] font-semibold">{t.received}</h2><p className="mt-2 text-[13px] leading-7 text-[#B9C5DF]">{t.receivedDesc}</p><p className="mt-3 font-mono text-[13px] text-[#dfbf59]">{t.reference}: {reference}</p></div></div>:<>
