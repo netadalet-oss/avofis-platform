@@ -1,75 +1,116 @@
 "use client";
-import { useRef,useState,type FormEvent } from "react";
+
+import { useEffect,useRef,useState,type FormEvent } from "react";
 import Link from "next/link";
 import Script from "next/script";
-import { CheckCircle2, LockKeyhole, ShieldCheck } from "lucide-react";
 import { PageFrame } from "@/components/avofis/PageFrame";
 import { usePortalLanguage } from "@/hooks/usePortalLanguage";
-import type { Language } from "@/lib/avofis-content";
+import { getJourney, journeys, validateJourneyDetails } from "@/lib/journeys";
 
 declare global {
-  interface Window {turnstile?:{render:(el:HTMLElement,options:{sitekey:string;callback:(token:string)=>void;"expired-callback":()=>void})=>string;reset:(id?:string)=>void};}
+ interface Window {turnstile?:{render:(el:HTMLElement,options:{sitekey:string;callback:(token:string)=>void;"expired-callback":()=>void})=>string;reset:(id?:string)=>void};}
 }
 const enabled=process.env.NEXT_PUBLIC_AVOFIS_INTAKE_ENABLED==="true";
 const sitekey=process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY||"";
-const locales={
- tr:{eyebrow:"ÖN BAŞVURU",title:"Başvuru ve iletişim",intro:"Hizmetler açıldığında ihtiyaç duyduğunuz işlemi kısaca bildirebilirsiniz. Bu formdan kimlik, sağlık, iltica veya dava belgesi göndermeyin.",closed:"Başvurular henüz açık değil",closedDesc:"Kuruluş, sözleşme ve veri koruma hazırlıkları tamamlanana kadar bu form üzerinden kişisel bilgi alınmıyor.",fullName:"Ad soyad",email:"E-posta",country:"İlgili ülke",service:"Hizmet konusu",message:"Kısa açıklama (en fazla 500 karakter)",consent:"Gizlilik bilgilendirmesini okudum; talebimin incelenmesi ve bana yanıt verilmesi için bilgilerimin işlenmesine ilişkin açıklamayı anladım.",privacy:"Gizlilik",button:"Başvuruyu gönder",sending:"Gönderiliyor…",success:"Başvuru alındı",successDetail:"Referans numaranızı saklayın. Bu kayıt bir hizmet sözleşmesi oluşturmaz.",error:"Başvuru şu anda gönderilemedi. Daha sonra tekrar deneyin.",captcha:"Güvenlik doğrulamasını tamamlayın.",choose:"Seçiniz",ref:"Başvuru numarası",noFiles:"Bu aşamada belge yüklenmez."},
- nl:{eyebrow:"CONTACTAANVRAAG",title:"Aanvraag en contact",intro:"Zodra diensten openen, kunt u uw verzoek kort toelichten. Stuur geen identiteitsbewijzen, medische informatie, asieldossiers of processtukken.",closed:"Aanvragen zijn nog niet geopend",closedDesc:"Tot registratie, contracten en privacymaatregelen zijn afgerond, verzamelen wij geen persoonsgegevens via dit formulier.",fullName:"Naam",email:"E-mail",country:"Betrokken land",service:"Soort dienst",message:"Korte toelichting (max. 500 tekens)",consent:"Ik heb de privacyinformatie gelezen en begrijp de verwerking van mijn gegevens om mijn verzoek te beoordelen en te beantwoorden.",privacy:"Privacy",button:"Aanvraag versturen",sending:"Verzenden…",success:"Aanvraag ontvangen",successDetail:"Bewaar het referentienummer. Hiermee ontstaat geen dienstverleningsovereenkomst.",error:"Uw aanvraag kon niet worden verzonden. Probeer het later opnieuw.",captcha:"Voltooi de beveiligingscontrole.",choose:"Kies een dienst",ref:"Referentienummer",noFiles:"In dit stadium worden geen documenten geüpload."},
- en:{eyebrow:"ENQUIRIES",title:"Enquiries and contact",intro:"When services open, you can briefly describe your request. Do not send identity documents, health information, asylum files or litigation records.",closed:"Enquiries are not open yet",closedDesc:"No personal data is collected through this form until registration, agreements and privacy arrangements are complete.",fullName:"Full name",email:"Email address",country:"Relevant country",service:"Service type",message:"Brief description (max. 500 characters)",consent:"I have read the privacy information and understand how my details would be processed to review and respond to this enquiry.",privacy:"Privacy",button:"Send enquiry",sending:"Sending…",success:"Enquiry received",successDetail:"Keep the reference number. This does not create a services contract.",error:"Your enquiry could not be sent. Please try again later.",captcha:"Complete the security check.",choose:"Select a service",ref:"Reference",noFiles:"No document uploads are accepted at this stage."}
+const ui={
+ tr:{eyebrow:"ÖN BAŞVURU",title:"İşleminize göre ön başvuru",intro:"Önce ne yapmak istediğinizi seçin. Farklı belge ve başvurular için farklı hazırlık adımları gösterilir. İlk aşamada kişisel belge yüklenmez.",journey:"Yapmak istediğiniz işlem",need:"Neden gerekli olabilir?",preparation:"Başvuru öncesi hazırlık",responsibility:"İşlemi kim yürütür?",questions:"İşleminizle ilgili bilgiler",choose:"Seçiniz",closed:"Çevrim içi başvuru şu anda kapalı",closedDesc:"Gerekli hukukî, veri koruma ve işletme koşulları doğrulanmadan ad, e-posta, belge veya ödeme alınmaz. Aşağıdaki işlem bilgilerini inceleyebilirsiniz.",required:"Başvuru sırasında işlemi değerlendirebilmek için şu bilgiler sorulacaktır:",name:"Ad soyad",email:"E-posta adresi",country:"İlgili ülke",summary:"Kısa açıklama (500 karakteri geçmeyin)",summaryHelp:"Kimlik numarası, DigiD parolası, sağlık, iltica veya mahkeme belgelerinin içeriğini yazmayın.",privacy:"Gizlilik bilgilendirmesi",consent:"Bilgilendirmeyi okudum ve talebimin incelenmesi için bu sınırlı bilgilerin işlenmesine ilişkin açıklamayı anladım.",send:"Ön başvuruyu gönder",sending:"Gönderiliyor…",verification:"Güvenlik kontrolünü tamamlayın.",failed:"Başvuru şu anda gönderilemedi. Lütfen daha sonra tekrar deneyin.",success:"Ön başvuru alındı",successInfo:"Bu kayıt bir hizmet sözleşmesi değildir. Başvuru referansınızı saklayın.",reference:"Başvuru referansı",noFiles:"Bu aşamada belge yüklenmez ve ücret alınmaz.",services:"Bütün işlemleri incele"},
+ nl:{eyebrow:"AANVRAAG",title:"Aanvraag op basis van uw procedure",intro:"Kies eerst wat u wilt regelen. Voor verschillende procedures gelden verschillende voorbereidende vragen. U uploadt hier geen documenten.",journey:"Gewenste procedure",need:"Wat is vereist?",preparation:"Voorbereiding",responsibility:"Wie voert het uit?",questions:"Informatie over uw procedure",choose:"Kies een optie",closed:"Online aanvragen zijn momenteel gesloten",closedDesc:"Tot de wettelijke, privacy- en bedrijfsvoorwaarden zijn bevestigd, worden geen namen, e-mails, documenten of betalingen aangenomen. U kunt de procedure-informatie wel bekijken.",required:"Voor de beoordeling worden deze gegevens gevraagd:",name:"Volledige naam",email:"E-mailadres",country:"Betrokken land",summary:"Korte toelichting (maximaal 500 tekens)",summaryHelp:"Voer geen identificatienummers, DigiD-wachtwoorden, medische, asiel- of processtukken in.",privacy:"Privacyinformatie",consent:"Ik heb de informatie gelezen en begrijp de verwerking van deze beperkte gegevens voor de beoordeling van mijn verzoek.",send:"Aanvraag versturen",sending:"Versturen…",verification:"Voltooi de beveiligingscontrole.",failed:"Uw aanvraag kon niet worden verstuurd. Probeer het later opnieuw.",success:"Aanvraag ontvangen",successInfo:"Dit vormt geen dienstverleningsovereenkomst. Bewaar uw referentie.",reference:"Aanvraagreferentie",noFiles:"Geen documenten of betalingen in deze fase.",services:"Bekijk alle procedures"},
+ en:{eyebrow:"ENQUIRY",title:"Enquiry for your specific procedure",intro:"First select what you need to arrange. The questions differ by procedure. No documents are uploaded at this stage.",journey:"What do you want to arrange?",need:"What may be involved?",preparation:"Before applying",responsibility:"Who carries out the work?",questions:"Details for this procedure",choose:"Choose an option",closed:"Online enquiries are currently closed",closedDesc:"Names, emails, documents and payments are not collected until legal, data-protection and business requirements have been verified. You can still review the procedure information.",required:"To assess the request, these details would be requested:",name:"Full name",email:"Email address",country:"Relevant country",summary:"Brief description (up to 500 characters)",summaryHelp:"Do not enter identity numbers, DigiD passwords, health records, asylum or litigation files.",privacy:"Privacy information",consent:"I have read the information and understand the processing of these limited details to assess my enquiry.",send:"Send enquiry",sending:"Sending…",verification:"Complete the security check.",failed:"Your enquiry could not be sent. Please try again later.",success:"Enquiry received",successInfo:"This does not establish a service agreement. Keep your reference.",reference:"Enquiry reference",noFiles:"No documents or payments at this stage.",services:"See all procedures"}
 };
-const categories=[
- {key:"documents",tr:"Resmî belgeler ve apostil",nl:"Officiële documenten en apostille",en:"Official documents and apostilles"},
- {key:"translation",tr:"Tercüme ve tasdik koordinasyonu",nl:"Vertaling en legalisatie",en:"Translation and legalisation"},
- {key:"administration",tr:"Hollanda idarî başvuruları",nl:"Nederlandse administratie",en:"Dutch administrative applications"},
- {key:"diplomas",tr:"Diploma değerlendirme",nl:"Diplomawaardering",en:"Diploma evaluation"},
- {key:"business",tr:"Şirket kuruluş hazırlığı",nl:"Voorbereiding bedrijfsoprichting",en:"Business formation preparation"},
- {key:"expert",tr:"Yetkili uzmana yönlendirme",nl:"Doorverwijzing naar specialisten",en:"Referral to authorised specialists"},
- {key:"other",tr:"Diğer",nl:"Overig",en:"Other"}
-];
 export default function IntakePage(){
- const lang=usePortalLanguage(),t=locales[lang];
+ const lang=usePortalLanguage(),t=ui[lang];
+ const [journeyId,setJourneyId]=useState("tr-to-nl");
+ const [details,setDetails]=useState<Record<string,string>>({});
  const [name,setName]=useState(""),[email,setEmail]=useState(""),[country,setCountry]=useState("Netherlands");
- const [service,setService]=useState(""),[message,setMessage]=useState(""),[consent,setConsent]=useState(false);
- const [token,setToken]=useState(""),[pending,setPending]=useState(false),[error,setError]=useState(""),[reference,setReference]=useState("");
+ const [summary,setSummary]=useState(""),[consent,setConsent]=useState(false),[token,setToken]=useState("");
+ const [pending,setPending]=useState(false),[error,setError]=useState(""),[reference,setReference]=useState("");
  const widgetRef=useRef<HTMLDivElement>(null),rendered=useRef(false);
+ const chosen=getJourney(journeyId)||journeys[0];
+ const ready=enabled&&!!sitekey;
+ useEffect(()=>{
+   const fromUrl=new URLSearchParams(window.location.search).get("islem")||"";
+   if(getJourney(fromUrl))setJourneyId(fromUrl);
+ },[]);
+ function changeJourney(next:string){
+   if(!getJourney(next))return;
+   setJourneyId(next);setDetails({});setReference("");setError("");
+ }
  function initTurnstile(){
-   if(!enabled||!sitekey||!widgetRef.current||!window.turnstile||rendered.current)return;
+   if(!ready||!widgetRef.current||!window.turnstile||rendered.current)return;
    rendered.current=true;
    window.turnstile.render(widgetRef.current,{sitekey,callback:setToken,"expired-callback":()=>setToken("")});
  }
  async function submit(e:FormEvent<HTMLFormElement>){
-   e.preventDefault();if(!enabled||!sitekey||!service||!consent||!token){setError(t.captcha);return;}
-   setError("");setPending(true);
+   e.preventDefault();
+   if(!ready||!validateJourneyDetails(chosen.id,details)||!consent||!token){setError(t.verification);return;}
+   setPending(true);setError("");
    try{
-     const res=await fetch("/api/intake",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,email,country,service,message,lang,privacyAccepted:true,turnstileToken:token})});
-     const data=await res.json();
-     if(!res.ok||typeof data.reference!=="string")throw new Error("intake failed");
-     setReference(data.reference);
-   }catch{setError(t.error);setToken("");window.turnstile?.reset();}
-   finally{setPending(false);}
+     const response=await fetch("/api/intake",{
+       method:"POST",headers:{"Content-Type":"application/json"},
+       body:JSON.stringify({name,email,country,message:summary,lang,service:chosen.service,journey:chosen.id,details,privacyAccepted:true,turnstileToken:token})
+     });
+     const result=await response.json();
+     if(!response.ok||typeof result.reference!=="string")throw new Error("Submission rejected");
+     setReference(result.reference);
+   }catch{
+     setError(t.failed);setToken("");window.turnstile?.reset();
+   }finally{setPending(false);}
  }
  return <PageFrame lang={lang} eyebrow={t.eyebrow} title={t.title} description={t.intro}>
-   {enabled&&sitekey&&<Script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" strategy="afterInteractive" onLoad={initTurnstile}/>}
-   <div className="avofis-card max-w-3xl rounded-[18px] border p-5 sm:p-7">
-     {!enabled||!sitekey?<div role="status" className="flex items-start gap-3.5">
-       <span className="avofis-icon-tile shrink-0"><LockKeyhole className="h-5 w-5" aria-hidden="true"/></span>
-       <div><h2 className="text-[16px] font-semibold text-[#F2F5FF]">{t.closed}</h2><p className="mt-2 text-[13px] leading-[1.8] text-[#B9C5DF]">{t.closedDesc}</p></div>
-     </div>:reference?<div role="status" className="flex items-start gap-3.5">
-       <span className="avofis-icon-tile shrink-0"><CheckCircle2 className="h-5 w-5" aria-hidden="true"/></span>
-       <div><h2 className="text-[16px] font-semibold text-[#F2F5FF]">{t.success}</h2><p className="mt-2 text-[13px] leading-[1.8] text-[#B9C5DF]">{t.successDetail}</p><p className="mt-3 font-mono text-[13px] text-[#dfbf59]">{t.ref}: {reference}</p></div>
-     </div>:<form onSubmit={submit} className="space-y-4">
-       <div className="grid gap-4 sm:grid-cols-2">
-         <label className="avofis-form-label">{t.fullName}<input className="avofis-field" autoComplete="name" required maxLength={100} value={name} onChange={e=>setName(e.target.value)}/></label>
-         <label className="avofis-form-label">{t.email}<input className="avofis-field" type="email" autoComplete="email" required maxLength={254} value={email} onChange={e=>setEmail(e.target.value)}/></label>
-         <label className="avofis-form-label">{t.country}<select className="avofis-field" value={country} onChange={e=>setCountry(e.target.value)}><option value="Netherlands">Nederland</option><option value="Türkiye">Türkiye</option><option value="Germany">Deutschland</option><option value="Other">Other</option></select></label>
-         <label className="avofis-form-label">{t.service}<select className="avofis-field" required value={service} onChange={e=>setService(e.target.value)}><option value="">{t.choose}</option>{categories.map(s=><option key={s.key} value={s.key}>{s[lang]}</option>)}</select></label>
+   <div className="avofis-card rounded-[18px] border p-5 sm:p-7">
+     <label className="avofis-form-label block">{t.journey}
+       <select className="avofis-field" value={journeyId} onChange={e=>changeJourney(e.target.value)}>
+         {journeys.map(j=><option key={j.id} value={j.id}>{j.title[lang]}</option>)}
+       </select>
+     </label>
+     <div className="mt-6 grid gap-4 lg:grid-cols-2">
+       <div className="rounded-xl border border-[#dfbf59]/15 bg-[#071738] p-4">
+         <h2 className="text-[15px] font-semibold">{t.need}</h2><p className="mt-2 text-[14px] leading-7 text-[#B9C5DF]">{chosen.need[lang]}</p>
+         <h3 className="mt-5 text-[15px] font-semibold">{t.preparation}</h3><p className="mt-2 text-[14px] leading-7 text-[#B9C5DF]">{chosen.preparation[lang]}</p>
        </div>
-       <label className="avofis-form-label block">{t.message}<textarea className="avofis-field" rows={3} maxLength={500} value={message} onChange={e=>setMessage(e.target.value)}/></label>
-       <p className="flex items-center gap-2 text-[12px] text-[#B9C5DF]"><ShieldCheck className="h-4 w-4 shrink-0 text-[#dfbf59]" aria-hidden="true"/>{t.noFiles}</p>
-       <label className="flex items-start gap-3 text-[13px] leading-[1.75] text-[#DCE3F1]"><input className="mt-1 h-4 w-4 shrink-0" type="checkbox" required checked={consent} onChange={e=>setConsent(e.target.checked)}/><span>{t.consent} <Link href={"/gizlilik?lang="+lang} className="font-semibold text-[#dfbf59] underline">{t.privacy}</Link></span></label>
-       <div ref={widgetRef} aria-label="Security verification"/>
-       {error&&<p role="alert" className="rounded-lg border border-red-400/25 bg-red-950/30 p-3 text-[13px] text-red-200">{error}</p>}
-       <button disabled={pending||!token||!consent} className="avofis-cta avofis-btn w-full disabled:cursor-not-allowed disabled:opacity-50">{pending?t.sending:t.button}</button>
+       <div className="rounded-xl border border-[#dfbf59]/15 bg-[#071738] p-4">
+         <h2 className="text-[15px] font-semibold">{t.responsibility}</h2><p className="mt-2 text-[14px] leading-7 text-[#B9C5DF]">{chosen.responsibility[lang]}</p>
+         <h3 className="mt-5 text-[15px] font-semibold">{t.questions}</h3><p className="mt-2 text-[14px] leading-7 text-[#B9C5DF]">{chosen.next[lang]}</p>
+       </div>
+     </div>
+     {!ready?<div className="mt-7 rounded-xl border border-[#dfbf59]/25 bg-[#04102C] p-5" role="status">
+       <h2 className="text-[17px] font-semibold">{t.closed}</h2>
+       <p className="mt-2 text-[14px] leading-7 text-[#B9C5DF]">{t.closedDesc}</p>
+       <p className="mt-4 text-[13px] font-semibold">{t.required}</p>
+       <ul className="mt-3 list-inside list-disc space-y-2 text-[14px] text-[#B9C5DF]">{chosen.fields.map(f=><li key={f.key}>{f.label[lang]}</li>)}</ul>
+       <Link href={"/islemler?lang="+lang} className="avofis-outline avofis-btn mt-5">{t.services}</Link>
+     </div>:reference?<div className="mt-7 rounded-xl border border-[#dfbf59]/25 bg-[#04102C] p-5" role="status">
+       <h2 className="text-[18px] font-semibold">{t.success}</h2><p className="mt-2 text-[14px] leading-7 text-[#B9C5DF]">{t.successInfo}</p>
+       <p className="mt-3 text-[15px] font-semibold text-[#dfbf59]">{t.reference}: {reference}</p>
+     </div>:<form onSubmit={submit} className="mt-7 space-y-5">
+       <fieldset className="grid gap-4 rounded-xl border border-[#dfbf59]/20 p-4 sm:grid-cols-2">
+         <legend className="px-2 text-[16px] font-semibold">{t.questions}</legend>
+         {chosen.fields.map(field=><label key={field.key} className="avofis-form-label block">
+           {field.label[lang]}<select required className="avofis-field" value={details[field.key]||""} onChange={e=>setDetails(old=>({...old,[field.key]:e.target.value}))}>
+             <option value="">{t.choose}</option>
+             {field.options.map(option=><option key={option.value} value={option.value}>{option.label[lang]}</option>)}
+           </select>
+         </label>)}
+       </fieldset>
+       <fieldset className="grid gap-4 sm:grid-cols-2">
+         <legend className="mb-4 text-[16px] font-semibold">{t.name} / {t.email}</legend>
+         <label className="avofis-form-label block">{t.name}<input className="avofis-field" autoComplete="name" required minLength={2} maxLength={100} value={name} onChange={e=>setName(e.target.value)}/></label>
+         <label className="avofis-form-label block">{t.email}<input className="avofis-field" type="email" autoComplete="email" required maxLength={254} value={email} onChange={e=>setEmail(e.target.value)}/></label>
+         <label className="avofis-form-label block">{t.country}<select required className="avofis-field" value={country} onChange={e=>setCountry(e.target.value)}>
+           <option value="Netherlands">Nederland</option><option value="Türkiye">Türkiye</option><option value="Germany">Deutschland</option><option value="Other">{lang==="tr"?"Diğer":lang==="nl"?"Overig":"Other"}</option>
+         </select></label>
+       </fieldset>
+       <label className="avofis-form-label block">{t.summary}<textarea rows={3} className="avofis-field" maxLength={500} value={summary} onChange={e=>setSummary(e.target.value)}/></label>
+       <p className="text-[13px] leading-6 text-[#B9C5DF]">{t.summaryHelp}</p>
+       <p className="text-[13px] text-[#dfbf59]">{t.noFiles}</p>
+       <label className="flex items-start gap-3 text-[13px] leading-7 text-[#E2E9F6]">
+         <input type="checkbox" className="mt-1 h-4 w-4 shrink-0" required checked={consent} onChange={e=>setConsent(e.target.checked)}/>
+         <span><Link href={"/gizlilik?lang="+lang} className="font-semibold text-[#dfbf59] underline">{t.privacy}</Link>: {t.consent}</span>
+       </label>
+       <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" strategy="afterInteractive" onLoad={initTurnstile}/>
+       <div ref={widgetRef} aria-label={t.verification}/>
+       {error&&<p role="alert" className="rounded-lg border border-red-400/30 p-3 text-[13px] text-red-200">{error}</p>}
+       <button className="avofis-cta avofis-btn w-full disabled:opacity-50" disabled={pending||!token||!consent||!validateJourneyDetails(chosen.id,details)}>{pending?t.sending:t.send}</button>
      </form>}
    </div>
  </PageFrame>;
