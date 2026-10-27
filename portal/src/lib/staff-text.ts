@@ -57,7 +57,8 @@ export const staffText={
     "conversionError": "Dosya açılamadı. E-postası doğrulanmış aynı müşteri hesabı bulunmalı ve başvuru daha önce dosyaya dönüşmemiş olmalıdır.",
     "agreementError": "Sözleşme oluşturulamadı.",
     "leadStatusError": "Başvuru durumu güncellenemedi.",
-    "caseStatusError": "Dosya durumu değiştirilemedi."
+    "caseStatusError": "Dosya durumu değiştirilemedi.",
+    "messageError": "Mesaj gönderilemedi."
   },
   "nl": {
     "eyebrow": "MEDEWERKERSOMGEVING",
@@ -117,7 +118,8 @@ export const staffText={
     "conversionError": "Dossier kon niet worden aangemaakt. Een geverifieerd account met hetzelfde e-mailadres is vereist; aanvraag mag niet eerder verwerkt zijn.",
     "agreementError": "Overeenkomst kon niet worden toegevoegd.",
     "leadStatusError": "Aanvraagstatus kon niet worden gewijzigd.",
-    "caseStatusError": "Dossierstatus kon niet worden gewijzigd."
+    "caseStatusError": "Dossierstatus kon niet worden gewijzigd.",
+    "messageError": "Bericht kon niet worden verzonden."
   },
   "en": {
     "eyebrow": "STAFF PORTAL",
@@ -177,6 +179,7 @@ export const staffText={
     "conversionError": "Case could not be created. A verified matching client account is required, and the enquiry must not be used already.",
     "agreementError": "Agreement could not be added.",
     "leadStatusError": "Could not update enquiry status.",
-    "caseStatusError": "Could not change case status."
+    "caseStatusError": "Could not change case status.",
+    "messageError": "Message could not be sent."
   }
 } as const;

@@ -1,4 +1,4 @@
--- Apply AFTER 20261027_avofis_mvp.sql and 20261027_customer_journeys.sql.
+-- Apply AFTER 20261027_avofis_mvp.sql, 20261027_staff_role_hardening.sql and 20261027_customer_journeys.sql.
 -- Links public enquiries to verified customer accounts without exposing auth.users.
 alter table public.avofis_cases add column if not exists lead_id uuid references public.avofis_leads(id) on delete restrict;
 create unique index if not exists avofis_cases_unique_lead on public.avofis_cases(lead_id) where lead_id is not null;
@@ -12,7 +12,7 @@ declare
  v_client uuid;
  v_case uuid;
 begin
- if auth.uid() is null or not public.avofis_is_staff() then
+ if auth.uid() is null or not public.avofis_is_admin() then
    raise exception 'Access denied' using errcode='42501';
  end if;
  if p_title is null or char_length(btrim(p_title)) < 3 or char_length(btrim(p_title))>160

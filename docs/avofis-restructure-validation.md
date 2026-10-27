@@ -10,7 +10,7 @@ Bu dal, mevcut müşteri MVP dalını temel alır. Kayıt, mesaj, sözleşme, ö
 - Dosya talepleri ve olayları için PostgreSQL satır düzeyinde erişim kuralları.
 
 ## Veri koruma ve kurulum
-1. Yedekli staging veritabanında önce database/migrations/20261027_avofis_mvp.sql, sonra database/migrations/20261027_case_tracking.sql, ardından database/migrations/20261027_staff_deliverables.sql uygulanmalıdır.
+1. Yedekli staging veritabanında migration sırasını aşağıdaki güncel listeye göre uygulayın.
 2. Personel rolü yalnızca public.avofis_staff tablosuna ayrıcalıklı yetkiyle atanır; kullanıcı profilinden atanmaz.
 3. Geçiş SQL'i uygulanmazsa takip ekranı gerçek kayıt gösteremez; geçmiş olay geriye dönük üretilmez.
 4. Dosya yüklemek otomatik teslim kanıtı değildir. Belgenin kabul durumunu yetkili personel günceller.
@@ -20,7 +20,7 @@ Bu dal, mevcut müşteri MVP dalını temel alır. Kayıt, mesaj, sözleşme, ö
 - Derleme ve içerik testleri için GitHub Actions tanımlıdır; geçtikleri görülmeden başarı bildirilmez.
 - Anonim/müşteri A/müşteri B/personel ile gerçek RLS saldırı testleri, 320/375/390/430/768/1024px görünüm ve klavye testleri, ödeme/iade/webhook ve müşteri akışları staging ortamında ayrı ayrı doğrulanmalıdır.
 - Hollanda şirket tescili, veri sorumlusu ve adresi, doğrulanmış iletişim kanalı, tüketici şartları, KDV/harç dökümü, ödeme hesabı ve belge saklama/silme prosedürleri mevcut kaynak koduyla doğrulanamaz.
-- Müşteri/personel işlem ekranlarının tamamı henüz Hollandaca ve İngilizce değildir.
+- Müşteri ve personel ana dosya ekranları ile belge talepleri ve sonuç belgeleri üç dilde etiketlidir; kullanıcılar tarafından oluşturulan sözleşme ve mesaj metinleri otomatik çevrilmez.
 - Yeşil CI veya Vercel dağıtımı, tüm işlevlerin çalıştığı anlamına gelmez.
 
 ## Sonuç belgeleri
@@ -34,3 +34,19 @@ Müşteri hesabı doğrulandığında, personelin başvuruyu doğrudan dosyaya d
 Düzenleyici makam bağlantıları `portal/src/lib/journey-sources.ts` içinde tutulur. Şartlar kurum ve belge türüne bağlıdır; örneğin bazı çok dilli Türkiye medeni hâl belgeleri Hollanda'da tercüme veya apostil gerektirmeyebilir. Müşteri sürecinde sabit belge listesi, otomatik onay veya garantili sonuç iddiası yer almaz.
 
 **Ek migration sırası:** temel MVP, müşteri senaryoları, başvurudan dosya açma, dosya olayları, durum geçiş guard'ı, belge talepleri, sonuç dosyaları. `20261027_case_tracking.sql` hem olayları hem belge taleplerini kurar; sonrasında `20261027_staff_deliverables.sql` uygulanır. Hiçbiri gerçek Supabase projesine bu PR ile otomatik uygulanmaz.
+
+## Personel yetkileri ve sınırlar
+`20261027_staff_role_hardening.sql`, yalnızca veritabanında `admin` olarak kaydedilmiş personele teklifli müşteri dosyası ve sözleşme oluşturma yetkisi verir. `operator` role sahip personel başvuruları ve mevcut dosyaları işleyebilir, belge talebi gönderebilir, teslim durumunu yönetebilir ve mesaj gönderebilir; fiyatı, müşteri sahipliğini ve hizmet türünü değiştiremez. Dosya açan SECURITY DEFINER yordamı ayrıca `avofis_is_admin()` kontrolü yapar. Ekran da operatörler için bu formları gizler. Bu izinler staging üzerinde ayrı kullanıcılarla denenmeden güvenlik doğrulanmış sayılmaz.
+
+## Otomatik rota denetimleri ve önizleme
+GitHub Actions, `portal/scripts/smoke-routes.mjs` üzerinden yerel Next sunucusunu başlatır; kamu rotaları, giriş, müşteri/personel sayfaları için HTTP 200 ve kayıt/ödeme kapalıyken API'ler için 503 bekler. Bu test görsel erişilebilirlik, Vercel Preview koruması veya gerçek ödeme doğrulaması değildir.
+Önizleme ortamında `/basvuru?islem=tr-to-nl&lang=tr` sayfasının işlem seçenekleri kaydedilmeden denenebilir; ad/e-posta toplama ve gönderim, gerekli uygunluk koşulları sağlanmadan kapalı tutulur.
+
+**Güncel staging migration sırası:**
+1. `20261027_avofis_mvp.sql`
+2. `20261027_staff_role_hardening.sql`
+3. `20261027_customer_journeys.sql`
+4. `20261027_lead_to_case.sql`
+5. `20261027_case_tracking.sql`
+6. `20261027_case_transition_guard.sql`
+7. `20261027_staff_deliverables.sql`
