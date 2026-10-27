@@ -119,14 +119,14 @@ export default function HomePage() {
           </nav>
           <div className="hidden items-center gap-3 lg:flex">
             <div className="flex items-center gap-1 rounded-full border border-[#dfbf59]/25 p-1 text-xs" aria-label="Language">
-              {(["tr","nl","en"] as const).map(item => <button key={item} type="button" aria-pressed={lang===item} onClick={()=>setLang(item)} className={"rounded-full px-2.5 py-1.5 font-semibold uppercase transition " + (lang===item ? "avofis-cta text-white":"text-[#B9C5DF] hover:bg-[#f0d56d]")}>{item}</button>)}
+              {(["tr","nl","en"] as const).map(item => <button key={item} type="button" aria-pressed={lang===item} onClick={()=>setLang(item)} className={"rounded-full px-2.5 py-1.5 font-semibold uppercase transition " + (lang===item ? "avofis-cta text-[#030A22]":"text-[#B9C5DF] hover:bg-[#071738] hover:text-[#f0d56d]")}>{item}</button>)}
             </div>
             <Link href={"/basvuru?lang=" + lang} className="inline-flex items-center gap-2 rounded-full avofis-cta px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#f0d56d]">{t.navContact}<ArrowUpRight className="h-4 w-4" /></Link>
           </div>
           <button type="button" onClick={()=>setMenuOpen(!menuOpen)} aria-label={menuOpen?"Close menu":"Open menu"} aria-expanded={menuOpen} className="rounded-lg p-2 text-[#dfbf59] lg:hidden">{menuOpen?<X/>:<Menu/>}</button>
         </div>
         {menuOpen && <div className="space-y-4 border-t border-[#dfbf59]/25 px-5 py-5 lg:hidden">
-          <div className="flex gap-2">{(["tr","nl","en"] as const).map(item=><button key={item} type="button" onClick={()=>setLang(item)} aria-pressed={lang===item} className={"rounded-lg px-3 py-2 text-sm uppercase " + (lang===item?"avofis-cta text-white":"bg-[#071738]")}>{item}</button>)}</div>
+          <div className="flex gap-2">{(["tr","nl","en"] as const).map(item=><button key={item} type="button" onClick={()=>setLang(item)} aria-pressed={lang===item} className={"rounded-lg px-3 py-2 text-sm uppercase " + (lang===item?"avofis-cta text-[#030A22]":"bg-[#071738] text-[#B9C5DF]")}>{item}</button>)}</div>
           <a className="block" href="#services" onClick={()=>setMenuOpen(false)}>{t.navServices}</a><a className="block" href="#process" onClick={()=>setMenuOpen(false)}>{t.navProcess}</a><a className="block" href="#about" onClick={()=>setMenuOpen(false)}>{t.navAbout}</a><Link className="block" href="/bilgi">{t.navKnowledge}</Link><Link className="block" href="/musteri">{t.navClient}</Link><Link className="block" href={"/basvuru?lang="+lang}>{t.navContact}</Link>
         </div>}
       </header>
@@ -136,18 +136,18 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-7xl gap-12 px-5 pb-24 pt-20 md:px-8 lg:grid-cols-[1.2fr_.8fr] lg:items-center lg:py-32">
           <div className="relative z-10">
             <div className="mb-7 inline-flex items-center gap-3 text-[11px] font-bold tracking-[.22em] text-[#dfbf59]"><span className="h-px w-9 bg-[#dfbf59]"/>{t.kicker}</div>
-            <h1 className="max-w-[760px] text-[clamp(3.2rem,6vw,6.4rem)] font-semibold leading-[1.07] tracking-[-.075em] text-[#dfbf59]">
+            <h1 className="max-w-[760px] text-[clamp(3.2rem,6vw,6.4rem)] font-semibold leading-[1.07] tracking-[-.075em] text-[#F2F5FF]">
               {t.titleA}<br/><span className="font-light italic text-[#dfbf59]">{t.titleB}</span><br/>{t.titleC}
             </h1>
             <p className="mt-9 max-w-xl text-[17px] leading-8 text-[#B9C5DF]">{t.lead}</p>
             <div className="mt-9 flex flex-wrap gap-3">
               <a href="#services" className="inline-flex items-center gap-3 rounded-full avofis-cta px-7 py-4 text-sm font-semibold text-white shadow-lg shadow-[#dfbf59]/10 transition hover:bg-[#f0d56d]">{t.explore}<ArrowRight className="h-4 w-4"/></a>
-              <Link href={"/basvuru?lang="+lang} className="inline-flex items-center gap-2 rounded-full border border-[#dfbf59]/25 px-7 py-4 text-sm font-semibold text-[#dfbf59] transition hover:avofis-card">{t.apply}<ArrowUpRight className="h-4 w-4"/></Link>
+              <Link href={"/basvuru?lang="+lang} className="inline-flex items-center gap-2 rounded-full border border-[#dfbf59]/25 px-7 py-4 text-sm font-semibold text-[#dfbf59] transition hover:bg-[#071738]">{t.apply}<ArrowUpRight className="h-4 w-4"/></Link>
             </div>
             <p className="mt-7 max-w-xl text-xs leading-5 text-[#B9C5DF]"><ShieldCheck className="mr-1 inline h-4 w-4 align-middle text-[#dfbf59]"/>{t.notice}</p>
           </div>
           <div className="relative mx-auto w-full max-w-[450px] lg:ml-auto">
-            <div className="relative overflow-hidden rounded-[35px] avofis-card p-7 text-white shadow-[0_35px_90px_-35px_rgba(12,46,54,.55)] sm:p-9">
+            <div className="relative overflow-hidden rounded-[35px] avofis-card p-7 text-white shadow-[0_35px_90px_-35px_rgba(0,0,0,.7)] sm:p-9">
               <div className="absolute -right-28 -top-28 h-80 w-80 rounded-full border border-[#dfbf59]/25"/>
               <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full border border-[#dfbf59]/25"/>
               <div className="mb-20 flex items-center justify-between"><span className="text-xs font-semibold tracking-[.28em] text-[#dfbf59]">AVOFIS / 01</span><Globe2 className="h-5 w-5 text-[#dfbf59]"/></div>
@@ -168,7 +168,7 @@ export default function HomePage() {
       </section>
       <section id="services" className="avofis-card py-24 md:py-28">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <div className="mb-12 max-w-[730px]"><p className="text-xs font-bold tracking-[.24em] text-[#dfbf59]">{t.serviceKicker}</p><h2 className="mt-4 text-4xl font-semibold tracking-[-.055em] text-[#dfbf59] md:text-5xl">{t.serviceTitle}</h2><p className="mt-5 text-base leading-8 text-[#B9C5DF]">{t.serviceLead}</p></div>
+          <div className="mb-12 max-w-[730px]"><p className="text-xs font-bold tracking-[.24em] text-[#dfbf59]">{t.serviceKicker}</p><h2 className="mt-4 text-4xl font-semibold tracking-[-.055em] text-[#F2F5FF] md:text-5xl">{t.serviceTitle}</h2><p className="mt-5 text-base leading-8 text-[#B9C5DF]">{t.serviceLead}</p></div>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{serviceCodes.map((code,i)=>{const Icon=icons[i];return <article key={code} className="group rounded-[25px] border border-[#dfbf59]/25 avofis-card p-7 transition hover:-translate-y-1 hover:border-[#dfbf59]/25 hover:shadow-xl hover:shadow-[#18353D]/5"><div className="mb-9 flex items-start justify-between"><span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#071738] text-[#dfbf59]"><Icon className="h-6 w-6" strokeWidth={1.5}/></span><span className="text-xs text-[#EFF3FF]">0{i+1}</span></div><h3 className="text-xl font-semibold tracking-[-.03em]">{t[code]}</h3><p className="mt-3 min-h-[80px] text-sm leading-7 text-[#B9C5DF]">{t[(code+"d") as keyof typeof t]}</p><Link href={"/basvuru?lang="+lang} className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#dfbf59]">{t.navContact}<ArrowUpRight className="h-4 w-4"/></Link></article>})}</div>
         </div>
       </section>
@@ -177,8 +177,8 @@ export default function HomePage() {
           <div className="mt-12 grid gap-5 md:grid-cols-3">{[["01",t.step1,t.step1d],["02",t.step2,t.step2d],["03",t.step3,t.step3d]].map(x=><div key={x[0]} className="rounded-3xl border border-[#dfbf59]/25 avofis-card p-7"><span className="text-sm font-semibold text-[#dfbf59]">{x[0]}</span><h3 className="mt-8 text-xl font-semibold">{x[1]}</h3><p className="mt-3 text-sm leading-7 text-[#B9C5DF]">{x[2]}</p></div>)}</div>
         </div>
       </section>
-      <section id="about" className="bg-[#04102C] py-24 text-[#EFF3FF]">
-        <div className="mx-auto grid max-w-7xl gap-14 px-5 md:px-8 lg:grid-cols-2 lg:items-center"><div><p className="text-xs font-bold tracking-[.24em] text-[#dfbf59]">{t.aboutKicker}</p><h2 className="mt-5 text-4xl font-semibold leading-tight tracking-[-.05em] md:text-5xl">{t.aboutTitle}</h2><p className="mt-7 text-base leading-8 text-[#EFF3FF]">{t.aboutLead}</p></div><div className="space-y-5">{[[t.point1,t.point1d],[t.point2,t.point2d],[t.point3,t.point3d]].map((x,i)=><div key={i} className="flex gap-4 rounded-2xl border border-white/10 bg-white/[.04] p-5"><span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#dfbf59] text-[#dfbf59]"><Check className="h-4 w-4"/></span><div><h3 className="font-semibold">{x[0]}</h3><p className="mt-2 text-sm leading-6 text-[#EFF3FF]">{x[1]}</p></div></div>)}</div></div>
+      <section id="about" className="bg-[#071738] py-24 text-[#EFF3FF]">
+        <div className="mx-auto grid max-w-7xl gap-14 px-5 md:px-8 lg:grid-cols-2 lg:items-center"><div><p className="text-xs font-bold tracking-[.24em] text-[#dfbf59]">{t.aboutKicker}</p><h2 className="mt-5 text-4xl font-semibold leading-tight tracking-[-.05em] md:text-5xl">{t.aboutTitle}</h2><p className="mt-7 text-base leading-8 text-[#EFF3FF]">{t.aboutLead}</p></div><div className="space-y-5">{[[t.point1,t.point1d],[t.point2,t.point2d],[t.point3,t.point3d]].map((x,i)=><div key={i} className="flex gap-4 rounded-2xl border border-white/10 bg-white/[.04] p-5"><span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#dfbf59] text-[#030A22]"><Check className="h-4 w-4"/></span><div><h3 className="font-semibold">{x[0]}</h3><p className="mt-2 text-sm leading-6 text-[#EFF3FF]">{x[1]}</p></div></div>)}</div></div>
       </section>
       <section className="bg-[#030A22] py-24"><div className="mx-auto flex max-w-7xl flex-col gap-8 px-5 md:flex-row md:items-center md:justify-between md:px-8"><div><h2 className="max-w-xl text-4xl font-semibold tracking-[-.05em] md:text-5xl">{t.lastTitle}</h2><p className="mt-4 text-base text-[#B9C5DF]">{t.lastLead}</p></div><Link href={"/basvuru?lang="+lang} className="inline-flex shrink-0 items-center gap-3 self-start rounded-full avofis-cta px-7 py-4 text-sm font-semibold text-white">{ready?t.apply:t.prelaunch}<ArrowUpRight className="h-4 w-4"/></Link></div></section>
       <footer className="border-t border-[#dfbf59]/25 bg-[#030A22]"><div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-9 md:flex-row md:items-start md:justify-between md:px-8"><div><p className="text-2xl font-semibold tracking-[-.06em]">AVOfis<span className="text-[#dfbf59]">.</span></p><p className="mt-2 text-xs text-[#B9C5DF]">{t.footer}</p></div><div className="max-w-[650px]"><p className="text-xs leading-6 text-[#B9C5DF]">{t.legal}</p><div className="mt-4 flex flex-wrap gap-5 text-xs font-semibold text-[#dfbf59]"><Link href="/gizlilik">{t.privacy}</Link><Link href="/bilgi">{t.navKnowledge}</Link><Link href="/musteri">{t.navClient}</Link><Link href="/modules">{t.older}</Link><span>© {new Date().getFullYear()} AVOfis</span></div></div></div></footer>
