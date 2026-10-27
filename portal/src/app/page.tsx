@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, BadgeCheck, BookOpen, Building2, Check, ChevronDown, FileCheck2, FileText, Globe2, Landmark, Languages, LockKeyhole, Menu, Scale, ShieldCheck, X } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BadgeCheck, BookOpen, Building2, Check, FileCheck2, FileText, Globe2, Landmark, Menu, Scale, ShieldCheck, X } from "lucide-react";
 
 type Lang = "tr" | "nl" | "en";
 const translations = {
@@ -97,91 +97,166 @@ export default function HomePage() {
   const [lang, setLang] = useState<Lang>("tr");
   const [menuOpen, setMenuOpen] = useState(false);
   const t = translations[lang];
+  const languages: Lang[] = ["tr", "nl", "en"];
+  const nav = [
+    { href: "#services", label: t.navServices },
+    { href: "#process", label: t.navProcess },
+    { href: "#about", label: t.navAbout },
+    { href: "/bilgi", label: t.navKnowledge }
+  ];
+
   return (
-    <main className="avofis-theme min-h-screen bg-[#030A22] text-[#dfbf59]">
-      <div className="bg-[#04102C] text-[#EFF3FF]">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-2 text-[11px] tracking-wide md:px-8">
-          <span className="inline-flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#dfbf59]" />{t.status}</span>
-          <span className="hidden items-center gap-1 md:inline-flex"><Globe2 className="h-3 w-3" /> NL · TR · EN</span>
+    <main className="avofis-theme min-h-screen">
+      <div className="border-b border-[#dfbf59]/10 bg-[#04102C]">
+        <div className="avofis-container flex min-h-8 items-center justify-between gap-3 py-1 text-[11px] text-[#B9C5DF]">
+          <span className="inline-flex items-center gap-2"><span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#dfbf59]" />{t.status}</span>
+          <span className="hidden items-center gap-1.5 sm:inline-flex"><Globe2 aria-hidden="true" className="h-3.5 w-3.5 text-[#dfbf59]" /> NL · TR · EN</span>
         </div>
       </div>
-      <header className="sticky top-0 z-40 border-b border-[#dfbf59]/25 bg-[#030A22]/95 backdrop-blur-xl">
-        <div className="mx-auto flex h-[82px] max-w-7xl items-center justify-between px-5 md:px-8">
-          <Link href="/" className="group flex items-center gap-3" aria-label="AVOfis">
-            <span className="flex h-11 w-11 items-center justify-center rounded-[14px] bg-[#04102C] text-[#dfbf59] shadow-sm"><Scale className="h-5 w-5" strokeWidth={1.6} /></span>
-            <span className="text-[23px] font-semibold tracking-[-0.07em] text-[#F2F5FF]">AV<span className="font-light">Ofis</span><span className="ml-1 text-[#dfbf59]">.</span></span>
+      <header className="sticky top-0 z-40 border-b border-[#dfbf59]/15 bg-[#030A22]/95 backdrop-blur-xl">
+        <div className="avofis-container flex h-[68px] items-center justify-between gap-4">
+          <Link href="/" aria-label="AVOfis ana sayfa" className="inline-flex shrink-0 items-center gap-2.5">
+            <span className="avofis-logo-icon"><Scale aria-hidden="true" className="h-[21px] w-[21px]" strokeWidth={1.75} /></span>
+            <span className="text-[22px] font-semibold tracking-[-.065em] text-[#F2F5FF]">AV<span className="font-normal">Ofis</span><span className="text-[#dfbf59]">.</span></span>
           </Link>
-          <nav className="hidden items-center gap-8 text-sm font-medium text-[#dfbf59] lg:flex" aria-label="Main navigation">
-            <a href="#services" className="hover:text-[#dfbf59]">{t.navServices}</a>
-            <a href="#process" className="hover:text-[#dfbf59]">{t.navProcess}</a>
-            <a href="#about" className="hover:text-[#dfbf59]">{t.navAbout}</a>
-            <Link href="/bilgi" className="hover:text-[#dfbf59]">{t.navKnowledge}</Link><Link href="/musteri" className="hover:text-[#dfbf59]">{t.navClient}</Link>
+          <nav className="hidden items-center gap-6 xl:gap-7 lg:flex" aria-label="Main navigation">
+            {nav.map(item => item.href.startsWith("#") ?
+              <a key={item.href} className="avofis-nav-link" href={item.href}>{item.label}</a> :
+              <Link key={item.href} className="avofis-nav-link" href={item.href}>{item.label}</Link>)}
+            <Link className="avofis-nav-link" href="/musteri">{t.navClient}</Link>
           </nav>
-          <div className="hidden items-center gap-3 lg:flex">
-            <div className="flex items-center gap-1 rounded-full border border-[#dfbf59]/25 p-1 text-xs" aria-label="Language">
-              {(["tr","nl","en"] as const).map(item => <button key={item} type="button" aria-pressed={lang===item} onClick={()=>setLang(item)} className={"rounded-full px-2.5 py-1.5 font-semibold uppercase transition " + (lang===item ? "avofis-cta text-[#030A22]":"text-[#B9C5DF] hover:bg-[#071738] hover:text-[#f0d56d]")}>{item}</button>)}
+          <div className="hidden shrink-0 items-center gap-3 lg:flex">
+            <div className="inline-flex items-center gap-0.5 rounded-lg border border-[#dfbf59]/25 p-1" aria-label="Language">
+              {languages.map(item => <button key={item} type="button" onClick={()=>setLang(item)} aria-pressed={lang===item} className={"avofis-lang " + (lang===item?"avofis-lang-active":"")}>{item.toUpperCase()}</button>)}
             </div>
-            <Link href={"/basvuru?lang=" + lang} className="inline-flex items-center gap-2 rounded-full avofis-cta px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#f0d56d]">{t.navContact}<ArrowUpRight className="h-4 w-4" /></Link>
+            <Link href={"/basvuru?lang="+lang} className="avofis-cta avofis-btn">{t.navContact}<ArrowUpRight aria-hidden="true" className="h-4 w-4"/></Link>
           </div>
-          <button type="button" onClick={()=>setMenuOpen(!menuOpen)} aria-label={menuOpen?"Close menu":"Open menu"} aria-expanded={menuOpen} className="rounded-lg p-2 text-[#dfbf59] lg:hidden">{menuOpen?<X/>:<Menu/>}</button>
+          <button type="button" className="avofis-icon-btn lg:hidden" onClick={()=>setMenuOpen(v=>!v)} aria-label={menuOpen?"Menüyü kapat":"Menüyü aç"} aria-expanded={menuOpen} aria-controls="mobile-nav">
+            {menuOpen?<X aria-hidden="true" className="h-5 w-5"/>:<Menu aria-hidden="true" className="h-5 w-5"/>}
+          </button>
         </div>
-        {menuOpen && <div className="space-y-4 border-t border-[#dfbf59]/25 px-5 py-5 lg:hidden">
-          <div className="flex gap-2">{(["tr","nl","en"] as const).map(item=><button key={item} type="button" onClick={()=>setLang(item)} aria-pressed={lang===item} className={"rounded-lg px-3 py-2 text-sm uppercase " + (lang===item?"avofis-cta text-[#030A22]":"bg-[#071738] text-[#B9C5DF]")}>{item}</button>)}</div>
-          <a className="block" href="#services" onClick={()=>setMenuOpen(false)}>{t.navServices}</a><a className="block" href="#process" onClick={()=>setMenuOpen(false)}>{t.navProcess}</a><a className="block" href="#about" onClick={()=>setMenuOpen(false)}>{t.navAbout}</a><Link className="block" href="/bilgi">{t.navKnowledge}</Link><Link className="block" href="/musteri">{t.navClient}</Link><Link className="block" href={"/basvuru?lang="+lang}>{t.navContact}</Link>
-        </div>}
+        {menuOpen && <nav id="mobile-nav" className="avofis-container grid gap-1 border-t border-[#dfbf59]/15 py-3 lg:hidden" aria-label="Mobile navigation">
+          {nav.map(item=>item.href.startsWith("#")?
+            <a key={item.href} href={item.href} className="avofis-mobile-link" onClick={()=>setMenuOpen(false)}>{item.label}</a> :
+            <Link key={item.href} href={item.href} className="avofis-mobile-link" onClick={()=>setMenuOpen(false)}>{item.label}</Link>)}
+          <Link href="/musteri" className="avofis-mobile-link" onClick={()=>setMenuOpen(false)}>{t.navClient}</Link>
+          <div className="flex items-center justify-between gap-3 pt-2">
+            <div className="inline-flex items-center gap-1 rounded-lg border border-[#dfbf59]/25 p-1">{languages.map(item=><button key={item} onClick={()=>setLang(item)} aria-pressed={lang===item} className={"avofis-lang "+(lang===item?"avofis-lang-active":"")}>{item.toUpperCase()}</button>)}</div>
+            <Link href={"/basvuru?lang="+lang} onClick={()=>setMenuOpen(false)} className="avofis-cta avofis-btn">{t.navContact}<ArrowUpRight aria-hidden="true" className="h-4 w-4"/></Link>
+          </div>
+        </nav>}
       </header>
-      <section className="relative overflow-hidden bg-[#030A22]">
-        <div className="pointer-events-none absolute right-[-210px] top-[-230px] h-[650px] w-[650px] rounded-full border border-[#dfbf59]/25" />
-        <div className="pointer-events-none absolute right-[-120px] top-[-140px] h-[470px] w-[470px] rounded-full border border-[#dfbf59]/25" />
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 pb-24 pt-20 md:px-8 lg:grid-cols-[1.2fr_.8fr] lg:items-center lg:py-32">
-          <div className="relative z-10">
-            <div className="mb-7 inline-flex items-center gap-3 text-[11px] font-bold tracking-[.22em] text-[#dfbf59]"><span className="h-px w-9 bg-[#dfbf59]"/>{t.kicker}</div>
-            <h1 className="max-w-[760px] text-[clamp(3.2rem,6vw,6.4rem)] font-semibold leading-[1.07] tracking-[-.075em] text-[#F2F5FF]">
-              {t.titleA}<br/><span className="font-light italic text-[#dfbf59]">{t.titleB}</span><br/>{t.titleC}
+
+      <section className="relative overflow-hidden">
+        <div className="avofis-container grid items-center gap-9 py-14 sm:py-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(310px,.85fr)] lg:gap-12 lg:py-[84px]">
+          <div className="min-w-0">
+            <p className="avofis-eyebrow"><span className="h-px w-7 bg-[#dfbf59]"/>{t.kicker}</p>
+            <h1 className="mt-5 max-w-2xl text-[clamp(2.55rem,5.1vw,4.45rem)] font-semibold leading-[1.12] tracking-[-.055em] text-[#F2F5FF]">
+              {t.titleA}<br/><span className="text-[#dfbf59]">{t.titleB}</span><br/>{t.titleC}
             </h1>
-            <p className="mt-9 max-w-xl text-[17px] leading-8 text-[#B9C5DF]">{t.lead}</p>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <a href="#services" className="inline-flex items-center gap-3 rounded-full avofis-cta px-7 py-4 text-sm font-semibold text-white shadow-lg shadow-[#dfbf59]/10 transition hover:bg-[#f0d56d]">{t.explore}<ArrowRight className="h-4 w-4"/></a>
-              <Link href={"/basvuru?lang="+lang} className="inline-flex items-center gap-2 rounded-full border border-[#dfbf59]/25 px-7 py-4 text-sm font-semibold text-[#dfbf59] transition hover:bg-[#071738]">{t.apply}<ArrowUpRight className="h-4 w-4"/></Link>
+            <p className="mt-6 max-w-[565px] text-[15px] leading-[1.8] text-[#B9C5DF] sm:text-base">{t.lead}</p>
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <a href="#services" className="avofis-cta avofis-btn">{t.explore}<ArrowRight aria-hidden="true" className="h-4 w-4"/></a>
+              <Link href={"/basvuru?lang="+lang} className="avofis-btn avofis-outline">{t.apply}<ArrowUpRight aria-hidden="true" className="h-4 w-4"/></Link>
             </div>
-            <p className="mt-7 max-w-xl text-xs leading-5 text-[#B9C5DF]"><ShieldCheck className="mr-1 inline h-4 w-4 align-middle text-[#dfbf59]"/>{t.notice}</p>
+            <p className="mt-6 flex max-w-xl items-start gap-2 text-xs leading-[1.7] text-[#AEBBD5]"><ShieldCheck aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-[#dfbf59]"/>{t.notice}</p>
           </div>
-          <div className="relative mx-auto w-full max-w-[450px] lg:ml-auto">
-            <div className="relative overflow-hidden rounded-[35px] avofis-card p-7 text-white shadow-[0_35px_90px_-35px_rgba(0,0,0,.7)] sm:p-9">
-              <div className="absolute -right-28 -top-28 h-80 w-80 rounded-full border border-[#dfbf59]/25"/>
-              <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full border border-[#dfbf59]/25"/>
-              <div className="mb-20 flex items-center justify-between"><span className="text-xs font-semibold tracking-[.28em] text-[#dfbf59]">AVOFIS / 01</span><Globe2 className="h-5 w-5 text-[#dfbf59]"/></div>
-              <div className="space-y-5">
-                <span className="text-xs uppercase tracking-[.18em] text-[#EFF3FF]">NEDERLAND · TÜRKIYE</span>
-                <p className="max-w-xs text-3xl font-light leading-snug tracking-[-.035em]">{lang==="tr"?"Sınırları aşan işlemler için tek bir düzen.":lang==="nl"?"Een helder traject over grenzen heen.":"Clear processes across borders."}</p>
-                <div className="h-px bg-white/20"/>
-                <div className="flex items-center justify-between text-sm text-[#EFF3FF]"><span>01 / Documenten</span><FileText className="h-5 w-5"/></div>
-                <div className="flex items-center justify-between text-sm text-[#EFF3FF]"><span>02 / Administratie</span><Landmark className="h-5 w-5"/></div>
-                <div className="flex items-center justify-between text-sm text-[#EFF3FF]"><span>03 / Expertise</span><Scale className="h-5 w-5"/></div>
-              </div>
+          <div className="avofis-card relative min-w-0 overflow-hidden rounded-[24px] border p-6 sm:p-8">
+            <div className="pointer-events-none absolute -right-14 -top-16 h-56 w-56 rounded-full border border-[#dfbf59]/15"/>
+            <div className="pointer-events-none absolute -right-7 -top-9 h-44 w-44 rounded-full border border-[#dfbf59]/15"/>
+            <div className="relative flex items-center justify-between gap-4 border-b border-[#dfbf59]/15 pb-5">
+              <span className="text-[11px] font-bold uppercase tracking-[.16em] text-[#dfbf59]">AVOFIS / NL · TR · EN</span>
+              <Globe2 aria-hidden="true" className="h-5 w-5 text-[#dfbf59]"/>
             </div>
-            <div className="absolute -bottom-5 -left-5 rounded-2xl border border-[#dfbf59]/25 avofis-card p-4 shadow-xl sm:-left-9">
-              <div className="flex items-center gap-2 text-xs font-medium text-[#dfbf59]"><BadgeCheck className="h-4 w-4 text-[#dfbf59]"/>{t.prelaunch}</div>
+            <div className="relative py-7">
+              <span className="text-xs font-medium uppercase tracking-[.12em] text-[#AEBBD5]">NEDERLAND · TÜRKIYE</span>
+              <p className="mt-3 max-w-sm text-[25px] font-medium leading-snug tracking-[-.035em] text-[#F2F5FF] sm:text-[28px]">{lang==="tr"?"Sınırları aşan işlemler için tek bir düzen.":lang==="nl"?"Een helder traject over grenzen heen.":"Clear processes across borders."}</p>
             </div>
+            <div className="relative grid gap-2 border-t border-[#dfbf59]/15 pt-5">
+              {[[FileText,"01 / Documenten"],[Landmark,"02 / Administratie"],[Scale,"03 / Expertise"]].map(([Icon,label],index)=>{
+                const C=Icon as typeof FileText;
+                return <div key={index} className="flex h-11 items-center gap-3 rounded-xl border border-[#dfbf59]/10 bg-[#071738]/70 px-3.5">
+                  <C aria-hidden="true" className="h-4 w-4 shrink-0 text-[#dfbf59]"/>
+                  <span className="text-[13px] font-medium text-[#DCE3F1]">{label as string}</span>
+                  <Check aria-hidden="true" className="ml-auto h-4 w-4 text-[#dfbf59]"/>
+                </div>;
+              })}
+            </div>
+            <div className="relative mt-5 inline-flex items-center gap-2 rounded-lg bg-[#dfbf59]/10 px-3 py-2 text-xs font-semibold text-[#f0d56d]"><BadgeCheck aria-hidden="true" className="h-4 w-4"/>{t.prelaunch}</div>
           </div>
         </div>
       </section>
-      <section id="services" className="avofis-card py-24 md:py-28">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <div className="mb-12 max-w-[730px]"><p className="text-xs font-bold tracking-[.24em] text-[#dfbf59]">{t.serviceKicker}</p><h2 className="mt-4 text-4xl font-semibold tracking-[-.055em] text-[#F2F5FF] md:text-5xl">{t.serviceTitle}</h2><p className="mt-5 text-base leading-8 text-[#B9C5DF]">{t.serviceLead}</p></div>
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{serviceCodes.map((code,i)=>{const Icon=icons[i];return <article key={code} className="group rounded-[25px] border border-[#dfbf59]/25 avofis-card p-7 transition hover:-translate-y-1 hover:border-[#dfbf59]/25 hover:shadow-xl hover:shadow-[#18353D]/5"><div className="mb-9 flex items-start justify-between"><span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#071738] text-[#dfbf59]"><Icon className="h-6 w-6" strokeWidth={1.5}/></span><span className="text-xs text-[#EFF3FF]">0{i+1}</span></div><h3 className="text-xl font-semibold tracking-[-.03em]">{t[code]}</h3><p className="mt-3 min-h-[80px] text-sm leading-7 text-[#B9C5DF]">{t[(code+"d") as keyof typeof t]}</p><Link href={"/basvuru?lang="+lang} className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#dfbf59]">{t.navContact}<ArrowUpRight className="h-4 w-4"/></Link></article>})}</div>
+
+      <section id="services" className="border-y border-[#dfbf59]/10 bg-[#04102C] py-14 sm:py-16">
+        <div className="avofis-container">
+          <div className="avofis-section-heading"><div><p className="avofis-eyebrow">{t.serviceKicker}</p><h2 className="avofis-h2 mt-3">{t.serviceTitle}</h2></div><p className="avofis-section-desc">{t.serviceLead}</p></div>
+          <div className="mt-8 grid items-stretch gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {serviceCodes.map((code,i)=>{
+              const Icon=icons[i];
+              return <article key={code} className="avofis-card avofis-service-card group flex h-full min-w-0 flex-col rounded-[18px] border p-5 sm:p-6">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="avofis-icon-tile"><Icon aria-hidden="true" className="h-5 w-5" strokeWidth={1.7}/></span>
+                  <span className="text-xs font-semibold tabular-nums text-[#8D9AB9]">0{i+1}</span>
+                </div>
+                <h3 className="mt-5 text-[17px] font-semibold leading-snug tracking-[-.02em] text-[#F2F5FF]">{t[code]}</h3>
+                <p className="mt-2 flex-1 text-[13px] leading-[1.75] text-[#B9C5DF]">{t[(code+"d") as keyof typeof t]}</p>
+                <div className="mt-5 border-t border-[#dfbf59]/15 pt-3.5">
+                  <Link href={"/basvuru?lang="+lang} className="inline-flex min-h-9 items-center gap-2 text-[13px] font-semibold text-[#dfbf59]">{t.navContact}<ArrowUpRight aria-hidden="true" className="h-4 w-4"/></Link>
+                </div>
+              </article>;
+            })}
+          </div>
+          <Link href="/hizmetler" className="avofis-outline avofis-btn mt-6">{t.explore}<ArrowUpRight aria-hidden="true" className="h-4 w-4"/></Link>
         </div>
       </section>
-      <section id="process" className="bg-[#04102C] py-24">
-        <div className="mx-auto max-w-7xl px-5 md:px-8"><p className="text-xs font-bold tracking-[.24em] text-[#dfbf59]">{t.howKicker}</p><h2 className="mt-4 max-w-2xl text-4xl font-semibold tracking-[-.05em] md:text-5xl">{t.howTitle}</h2>
-          <div className="mt-12 grid gap-5 md:grid-cols-3">{[["01",t.step1,t.step1d],["02",t.step2,t.step2d],["03",t.step3,t.step3d]].map(x=><div key={x[0]} className="rounded-3xl border border-[#dfbf59]/25 avofis-card p-7"><span className="text-sm font-semibold text-[#dfbf59]">{x[0]}</span><h3 className="mt-8 text-xl font-semibold">{x[1]}</h3><p className="mt-3 text-sm leading-7 text-[#B9C5DF]">{x[2]}</p></div>)}</div>
+
+      <section id="process" className="py-14 sm:py-16">
+        <div className="avofis-container">
+          <p className="avofis-eyebrow">{t.howKicker}</p>
+          <h2 className="avofis-h2 mt-3 max-w-2xl">{t.howTitle}</h2>
+          <div className="mt-8 grid items-stretch gap-3 md:grid-cols-3">
+            {[[t.step1,t.step1d,FileText],[t.step2,t.step2d,FileCheck2],[t.step3,t.step3d,ShieldCheck]].map(([title,desc,Icon],i)=>{
+              const StepIcon=Icon as typeof FileText;
+              return <div key={i} className="avofis-card flex h-full min-w-0 gap-4 rounded-[18px] border p-5 sm:p-6">
+                <span className="avofis-icon-tile shrink-0"><StepIcon aria-hidden="true" className="h-5 w-5"/></span>
+                <div className="min-w-0"><span className="text-[11px] font-semibold tabular-nums tracking-[.13em] text-[#dfbf59]">0{i+1}</span><h3 className="mt-1 text-[16px] font-semibold leading-snug text-[#F2F5FF]">{title as string}</h3><p className="mt-2 text-[13px] leading-[1.75] text-[#B9C5DF]">{desc as string}</p></div>
+              </div>;
+            })}
+          </div>
         </div>
       </section>
-      <section id="about" className="bg-[#071738] py-24 text-[#EFF3FF]">
-        <div className="mx-auto grid max-w-7xl gap-14 px-5 md:px-8 lg:grid-cols-2 lg:items-center"><div><p className="text-xs font-bold tracking-[.24em] text-[#dfbf59]">{t.aboutKicker}</p><h2 className="mt-5 text-4xl font-semibold leading-tight tracking-[-.05em] md:text-5xl">{t.aboutTitle}</h2><p className="mt-7 text-base leading-8 text-[#EFF3FF]">{t.aboutLead}</p></div><div className="space-y-5">{[[t.point1,t.point1d],[t.point2,t.point2d],[t.point3,t.point3d]].map((x,i)=><div key={i} className="flex gap-4 rounded-2xl border border-white/10 bg-white/[.04] p-5"><span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#dfbf59] text-[#030A22]"><Check className="h-4 w-4"/></span><div><h3 className="font-semibold">{x[0]}</h3><p className="mt-2 text-sm leading-6 text-[#EFF3FF]">{x[1]}</p></div></div>)}</div></div>
+
+      <section id="about" className="border-y border-[#dfbf59]/10 bg-[#071738] py-14 sm:py-16">
+        <div className="avofis-container grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
+          <div className="min-w-0">
+            <p className="avofis-eyebrow">{t.aboutKicker}</p>
+            <h2 className="avofis-h2 mt-3">{t.aboutTitle}</h2>
+            <p className="mt-4 max-w-xl text-[14px] leading-[1.85] text-[#B9C5DF]">{t.aboutLead}</p>
+          </div>
+          <div className="grid gap-3">
+            {[[t.point1,t.point1d],[t.point2,t.point2d],[t.point3,t.point3d]].map(([title,desc],i)=>
+              <div key={i} className="avofis-card flex min-w-0 items-start gap-3.5 rounded-[16px] border p-4 sm:p-5">
+                <span className="avofis-icon-tile h-9 w-9 shrink-0"><Check aria-hidden="true" className="h-4 w-4"/></span>
+                <div className="min-w-0"><h3 className="text-[15px] font-semibold text-[#F2F5FF]">{title}</h3><p className="mt-1 text-[13px] leading-[1.7] text-[#B9C5DF]">{desc}</p></div>
+              </div>)}
+          </div>
+        </div>
       </section>
-      <section className="bg-[#030A22] py-24"><div className="mx-auto flex max-w-7xl flex-col gap-8 px-5 md:flex-row md:items-center md:justify-between md:px-8"><div><h2 className="max-w-xl text-4xl font-semibold tracking-[-.05em] md:text-5xl">{t.lastTitle}</h2><p className="mt-4 text-base text-[#B9C5DF]">{t.lastLead}</p></div><Link href={"/basvuru?lang="+lang} className="inline-flex shrink-0 items-center gap-3 self-start rounded-full avofis-cta px-7 py-4 text-sm font-semibold text-white">{ready?t.apply:t.prelaunch}<ArrowUpRight className="h-4 w-4"/></Link></div></section>
-      <footer className="border-t border-[#dfbf59]/25 bg-[#030A22]"><div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-9 md:flex-row md:items-start md:justify-between md:px-8"><div><p className="text-2xl font-semibold tracking-[-.06em]">AVOfis<span className="text-[#dfbf59]">.</span></p><p className="mt-2 text-xs text-[#B9C5DF]">{t.footer}</p></div><div className="max-w-[650px]"><p className="text-xs leading-6 text-[#B9C5DF]">{t.legal}</p><div className="mt-4 flex flex-wrap gap-5 text-xs font-semibold text-[#dfbf59]"><Link href="/gizlilik">{t.privacy}</Link><Link href="/bilgi">{t.navKnowledge}</Link><Link href="/musteri">{t.navClient}</Link><Link href="/modules">{t.older}</Link><span>© {new Date().getFullYear()} AVOfis</span></div></div></div></footer>
+
+      <section className="py-12 sm:py-14">
+        <div className="avofis-container">
+          <div className="avofis-card flex flex-col items-start gap-5 rounded-[20px] border p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+            <div className="min-w-0"><h2 className="text-[clamp(1.4rem,2.5vw,1.85rem)] font-semibold leading-tight tracking-[-.035em] text-[#F2F5FF]">{t.lastTitle}</h2><p className="mt-2 text-[13px] leading-6 text-[#B9C5DF]">{t.lastLead}</p></div>
+            <Link href={"/basvuru?lang="+lang} className="avofis-cta avofis-btn shrink-0">{ready?t.apply:t.prelaunch}<ArrowUpRight aria-hidden="true" className="h-4 w-4"/></Link>
+          </div>
+        </div>
+      </section>
+      <footer className="border-t border-[#dfbf59]/15 bg-[#04102C]">
+        <div className="avofis-container grid gap-5 py-8 md:grid-cols-[180px_1fr] md:gap-10">
+          <div><p className="text-xl font-semibold tracking-[-.055em] text-[#F2F5FF]">AVOfis<span className="text-[#dfbf59]">.</span></p><p className="mt-1 text-xs text-[#B9C5DF]">{t.footer}</p></div>
+          <div className="md:text-right"><p className="text-xs leading-[1.75] text-[#B9C5DF]">{t.legal}</p><div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-xs font-medium text-[#dfbf59] md:justify-end"><Link href="/gizlilik">{t.privacy}</Link><Link href="/bilgi">{t.navKnowledge}</Link><Link href="/musteri">{t.navClient}</Link><Link href="/modules">{t.older}</Link><span className="text-[#B9C5DF]">© {new Date().getFullYear()} AVOfis</span></div></div>
+        </div>
+      </footer>
     </main>
   );
 }

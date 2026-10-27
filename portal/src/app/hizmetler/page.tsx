@@ -11,5 +11,27 @@ const categories = [
   ["Göçmenlik, uyuşmazlık, AİHM ve dava", "Somut hukukî değerlendirme ve temsil yetkili bağımsız uzman tarafından yürütülür; yetkisiz temsil üstlenilmez.", "Bağımsız uzman"]
 ];
 export default function ServicesPage() {
-  return <main className="avofis-theme min-h-screen bg-[#030A22] text-[#dfbf59]"><div className="mx-auto max-w-5xl px-5 py-16 md:py-24"><Link href="/" className="inline-flex items-center gap-2 text-sm text-[#dfbf59]"><ArrowLeft className="h-4 w-4"/> AVOfis</Link><p className="mt-16 text-xs font-semibold tracking-[.22em] text-[#dfbf59]">HİZMET ÇERÇEVESİ</p><h1 className="mt-5 text-5xl font-semibold tracking-[-.06em]">Hizmetler ve yetki sınırları</h1><p className="mt-6 max-w-3xl text-base leading-8 text-[#dfbf59]">Bu katalog bilgilendirme amaçlıdır. AVOfis'in kuruluş ve çalışma yetkisi koşulları tamamlanmadan hizmet satışı veya dosya kabulü yapılmaz. Her işlem için ayrı sözleşme, kapsam ve ücret teyidi gerekir.</p><div className="mt-12 grid gap-4 md:grid-cols-2">{categories.map((c,i)=><article key={c[0]} className="rounded-3xl border border-[#dfbf59]/25 avofis-card p-7"><div className="mb-6 flex items-center justify-between"><FileCheck2 className="h-6 w-6 text-[#dfbf59]"/><span className="text-xs font-semibold text-[#B9C5DF]">0{i+1}</span></div><h2 className="text-xl font-semibold">{c[0]}</h2><p className="mt-3 text-sm leading-7 text-[#B9C5DF]">{c[1]}</p><p className="mt-5 text-xs font-bold uppercase tracking-wide text-[#dfbf59]">{c[2]}</p></article>)}</div><div className="mt-10 rounded-3xl avofis-cta p-7 text-[#EFF3FF]"><ShieldCheck className="h-7 w-7 text-[#dfbf59]"/><p className="mt-3 text-sm leading-7">AVOfis kendisini Hollanda barosuna kayıtlı bir advocatenkantoor olarak tanıtmaz. Göçmenlik hukukunda temsil, mahkeme işleri, yeminli tercüme ve noterlik gerektiğinde bağımsız yetkili meslek mensupları görev alır.</p></div><Link href="/basvuru" className="mt-8 inline-flex items-center gap-2 rounded-full avofis-cta px-6 py-3 text-sm font-semibold text-white">İletişim kanalı<ArrowUpRight className="h-4 w-4"/></Link></div></main>;
+ return <main className="avofis-theme min-h-screen">
+  <div className="avofis-container max-w-5xl py-10 sm:py-14">
+   <Link href="/" className="inline-flex min-h-10 items-center gap-2 text-[13px] font-semibold text-[#dfbf59]"><ArrowLeft aria-hidden="true" className="h-4 w-4"/>AVOfis</Link>
+   <div className="avofis-page-head">
+    <p className="avofis-eyebrow">HİZMET ÇERÇEVESİ</p>
+    <h1 className="avofis-page-title mt-3">Hizmetler ve yetki sınırları</h1>
+    <p className="mt-4 max-w-3xl text-sm leading-[1.8] text-[#B9C5DF]">Bu katalog bilgilendirme amaçlıdır. AVOfis'in kuruluş ve çalışma yetkisi koşulları tamamlanmadan hizmet satışı veya dosya kabulü yapılmaz. Her işlem için ayrı sözleşme, kapsam ve ücret teyidi gerekir.</p>
+   </div>
+   <div className="mt-8 grid items-stretch gap-3 sm:grid-cols-2">
+    {categories.map((c,i)=><article key={c[0]} className="avofis-card flex h-full flex-col rounded-[18px] border p-5 sm:p-6">
+     <div className="flex items-center justify-between gap-3"><span className="avofis-icon-tile"><FileCheck2 aria-hidden="true" className="h-5 w-5"/></span><span className="text-xs font-semibold text-[#8D9AB9]">0{i+1}</span></div>
+     <h2 className="mt-4 text-[17px] font-semibold leading-snug text-[#F2F5FF]">{c[0]}</h2>
+     <p className="mt-2 flex-1 text-[13px] leading-[1.75] text-[#B9C5DF]">{c[1]}</p>
+     <p className="mt-5 border-t border-[#dfbf59]/15 pt-3 text-[11px] font-semibold uppercase tracking-[.1em] text-[#dfbf59]">{c[2]}</p>
+    </article>)}
+   </div>
+   <div className="avofis-card mt-6 flex items-start gap-3 rounded-[18px] border p-5 sm:p-6">
+    <span className="avofis-icon-tile shrink-0"><ShieldCheck aria-hidden="true" className="h-5 w-5"/></span>
+    <p className="text-[13px] leading-[1.8] text-[#DCE3F1]">AVOfis kendisini Hollanda barosuna kayıtlı bir advocatenkantoor olarak tanıtmaz. Göçmenlik hukukunda temsil, mahkeme işleri, yeminli tercüme ve noterlik gerektiğinde bağımsız yetkili meslek mensupları görev alır.</p>
+   </div>
+   <Link href="/basvuru" className="avofis-cta avofis-btn mt-6">İletişim kanalı<ArrowUpRight aria-hidden="true" className="h-4 w-4"/></Link>
+  </div>
+ </main>;
 }
