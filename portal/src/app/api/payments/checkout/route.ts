@@ -22,6 +22,8 @@ export async function POST(request:NextRequest){
   const {data:agreement}=await db.from("avofis_agreements").select("id,signed_at").eq("case_id",caseId).maybeSingle();
   if(!agreement?.signed_at)return response("Agreement not accepted",409);
   const {data:previous}=await db.from("avofis_payments").select("checkout_url,status").eq("case_id",caseId).in("status",["open","pending","authorized","paid"]).order("created_at",{ascending:false}).limit(1).maybeSingle();
+  const {data:disputed}=await db.from("avofis_payments").select("id").eq("case_id",caseId).in("status",["refunded","charged_back"]).limit(1).maybeSingle();
+  if(disputed)return response("Please contact support before attempting another payment",409);
   if(previous){
     if(previous.status==="paid")return response("Already paid",409);
     return NextResponse.json({checkoutUrl:previous.checkout_url},{headers:{"Cache-Control":"no-store"}});
