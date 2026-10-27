@@ -6,7 +6,7 @@ export function usePortalLanguage(): Language {
   const [language,setLanguage] = useState<Language>("tr");
   useEffect(()=>{
     const value = new URLSearchParams(window.location.search).get("lang");
-    if(value==="tr"||value==="nl"||value==="en") setLanguage(value);
+    if(value==="tr"||value==="nl"||value==="en"){ setLanguage(value); document.documentElement.lang=value; } else { document.documentElement.lang="tr"; }
   },[]);
   return language;
 }
