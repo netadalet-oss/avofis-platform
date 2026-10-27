@@ -1,17 +1,6 @@
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
+import { redirect } from "next/navigation";
 
+// Legacy placeholder: use the access-controlled staff CMS rather than a public fake module.
 export default function Page() {
-  return (
-    <main>
-      <SiteHeader />
-      <section className="container-shell py-24">
-        <div className="rounded-[28px] border border-white/10 bg-white/5 p-8">
-          <h1 className="text-3xl font-semibold text-white">Users</h1>
-          <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300">Admin bölümü: users</p>
-        </div>
-      </section>
-      <SiteFooter />
-    </main>
-  );
+  redirect("/cms");
 }
