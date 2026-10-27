@@ -12,6 +12,7 @@
     "dev:api": "npm --workspace api run dev",
     "build:portal": "npm --workspace portal run build",
     "build:admin": "npm --workspace admin run build",
-    "build:api": "npm --workspace api run build"
+    "build:api": "npm --workspace api run build",
+    "test:content": "tsx --test portal/tests/*.test.ts"
   }
 }
