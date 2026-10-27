@@ -12,7 +12,7 @@ const priorities:[string,string][]=[["low","Düşük"],["normal","Normal"],["hig
 const enabled=process.env.NEXT_PUBLIC_AVOFIS_INTERNAL_ENABLED==="true";
 export default function InternalOperationsPage(){
  const {user,loading:authLoading}=useUser();
- const [admin,setAdmin]=useState<boolean|null>(null),[items,setItems]=useState<WorkItem[]>([]),[error,setError]=useState(""),[busy,setBusy]=useState(false);
+ const [admin,setAdmin]=useState<boolean|null>(null),[items,setItems]=useState<WorkItem[]>([]),[error,setError]=useState(""),[busy,setBusy]=useState(false),[loaded,setLoaded]=useState(false);
  const [filter,setFilter]=useState("all"),[title,setTitle]=useState(""),[group,setGroup]=useState("company"),[owner,setOwner]=useState(""),[priority,setPriority]=useState("normal"),[due,setDue]=useState(""),[budget,setBudget]=useState(""),[notes,setNotes]=useState("");
  useEffect(()=>{
   if(!enabled||!user){setAdmin(null);return;}
