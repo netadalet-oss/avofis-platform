@@ -25,3 +25,12 @@ Bu dal, mevcut müşteri MVP dalını temel alır. Kayıt, mesaj, sözleşme, ö
 
 ## Sonuç belgeleri
 Personel yalnızca kabul edilmiş sözleşmeli dosyaya özel Supabase bucket üzerinden dosya yükleyebilir; dosya metadatası public.avofis_deliverables tablosunda RLS ile kayıtlıdır. Müşteri yalnızca yetkili olduğu dosyanın teslim belgelerini kısa süreli imzalı bağlantıdan indirebilir. Depolama yazımı başarılı ancak veritabanı kaydı başarısız olursa sistem bunu açık hata olarak bildirir; manuel tutarlılık denetimi gerekir. Canlıda uçtan uca doğrulanmadı.
+
+## Müşteri hedefleri ile gerçek işlem eşlemesi
+Dokuz işlem rotası `portal/src/lib/journeys.ts` ve `portal/src/app/islemler/page.tsx` içinde tanımlıdır. Türkiye belgesinin Hollanda'da, Hollanda belgesinin Türkiye'de kullanımı; apostil/tercüme; Hollanda belediye; diploma; şirket; belge aktarımı ve bağımsız uzman gereksinimi ayrı ayrı ele alınır. Her rota işlem bazlı sorulara sahip olup formun gönderimi sunucu tarafında `validateJourneyDetails` ile kontrol edilir. `avofis_leads.journey_key` ve `intake_details` alanları için `20261027_customer_journeys.sql` uygulanır.
+
+Müşteri hesabı doğrulandığında, personelin başvuruyu doğrudan dosyaya dönüştürmesi için `20261027_lead_to_case.sql` ile `avofis_open_case_from_lead` yordamı eklenir. Doğrudan kullanıcı UUID girişi yerine doğrulanmış hesap e-postası eşleştirilir. Durum geçişi denetimi için `20261027_case_transition_guard.sql` uygulanır. Yalnızca gerçek sözleşme ve sağlayıcı kayıtlarıyla ilerleme sağlanır.
+
+Düzenleyici makam bağlantıları `portal/src/lib/journey-sources.ts` içinde tutulur. Şartlar kurum ve belge türüne bağlıdır; örneğin bazı çok dilli Türkiye medeni hâl belgeleri Hollanda'da tercüme veya apostil gerektirmeyebilir. Müşteri sürecinde sabit belge listesi, otomatik onay veya garantili sonuç iddiası yer almaz.
+
+**Ek migration sırası:** temel MVP, müşteri senaryoları, başvurudan dosya açma, dosya olayları, durum geçiş guard'ı, belge talepleri, sonuç dosyaları. `20261027_case_tracking.sql` hem olayları hem belge taleplerini kurar; sonrasında `20261027_staff_deliverables.sql` uygulanır. Hiçbiri gerçek Supabase projesine bu PR ile otomatik uygulanmaz.

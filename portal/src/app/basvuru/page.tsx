@@ -6,6 +6,7 @@ import Script from "next/script";
 import { PageFrame } from "@/components/avofis/PageFrame";
 import { usePortalLanguage } from "@/hooks/usePortalLanguage";
 import { getJourney, journeys, validateJourneyDetails } from "@/lib/journeys";
+import { officialSources } from "@/lib/journey-sources";
 
 declare global {
  interface Window {turnstile?:{render:(el:HTMLElement,options:{sitekey:string;callback:(token:string)=>void;"expired-callback":()=>void})=>string;reset:(id?:string)=>void};}
@@ -73,6 +74,7 @@ export default function IntakePage(){
          <h3 className="mt-5 text-[15px] font-semibold">{t.questions}</h3><p className="mt-2 text-[14px] leading-7 text-[#B9C5DF]">{chosen.next[lang]}</p>
        </div>
      </div>
+     <div className="mt-5 border-t border-[#dfbf59]/15 pt-4"><p className="text-[13px] font-semibold">{lang==="tr"?"İşleminizin resmî koşulları":lang==="nl"?"Officiële voorwaarden":"Official requirements"}</p>{(officialSources[chosen.id]||[]).map(source=><a key={source.url} href={source.url} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex min-h-11 items-center text-[13px] leading-6 text-[#dfbf59] underline underline-offset-4">{source.name[lang]}</a>)}</div>
      {!ready?<div className="mt-7 rounded-xl border border-[#dfbf59]/25 bg-[#04102C] p-5" role="status">
        <h2 className="text-[17px] font-semibold">{t.closed}</h2>
        <p className="mt-2 text-[14px] leading-7 text-[#B9C5DF]">{t.closedDesc}</p>
