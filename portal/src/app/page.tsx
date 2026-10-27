@@ -5,6 +5,7 @@ import { ArrowUpRight, Building2, FileText, GraduationCap, Landmark, Languages, 
 import { PublicNav } from "@/components/avofis/PublicNav";
 import { copy,serviceCodes,type ServiceCode } from "@/lib/avofis-content";
 import { usePortalLanguage } from "@/hooks/usePortalLanguage";
+import { journeys } from "@/lib/journeys";
 
 const icons:Record<ServiceCode,LucideIcon>={documents:FileText,translation:Languages,administration:Landmark,diplomas:GraduationCap,business:Building2,referral:UserRoundCheck};
 const extras={
@@ -13,6 +14,11 @@ const extras={
   en:{scope:"Before work starts",scopeIntro:"The service proposal distinguishes these items.",scopeItems:["Included and excluded work","Required documents and responsible professionals","Service fee, official charges, VAT and third-party costs"],browse:"View service details",steps:"Not every stage applies to every case.",more:"Read the full process",foot:"AVOfis does not perform reserved professional services without the required authorisation. Where necessary, independent authorised specialists are engaged.",closed:"The online enquiry form is not yet active. Do not send documents or personal data."}
 };
 const enabled=process.env.NEXT_PUBLIC_AVOFIS_INTAKE_ENABLED==="true";
+const journeyLabels={
+ tr:{heading:"Ne işlem yaptırmak istiyorsunuz?",description:"İkamet ettiğiniz yere veya işin adını bilmenize gerek yok. Belgenizin kaynağına ve kullanım yerine uygun işlemi seçin.",more:"Tüm işlem türlerini incele",choose:"İşlemi incele"},
+ nl:{heading:"Wat wilt u regelen?",description:"Kies uw situatie op basis van waar het document vandaan komt en waar het wordt gebruikt.",more:"Alle procedures bekijken",choose:"Bekijk procedure"},
+ en:{heading:"What do you need to arrange?",description:"Choose your situation based on where the record comes from and where it will be used.",more:"View all procedures",choose:"Explore procedure"}
+};
 export default function HomePage(){
   const lang=usePortalLanguage(),c=copy[lang],t=extras[lang];
   const link=(path:string)=>path+"?lang="+lang;
@@ -34,6 +40,20 @@ export default function HomePage(){
           <p className="mt-2 text-[14px] leading-7 text-[#B9C5DF]">{t.scopeIntro}</p>
           <ul className="mt-4 grid gap-3">{t.scopeItems.map((item,i)=><li key={item} className="flex gap-3 border-t border-[#dfbf59]/15 pt-3 text-[14px] leading-6 text-[#E1E8F5]"><span className="font-semibold text-[#dfbf59]">{i+1}.</span>{item}</li>)}</ul>
         </aside>
+      </div>
+    </section>
+    <section className="border-b border-[#dfbf59]/15 py-14 sm:py-16">
+      <div className="avofis-container">
+        <h2 className="avofis-h2">{journeyLabels[lang].heading}</h2>
+        <p className="mt-3 max-w-3xl text-[14px] leading-7 text-[#B9C5DF]">{journeyLabels[lang].description}</p>
+        <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {journeys.slice(0,6).map(j=><article key={j.id} className="avofis-card flex min-w-0 flex-col rounded-[18px] border p-5">
+            <h3 className="text-[17px] font-semibold leading-snug">{j.title[lang]}</h3>
+            <p className="mt-3 flex-1 text-[14px] leading-7 text-[#B9C5DF]">{j.audience[lang]}</p>
+            <Link className="mt-4 inline-flex min-h-11 items-center text-[14px] font-semibold text-[#dfbf59]" href={link("/islemler")+"#"+j.id}>{journeyLabels[lang].choose} <ArrowUpRight className="ml-2 h-4 w-4" aria-hidden="true"/></Link>
+          </article>)}
+        </div>
+        <Link className="avofis-outline avofis-btn mt-6" href={link("/islemler")}>{journeyLabels[lang].more}</Link>
       </div>
     </section>
     <section className="bg-[#04102C] py-14 sm:py-16">
