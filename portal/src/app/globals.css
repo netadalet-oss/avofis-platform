@@ -33,7 +33,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   background-color: var(--ref-panel);
   background-image: radial-gradient(ellipse at 80% 7%, rgba(7,23,56,.84), transparent 52%);
 }
-.avofis-theme .avofis-card {
+.avofis-theme .avofis-card,
+.avofis-theme .card {
   background:
     linear-gradient(
       145deg,

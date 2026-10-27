@@ -140,7 +140,7 @@ export function EditableCTA({
           value={draft.title}
           onChange={(e) => updateField("title", e.target.value)}
           placeholder="CTA başlık"
-          className="w-full rounded-xl border border-amber-400/30 bg-white/5 px-3 py-3 text-white"
+          className="w-full rounded-xl border border-[#dfbf59]/30 bg-white/5 px-3 py-3 text-white"
         />
 
         <textarea
@@ -148,7 +148,7 @@ export function EditableCTA({
           onChange={(e) => updateField("text", e.target.value)}
           rows={4}
           placeholder="CTA açıklama"
-          className="w-full rounded-xl border border-amber-400/30 bg-white/5 px-3 py-3 text-white"
+          className="w-full rounded-xl border border-[#dfbf59]/30 bg-white/5 px-3 py-3 text-white"
         />
 
         <div className="space-y-3">
@@ -158,13 +158,13 @@ export function EditableCTA({
                 value={btn.label}
                 onChange={(e) => updateButton(index, "label", e.target.value)}
                 placeholder="Buton metni"
-                className="w-1/2 rounded-xl border border-amber-400/30 bg-white/5 px-3 py-2 text-white"
+                className="w-1/2 rounded-xl border border-[#dfbf59]/30 bg-white/5 px-3 py-2 text-white"
               />
               <input
                 value={btn.href}
                 onChange={(e) => updateButton(index, "href", e.target.value)}
                 placeholder="Link"
-                className="w-1/2 rounded-xl border border-amber-400/30 bg-white/5 px-3 py-2 text-white"
+                className="w-1/2 rounded-xl border border-[#dfbf59]/30 bg-white/5 px-3 py-2 text-white"
               />
               <button onClick={() => removeButton(index)}>
                 <Trash2 className="h-4 w-4 text-red-400" />
@@ -173,7 +173,7 @@ export function EditableCTA({
           ))}
         </div>
 
-        <button onClick={addButton} className="text-sm text-sky-300">
+        <button onClick={addButton} className="text-sm text-[#dfbf59]">
           + Buton ekle
         </button>
 
@@ -216,7 +216,7 @@ export function EditableCTA({
         onClick={() => setIsEditing(true)}
         className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100"
       >
-        <Pencil className="h-4 w-4 text-amber-300" />
+        <Pencil className="h-4 w-4 text-[#f0d56d]" />
       </button>
     </div>
   );

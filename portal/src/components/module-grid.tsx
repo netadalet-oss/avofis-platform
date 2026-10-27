@@ -236,7 +236,7 @@ export function ModuleGrid() {
       />
 
       {isAdmin && !authLoading ? (
-        <div className="mt-8 rounded-[24px] border border-amber-400/20 bg-amber-400/10 p-4">
+        <div className="mt-8 rounded-[24px] border border-[#dfbf59]/20 bg-[#dfbf59]/10 p-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <div className="text-sm font-semibold text-white">
@@ -252,7 +252,7 @@ export function ModuleGrid() {
                 <button
                   type="button"
                   onClick={openEditMode}
-                  className="inline-flex items-center gap-2 rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-2 text-sm font-medium text-amber-200"
+                  className="inline-flex items-center gap-2 rounded-xl border border-[#dfbf59]/30 bg-[#dfbf59]/10 px-4 py-2 text-sm font-medium text-[#f0d56d]"
                 >
                   <Pencil className="h-4 w-4" />
                   Modülleri Düzenle
@@ -272,7 +272,7 @@ export function ModuleGrid() {
                     type="button"
                     onClick={saveModulesInline}
                     disabled={saving}
-                    className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950 disabled:opacity-60"
+                    className="inline-flex items-center gap-2 rounded-xl bg-[#dfbf59] px-4 py-2 text-sm font-semibold text-slate-950 disabled:opacity-60"
                   >
                     <Save className="h-4 w-4" />
                     {saving ? "Kaydediliyor..." : "Modülleri Kaydet"}
@@ -312,7 +312,7 @@ export function ModuleGrid() {
                   updateDraftItem(index, "title", e.target.value)
                 }
                 placeholder="Modül başlığı"
-                className="rounded-xl border border-white/10 bg-slate-950/50 px-4 py-3 text-sm text-white outline-none"
+                className="rounded-xl border border-white/10 bg-[#04102C]/80 px-4 py-3 text-sm text-white outline-none"
               />
 
               <textarea
@@ -322,7 +322,7 @@ export function ModuleGrid() {
                 }
                 placeholder="Modül açıklaması"
                 rows={3}
-                className="rounded-xl border border-white/10 bg-slate-950/50 px-4 py-3 text-sm text-white outline-none"
+                className="rounded-xl border border-white/10 bg-[#04102C]/80 px-4 py-3 text-sm text-white outline-none"
               />
 
               <button
@@ -345,10 +345,10 @@ export function ModuleGrid() {
           return (
             <article
               key={item.title}
-              className="group rounded-[26px] border border-white/10 bg-white/5 p-6 transition duration-300 hover:-translate-y-1 hover:border-sky-400/30 hover:bg-white/[0.08]"
+              className="group rounded-[26px] border border-white/10 bg-white/5 p-6 transition duration-300 hover:-translate-y-1 hover:border-[#dfbf59]/30 hover:bg-white/[0.08]"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-slate-950/50">
-                <Icon className="h-5 w-5 text-sky-300" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-[#04102C]/80">
+                <Icon className="h-5 w-5 text-[#dfbf59]" />
               </div>
 
               <h3 className="mt-5 text-lg font-semibold text-white">
@@ -359,7 +359,7 @@ export function ModuleGrid() {
                 {item.text}
               </p>
 
-              <div className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-sky-300">
+              <div className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-[#dfbf59]">
                 Modülü incele
                 <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
               </div>
