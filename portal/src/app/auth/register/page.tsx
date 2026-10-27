@@ -7,10 +7,11 @@ import { supabase } from "@/lib/supabase";
 
 export default function RegisterPage(){
  const router=useRouter();
+ const enabled=process.env.NEXT_PUBLIC_AVOFIS_CLIENT_PORTAL_ENABLED==="true";
  const [name,setName]=useState(""),[email,setEmail]=useState(""),[password,setPassword]=useState(""),[agree,setAgree]=useState(false);
  const [loading,setLoading]=useState(false),[message,setMessage]=useState(""),[successful,setSuccessful]=useState(false);
  async function submit(e:FormEvent<HTMLFormElement>){
-  e.preventDefault();if(!agree||name.trim().length<2||password.length<12)return;
+  e.preventDefault();if(!enabled)return;if(!agree||name.trim().length<2||password.length<12)return;
   setLoading(true);setMessage("");
   const {data,error}=await supabase.auth.signUp({
    email:email.trim().toLowerCase(),
@@ -24,7 +25,7 @@ export default function RegisterPage(){
  }
  return <main className="min-h-screen bg-[#F7F6F2] text-[#193A43]"><div className="mx-auto max-w-lg px-5 py-12 md:py-20"><Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold"><ArrowLeft className="h-4 w-4"/> AVOfis</Link>
  <div className="mt-12 rounded-[28px] border border-[#D8E4DC] bg-white p-7 md:p-10"><p className="text-xs font-bold tracking-[.2em] text-[#AA8254]">MÜŞTERİ HESABI</p><h1 className="mt-4 text-3xl font-semibold tracking-[-.05em]">Hesap oluşturun.</h1><p className="mt-4 text-sm leading-7 text-[#627D79]">Kayıt hesabınızı oluşturur; dosya kabulü ve ücretli hizmet sözleşmesi yerine geçmez. Hizmetler yalnızca açılış koşulları tamamlandığında etkinleştirilir.</p>
- {successful?<div className="mt-7 rounded-xl bg-[#EAF4ED] p-5 text-sm text-[#326A5A]" role="status">{message||"Kayıt tamamlandı. Müşteri alanına yönlendiriliyorsunuz."}</div>:<form onSubmit={submit} className="mt-7 space-y-5">
+ {!enabled?<div role="status" className="mt-7 rounded-xl bg-[#EAF4ED] p-5 text-sm text-[#326A5A]">Müşteri hesap açılışı henüz etkinleştirilmedi. Şirket ve veri koruma koşullarının tamamlanması bekleniyor.</div>:successful?<div className="mt-7 rounded-xl bg-[#EAF4ED] p-5 text-sm text-[#326A5A]" role="status">{message||"Kayıt tamamlandı. Müşteri alanına yönlendiriliyorsunuz."}</div>:<form onSubmit={submit} className="mt-7 space-y-5">
  <label className="block text-sm font-semibold">Ad soyad<input autoComplete="name" value={name} onChange={e=>setName(e.target.value)} maxLength={100} required className="mt-2 w-full rounded-xl border border-[#CBDCD0] bg-white p-3.5 font-normal"/></label>
  <label className="block text-sm font-semibold">E-posta<input autoComplete="email" type="email" value={email} onChange={e=>setEmail(e.target.value)} maxLength={254} required className="mt-2 w-full rounded-xl border border-[#CBDCD0] bg-white p-3.5 font-normal"/></label>
  <label className="block text-sm font-semibold">Parola (en az 12 karakter)<input autoComplete="new-password" type="password" value={password} onChange={e=>setPassword(e.target.value)} minLength={12} required className="mt-2 w-full rounded-xl border border-[#CBDCD0] bg-white p-3.5 font-normal"/></label>
