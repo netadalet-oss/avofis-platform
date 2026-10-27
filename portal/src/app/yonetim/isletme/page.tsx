@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect,useState,type FormEvent } from "react";
 import { ArrowLeft,BriefcaseBusiness,ClipboardList,LockKeyhole,RefreshCw } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { businessPlan } from "@/lib/avofis-business-plan";
 import { useUser } from "@/hooks/useUser";
 type WorkItem={id:string;title:string;group_key:string;owner_label:string;status:string;priority:string;due_on:string|null;budget_eur_cents:number|null;notes:string;created_at:string};
 const groups:[string,string][]=[["company","Kuruluş ve ortaklık"],["legal","Hukukî uygunluk"],["finance","Finans ve muhasebe"],["services","Hizmet geliştirme"],["partners","İş ortakları"],["operations","Personel ve operasyon"],["security","Portal ve veri güvenliği"],["marketing","Pazarlama ve büyüme"],["quality","Kalite ve denetim"]];
@@ -27,9 +28,19 @@ export default function InternalOperationsPage(){
   const {data,error}=await supabase.from("avofis_internal_tasks").select("id,title,group_key,owner_label,status,priority,due_on,budget_eur_cents,notes,created_at").order("created_at",{ascending:false}).limit(300);
   if(error)setError("İç görevler yüklenemedi. Veri tabanı geçişini ve yönetici erişimini kontrol edin.");
   else setItems(data as WorkItem[]||[]);
+  setLoaded(!error);
   setBusy(false);
  }
  useEffect(()=>{if(admin===true)void refresh();},[admin,user?.id]);
+ async function initialiseBusinessPlan(){
+  if(!enabled||!user||admin!==true||busy||!loaded||items.length!==0)return;
+  setBusy(true);setError("");
+  const records=businessPlan.map(task=>({...task,created_by:user.id,status:"todo",owner_label:"",notes:task.notes,budget_eur_cents:null,due_on:null}));
+  const {error}=await supabase.from("avofis_internal_tasks").insert(records);
+  if(error)setError("Kuruluş planı kaydedilemedi: "+error.message);
+  else await refresh();
+  setBusy(false);
+ }
  async function create(e:FormEvent<HTMLFormElement>){
   e.preventDefault();if(!user||!admin||!enabled||title.trim().length<3||busy)return;
   const cents=budget.trim()?Math.round(Number(budget)*100):null;
@@ -63,6 +74,7 @@ export default function InternalOperationsPage(){
       <div className="avofis-card rounded-[14px] border p-4"><p className="text-[12px] text-[#B9C5DF]">Tamamlanan</p><p className="mt-2 text-2xl font-semibold tabular-nums text-[#F2F5FF]">{items.filter(i=>i.status==="done").length}</p></div>
       <div className="avofis-card rounded-[14px] border p-4"><p className="text-[12px] text-[#B9C5DF]">Girilen tahmini bütçe</p><p className="mt-2 text-2xl font-semibold tabular-nums text-[#F2F5FF]">{(total/100).toLocaleString("nl-NL",{style:"currency",currency:"EUR"})}</p></div>
     </div>
+    {loaded&&items.length===0&&!error&&<div className="avofis-card mt-5 flex flex-col gap-4 rounded-[16px] border p-5 sm:flex-row sm:items-center sm:justify-between"><div><h2 className="text-[15px] font-semibold text-[#F2F5FF]">24 maddelik AVOfis kuruluş planı</h2><p className="mt-1 text-[12px] leading-[1.8] text-[#B9C5DF]">Bu işlem, kuruluş ve işletme hazırlıklarının 24 gerçek görev kaydını yalnızca yetkili yönetici alanına ekler. Hiçbiri kendiliğinden tamamlanmış sayılmaz.</p></div><button type="button" disabled={busy} onClick={()=>void initialiseBusinessPlan()} className="avofis-cta avofis-btn shrink-0 disabled:opacity-50">24 görevi oluştur</button></div>}
     <div className="mt-5 grid items-start gap-5 lg:grid-cols-[minmax(0,1.3fr)_minmax(290px,.7fr)]">
      <section className="avofis-card rounded-[18px] border p-5 sm:p-6">
        <div className="flex flex-wrap items-center justify-between gap-3"><h2 className="flex items-center gap-2 text-[17px] font-semibold text-[#F2F5FF]"><ClipboardList className="h-5 w-5 text-[#dfbf59]"/>Kuruluş ve operasyon görevleri</h2><button type="button" disabled={busy} onClick={()=>void refresh()} className="avofis-icon-btn" aria-label="Yenile"><RefreshCw className="h-4 w-4"/></button></div>
