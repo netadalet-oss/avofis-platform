@@ -1,37 +1,34 @@
+"use client";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, FileCheck2, ShieldCheck } from "lucide-react";
-import type { Metadata } from "next";
-export const metadata: Metadata = { title: "Hizmet alanları" };
-const categories = [
-  ["Belge ve apostil organizasyonu", "Belge türü, düzenleyen makam, apostil ve tercüme ihtiyacı belirlenir. AVOfis apostil veya noterlik işlemi yapmaz.", "İdarî koordinasyon"],
-  ["Hollanda idarî başvuru hazırlığı", "BRP, belediye, IND randevu ve belge listeleri; kişisel DigiD şifresi talep edilmez.", "Yetkiye bağlı destek"],
-  ["Diploma değerlendirme", "IDW için gerekli belgeler ve başvuru adımları düzenlenir. Diploma değerlendirmesi meslek icra yetkisi yerine geçmez.", "İdarî koordinasyon"],
-  ["İşletme kuruluş hazırlığı", "KVK, noter, adres ve UBO evrakı planlanır. Noter ve vergi uzmanı işlemleri bağımsız yürütür.", "Uzman işbirliği"],
-  ["Türkiye–Hollanda belge işlemleri", "Belgelerin alınması, tasdik, yeminli tercüme ve teslim aşamaları koordine edilir.", "Yetkili tercüman"],
-  ["Göçmenlik, uyuşmazlık, AİHM ve dava", "Somut hukukî değerlendirme ve temsil yetkili bağımsız uzman tarafından yürütülür; yetkisiz temsil üstlenilmez.", "Bağımsız uzman"]
-];
-export default function ServicesPage() {
- return <main className="avofis-theme min-h-screen">
-  <div className="avofis-container max-w-5xl py-10 sm:py-14">
-   <Link href="/" className="inline-flex min-h-10 items-center gap-2 text-[13px] font-semibold text-[#dfbf59]"><ArrowLeft aria-hidden="true" className="h-4 w-4"/>AVOfis</Link>
-   <div className="avofis-page-head">
-    <p className="avofis-eyebrow">HİZMET ÇERÇEVESİ</p>
-    <h1 className="avofis-page-title mt-3">Hizmetler ve yetki sınırları</h1>
-    <p className="mt-4 max-w-3xl text-sm leading-[1.8] text-[#B9C5DF]">Bu katalog bilgilendirme amaçlıdır. AVOfis'in kuruluş ve çalışma yetkisi koşulları tamamlanmadan hizmet satışı veya dosya kabulü yapılmaz. Her işlem için ayrı sözleşme, kapsam ve ücret teyidi gerekir.</p>
-   </div>
-   <div className="mt-8 grid items-stretch gap-3 sm:grid-cols-2">
-    {categories.map((c,i)=><article key={c[0]} className="avofis-card flex h-full flex-col rounded-[18px] border p-5 sm:p-6">
-     <div className="flex items-center justify-between gap-3"><span className="avofis-icon-tile"><FileCheck2 aria-hidden="true" className="h-5 w-5"/></span><span className="text-xs font-semibold text-[#8D9AB9]">0{i+1}</span></div>
-     <h2 className="mt-4 text-[17px] font-semibold leading-snug text-[#F2F5FF]">{c[0]}</h2>
-     <p className="mt-2 flex-1 text-[13px] leading-[1.75] text-[#B9C5DF]">{c[1]}</p>
-     <p className="mt-5 border-t border-[#dfbf59]/15 pt-3 text-[11px] font-semibold uppercase tracking-[.1em] text-[#dfbf59]">{c[2]}</p>
-    </article>)}
-   </div>
-   <div className="avofis-card mt-6 flex items-start gap-3 rounded-[18px] border p-5 sm:p-6">
-    <span className="avofis-icon-tile shrink-0"><ShieldCheck aria-hidden="true" className="h-5 w-5"/></span>
-    <p className="text-[13px] leading-[1.8] text-[#DCE3F1]">AVOfis kendisini Hollanda barosuna kayıtlı bir advocatenkantoor olarak tanıtmaz. Göçmenlik hukukunda temsil, mahkeme işleri, yeminli tercüme ve noterlik gerektiğinde bağımsız yetkili meslek mensupları görev alır.</p>
-   </div>
-   <Link href="/basvuru" className="avofis-cta avofis-btn mt-6">İletişim kanalı<ArrowUpRight aria-hidden="true" className="h-4 w-4"/></Link>
-  </div>
- </main>;
+import { ArrowUpRight, Building2, FileText, GraduationCap, Landmark, Languages, UserRoundCheck, type LucideIcon } from "lucide-react";
+import { PageFrame } from "@/components/avofis/PageFrame";
+import { copy,serviceCodes,type ServiceCode } from "@/lib/avofis-content";
+import { usePortalLanguage } from "@/hooks/usePortalLanguage";
+
+const icons:Record<ServiceCode,LucideIcon>={documents:FileText,translation:Languages,administration:Landmark,diplomas:GraduationCap,business:Building2,referral:UserRoundCheck};
+const text={
+  tr:{eyebrow:"HİZMETLER",title:"Hizmet alanları ve kapsamları",description:"Her işlem için belgenin türü, başvuru kurumu, gereken uzmanlık ve hizmet sınırları ayrı değerlendirilir. Aşağıdaki hizmetler henüz faaliyete açılmamıştır.",noteTitle:"Hizmet yetkisi ve kapsam",note:"AVOfis, Hollanda'da bir avukatlık veya noterlik bürosu olarak faaliyet göstermez. Noterlik, yeminli tercüme, avukatlık ve diğer düzenlenmiş meslekî işlemler yalnızca ilgili yetkili profesyoneller tarafından yürütülür.",action:"Başvuru durumunu kontrol et"},
+  nl:{eyebrow:"DIENSTEN",title:"Diensten en verantwoordelijkheden",description:"Per aanvraag worden documentvereisten, bevoegde instanties, specialistische inzet en grenzen van de opdracht vooraf vastgesteld. De dienstverlening is nog niet geopend.",noteTitle:"Bevoegdheid en afbakening",note:"AVOfis is geen Nederlands advocaten- of notariskantoor. Voorbehouden juridische, notariële en beëdigde vertaaldiensten worden uitsluitend door daartoe bevoegde professionals uitgevoerd.",action:"Beschikbaarheid bekijken"},
+  en:{eyebrow:"SERVICES",title:"Services and scope",description:"Document requirements, responsible authorities, professional involvement and scope are assessed for each request. Services are not yet available to clients.",noteTitle:"Professional authorisation",note:"AVOfis is not a Dutch law firm or civil-law notary office. Reserved legal, notarial and sworn-translation services are delivered only by the relevant authorised professionals.",action:"Check availability"}
+};
+export default function ServicesPage(){
+  const lang=usePortalLanguage(),t=text[lang],services=copy[lang].serviceList;
+  return <PageFrame lang={lang} wide eyebrow={t.eyebrow} title={t.title} description={t.description}>
+    <div className="grid items-stretch gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {serviceCodes.map(code=>{
+        const entry=services.find(s=>s.id===code);if(!entry)return null;
+        const Icon=icons[code];
+        return <article key={code} id={code} className="avofis-card flex h-full min-w-0 scroll-mt-24 flex-col rounded-[18px] border p-5 sm:p-6">
+          <div className="flex items-center justify-between gap-3"><span className="avofis-icon-tile"><Icon className="h-5 w-5" aria-hidden="true"/></span><span className="text-[11px] font-medium text-[#dfbf59]">{entry.category}</span></div>
+          <h2 className="mt-4 text-[16px] font-semibold leading-snug text-[#F2F5FF]">{entry.title}</h2>
+          <p className="mt-2 text-[13px] leading-[1.8] text-[#B9C5DF]">{entry.detail}</p>
+        </article>;
+      })}
+    </div>
+    <div className="avofis-card mt-6 flex items-start gap-3.5 rounded-[18px] border p-5">
+      <span className="avofis-icon-tile shrink-0"><UserRoundCheck className="h-5 w-5" aria-hidden="true"/></span>
+      <div><h2 className="text-[15px] font-semibold text-[#F2F5FF]">{t.noteTitle}</h2><p className="mt-1.5 text-[13px] leading-[1.8] text-[#B9C5DF]">{t.note}</p></div>
+    </div>
+    <Link href={"/basvuru?lang="+lang} className="avofis-outline avofis-btn mt-6">{t.action}<ArrowUpRight className="h-4 w-4" aria-hidden="true"/></Link>
+  </PageFrame>;
 }
