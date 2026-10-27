@@ -5,10 +5,10 @@ import { PageFrame } from "@/components/avofis/PageFrame";
 import { useSiteLang } from "@/hooks/useSiteLang";
 import { audiences,localized,ui,withLang } from "@/lib/avofis-site";
 const intro={
- tr:"Avrupa'da yaşayan veya Avrupa ile Türkiye arasında işlem yapan bireyler, aileler ve işletmeler için ihtiyaç odaklı hizmet yolları.",
- nl:"Passende ondersteuning voor personen, gezinnen en bedrijven met zaken tussen Europa en Turkije.",
- de:"Passende Unterstützung für Privatpersonen, Familien und Unternehmen mit Angelegenheiten in Europa und der Türkei.",
- en:"Practical routes for individuals, families and businesses with matters between Europe and Türkiye."
+ tr:"Türkiye bağlantısı olsun veya olmasın, Avrupa ülkelerinin içinde ve arasında hukukî, idarî, ticari veya kişisel işlem ihtiyacı bulunan bireyler, aileler ve işletmeler için hizmet yolları.",
+ nl:"Ondersteuning voor personen, gezinnen en ondernemingen binnen en tussen Europese landen, met of zonder band met Turkije.",
+ de:"Unterstützung für Privatpersonen, Familien und Unternehmen innerhalb und zwischen europäischen Staaten — auch ohne Bezug zur Türkei.",
+ en:"Support for individuals, families and businesses dealing with legal, public or commercial matters within and between European countries, with or without Türkiye links."
 };
 export default function AudiencesPage(){
  const lang=useSiteLang(),t=ui[lang];
