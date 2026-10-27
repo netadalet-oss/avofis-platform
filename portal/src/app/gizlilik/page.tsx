@@ -1,49 +1,18 @@
 "use client";
-import { LockKeyhole, ShieldCheck } from "lucide-react";
+import { LockKeyhole,ShieldCheck } from "lucide-react";
 import { PageFrame } from "@/components/avofis/PageFrame";
-import { usePortalLanguage } from "@/hooks/usePortalLanguage";
-
-const content={
-  tr:{
-    eyebrow:"GİZLİLİK",title:"Kişisel verilerin korunması",
-    description:"AVOfis'in müşteri kabulü henüz açılmadı. Bu metin hazırlık aşamasındaki bilgilendirme taslağıdır; şirket bilgileri ve veri işleme koşulları kesinleştirilmeden nihai gizlilik bildirimi yerine kullanılamaz.",
-    sections:[
-      ["Veri sorumlusu ve iletişim","Şirketin tescilli unvanı, kayıt adresi ve veri koruma iletişim bilgileri faaliyete açılmadan önce bu sayfada yayımlanacaktır."],
-      ["Başvuru sırasında alınacak bilgiler","Ön başvuru açıldığında yalnızca ad, e-posta adresi, işlem kategorisi, ilgili ülke ve kısa açıklama istenmesi planlanmaktadır. İlk formda kimlik, sağlık, iltica veya mahkeme dosyaları talep edilmez."],
-      ["Dosya belgeleri ve erişim","Hizmet sözleşmesi sonrasında gerekli belgelerin özel, erişim kontrollü müşteri alanında işlenmesi öngörülmektedir. Verilerin tutulma süreleri, sağlayıcılar ve silme prosedürü açılıştan önce belirlenecektir."],
-      ["Haklar ve talepler","GDPR kapsamında erişim, düzeltme, silme ve diğer uygulanabilir hakların kullanılmasına ilişkin başvuru kanalı faaliyetten önce duyurulacaktır."]
-    ],note:"Bu sayfadaki hazırlık bilgileri, GDPR Madde 13 kapsamında tamamlanmış bir aydınlatma metni değildir."
-  },
-  nl:{
-    eyebrow:"PRIVACY",title:"Bescherming van persoonsgegevens",
-    description:"AVOfis neemt nog geen klantdossiers aan. Dit is een concept voor de voorbereidingsfase, geen definitieve privacyverklaring. De bedrijfsgegevens en verwerkingsvoorwaarden moeten vóór de start worden vastgesteld.",
-    sections:[
-      ["Verwerkingsverantwoordelijke en contact","De geregistreerde bedrijfsnaam, vestigingsadres en contactgegevens voor privacyverzoeken worden vóór de start gepubliceerd."],
-      ["Gegevens bij een eerste aanvraag","Zodra aanvragen open zijn, worden naar verwachting uitsluitend naam, e-mail, soort verzoek, betrokken land en een korte toelichting gevraagd. Identiteits-, medische, asiel- of procesdossiers horen niet in dit formulier."],
-      ["Documenten en toegang","Na de opdrachtbevestiging kunnen noodzakelijke documenten worden verwerkt in een afgeschermd klantdossier. Bewaartermijnen, verwerkers en verwijderingsprocedures worden vóór ingebruikname bepaald."],
-      ["Privacyrechten","Een bereikbaar kanaal voor inzage, correctie, verwijdering en andere toepasselijke AVG-rechten wordt vóór de start bekendgemaakt."]
-    ],note:"Deze voorbereidingsinformatie is nog geen volledige informatieverstrekking volgens artikel 13 AVG."
-  },
-  en:{
-    eyebrow:"PRIVACY",title:"Personal data protection",
-    description:"AVOfis is not yet accepting client matters. This is a pre-launch draft, not a final privacy notice. The registered entity details and data-processing terms must be confirmed before services open.",
-    sections:[
-      ["Data controller and contact","The registered business name, address and contact details for privacy requests will be published before launch."],
-      ["Initial enquiry information","Once enquiries are enabled, the proposed form asks for a name, email, service category, relevant country and short description only. Identity, medical, asylum and litigation files should not be submitted."],
-      ["Documents and access","Following a service agreement, necessary documents are intended to be processed within access-controlled client storage. Retention periods, processors and deletion procedures must be finalised before launch."],
-      ["Individual rights","A channel for access, correction, erasure and other applicable GDPR rights will be published before launch."]
-    ],note:"This pre-launch information is not yet a complete privacy notice under GDPR Article 13."
-  }
+import { useSiteLang } from "@/hooks/useSiteLang";
+import { ui } from "@/lib/avofis-site";
+const text={
+ tr:{title:"Kişisel verilerin korunması",lead:"Bu sayfa AVOfis'in veri işleme yaklaşımına ilişkin mevcut bilgilendirmeyi içerir. Nihai veri sorumlusu ve iletişim bilgileri doğrulanmadan kişisel başvuru ve dosya kabulü açılmaz.",sections:[["Başvuru sırasında","İlk iletişim için ad, e-posta, ilgili ülke, hizmet konusu ve kısa açıklama yeterlidir. Kimlik, sağlık, iltica ve mahkeme dosyaları ilk başvuruda istenmez."],["Müşteri belgeleri","Sözleşme sonrası gerçekten gerekli belgeler, kimlik doğrulaması yapılmış kullanıcıya ve yetkili personele açık özel dosya alanında işlenir."],["Veri sorumlusu ve saklama","Veri sorumlusu şirketin tescilli adı, adresi, iletişim kanalı; saklama süreleri, hukukî dayanaklar, veri işleyenler ve uluslararası aktarımlar faaliyete geçmeden önce nihai metinde yayımlanmalıdır."],["İlgili kişinin hakları","GDPR kapsamında erişim, düzeltme, silme ve uygulanabilir diğer hakların nasıl kullanılacağı gerçek veri koruma iletişim kanalı ile duyurulacaktır."]],note:"Bu hazırlık metni tamamlanmış bir GDPR Madde 13 aydınlatma bildirimi değildir."},
+ nl:{title:"Bescherming van persoonsgegevens",lead:"Deze informatie beschrijft de huidige aanpak. Persoonsgegevens worden niet via nieuwe aanvragen verzameld totdat gegevens van de verantwoordelijke zijn bevestigd.",sections:[["Eerste aanvraag","Naam, e-mail, land, onderwerp en een korte toelichting zijn voldoende. Geen medische, asiel-, identiteits- of procesdossiers."],["Klantdocumenten","Noodzakelijke stukken zijn uitsluitend toegankelijk via een afgeschermde, geautoriseerde dossieromgeving."],["Verwerkingsverantwoordelijke","Geregistreerde bedrijfsgegevens, bewaartermijnen, rechtsgronden, verwerkers en doorgiften worden vóór de start definitief vastgelegd."],["Privacyrechten","Toegang, correctie, verwijdering en andere toepasselijke AVG-rechten worden met een bereikbaar contactkanaal toegelicht."]],note:"Dit is nog geen volledige privacyverklaring volgens artikel 13 AVG."},
+ de:{title:"Schutz personenbezogener Daten",lead:"Diese Informationen beschreiben die derzeitige Planung. Personenbezogene Neuanfragen werden erst nach Festlegung des Verantwortlichen verarbeitet.",sections:[["Erstanfrage","Nur Name, E-Mail, Land, Anliegen und kurze Beschreibung; keine Ausweis-, Gesundheits-, Asyl- oder Gerichtsakten."],["Kundendokumente","Erforderliche Unterlagen werden nur in geschützten, rollenbasierten Kundenakten verarbeitet."],["Verantwortlicher und Speicherung","Firma, Anschrift, Rechtsgrundlagen, Speicherdauer, Auftragsverarbeiter und Übermittlungen werden vor dem Start veröffentlicht."],["Betroffenenrechte","Auskunft, Berichtigung, Löschung und weitere anwendbare Rechte werden mit einer erreichbaren Kontaktstelle erläutert."]],note:"Diese vorläufigen Angaben erfüllen noch nicht vollständig Artikel 13 DSGVO."},
+ en:{title:"Personal data protection",lead:"This page explains the intended data practices. New personal enquiries stay closed until the registered controller and privacy arrangements are finalised.",sections:[["Initial enquiry","Only name, email, jurisdiction, subject and brief explanation; do not submit identity, medical, asylum or litigation records."],["Client records","Necessary documents are handled only in access-controlled client files with verified accounts."],["Controller and retention","Registered controller, contact address, retention, lawful bases, providers and international transfers must be finalised before live collection."],["Individual rights","Access, correction, erasure and other applicable GDPR rights will be explained together with a verified contact channel."]],note:"This pre-launch page is not yet a complete GDPR Article 13 privacy notice."}
 };
 export default function PrivacyPage(){
-  const lang=usePortalLanguage(),t=content[lang];
-  return <PageFrame lang={lang} eyebrow={t.eyebrow} title={t.title} description={t.description}>
-    <div className="grid gap-3">
-      {t.sections.map(([title,body],i)=><section key={title} className="avofis-card flex items-start gap-3.5 rounded-[18px] border p-5 sm:p-6">
-        <span className="avofis-icon-tile shrink-0">{i===2?<LockKeyhole className="h-5 w-5" aria-hidden="true"/>:<ShieldCheck className="h-5 w-5" aria-hidden="true"/>}</span>
-        <div className="min-w-0"><h2 className="text-[15px] font-semibold text-[#F2F5FF]">{title}</h2><p className="mt-2 text-[13px] leading-[1.8] text-[#B9C5DF]">{body}</p></div>
-      </section>)}
-    </div>
-    <p className="mt-5 text-[12px] leading-[1.75] text-[#dfbf59]">{t.note}</p>
-  </PageFrame>;
+ const lang=useSiteLang(),t=text[lang],u=ui[lang];
+ return <PageFrame lang={lang} eyebrow={u.privacy} title={t.title} description={t.lead}>
+  <div className="grid gap-3">{t.sections.map(([title,body],i)=><section key={i} className="avofis-card flex items-start gap-3.5 rounded-[16px] border p-5"><span className="avofis-icon-tile shrink-0">{i===1?<LockKeyhole className="h-5 w-5"/>:<ShieldCheck className="h-5 w-5"/>}</span><div><h2 className="text-[15px] font-semibold text-[#F2F5FF]">{title}</h2><p className="mt-2 text-[13px] leading-[1.8] text-[#B9C5DF]">{body}</p></div></section>)}</div>
+  <p className="mt-5 text-[12px] leading-[1.75] text-[#f0d56d]">{t.note}</p>
+ </PageFrame>;
 }
