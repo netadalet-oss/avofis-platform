@@ -7,7 +7,7 @@ import { ArrowRight, ArrowUpRight, BadgeCheck, BookOpen, Building2, Check, Chevr
 type Lang = "tr" | "nl" | "en";
 const translations = {
   tr: {
-    navServices: "Hizmetler", navProcess: "Nasıl çalışırız?", navAbout: "Yaklaşımımız", navContact: "Ön başvuru",
+    navServices: "Hizmetler", navKnowledge: "Bilgi merkezi", navClient: "Müşteri girişi", navProcess: "Nasıl çalışırız?", navAbout: "Yaklaşımımız", navContact: "Ön başvuru",
     status: "Hollanda merkezli · Kuruluş aşaması", kicker: "SINIR ÖTESİ İŞLERDE GÜVENİLİR YOL HARİTASI",
     titleA: "Belgeler, kurumlar,", titleB: "ülkeler arasında", titleC: "netlik.",
     lead: "Hollanda ve Türkiye bağlantılı idarî işlemler, resmî belgeler ve profesyonel süreç koordinasyonu için anlaşılır, sistemli bir hizmet deneyimi.",
@@ -34,7 +34,7 @@ const translations = {
     s6: "Yetkili uzman ağı", s6d: "Özel hukukî değerlendirme ve temsil için bağımsız avukat ve diğer uzmanlarla yönlendirme."
   },
   nl: {
-    navServices: "Diensten", navProcess: "Werkwijze", navAbout: "Onze aanpak", navContact: "Contactaanvraag",
+    navServices: "Diensten", navKnowledge: "Informatie", navClient: "Mijn dossier", navProcess: "Werkwijze", navAbout: "Onze aanpak", navContact: "Contactaanvraag",
     status: "Gevestigd in Nederland · In voorbereiding", kicker: "DUIDELIJKHEID BIJ GRENSOVERSCHRIJDENDE ZAKEN",
     titleA: "Documenten, instanties,", titleB: "grenzen over", titleC: "met overzicht.",
     lead: "Heldere ondersteuning bij administratieve processen, officiële documenten en professionele coördinatie tussen Nederland en Turkije.",
@@ -61,7 +61,7 @@ const translations = {
     s6: "Onafhankelijke experts", s6d: "Doorverwijzing naar bevoegde advocaten en andere specialisten."
   },
   en: {
-    navServices: "Services", navProcess: "Our process", navAbout: "Our approach", navContact: "Enquiry",
+    navServices: "Services", navKnowledge: "Information", navClient: "Client area", navProcess: "Our process", navAbout: "Our approach", navContact: "Enquiry",
     status: "Based in the Netherlands · In preparation", kicker: "CLARITY ACROSS BORDERS",
     titleA: "Documents, institutions,", titleB: "and borders.", titleC: "Made clearer.",
     lead: "Structured support with administrative procedures, official documents and professional coordination between the Netherlands and Türkiye.",
@@ -115,19 +115,19 @@ export default function HomePage() {
             <a href="#services" className="hover:text-[#B7864C]">{t.navServices}</a>
             <a href="#process" className="hover:text-[#B7864C]">{t.navProcess}</a>
             <a href="#about" className="hover:text-[#B7864C]">{t.navAbout}</a>
-            <Link href="/modules" className="hover:text-[#B7864C]">{t.older}</Link>
+            <Link href="/bilgi" className="hover:text-[#B7864C]">{t.navKnowledge}</Link><Link href="/musteri" className="hover:text-[#B7864C]">{t.navClient}</Link>
           </nav>
-          <div className="hidden items-center gap-3 md:flex">
+          <div className="hidden items-center gap-3 lg:flex">
             <div className="flex items-center gap-1 rounded-full border border-[#CBD4CE] p-1 text-xs" aria-label="Language">
               {(["tr","nl","en"] as const).map(item => <button key={item} type="button" aria-pressed={lang===item} onClick={()=>setLang(item)} className={"rounded-full px-2.5 py-1.5 font-semibold uppercase transition " + (lang===item ? "bg-[#173A43] text-white":"text-[#667A7D] hover:bg-[#E7EBE6]")}>{item}</button>)}
             </div>
             <Link href={"/basvuru?lang=" + lang} className="inline-flex items-center gap-2 rounded-full bg-[#173A43] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#28626A]">{t.navContact}<ArrowUpRight className="h-4 w-4" /></Link>
           </div>
-          <button type="button" onClick={()=>setMenuOpen(!menuOpen)} aria-label={menuOpen?"Close menu":"Open menu"} aria-expanded={menuOpen} className="rounded-lg p-2 text-[#173A43] md:hidden">{menuOpen?<X/>:<Menu/>}</button>
+          <button type="button" onClick={()=>setMenuOpen(!menuOpen)} aria-label={menuOpen?"Close menu":"Open menu"} aria-expanded={menuOpen} className="rounded-lg p-2 text-[#173A43] lg:hidden">{menuOpen?<X/>:<Menu/>}</button>
         </div>
-        {menuOpen && <div className="space-y-4 border-t border-[#E1E6E0] px-5 py-5 md:hidden">
+        {menuOpen && <div className="space-y-4 border-t border-[#E1E6E0] px-5 py-5 lg:hidden">
           <div className="flex gap-2">{(["tr","nl","en"] as const).map(item=><button key={item} type="button" onClick={()=>setLang(item)} aria-pressed={lang===item} className={"rounded-lg px-3 py-2 text-sm uppercase " + (lang===item?"bg-[#173A43] text-white":"bg-[#EBEFEB]")}>{item}</button>)}</div>
-          <a className="block" href="#services" onClick={()=>setMenuOpen(false)}>{t.navServices}</a><a className="block" href="#process" onClick={()=>setMenuOpen(false)}>{t.navProcess}</a><a className="block" href="#about" onClick={()=>setMenuOpen(false)}>{t.navAbout}</a><Link className="block" href={"/basvuru?lang="+lang}>{t.navContact}</Link>
+          <a className="block" href="#services" onClick={()=>setMenuOpen(false)}>{t.navServices}</a><a className="block" href="#process" onClick={()=>setMenuOpen(false)}>{t.navProcess}</a><a className="block" href="#about" onClick={()=>setMenuOpen(false)}>{t.navAbout}</a><Link className="block" href="/bilgi">{t.navKnowledge}</Link><Link className="block" href="/musteri">{t.navClient}</Link><Link className="block" href={"/basvuru?lang="+lang}>{t.navContact}</Link>
         </div>}
       </header>
       <section className="relative overflow-hidden bg-[#F7F6F2]">
@@ -181,7 +181,7 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-7xl gap-14 px-5 md:px-8 lg:grid-cols-2 lg:items-center"><div><p className="text-xs font-bold tracking-[.24em] text-[#DBB889]">{t.aboutKicker}</p><h2 className="mt-5 text-4xl font-semibold leading-tight tracking-[-.05em] md:text-5xl">{t.aboutTitle}</h2><p className="mt-7 text-base leading-8 text-[#BAD0CC]">{t.aboutLead}</p></div><div className="space-y-5">{[[t.point1,t.point1d],[t.point2,t.point2d],[t.point3,t.point3d]].map((x,i)=><div key={i} className="flex gap-4 rounded-2xl border border-white/10 bg-white/[.04] p-5"><span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#DCC29C] text-[#173A43]"><Check className="h-4 w-4"/></span><div><h3 className="font-semibold">{x[0]}</h3><p className="mt-2 text-sm leading-6 text-[#B9CDCA]">{x[1]}</p></div></div>)}</div></div>
       </section>
       <section className="bg-[#F7F6F2] py-24"><div className="mx-auto flex max-w-7xl flex-col gap-8 px-5 md:flex-row md:items-center md:justify-between md:px-8"><div><h2 className="max-w-xl text-4xl font-semibold tracking-[-.05em] md:text-5xl">{t.lastTitle}</h2><p className="mt-4 text-base text-[#677C7B]">{t.lastLead}</p></div><Link href={"/basvuru?lang="+lang} className="inline-flex shrink-0 items-center gap-3 self-start rounded-full bg-[#173A43] px-7 py-4 text-sm font-semibold text-white">{ready?t.apply:t.prelaunch}<ArrowUpRight className="h-4 w-4"/></Link></div></section>
-      <footer className="border-t border-[#D9E0D9] bg-[#F7F6F2]"><div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-9 md:flex-row md:items-start md:justify-between md:px-8"><div><p className="text-2xl font-semibold tracking-[-.06em]">AVOfis<span className="text-[#B58C57]">.</span></p><p className="mt-2 text-xs text-[#728380]">{t.footer}</p></div><div className="max-w-[650px]"><p className="text-xs leading-6 text-[#667D79]">{t.legal}</p><div className="mt-4 flex flex-wrap gap-5 text-xs font-semibold text-[#31575A]"><Link href="/gizlilik">{t.privacy}</Link><Link href="/modules">{t.older}</Link><span>© {new Date().getFullYear()} AVOfis</span></div></div></div></footer>
+      <footer className="border-t border-[#D9E0D9] bg-[#F7F6F2]"><div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-9 md:flex-row md:items-start md:justify-between md:px-8"><div><p className="text-2xl font-semibold tracking-[-.06em]">AVOfis<span className="text-[#B58C57]">.</span></p><p className="mt-2 text-xs text-[#728380]">{t.footer}</p></div><div className="max-w-[650px]"><p className="text-xs leading-6 text-[#667D79]">{t.legal}</p><div className="mt-4 flex flex-wrap gap-5 text-xs font-semibold text-[#31575A]"><Link href="/gizlilik">{t.privacy}</Link><Link href="/bilgi">{t.navKnowledge}</Link><Link href="/musteri">{t.navClient}</Link><Link href="/modules">{t.older}</Link><span>© {new Date().getFullYear()} AVOfis</span></div></div></div></footer>
     </main>
   );
 }
