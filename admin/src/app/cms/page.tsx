@@ -73,29 +73,9 @@ export default function Page() {
     }
 
     const userId = session.user.id;
-    let allowed = false;
-
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", userId)
-      .maybeSingle();
-
-    const profileRole =
-      typeof profile?.role === "string" ? profile.role.toLowerCase() : "";
-    const metaRole =
-      typeof session.user.user_metadata?.role === "string"
-        ? String(session.user.user_metadata.role).toLowerCase()
-        : "";
-
-    if (
-      profileRole === "admin" ||
-      profileRole === "super_admin" ||
-      metaRole === "admin" ||
-      metaRole === "super_admin"
-    ) {
-      allowed = true;
-    }
+    // Staff privilege comes from a server-governed table, never editable user metadata.
+    const { data: staff } = await supabase.from("avofis_staff").select("role").eq("user_id",userId).maybeSingle();
+    const allowed = staff?.role === "admin";
 
     if (!allowed) {
       if (isMounted) {

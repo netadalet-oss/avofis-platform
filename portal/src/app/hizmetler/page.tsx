@@ -1,0 +1,15 @@
+import Link from "next/link";
+import { ArrowLeft, ArrowUpRight, FileCheck2, ShieldCheck } from "lucide-react";
+import type { Metadata } from "next";
+export const metadata: Metadata = { title: "Hizmet alanları" };
+const categories = [
+  ["Belge ve apostil organizasyonu", "Belge türü, düzenleyen makam, apostil ve tercüme ihtiyacı belirlenir. AVOfis apostil veya noterlik işlemi yapmaz.", "İdarî koordinasyon"],
+  ["Hollanda idarî başvuru hazırlığı", "BRP, belediye, IND randevu ve belge listeleri; kişisel DigiD şifresi talep edilmez.", "Yetkiye bağlı destek"],
+  ["Diploma değerlendirme", "IDW için gerekli belgeler ve başvuru adımları düzenlenir. Diploma değerlendirmesi meslek icra yetkisi yerine geçmez.", "İdarî koordinasyon"],
+  ["İşletme kuruluş hazırlığı", "KVK, noter, adres ve UBO evrakı planlanır. Noter ve vergi uzmanı işlemleri bağımsız yürütür.", "Uzman işbirliği"],
+  ["Türkiye–Hollanda belge işlemleri", "Belgelerin alınması, tasdik, yeminli tercüme ve teslim aşamaları koordine edilir.", "Yetkili tercüman"],
+  ["Göçmenlik, uyuşmazlık, AİHM ve dava", "Somut hukukî değerlendirme ve temsil yetkili bağımsız uzman tarafından yürütülür; yetkisiz temsil üstlenilmez.", "Bağımsız uzman"]
+];
+export default function ServicesPage() {
+  return <main className="min-h-screen bg-[#F7F6F2] text-[#18383F]"><div className="mx-auto max-w-5xl px-5 py-16 md:py-24"><Link href="/" className="inline-flex items-center gap-2 text-sm text-[#3C6564]"><ArrowLeft className="h-4 w-4"/> AVOfis</Link><p className="mt-16 text-xs font-semibold tracking-[.22em] text-[#AE8757]">HİZMET ÇERÇEVESİ</p><h1 className="mt-5 text-5xl font-semibold tracking-[-.06em]">Hizmetler ve yetki sınırları</h1><p className="mt-6 max-w-3xl text-base leading-8 text-[#5E7779]">Bu katalog bilgilendirme amaçlıdır. AVOfis'in kuruluş ve çalışma yetkisi koşulları tamamlanmadan hizmet satışı veya dosya kabulü yapılmaz. Her işlem için ayrı sözleşme, kapsam ve ücret teyidi gerekir.</p><div className="mt-12 grid gap-4 md:grid-cols-2">{categories.map((c,i)=><article key={c[0]} className="rounded-3xl border border-[#D8E4DD] bg-white p-7"><div className="mb-6 flex items-center justify-between"><FileCheck2 className="h-6 w-6 text-[#3C726A]"/><span className="text-xs font-semibold text-[#B28A56]">0{i+1}</span></div><h2 className="text-xl font-semibold">{c[0]}</h2><p className="mt-3 text-sm leading-7 text-[#657B7A]">{c[1]}</p><p className="mt-5 text-xs font-bold uppercase tracking-wide text-[#A58154]">{c[2]}</p></article>)}</div><div className="mt-10 rounded-3xl bg-[#173A43] p-7 text-[#ECF4EF]"><ShieldCheck className="h-7 w-7 text-[#DCC39D]"/><p className="mt-3 text-sm leading-7">AVOfis kendisini Hollanda barosuna kayıtlı bir advocatenkantoor olarak tanıtmaz. Göçmenlik hukukunda temsil, mahkeme işleri, yeminli tercüme ve noterlik gerektiğinde bağımsız yetkili meslek mensupları görev alır.</p></div><Link href="/basvuru" className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#173A43] px-6 py-3 text-sm font-semibold text-white">İletişim kanalı<ArrowUpRight className="h-4 w-4"/></Link></div></main>;
+}

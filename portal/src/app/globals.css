@@ -1,19 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 :root { color-scheme: dark; }
-
 html { scroll-behavior: smooth; }
-
 body {
   @apply bg-[#07111f] text-white antialiased;
-  background-image: radial-gradient(circle at top, rgba(24, 52, 91, 0.9) 0%, rgba(11, 21, 36, 0.96) 44%, rgba(7, 17, 31, 1) 74%);
   min-height: 100vh;
 }
-
-a { @apply transition-colors; }
-
+a, button { @apply transition-colors; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid #C5A16C; outline-offset: 3px; }
 .container-shell { @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8; }
-
 .panel { @apply rounded-[28px] border border-white/10 bg-white/5 backdrop-blur-sm; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}

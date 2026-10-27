@@ -35,7 +35,7 @@ export function SectionTitle({
 
   const rawRole = session?.user?.user_metadata?.role;
   const role = typeof rawRole === "string" ? rawRole.toLowerCase() : "";
-  const isAdmin = role === "admin" || role === "super_admin";
+  const isAdmin = false; // Legacy CMS editing disabled until server-side staff authorization and RLS review.
   const canEdit = editable && editMode && !loading && isAdmin;
 
   return (
