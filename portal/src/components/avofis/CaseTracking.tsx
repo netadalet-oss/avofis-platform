@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { nextCaseAction } from "@/lib/case-next-action";
 
 type Event={id:string;new_status:string;created_at:string};
 type Request={id:string;title:string;status:string};
 const states:Record<string,string>={review:"Ön inceleme",awaiting_agreement:"Sözleşme ve onay",open:"İşlem yürütülüyor",completed:"İşlem tamamlandı",closed:"Dosya kapatıldı"};
 const requestStates:Record<string,string>={requested:"Belge bekleniyor",received:"Personel tarafından teslim alındı",waived:"Gerekli değil"};
 
-export function CaseTracking({caseId}:{caseId:string}){
+export function CaseTracking({caseId,status,hasAgreement,agreementSigned,priceEurCents,paid}:{caseId:string;status:string;hasAgreement:boolean;agreementSigned:boolean;priceEurCents:number;paid:boolean}){
  const [events,setEvents]=useState<Event[]>([]);
  const [requests,setRequests]=useState<Request[]>([]);
  const [loading,setLoading]=useState(true);
@@ -27,7 +28,9 @@ export function CaseTracking({caseId}:{caseId:string}){
    }).catch(()=>{if(active)setError(true);}).finally(()=>{if(active)setLoading(false);});
    return ()=>{active=false;};
  },[caseId]);
- return <div className="grid gap-4 md:grid-cols-2">
+ const pending=requests.some(r=>r.status==="requested");
+ const next=!loading&&!error?nextCaseAction({status,hasAgreement,agreementSigned,priceEurCents,paid,hasPendingDocuments:pending}):"";
+ return <div className="space-y-4"><section className="avofis-card rounded-[18px] border p-5 sm:p-6"><h2 className="text-[17px] font-semibold">Sıradaki işlem</h2><p className="mt-2 text-[14px] leading-7 text-[#B9C5DF]">{loading?"Dosya kaydı denetleniyor…":error?"Sonraki işlem belirlenemedi. Dosya durumunu personelle doğrulayın.":next}</p></section><div className="grid gap-4 md:grid-cols-2">
    <section className="avofis-card rounded-[18px] border p-5 sm:p-6">
      <h2 className="text-[17px] font-semibold">Dosya işlem geçmişi</h2>
      {loading?<p className="mt-3 text-[14px] text-[#B9C5DF]">Kayıtlar getiriliyor…</p>
@@ -48,5 +51,5 @@ export function CaseTracking({caseId}:{caseId:string}){
        <p className="mt-1 text-[12px] text-[#B9C5DF]">{requestStates[item.status]||"Durum bilgisi yok"}</p>
      </li>)}</ul>}
    </section>
- </div>;
+ </div></div>;
 }
