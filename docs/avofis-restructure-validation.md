@@ -10,7 +10,7 @@ Bu dal, mevcut müşteri MVP dalını temel alır. Kayıt, mesaj, sözleşme, ö
 - Dosya talepleri ve olayları için PostgreSQL satır düzeyinde erişim kuralları.
 
 ## Veri koruma ve kurulum
-1. Yedekli staging veritabanında önce database/migrations/20261027_avofis_mvp.sql, sonra database/migrations/20261027_case_tracking.sql uygulanmalıdır.
+1. Yedekli staging veritabanında önce database/migrations/20261027_avofis_mvp.sql, sonra database/migrations/20261027_case_tracking.sql, ardından database/migrations/20261027_staff_deliverables.sql uygulanmalıdır.
 2. Personel rolü yalnızca public.avofis_staff tablosuna ayrıcalıklı yetkiyle atanır; kullanıcı profilinden atanmaz.
 3. Geçiş SQL'i uygulanmazsa takip ekranı gerçek kayıt gösteremez; geçmiş olay geriye dönük üretilmez.
 4. Dosya yüklemek otomatik teslim kanıtı değildir. Belgenin kabul durumunu yetkili personel günceller.
@@ -22,3 +22,6 @@ Bu dal, mevcut müşteri MVP dalını temel alır. Kayıt, mesaj, sözleşme, ö
 - Hollanda şirket tescili, veri sorumlusu ve adresi, doğrulanmış iletişim kanalı, tüketici şartları, KDV/harç dökümü, ödeme hesabı ve belge saklama/silme prosedürleri mevcut kaynak koduyla doğrulanamaz.
 - Müşteri/personel işlem ekranlarının tamamı henüz Hollandaca ve İngilizce değildir.
 - Yeşil CI veya Vercel dağıtımı, tüm işlevlerin çalıştığı anlamına gelmez.
+
+## Sonuç belgeleri
+Personel yalnızca kabul edilmiş sözleşmeli dosyaya özel Supabase bucket üzerinden dosya yükleyebilir; dosya metadatası public.avofis_deliverables tablosunda RLS ile kayıtlıdır. Müşteri yalnızca yetkili olduğu dosyanın teslim belgelerini kısa süreli imzalı bağlantıdan indirebilir. Depolama yazımı başarılı ancak veritabanı kaydı başarısız olursa sistem bunu açık hata olarak bildirir; manuel tutarlılık denetimi gerekir. Canlıda uçtan uca doğrulanmadı.
