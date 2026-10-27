@@ -4,8 +4,8 @@ import { AuthProvider } from "@/components/providers/AuthProvider";
 import { EditModeProvider } from "@/components/providers/EditModeProvider";
 
 export const metadata: Metadata = {
- title:{default:"AVOfis | Avrupa–Türkiye Profesyonel İşlem Desteği",template:"%s | AVOfis"},
- description:"Hollanda, Almanya ve Türkiye bağlantılı vize, oturum, resmî başvuru, sözleşme, uyuşmazlık, insan hakları, belge, eğitim, şirket ve ticari işlem organizasyonu.",
+ title:{default:"AVOfis | Avrupa Genelinde Hukukî ve İdarî Destek",template:"%s | AVOfis"},
+ description:"Hollanda ve Almanya ağırlıklı Avrupa genelinde hukukî danışmanlık, idarî itiraz, uygun temsil, alacak takibi, kira, sosyal güvenlik, göçmenlik, sözleşmeler ve ticari işlem hizmetleri.",
  robots:{index:true,follow:true}
 };
 export default function RootLayout({children}:{children:React.ReactNode}){

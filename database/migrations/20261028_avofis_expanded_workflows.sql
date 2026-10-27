@@ -105,3 +105,15 @@ drop trigger if exists avofis_internal_tasks_touch on public.avofis_internal_tas
 create trigger avofis_internal_tasks_touch
  before update on public.avofis_internal_tasks for each row
  execute function public.avofis_set_internal_task_updated_at();
+
+
+-- European multi-jurisdiction enquiries: routing data only, no sensitive case files.
+alter table public.avofis_leads add column if not exists other_country text not null default '';
+alter table public.avofis_leads add column if not exists secondary_country text not null default '';
+alter table public.avofis_leads add column if not exists authority_name text not null default '';
+alter table public.avofis_leads drop constraint if exists avofis_leads_other_country_check;
+alter table public.avofis_leads add constraint avofis_leads_other_country_check check(char_length(other_country)<=80);
+alter table public.avofis_leads drop constraint if exists avofis_leads_secondary_country_check;
+alter table public.avofis_leads add constraint avofis_leads_secondary_country_check check(char_length(secondary_country)<=80);
+alter table public.avofis_leads drop constraint if exists avofis_leads_authority_name_check;
+alter table public.avofis_leads add constraint avofis_leads_authority_name_check check(char_length(authority_name)<=120);

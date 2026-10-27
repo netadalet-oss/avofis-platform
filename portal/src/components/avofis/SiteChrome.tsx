@@ -57,7 +57,7 @@ function HeaderDropdown({label,lang,type}:{label:string;lang:SiteLang;type:"serv
  const root=type==="services"?"/hizmetler":"/kimler-icin";
  return <details className="group relative">
    <summary className="avofis-nav-link flex cursor-pointer list-none items-center gap-1 py-5 [&::-webkit-details-marker]:hidden">{label}<ChevronDown className="h-3.5 w-3.5 transition-transform group-open:rotate-180"/></summary>
-   <div className="absolute left-[-170px] top-full w-[660px] rounded-b-[18px] border border-[#dfbf59]/25 bg-[#04102C] p-4 shadow-2xl">
+   <div className="absolute left-[-170px] top-full max-h-[72vh] w-[660px] overflow-y-auto rounded-b-[18px] border border-[#dfbf59]/25 bg-[#04102C] p-4 shadow-2xl">
      <div className="grid grid-cols-3 gap-1.5">
        {entries.map(item=><Link key={item.slug} href={withLang(root+"/"+item.slug,lang)} className="flex min-h-[70px] items-center gap-2.5 rounded-xl px-3 py-2 text-[12px] leading-[1.5] text-[#E4EAF5] hover:bg-[#071738]">
          <item.icon className="h-5 w-5 shrink-0 text-[#dfbf59]" strokeWidth={1.7} aria-hidden="true"/><span>{item.title}</span>

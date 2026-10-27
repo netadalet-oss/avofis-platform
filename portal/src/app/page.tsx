@@ -4,6 +4,7 @@ import { ArrowRight,ArrowUpRight,CheckCircle2,FolderCheck,Globe2,MessageSquareTe
 import { SiteFooter,SiteHeader } from "@/components/avofis/SiteChrome";
 import { useSiteLang } from "@/hooks/useSiteLang";
 import { services,audiences,processSteps,localized,ui,withLang } from "@/lib/avofis-site";
+import {featuredServiceSlugs,featuredAudienceSlugs} from "@/lib/avofis-groups";
 
 export default function HomePage(){
  const lang=useSiteLang(),t=ui[lang];
@@ -25,7 +26,7 @@ export default function HomePage(){
         <div><h2 className="text-[17px] font-semibold leading-snug text-[#F2F5FF]">{t.support}</h2><p className="mt-1 text-[13px] leading-[1.75] text-[#B9C5DF]">{t.searchHelp}</p></div>
       </div>
       <div className="mt-4 grid gap-1.5">
-        {services.slice(0,6).map(s=><Link href={withLang("/hizmetler/"+s.slug,lang)} key={s.slug} className="flex min-h-[44px] items-center gap-3 rounded-lg border border-[#dfbf59]/10 bg-[#071738]/75 px-3 py-2 text-[13px] font-medium text-[#E4EAF5] hover:border-[#dfbf59]/45">
+        {services.filter(s=>featuredServiceSlugs.slice(0,6).includes(s.slug)).sort((a,b)=>featuredServiceSlugs.indexOf(a.slug)-featuredServiceSlugs.indexOf(b.slug)).map(s=><Link href={withLang("/hizmetler/"+s.slug,lang)} key={s.slug} className="flex min-h-[44px] items-center gap-3 rounded-lg border border-[#dfbf59]/10 bg-[#071738]/75 px-3 py-2 text-[13px] font-medium text-[#E4EAF5] hover:border-[#dfbf59]/45">
          <s.icon className="h-4 w-4 shrink-0 text-[#dfbf59]" strokeWidth={1.8} aria-hidden="true"/><span className="min-w-0 flex-1">{localized(s.title,lang)}</span><ArrowUpRight className="h-4 w-4 shrink-0 text-[#dfbf59]" aria-hidden="true"/>
         </Link>)}
       </div>
@@ -37,20 +38,21 @@ export default function HomePage(){
     <div className="avofis-container">
       <div className="avofis-section-heading"><h2 className="avofis-h2">{t.serviceHead}</h2><p className="avofis-section-desc">{t.serviceDesc}</p></div>
       <div className="mt-7 grid items-stretch gap-3 sm:grid-cols-2 lg:grid-cols-3">
-       {services.map(s=><article key={s.slug} className="avofis-card avofis-service-card flex h-full flex-col rounded-[18px] border p-5">
+       {services.filter(s=>featuredServiceSlugs.includes(s.slug)).sort((a,b)=>featuredServiceSlugs.indexOf(a.slug)-featuredServiceSlugs.indexOf(b.slug)).map(s=><article key={s.slug} className="avofis-card avofis-service-card flex h-full flex-col rounded-[18px] border p-5">
           <span className="avofis-icon-tile"><s.icon className="h-5 w-5" aria-hidden="true"/></span>
           <h3 className="mt-4 text-[16px] font-semibold leading-snug text-[#F2F5FF]">{localized(s.title,lang)}</h3>
           <p className="mt-2 flex-1 text-[13px] leading-[1.8] text-[#B9C5DF]">{localized(s.lead,lang)}</p>
           <Link className="mt-4 inline-flex min-h-10 items-center gap-2 border-t border-[#dfbf59]/15 pt-3 text-[13px] font-semibold text-[#dfbf59]" href={withLang("/hizmetler/"+s.slug,lang)}>{t.learn}<ArrowUpRight className="h-4 w-4" aria-hidden="true"/></Link>
        </article>)}
       </div>
+      <Link href={withLang("/hizmetler",lang)} className="mt-5 inline-flex min-h-10 items-center gap-2 text-[13px] font-semibold text-[#dfbf59]">{t.allServices}<ArrowRight className="h-4 w-4"/></Link>
     </div>
   </section>
   <section id="audiences" className="py-14 sm:py-16">
     <div className="avofis-container">
       <div className="flex flex-wrap items-end justify-between gap-4"><h2 className="avofis-h2">{t.audienceHead}</h2><Link href={withLang("/kimler-icin",lang)} className="inline-flex min-h-10 items-center gap-2 text-[13px] font-semibold text-[#dfbf59]">{t.allAudiences}<ArrowRight className="h-4 w-4"/></Link></div>
       <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-       {audiences.map(a=><Link href={withLang("/kimler-icin/"+a.slug,lang)} key={a.slug} className="avofis-card flex min-h-[98px] items-start gap-3 rounded-[16px] border p-4 transition hover:border-[#dfbf59]/50">
+       {audiences.filter(a=>featuredAudienceSlugs.includes(a.slug)).sort((a,b)=>featuredAudienceSlugs.indexOf(a.slug)-featuredAudienceSlugs.indexOf(b.slug)).map(a=><Link href={withLang("/kimler-icin/"+a.slug,lang)} key={a.slug} className="avofis-card flex min-h-[98px] items-start gap-3 rounded-[16px] border p-4 transition hover:border-[#dfbf59]/50">
          <span className="avofis-icon-tile shrink-0"><a.icon className="h-5 w-5" aria-hidden="true"/></span>
          <span className="min-w-0"><span className="block text-[15px] font-semibold leading-snug text-[#F2F5FF]">{localized(a.title,lang)}</span><span className="mt-1 block text-[12px] leading-[1.6] text-[#B9C5DF]">{localized(a.lead,lang)}</span></span>
        </Link>)}
