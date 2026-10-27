@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import Script from "next/script";
 import { ArrowLeft, CheckCircle2, LockKeyhole, ShieldCheck } from "lucide-react";
@@ -29,11 +29,8 @@ const enabled = process.env.NEXT_PUBLIC_AVOFIS_INTAKE_ENABLED === "true";
 const sitekey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "";
 
 export default function IntakePage() {
-  const [lang] = useState<Language>(() => {
-    if (typeof window === "undefined") return "tr";
-    const value = new URLSearchParams(window.location.search).get("lang");
-    return value === "nl" || value === "en" ? value : "tr";
-  });
+  const [lang,setLang] = useState<Language>("tr");
+  useEffect(()=>{ const value=new URLSearchParams(window.location.search).get("lang"); if(value==="nl"||value==="en")setLang(value); },[]);
   const t = copy[lang];
   const [name,setName] = useState("");
   const [email,setEmail] = useState("");
