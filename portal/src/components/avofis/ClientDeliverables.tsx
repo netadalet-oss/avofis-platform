@@ -11,9 +11,9 @@ export function ClientDeliverables({caseId}:{caseId:string}){
  const [loading,setLoading]=useState(true);
  useEffect(()=>{
    let active=true;setItems([]);setError("");setLoading(true);
-   void supabase.from("avofis_deliverables")
+   void Promise.resolve(supabase.from("avofis_deliverables")
      .select("id,original_file_name,storage_path,created_at")
-     .eq("case_id",caseId).order("created_at",{ascending:false})
+     .eq("case_id",caseId).order("created_at",{ascending:false}))
      .then(({data,error})=>{
        if(!active)return;
        if(error)setError("Teslim edilen belgeler şu anda görüntülenemiyor.");
