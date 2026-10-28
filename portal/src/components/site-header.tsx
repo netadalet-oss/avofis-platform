@@ -30,7 +30,7 @@ export function SiteHeader() {
     return typeof rawRole === "string" ? rawRole.toLowerCase() : "";
   }, [session]);
 
-  const isAdmin = role === "admin" || role === "super_admin";
+  const isAdmin = false; // Legacy CMS editing disabled until server-side staff authorization and RLS review.
 
   useEffect(() => {
     let mounted = true;
@@ -152,11 +152,11 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#07111f]/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#030A22]/80 backdrop-blur-xl">
       <div className="container-shell flex h-20 items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-sky-400/30 bg-gradient-to-br from-sky-400/20 to-blue-600/20 shadow-glow">
-            <Gavel className="h-5 w-5 text-sky-300" />
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-[#dfbf59]/30 bg-gradient-to-br from-[#dfbf59]/20 to-[#071738]/70 shadow-glow">
+            <Gavel className="h-5 w-5 text-[#dfbf59]" />
           </div>
           <div>
             <div className="text-lg font-semibold tracking-tight">AvOfis</div>
@@ -187,7 +187,7 @@ export function SiteHeader() {
                   openEditMode();
                 }
               }}
-              className="inline-flex items-center gap-2 rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-2.5 text-sm font-medium text-amber-200 hover:bg-amber-400/15"
+              className="inline-flex items-center gap-2 rounded-xl border border-[#dfbf59]/30 bg-[#dfbf59]/10 px-4 py-2.5 text-sm font-medium text-[#f0d56d] hover:bg-[#dfbf59]/15"
             >
               {editMode ? <X className="h-4 w-4" /> : <Pencil className="h-4 w-4" />}
               {editMode ? "Düzenleme Modunu Kapat" : "Düzenleme Modu"}
@@ -202,7 +202,7 @@ export function SiteHeader() {
           </a>
           <a
             href="/auth/register"
-            className="rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-slate-950 hover:bg-slate-100"
+            className="rounded-xl bg-[#dfbf59] px-4 py-2.5 text-sm font-semibold text-slate-950 hover:bg-[#f0d56d]"
           >
             Hesap Oluştur
           </a>
@@ -218,9 +218,9 @@ export function SiteHeader() {
       </div>
 
       {isAdmin && editMode ? (
-        <div className="border-t border-white/10 bg-[#081321]">
+        <div className="border-t border-white/10 bg-[#04102C]">
           <div className="container-shell py-5">
-            <div className="rounded-[24px] border border-amber-400/20 bg-amber-400/10 p-4">
+            <div className="rounded-[24px] border border-[#dfbf59]/20 bg-[#dfbf59]/10 p-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <div className="text-sm font-semibold text-white">
@@ -245,7 +245,7 @@ export function SiteHeader() {
                     type="button"
                     onClick={saveMenuInline}
                     disabled={saving}
-                    className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-950 disabled:opacity-60"
+                    className="inline-flex items-center gap-2 rounded-xl bg-[#dfbf59] px-4 py-2 text-sm font-semibold text-slate-950 disabled:opacity-60"
                   >
                     <Save className="h-4 w-4" />
                     {saving ? "Kaydediliyor..." : "Menüyü Kaydet"}
@@ -309,7 +309,7 @@ export function SiteHeader() {
       ) : null}
 
       {open && (
-        <div className="border-t border-white/10 bg-[#081321] md:hidden">
+        <div className="border-t border-white/10 bg-[#04102C] md:hidden">
           <div className="container-shell flex flex-col gap-3 py-4">
             {menuItems.map((item) => (
               <a
@@ -330,7 +330,7 @@ export function SiteHeader() {
               </a>
               <a
                 href="/auth/register"
-                className="rounded-xl bg-white px-4 py-3 text-center text-sm font-semibold text-slate-950"
+                className="rounded-xl bg-[#dfbf59] px-4 py-3 text-center text-sm font-semibold text-slate-950"
               >
                 Hesap Oluştur
               </a>

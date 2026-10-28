@@ -1,0 +1,119 @@
+# AVOfis: public portal, client workflow and internal operations
+
+**Source branch:** feature/avofis-client-mvp-2026. This is a feature-gated staging implementation, not a certified production launch.
+
+## Customer-facing information architecture
+
+Top navigation: Services / Who we help / How it works / Information / Contact / Client login / Start an enquiry.
+The logo leads home. Customer-facing content NEVER includes incorporation notes, shareholder/immigration details, funding plans or internal work tasks.
+
+The shared canonical catalogue is \`portal/src/lib/avofis-site.ts\`, with TR / NL / DE / EN texts. The following are the original nine services; the catalogue has since expanded to seventeen routes grouped into four navigation families:
+
+1. Visas, residence and citizenship — invitation, sponsorship, family reunion, residence renewals, refusals and relevant specialists.
+2. Employment and workplace disputes — wages, termination, contract documentation, employer and employee routes.
+3. Public authorities, objections and fines — municipalities, migration authorities, tax, traffic, customs, administrative deadlines.
+4. Contracts and civil disputes — sale and services, debts, tenancy, consumer claims, travel and tourism disputes, deliveries.
+5. ECHR and UN human-rights mechanisms — admissibility, domestic remedies, chronology, evidence and qualified legal review.
+6. Documents, apostilles and translations — civil-status records, powers of attorney, notarisation and sworn translations.
+7. Education and diplomas — qualifications, transcripts, student residence, admission and education agreements.
+8. Company formation and cross-border trade — KVK, supply/distribution agreements, import/export, transport, customs, specialists.
+9. International employment and recruitment — offers, work permits, staffing, recruitment and labour-supply authorisation.
+
+The audience taxonomy includes European residents with Türkiye links, migrant families, students, employees, entrepreneurs, visa applicants/sponsors, Türkiye-to-Europe, Europe-to-Türkiye and ECHR/UN applicants.
+
+Per-service detail routes: \`/hizmetler/[slug]\`; per-audience detail: \`/kimler-icin/[slug]\`.
+Avoid generic slogans, imaginary credentials, invented testimonials or unverified prices. Keep official sources in \`/bilgi\`.
+Other pages: \`/nasil-calisir\`, \`/iletisim\`, \`/basvuru\`, \`/musteri\`, \`/yonetim\`, \`/yonetim/isletme\`.
+Historical unrelated pages redirect and must not be used as public navigation.
+
+## Real service lifecycle
+
+1. Contact purpose, country and applicant role identified; no sensitive uploads in public form.
+2. Staff checks urgency, jurisdiction and professional authorisation. Appeal or human-rights dates REQUIRE expert review, not an automatic calculator.
+3. Scope, costs, third-party providers and service contract clarified and approved.
+4. Secure account, agreement and necessary case documents.
+5. Access-controlled case tasks, manually recorded due dates, messages and status.
+6. Verified payment settlement (Mollie webhook + provider retrieval) and deliverables.
+7. Closure and retention/deletion according to reviewed policy.
+
+Nine guided-intake categories and four locales are supported in \`/api/intake\`. 
+Cases may use category slugs; older keys remain accepted for historical records.
+The intake API validates all inputs, verifies Turnstile SERVER-SIDE and uses a server-only Supabase service role.
+
+## Internal system separation
+
+\`/yonetim\`: independent database staff role for leads, cases, agreements, payments and messages.
+\`/yonetim/isletme\`: administrator-only company programme (not indexed in public navigation), with tasks in nine internal workstreams: company, legal, finance, services, partners, operations, security, marketing and quality. It stores real task status, assigned label, notes, priorities, due dates and estimated budget. No fictional tasks are pre-created.
+
+Customer tasks in \`avofis_case_tasks\` have explicit \`visible_to_client\` and RLS checks against the owner. Only staff may create/update case tasks. A due date is merely a manually reviewed date, not an automatic determination of court or administrative deadlines.
+Company tasks in \`avofis_internal_tasks\` are readable and writable ONLY by verified database admins.
+
+The operating programme should be populated by authorised management with these work packages:
+1 Business model and revenue lines; 2 target markets and user interviews; 3 service catalogue and permission map;
+4 share ownership / management / signing roles; 5 shareholders agreement and deadlock rules;
+6 immigration and employment authorisation opinion; 7 Dutch BV, notary, KVK and UBO;
+8 brand and trade-name clearance; 9 business address and verified contacts;
+10 start-up capital and 6-month cash budget; 11 VAT, corporate tax, payroll and accounting;
+12 bank and payments onboarding; 13 service pricing and margin;
+14 independent specialists in NL/DE/TR; 15 professional, general and cyber insurance;
+16 written case SOPs and quality controls; 17 service terms, withdrawal and complaints;
+18 GDPR lawful basis, retention, DPA and international transfers;
+19 accessible public portal and case system; 20 staff operation and critical deadlines;
+21 market-appropriate communications and acquisition; 22 staging functional, access and security tests;
+23 controlled legal launch authorisation; 24 first-90-day operating KPIs and review.
+
+The admin may create these as REAL tasks after work authorisation and private data protection have been assessed. They are not public marketing material.
+
+## Design contract
+
+Use exactly:
+\`\`\`css
+--ref-panel: #030A22;
+--ref-panel-2: #04102C;
+--ref-panel-3: #071738;
+--ref-gold: #dfbf59;
+--ref-gold-strong: #f0d56d;
+.card { background: linear-gradient(145deg,rgba(4,13,38,.99),rgba(1,4,15,.998)); }
+\`\`\`
+Consistent heading hierarchy, equal card geometry, aligned Lucide icons, 44px+ actionable targets; test narrow 320px/375px/390px, tablets 768px/1024px and desktop. Core public content has four languages; authenticated operational screens may still require additional localisation before broad rollout.
+
+## Migration / operational steps (MANDATORY, NOT DONE BY A GIT COMMIT)
+
+1. Backup staging DB and verify RLS before running SQL. Apply \`database/migrations/20261027_avofis_mvp.sql\` first.
+2. Review and apply \`database/migrations/20261028_avofis_expanded_workflows.sql\`. It adds lead context, case task RLS and admin-only internal tasks.
+3. Manually bootstrap verified accounts in \`avofis_staff\`. Do not grant privileges using public user_metadata.
+4. Test unauthenticated, client A, client B, staff and admin role matrix for ALL tables and private storage.
+5. Configure Turnstile, Supabase, auth email, secure service role, real business details, privacy notice version, approved agreements and Mollie test account.
+6. Confirm jurisdiction-specific company law, immigration/work rights, legal practice, representation rules, GDPR, labour supply and travel organisers' regulations with qualified advisers.
+7. Keep feature gates OFF until all checks pass: \`AVOFIS_LEGAL_READY\`, \`AVOFIS_INTAKE_ENABLED\`, \`NEXT_PUBLIC_AVOFIS_INTAKE_ENABLED\`, \`NEXT_PUBLIC_AVOFIS_CLIENT_PORTAL_ENABLED\`, \`AVOFIS_PAYMENT_ENABLED\`, \`NEXT_PUBLIC_AVOFIS_INTERNAL_ENABLED\`.
+8. Verify production payment and case data flows separately. Build success / a Vercel preview URL does not verify real integrations.
+
+Staging / preview uses generated fixtures and must not collect personal/sensitive files prior to authorisation. Do not call an untested action "live" or "operational".
+
+## October 28: pan-European legal and administrative service expansion
+
+**Geographic principle:** A Türkiye connection is NOT required. Potential AVOfis matters may arise within the Netherlands, Germany and other European countries, between European countries, or between Europe and Türkiye. Listing a country does not imply all activities are authorised there.
+
+**Current service catalogue:** 17 service areas grouped into four navigation families. Eight additional areas (including specialist coordination):
+- legal advice, written opinions, contract review and research;
+- debt, claims and collections, with Wki/RDG clearance before regulated recovery;
+- authorised Dutch cantonal and administrative court or agency representation, subject to the case and power of attorney;
+- benefits, tax and social-security decisions;
+- housing, rent, Huurcommissie and insurance disputes;
+- criminal complaints, victims and traffic matters, excluding reserved criminal defence;
+- intra-European legal, administrative, employment and commercial matters with no Türkiye condition.
+
+**Current target groups:** 14 audience routes, including Europe-only clients, legal-advice seekers, creditors/debtors, tenants/landlords and benefits/tax claimants.
+
+**Navigation:** Four grouped service sections in desktop and mobile menus. Services are searchable by the active language's titles, descriptions and subservice labels. The customer-facing /yetki-ve-temsil explains Dutch jurist versus advocaat, representation permissions, Wki and German RDG limits. Official links are provided.
+
+**Initial enquiry:** Country selection includes European jurisdictions, plus optional secondary jurisdiction and public authority. Critical dates are NOT automatically calculated or validated as legal deadlines. Intake remains gated until legal readiness, privacy, role and security approvals are complete.
+
+**Internal compliance checkpoint:** Before activating any paid or representative service, review individual right to work, jurisdiction-specific professional permission, court or authority procedure, signed mandate, deadline verification, Wki or RDG registration, insurance scope and service contracts.
+
+**Deployment:** Database migrations are NOT automatically run when GitHub code is committed. Validate the new lead fields against Supabase in a staging database before switching intake on. Passing build and Vercel checks does not establish functional or regulatory readiness.
+
+
+## Stage-gated operating roadmap and Dutch–Turkish specialist coordination
+
+See `docs/avofis-4-asama-5-odak.md`. The roadmap is explicitly **private**, visible only to authorised administrators in `/yonetim/isletme`. It has four delivery stages and a fifth, cross-cutting professional-coordination focus. Legal rights, staff permission, GDPR and commercial terms remain gates rather than claims of completion. The portal now contains an additional planned service page for Europe–Türkiye legal professional coordination; it does NOT claim verified partnerships until such agreements exist. The private operational migration `20261030_avofis_internal_roadmap.sql` must be applied and tested in staging before the internal manager feature is enabled.

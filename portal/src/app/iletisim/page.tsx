@@ -1,0 +1,22 @@
+"use client";
+import Link from "next/link";
+import { ArrowUpRight,FileText,LockKeyhole,MessageSquareText,ShieldCheck } from "lucide-react";
+import { PageFrame } from "@/components/avofis/PageFrame";
+import { useSiteLang } from "@/hooks/useSiteLang";
+import { ui,withLang } from "@/lib/avofis-site";
+const t={
+ tr:{title:"İletişim ve başvuru",desc:"Hangi işlem için yardıma ihtiyaç duyduğunuzu hizmet başlıkları üzerinden belirleyebilirsiniz. İletişim ve dosya kabulü yalnızca doğrulanmış kanallar üzerinden yürütülür.",request:"Başvuru ve dosya açılışı",requestDesc:"Başvuru kanalı faaliyete açıldığında talebinizi ilgili hizmet ve ülke bilgileriyle iletebilirsiniz.",account:"Mevcut müşteri dosyası",accountDesc:"Hesabı bulunan müşteriler dosyalarını ve mesajlarını güvenli müşteri alanından yönetir.",documents:"Hassas belgeler hakkında",documentsDesc:"Kimlik, sağlık, iltica ve dava dosyalarını ilk iletişim sırasında veya kişisel mesajlaşma uygulamalarıyla göndermeyin.",status:"Yeni başvurular şu anda kabul edilmiyor."},
+ nl:{title:"Contact en aanvragen",desc:"Kies eerst uw onderwerp. Persoonsgegevens en dossiers worden uitsluitend via gecontroleerde kanalen behandeld.",request:"Nieuwe aanvraag",requestDesc:"Zodra het aanvraagkanaal is geopend, kunt u een verzoek met land en dienst indienen.",account:"Bestaand klantdossier",accountDesc:"Geregistreerde klanten gebruiken de beveiligde omgeving voor dossiers en berichten.",documents:"Gevoelige documenten",documentsDesc:"Stuur geen identiteits-, medische, asiel- of processtukken via gewone berichten of het eerste contactformulier.",status:"Nieuwe aanvragen zijn momenteel gesloten."},
+ de:{title:"Kontakt und Anfragen",desc:"Wählen Sie Ihr Anliegen aus. Persönliche Daten und Akten werden ausschließlich über gesicherte Kanäle verarbeitet.",request:"Neue Anfrage",requestDesc:"Nach Freischaltung können Sie Ihr Anliegen mit Land und Leistung einreichen.",account:"Bestehende Kundenakte",accountDesc:"Registrierte Kunden verwenden den geschützten Bereich für Akten und Nachrichten.",documents:"Sensible Dokumente",documentsDesc:"Keine Ausweis-, Gesundheits-, Asyl- oder Prozessakten über ungesicherte Nachrichten senden.",status:"Neue Anfragen werden derzeit nicht angenommen."},
+ en:{title:"Contact and enquiries",desc:"Choose the subject relevant to you. Personal data and case records are handled only through verified channels.",request:"New enquiry",requestDesc:"When the enquiry channel opens, you can submit your request with the relevant service and country.",account:"Existing client file",accountDesc:"Registered clients use the protected account for files and messages.",documents:"Sensitive documents",documentsDesc:"Do not send identity, medical, asylum or litigation documents through unsecured messages or an initial form.",status:"New enquiries are currently closed."}
+};
+export default function ContactPage(){
+ const lang=useSiteLang(),c=t[lang],u=ui[lang];
+ return <PageFrame lang={lang} eyebrow={u.contact} title={c.title} description={c.desc} wide>
+  <div className="grid gap-3 md:grid-cols-2">
+    <section className="avofis-card flex flex-col rounded-[18px] border p-5 sm:p-6"><span className="avofis-icon-tile"><MessageSquareText className="h-5 w-5"/></span><h2 className="mt-4 text-[17px] font-semibold text-[#F2F5FF]">{c.request}</h2><p className="mt-2 flex-1 text-[13px] leading-[1.8] text-[#B9C5DF]">{c.requestDesc}</p><Link href={withLang("/basvuru",lang)} className="avofis-outline avofis-btn mt-5">{u.intake}<ArrowUpRight className="h-4 w-4"/></Link><p className="mt-3 text-[12px] text-[#dfbf59]">{c.status}</p></section>
+    <section className="avofis-card flex flex-col rounded-[18px] border p-5 sm:p-6"><span className="avofis-icon-tile"><FileText className="h-5 w-5"/></span><h2 className="mt-4 text-[17px] font-semibold text-[#F2F5FF]">{c.account}</h2><p className="mt-2 flex-1 text-[13px] leading-[1.8] text-[#B9C5DF]">{c.accountDesc}</p><Link href="/musteri" className="avofis-outline avofis-btn mt-5">{u.account}<ArrowUpRight className="h-4 w-4"/></Link></section>
+  </div>
+  <div className="avofis-card mt-5 flex items-start gap-3 rounded-[16px] border p-5"><span className="avofis-icon-tile shrink-0"><LockKeyhole className="h-5 w-5"/></span><div><h2 className="text-[15px] font-semibold text-[#F2F5FF]">{c.documents}</h2><p className="mt-2 text-[13px] leading-[1.8] text-[#B9C5DF]">{c.documentsDesc}</p></div></div>
+ </PageFrame>;
+}

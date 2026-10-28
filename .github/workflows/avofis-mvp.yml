@@ -1,0 +1,36 @@
+name: AVOfis MVP build checks
+on:
+  push:
+    branches: [feature/avofis-client-mvp-2026]
+  pull_request:
+    branches: [main]
+jobs:
+  portal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: node --test scripts/avofis-contract.test.mjs
+      - run: npm run build:portal
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ci-public-test-key
+          NEXT_PUBLIC_AVOFIS_INTAKE_ENABLED: 'false'
+          NEXT_PUBLIC_AVOFIS_CLIENT_PORTAL_ENABLED: 'false'
+      - run: npm run lint --workspace portal
+  admin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npm run build:admin
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ci-public-test-key
+      - run: npm run typecheck --workspace admin
