@@ -83,7 +83,7 @@ test("the four-stage launch programme and fifth cross-cutting focus remain stric
  assert.equal([...roadmap.matchAll(/\bid:"(?:foundation|launch|digital|expansion)"/g)].length,4);
  assert.match(roadmap,/id:"coordination"/);
  assert.match(roadmap,/number:4/);
- assert.equal([...taskPlan.matchAll(/\{group_key:/g)].length,24);
+ assert.equal([...taskPlan.matchAll(/\{group_key:"/g)].length,24);
  assert.equal([...roadmap.matchAll(/\{group_key:"/g)].length,5);
  assert.match(taskPlan,/phaseForOriginalTask/);
  assert.match(manager,/phaseSections\.map/);
