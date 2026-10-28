@@ -15,10 +15,10 @@ const baseMigration=file("database/migrations/20261029_avofis_case_clearance.sql
 const additionalMigration=file("database/migrations/20261030_avofis_scope_and_audit.sql");
 const slugs=(source)=>[...source.matchAll(/\bslug:"([^"]+)"/g)].map(x=>x[1]);
 
-test("the 16 services and 14 audiences have distinct route slugs",()=>{
+test("the 17 services and 14 audiences have distinct route slugs",()=>{
  const services=[...slugs(original.split("export type Audience")[0]),...slugs(expanded.split("export const extraAudiences")[0])];
  const audiences=[...slugs(original.split("export const audiences:Audience[]=")[1].split("export const processSteps")[0]),...slugs(expanded.split("export const extraAudiences")[1])];
- assert.equal(services.length,16);
+ assert.equal(services.length,17);
  assert.equal(new Set(services).size,services.length);
  assert.equal(audiences.length,14);
  assert.equal(new Set(audiences).size,audiences.length);
@@ -72,5 +72,26 @@ test("client files and internal reviews cannot bypass a withdrawn approval",()=>
  assert.doesNotMatch(client,/SUPABASE_SERVICE_ROLE_KEY/);
  for(const path of ["portal/src/app/page.tsx","portal/src/app/hizmetler/page.tsx","portal/src/app/kimler-icin/page.tsx"]){
   assert.doesNotMatch(file(path),/avofis_internal_tasks|avofis_case_assessments|SUPABASE_SERVICE_ROLE_KEY/);
+ }
+});
+
+test("the four-stage launch programme and fifth cross-cutting focus remain strictly private",()=>{
+ const roadmap=file("portal/src/lib/avofis-roadmap.ts");
+ const taskPlan=file("portal/src/lib/avofis-business-plan.ts");
+ const manager=file("portal/src/app/yonetim/isletme/page.tsx");
+ const migration=file("database/migrations/20261030_avofis_internal_roadmap.sql");
+ assert.equal([...roadmap.matchAll(/\bid:"(?:foundation|launch|digital|expansion)"/g)].length,4);
+ assert.match(roadmap,/id:"coordination"/);
+ assert.match(roadmap,/number:4/);
+ assert.equal([...taskPlan.matchAll(/\{group_key:/g)].length,24);
+ assert.equal([...roadmap.matchAll(/\{group_key:"/g)].length,5);
+ assert.match(taskPlan,/phaseForOriginalTask/);
+ assert.match(manager,/phaseSections\.map/);
+ assert.match(manager,/addCoordinationFocus/);
+ assert.match(manager,/admin===true/);
+ assert.match(migration,/avofis_internal_tasks/);
+ assert.match(migration,/phase_key/);
+ for(const path of ["portal/src/app/page.tsx","portal/src/app/hizmetler/page.tsx","portal/src/app/kimler-icin/page.tsx"]){
+  assert.doesNotMatch(file(path),/avofis_roadmap|avofis-roadmap|avofis_internal_tasks|phaseForOriginalTask/);
  }
 });
