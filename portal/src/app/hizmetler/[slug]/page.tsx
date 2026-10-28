@@ -34,6 +34,7 @@ export default function ServiceDetailPage(){
   <div className="mt-6 flex flex-wrap gap-3">
    <Link href={withLang("/basvuru",lang)+"&service="+service.slug} className="avofis-cta avofis-btn">{t.intake}<ArrowUpRight className="h-4 w-4" aria-hidden="true"/></Link>
    <Link href={withLang("/nasil-calisir",lang)} className="avofis-outline avofis-btn">{t.process}</Link>
+   <Link href={withLang("/yetki-ve-temsil",lang)} className="avofis-outline avofis-btn">{t.professional}</Link>
   </div>
  </PageFrame>;
 }

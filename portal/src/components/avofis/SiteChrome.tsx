@@ -76,7 +76,7 @@ export function SiteFooter({lang}:{lang:SiteLang}){
    <div className="sm:text-right"><p className="text-[12px] leading-[1.8] text-[#B9C5DF]">{t.legal}</p>
     <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-[12px] font-semibold text-[#dfbf59] sm:justify-end">
      <Link href={withLang("/hizmetler",lang)}>{t.services}</Link><Link href={withLang("/nasil-calisir",lang)}>{t.process}</Link>
-     <Link href={withLang("/gizlilik",lang)}>{t.privacy}</Link><Link href={withLang("/iletisim",lang)}>{t.contact}</Link>
+     <Link href={withLang("/yetki-ve-temsil",lang)}>{t.professional}</Link><Link href={withLang("/gizlilik",lang)}>{t.privacy}</Link><Link href={withLang("/iletisim",lang)}>{t.contact}</Link>
      <span className="font-normal text-[#B9C5DF]">© {new Date().getFullYear()} AVOfis</span>
     </div>
    </div>

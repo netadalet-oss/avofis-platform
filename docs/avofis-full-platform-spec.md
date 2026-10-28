@@ -89,3 +89,26 @@ Consistent heading hierarchy, equal card geometry, aligned Lucide icons, 44px+ a
 8. Verify production payment and case data flows separately. Build success / a Vercel preview URL does not verify real integrations.
 
 Staging / preview uses generated fixtures and must not collect personal/sensitive files prior to authorisation. Do not call an untested action "live" or "operational".
+
+## October 28: pan-European legal and administrative service expansion
+
+**Geographic principle:** A Türkiye connection is NOT required. Potential AVOfis matters may arise within the Netherlands, Germany and other European countries, between European countries, or between Europe and Türkiye. Listing a country does not imply all activities are authorised there.
+
+**Current service catalogue:** 16 service areas grouped into four navigation families. Seven additional areas:
+- legal advice, written opinions, contract review and research;
+- debt, claims and collections, with Wki/RDG clearance before regulated recovery;
+- authorised Dutch cantonal and administrative court or agency representation, subject to the case and power of attorney;
+- benefits, tax and social-security decisions;
+- housing, rent, Huurcommissie and insurance disputes;
+- criminal complaints, victims and traffic matters, excluding reserved criminal defence;
+- intra-European legal, administrative, employment and commercial matters with no Türkiye condition.
+
+**Current target groups:** 14 audience routes, including Europe-only clients, legal-advice seekers, creditors/debtors, tenants/landlords and benefits/tax claimants.
+
+**Navigation:** Four grouped service sections in desktop and mobile menus. Services are searchable by the active language's titles, descriptions and subservice labels. The customer-facing /yetki-ve-temsil explains Dutch jurist versus advocaat, representation permissions, Wki and German RDG limits. Official links are provided.
+
+**Initial enquiry:** Country selection includes European jurisdictions, plus optional secondary jurisdiction and public authority. Critical dates are NOT automatically calculated or validated as legal deadlines. Intake remains gated until legal readiness, privacy, role and security approvals are complete.
+
+**Internal compliance checkpoint:** Before activating any paid or representative service, review individual right to work, jurisdiction-specific professional permission, court or authority procedure, signed mandate, deadline verification, Wki or RDG registration, insurance scope and service contracts.
+
+**Deployment:** Database migrations are NOT automatically run when GitHub code is committed. Validate the new lead fields against Supabase in a staging database before switching intake on. Passing build and Vercel checks does not establish functional or regulatory readiness.
