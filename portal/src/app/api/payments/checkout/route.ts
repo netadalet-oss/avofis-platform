@@ -18,7 +18,9 @@ export async function POST(request:NextRequest){
   const {data:{user},error:authError}=await db.auth.getUser(auth.slice(7));
   if(authError||!user||!user.email_confirmed_at)return response("Email verification required",401);
   const {data:caseRecord,error:caseError}=await db.from("avofis_cases").select("id,client_user_id,price_eur_cents,status").eq("id",caseId).eq("client_user_id",user.id).maybeSingle();
-  if(caseError||!caseRecord||caseRecord.status==="closed"||caseRecord.status==="review"||caseRecord.price_eur_cents<1)return response("Case unavailable",403);
+  if(caseError||!caseRecord||caseRecord.status!=="open"||caseRecord.price_eur_cents<1)return response("Case must be legally cleared and active before payment",403);
+  const {data:review,error:reviewError}=await db.from("avofis_case_assessments").select("decision,authorisation,deadline_review").eq("case_id",caseId).maybeSingle();
+  if(reviewError||review?.decision!=="approved"||!["permitted","specialist_confirmed"].includes(review.authorisation)||!["confirmed","not_applicable"].includes(review.deadline_review))return response("Legal review required before payment",409);
   const {data:agreement}=await db.from("avofis_agreements").select("id,signed_at").eq("case_id",caseId).maybeSingle();
   if(!agreement?.signed_at)return response("Agreement not accepted",409);
   const {data:previous}=await db.from("avofis_payments").select("checkout_url,status").eq("case_id",caseId).in("status",["open","pending","authorized","paid"]).order("created_at",{ascending:false}).limit(1).maybeSingle();
