@@ -13,6 +13,7 @@ jobs:
         with:
           node-version: '22'
       - run: npm install --no-audit --no-fund
+      - run: node --test scripts/avofis-contract.test.mjs
       - run: npm run build:portal
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co

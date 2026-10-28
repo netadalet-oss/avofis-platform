@@ -30,7 +30,7 @@ const deadlineStates=[
 ] as const;
 const field="avofis-field mt-1.5";
 const label="avofis-form-label block text-[13px]";
-export function StaffCaseAssessment({caseId}:{caseId:string}){
+export function StaffCaseAssessment({caseId,canApprove=false}:{caseId:string;canApprove?:boolean}){
  const [form,setForm]=useState<Assessment>(()=>blank(caseId));
  const [loaded,setLoaded]=useState(false),[working,setWorking]=useState(false),[error,setError]=useState(""),[saved,setSaved]=useState("");
  useEffect(()=>{
@@ -54,6 +54,7 @@ export function StaffCaseAssessment({caseId}:{caseId:string}){
  async function save(e:FormEvent<HTMLFormElement>){
   e.preventDefault();if(!caseId||!loaded||working)return;
   setWorking(true);setError("");setSaved("");
+  if(form.decision==="approved"&&!canApprove){setError("Nihai uygunluk onayı yalnızca yetkili yönetici tarafından verilebilir.");setWorking(false);return;}
   if(form.decision==="approved"&&(!["permitted","specialist_confirmed"].includes(form.authorisation)||
     form.deadline_review==="pending"||form.review_notes.trim().length<12||
     (form.deadline_review==="confirmed"&&(!form.applicable_deadline_on||form.deadline_basis.trim().length<5))||
@@ -98,8 +99,8 @@ export function StaffCaseAssessment({caseId}:{caseId:string}){
     <label className={label}>Meslekî yetki ve çalışma hakkı<select className={field} value={form.authorisation} onChange={e=>change("authorisation",e.target.value)}>{authorisations.map(([value,text])=><option key={value} value={value}>{text}</option>)}</select></label>
     <label className={label}>Bağımsız uzman teyit kaydı<input maxLength={180} className={field} value={form.specialist_reference} onChange={e=>change("specialist_reference",e.target.value)} placeholder="İsim, meslekî kayıt veya teyit referansı"/></label>
    </div>
-   <label className={label}>Değerlendirme sonucu<select className={field} value={form.decision} onChange={e=>change("decision",e.target.value)}>{decisions.map(([value,text])=><option key={value} value={value}>{text}</option>)}</select></label>
-   <label className={label}>İnceleme gerekçesi ve uygulanacak hizmet sınırları<textarea maxLength={2400} rows={4} className={field} value={form.review_notes} onChange={e=>change("review_notes",e.target.value)} placeholder="Yetki, ülke, mahkeme aşaması, süre ve gerekli uzman incelemesini belgeleyin."/></label>
+   <label className={label}>Değerlendirme sonucu<select className={field} value={form.decision} onChange={e=>change("decision",e.target.value)}>{decisions.map(([value,text])=><option key={value} value={value} disabled={value==="approved"&&!canApprove}>{text}</option>)}</select></label>
+   <label className={label}>İnceleme gerekçesi, doğrulanan çalışma hakkı ve uygulanacak hizmet sınırları<textarea maxLength={2400} rows={4} className={field} value={form.review_notes} onChange={e=>change("review_notes",e.target.value)} placeholder="Yetki, ülke, mahkeme aşaması, süre ve gerekli uzman incelemesini belgeleyin."/></label>
    {error&&<div role="alert" className="rounded-xl border border-red-400/30 bg-red-950/40 p-3 text-[13px] leading-6 text-red-200">{error}</div>}
    {saved&&<p role="status" className="flex items-start gap-2 text-[13px] leading-6 text-[#f0d56d]"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0"/>{saved}</p>}
    {form.reviewed_at&&<p className="text-[12px] text-[#B9C5DF]">Son inceleme kaydı: {new Date(form.reviewed_at).toLocaleString("tr-TR")}</p>}
