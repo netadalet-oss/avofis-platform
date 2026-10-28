@@ -188,6 +188,34 @@ export const extraServices:Service[]=[
  "Die Befugnisse hängen von den nationalen Berufs- und Verfahrensgesetzen ab; in Deutschland ist das RDG zu beachten.",
  "Legal and representation permissions do not transfer automatically between countries; German RDG requires separate review.")
  }
+ ,
+ {
+ slug:"avrupa-turkiye-hukuki-uzman-koordinasyonu",icon:FileBadge,group:"advice",
+ title:l("Avrupa–Türkiye Hukukî Uzman Koordinasyonu","Juridische samenwerking Europa–Turkije","Juristische Fachkoordination Europa–Türkei","Europe–Türkiye Legal Specialist Coordination"),
+ lead:l("Hollandalı advocaat, Türk hukuk profesyonelleri ve gerektiğinde diğer Avrupa uzmanları arasında, avukat zorunlu işler ve karmaşık sınır ötesi uyuşmazlıklar için şeffaf iş birliği organizasyonu. Bağımsız iş ortağı teyidi olmadan hizmet taahhüdü verilmez.",
+ "Transparante coördinatie tussen Nederlandse advocaten, Turkse juridische professionals en andere bevoegde Europese experts, mits de samenwerking vooraf is bevestigd.",
+ "Transparente Koordination niederländischer Rechtsanwälte, türkischer Juristen und weiterer zugelassener Fachleute – erst nach Prüfung konkreter Kooperationspartner.",
+ "Transparent coordination among Dutch advocates, Turkish legal professionals and authorised European specialists, subject to verified partner engagement."),
+ items:[
+ l("Avukat zorunluluğu olan Hollanda dosyalarında bağımsız advocaat bağlantısının değerlendirilmesi","Beoordeling van inzet van een onafhankelijke Nederlandse advocaat","Prüfung der erforderlichen anwaltlichen Vertretung","Review of independent Dutch counsel requirements"),
+ l("Hollanda–Türkiye iki ülkeli hukukî uyuşmazlıklarda dosya ve görev paylaşımı","Dossiers met rechtsvragen in Nederland en Turkije","Grenzüberschreitende Aktenführung und Aufgabenverteilung","Case coordination across Dutch and Turkish proceedings"),
+ l("Noterlik, tercüme, vergi ve düzenlenmiş uzmanlıkların ayrı yönetimi","Afzonderlijke inzet van notaris, vertaler en fiscalist","Gesonderte Einbindung regulierter Berufe","Separate referrals to regulated notaries, translators and tax specialists"),
+ l("Uzmanın yetkisi, ücretleri, gizlilik ve çıkar çatışması kontrolü","Bevoegdheid, tarieven, geheimhouding en belangenconflicten","Berufsbefugnis, Vergütung, Vertraulichkeit und Interessenkonflikte","Practitioner verification, fees, confidentiality and conflicts"),
+ l("Müşteri onayıyla güvenli dosya paylaşımı, sözleşme ve işlem takibi","Veilige dossieroverdracht met klanttoestemming en duidelijke afspraken","Sichere Aktenübergabe mit Einwilligung und Vertragsbedingungen","Client-approved secure handoff, documented responsibilities and progress")
+ ],
+ firstDetails:l("İlgili ülkeler, uyuşmazlığın türü, işlemin aşaması, yetkili kurum, kritik karar tarihleri ve hangi uzmanlığa ihtiyaç duyulduğu. Hassas belgeler ilk iletişimde istenmez.",
+ "Betrokken landen, soort geschil, procesfase, instantie, eventuele termijnen en gewenste expertise; geen gevoelige stukken bij de eerste vraag.",
+ "Beteiligte Staaten, Gegenstand, Verfahrensstand, Behörde, Fristen und notwendige Qualifikation; zunächst keine sensiblen Akten.",
+ "Countries, subject matter, procedural stage, authority, urgent dates and specialist expertise; no sensitive files in the initial enquiry."),
+ stages:l("Önce ülke ve usul yetkisi kontrol edilir; bağımsız uzmanın ruhsatı doğrulanır; müşteri için sorumluluklar, ücretler, yönlendirme ilişkisi ve veri paylaşımı açıkça kararlaştırılır.",
+ "Controleer rechtsgebied, vergunningen, rolverdeling, kosten, eventuele verwijzingsbelangen en rechtmatige gegevensoverdracht vóór samenwerking.",
+ "Zuerst Zuständigkeit und Zulassung, danach Rollen, Honorare, mögliche Vermittlungsinteressen und sichere Aktenübermittlung klären.",
+ "Verify jurisdiction and credentials, then disclose roles, fees, any referral arrangement and lawful data transfer before engagement."),
+ boundaries:l("AVOfis Hollanda avukatlık bürosu olarak faaliyet göstermez. Avukatlık ve diğer saklı meslek işleri bağımsız yetkili uzmanların sorumluluğundadır. İlgili uzmanlar doğrulanmadan iş birliği veya temsil garantisi verilmez.",
+ "AVOfis is geen advocatenkantoor. Advocaatplichtige en andere voorbehouden werkzaamheden worden alleen door bevoegde onafhankelijke professionals verricht. Geen partnerrelatie wordt verondersteld.",
+ "AVOfis ist keine niederländische Anwaltskanzlei. Anwaltspflichtige Tätigkeiten verbleiben bei zugelassenen unabhängigen Fachleuten. Kooperationen werden nicht vorgetäuscht.",
+ "AVOfis is not a Dutch law firm. Lawyer-reserved and other regulated work remains the responsibility of independently authorised practitioners; no unverified partnership is claimed.")
+ }
 ];
 
 export const extraAudiences:Audience[]=[

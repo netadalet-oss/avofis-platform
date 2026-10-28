@@ -7,7 +7,7 @@
 Top navigation: Services / Who we help / How it works / Information / Contact / Client login / Start an enquiry.
 The logo leads home. Customer-facing content NEVER includes incorporation notes, shareholder/immigration details, funding plans or internal work tasks.
 
-The shared canonical catalogue is \`portal/src/lib/avofis-site.ts\`, with TR / NL / DE / EN texts and nine categories:
+The shared canonical catalogue is \`portal/src/lib/avofis-site.ts\`, with TR / NL / DE / EN texts. The following are the original nine services; the catalogue has since expanded to seventeen routes grouped into four navigation families:
 
 1. Visas, residence and citizenship — invitation, sponsorship, family reunion, residence renewals, refusals and relevant specialists.
 2. Employment and workplace disputes — wages, termination, contract documentation, employer and employee routes.
@@ -94,7 +94,7 @@ Staging / preview uses generated fixtures and must not collect personal/sensitiv
 
 **Geographic principle:** A Türkiye connection is NOT required. Potential AVOfis matters may arise within the Netherlands, Germany and other European countries, between European countries, or between Europe and Türkiye. Listing a country does not imply all activities are authorised there.
 
-**Current service catalogue:** 16 service areas grouped into four navigation families. Seven additional areas:
+**Current service catalogue:** 17 service areas grouped into four navigation families. Eight additional areas (including specialist coordination):
 - legal advice, written opinions, contract review and research;
 - debt, claims and collections, with Wki/RDG clearance before regulated recovery;
 - authorised Dutch cantonal and administrative court or agency representation, subject to the case and power of attorney;
@@ -112,3 +112,8 @@ Staging / preview uses generated fixtures and must not collect personal/sensitiv
 **Internal compliance checkpoint:** Before activating any paid or representative service, review individual right to work, jurisdiction-specific professional permission, court or authority procedure, signed mandate, deadline verification, Wki or RDG registration, insurance scope and service contracts.
 
 **Deployment:** Database migrations are NOT automatically run when GitHub code is committed. Validate the new lead fields against Supabase in a staging database before switching intake on. Passing build and Vercel checks does not establish functional or regulatory readiness.
+
+
+## Stage-gated operating roadmap and Dutch–Turkish specialist coordination
+
+See `docs/avofis-4-asama-5-odak.md`. The roadmap is explicitly **private**, visible only to authorised administrators in `/yonetim/isletme`. It has four delivery stages and a fifth, cross-cutting professional-coordination focus. Legal rights, staff permission, GDPR and commercial terms remain gates rather than claims of completion. The portal now contains an additional planned service page for Europe–Türkiye legal professional coordination; it does NOT claim verified partnerships until such agreements exist. The private operational migration `20261030_avofis_internal_roadmap.sql` must be applied and tested in staging before the internal manager feature is enabled.

@@ -1,7 +1,9 @@
 // Administrator-only task templates. No customer-facing rendering and no automatic data writes.
 // An authorised administrator can explicitly create real private task records from this checklist.
-export type InternalTaskSeed={group_key:string;title:string;notes:string;priority:"normal"|"high"|"critical"};
-export const businessPlan:InternalTaskSeed[]=[
+import {phaseForOriginalTask,coordinationTaskSeeds,type PhaseKey} from "./avofis-roadmap";
+export type InternalTaskSeed={group_key:string;title:string;notes:string;priority:"normal"|"high"|"critical";phase_key:PhaseKey};
+type BaseTask=Omit<InternalTaskSeed,"phase_key">;
+const originalTasks:BaseTask[]=[
  {group_key:"services",title:"İş modeli ve gelir kanallarını kesinleştir",notes:"Bireysel dosya, kurumsal paket, belge organizasyonu ve bağımsız uzman koordinasyonunun hizmet kapsamı ile fiyatlama mantığını ayrı tanımla.",priority:"high"},
  {group_key:"marketing",title:"Hedef kitleleri ve ülke ihtiyaçlarını doğrula",notes:"Hollanda ve Almanya ağırlıklı Türkiyeliler, göçmenler, öğrenciler, çalışanlar ve Türkiye–Avrupa işletmeleri için gerçek kullanım senaryolarını değerlendir.",priority:"high"},
  {group_key:"services",title:"Dokuz faaliyet kategorisi için yetki matrisi hazırla",notes:"Her alt işin yapılacağı ülke, işi yürütebilecek kişi, gereken izin, sorumluluk ve alternatif yetkili uzman ayrı kaydedilsin.",priority:"critical"},
@@ -26,4 +28,8 @@ export const businessPlan:InternalTaskSeed[]=[
  {group_key:"quality",title:"Uçtan uca senaryoları ve güvenlik testlerini geç",notes:"Başvuru, sözleşme, belge yükleme, ödeme ve iade, yetkisiz erişim, RLS, kritik süre ve bildirim senaryolarını kanıtla test et.",priority:"critical"},
  {group_key:"legal",title:"Yasal üretim açılışını ve müşteri kabulünü onayla",notes:"Çalışma hakları, BV, sigorta, uzman yetkileri, GDPR, sözleşmeler ve ödeme geçitleri doğrulanmadan kamuya açık kabulü açma.",priority:"critical"},
  {group_key:"quality",title:"İlk 90 gün performans ve iyileştirme incelemesi yap",notes:"Başvuru, dönüşüm, net gelir, tahsilat, geciken dosyalar, müşteri şikâyeti ve hizmet başına işlem süresini düzenli raporla.",priority:"normal"}
+];
+export const businessPlan:InternalTaskSeed[]=[
+ ...originalTasks.map(task=>({...task,phase_key:phaseForOriginalTask[task.title]||"foundation"})),
+ ...coordinationTaskSeeds.map(task=>({...task}))
 ];
