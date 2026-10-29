@@ -74,6 +74,20 @@ begin
 end $$;
 reset role;
 
+-- T10: owner A cannot spoof another principal while posting within its own file.
+select set_config('request.jwt.claim.sub','aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa',false);
+set role authenticated;
+do $$
+begin
+ begin
+  insert into public.avofis_messages(case_id,sender_id,body)
+  values('99999999-9999-4999-8999-999999999999',
+    'bbbbbbbb-bbbb-4bbb-bbbb-bbbbbbbbbbbb','Synthetic forged sender');
+  raise exception 'Client A forged B as sender';
+ exception when check_violation then null; when insufficient_privilege then null; end;
+end $$;
+reset role;
+
 -- The payment row below is not sent to Mollie and represents no funds.
 insert into public.avofis_payments(id,case_id,mollie_id,amount_eur_cents,status,checkout_url)
 values('87777777-7777-4777-8777-777777777777',
@@ -103,6 +117,33 @@ begin
 end $$;
 reset role;
 
+-- Only a real, verified provider payment may enable completion.
+-- Every non-paid synthetic state must remain blocked by the case-status trigger.
+reset role;
+do $$
+declare state text;
+begin
+ foreach state in array array['pending','authorized','failed','refunded','charged_back'] loop
+  update public.avofis_payments set status=state
+   where case_id='99999999-9999-4999-8999-999999999999';
+  perform set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',true);
+  begin
+   -- Must use authenticated role, not fixture owner's implicit bypass.
+   execute 'set local role authenticated';
+   update public.avofis_cases set status='completed'
+    where id='99999999-9999-4999-8999-999999999999';
+   raise exception 'Non-paid state % unexpectedly completed a case',state;
+  exception when others then
+   if sqlerrm not like 'Verified payment required before completion%' then
+    raise;
+   end if;
+  end;
+  reset role;
+ end loop;
+ update public.avofis_payments set status='open'
+  where case_id='99999999-9999-4999-8999-999999999999';
+end $$;
+
 -- Database owner simulates a *verified PSP* callback; not a real PSP E2E.
 update public.avofis_payments set status='paid'
  where case_id='99999999-9999-4999-8999-999999999999';
@@ -117,6 +158,32 @@ begin
  if (select count(*) from public.avofis_case_events
  where case_id='99999999-9999-4999-8999-999999999999')<>5 then
   raise exception 'Full status-event chain was not recorded'; end if;
+end $$;
+reset role;
+-- Closing a synthetic case must not allow new private uploads or staff
+-- document requests, even if the agreement remains signed and the operator is assigned.
+reset role;
+select set_config('request.jwt.claim.sub','aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa',false);
+set role authenticated;
+do $$
+begin
+ begin
+  insert into storage.objects(bucket_id,name) values('avofis-private',
+   '99999999-9999-4999-8999-999999999999/aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa/96666666-6666-4666-8666-666666666666.pdf');
+  raise exception 'Closed case accepted a private object';
+ exception when check_violation then null; when insufficient_privilege then null; end;
+end $$;
+reset role;
+select set_config('request.jwt.claim.sub','dddddddd-dddd-4ddd-8ddd-dddddddddddd',false);
+set role authenticated;
+do $$
+begin
+ begin
+  insert into public.avofis_document_requests(case_id,requested_by,title)
+   values('99999999-9999-4999-8999-999999999999',auth.uid(),
+    'Staff tried request on closed matter');
+  raise exception 'Closed case accepted an operator document request';
+ exception when check_violation then null; when insufficient_privilege then null; end;
 end $$;
 reset role;
 rollback;
