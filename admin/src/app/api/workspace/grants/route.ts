@@ -1,6 +1,7 @@
 import {createClient} from "@supabase/supabase-js";
 import {NextRequest,NextResponse} from "next/server";
 import {isStaffCapability} from "@/lib/workspace-model";
+import {evaluateStaffMfa} from "@/lib/staff-mfa";
 export const runtime="nodejs";export const dynamic="force-dynamic";
 const reject=(status:number,error:string)=>NextResponse.json({error},{status,headers:{"Cache-Control":"no-store"}});
 const staging=process.env.AVOFIS_STAFF_WORKSPACE_STAGING_ENABLED==="true";
@@ -18,6 +19,8 @@ async function getAdmin(req:NextRequest){
  const {data:user,error}=await db.auth.getUser(token);
  if(error||!user.user)return {status:401,reason:"SESSION_INVALID"} as const;
  const uid=user.user.id;
+ const assurance=await evaluateStaffMfa(db,token);
+ if(!assurance.allowed)return {status:403,reason:assurance.reason} as const;
  const {data:role,error:roleError}=await db.from("avofis_staff").select("role")
   .eq("user_id",uid).maybeSingle();
  if(roleError||role?.role!=="admin")return {status:403,reason:"ADMIN_ROLE_REQUIRED"} as const;
