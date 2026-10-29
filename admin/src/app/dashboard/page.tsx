@@ -8,6 +8,7 @@ import type {Workstream} from "@/lib/legal-workflows";
 import {StaffReviewQueue} from "@/components/staff-review-queue";
 import {StaffGrantManager} from "@/components/staff-grant-manager";
 import {StaffAuditTimeline} from "@/components/staff-audit-timeline";
+import {ClientDocumentReview} from "@/components/client-document-review";
 
 type StaffItem=Record<string,unknown>;
 type WorkspaceResponse={
@@ -343,6 +344,7 @@ export default function StaffDashboard(){
          </article>)}</div>}
        </section>
       </div>}
+      {role==="operator"&&(section==="documents"||section==="pleadings")&&<ClientDocumentReview/>}
       {role==="admin"&&section==="people"&&<StaffGrantManager/>}
       {role==="admin"&&section==="audit"&&<StaffAuditTimeline/>}
       {role==="admin"&&section&&<StaffReviewQueue module={section}/>}
