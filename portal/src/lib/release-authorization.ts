@@ -1,3 +1,4 @@
+import { publicCustomerTransactionsAuthorized } from "./public-release-status";
 /**
  * AVOfis v17 T08: release-authorisation gate.
  *
@@ -34,8 +35,8 @@ export const activeReleaseEvidence: ReleaseEvidence | null = null;
 const hasSignedEvidence = (e: ReleaseEvidence | null): boolean =>
  !!e && Object.values(e).every(x => typeof x === "string" && x.trim().length >= 8);
 
-export function decideRelease(t:ReleaseToggles,evidence:ReleaseEvidence|null){
- const base = t.legalReady && hasSignedEvidence(evidence);
+export function decideRelease(t:ReleaseToggles,evidence:ReleaseEvidence|null,ownerReleaseSeal=false){
+ const base = ownerReleaseSeal && t.legalReady && hasSignedEvidence(evidence);
  return {
   intakeAllowed:base && t.intakeEnabled && t.clientIntakeEnabled,
   paymentsAllowed:base && t.intakeEnabled && t.clientIntakeEnabled && t.paymentEnabled,
@@ -51,5 +52,5 @@ export const releaseEnv = ():ReleaseToggles=>({
  paymentEnabled:process.env.AVOFIS_PAYMENT_ENABLED==="true",
 });
 
-export const intakeReleased=()=>decideRelease(releaseEnv(),activeReleaseEvidence).intakeAllowed;
-export const paymentsReleased=()=>decideRelease(releaseEnv(),activeReleaseEvidence).paymentsAllowed;
+export const intakeReleased=()=>decideRelease(releaseEnv(),activeReleaseEvidence,publicCustomerTransactionsAuthorized).intakeAllowed;
+export const paymentsReleased=()=>decideRelease(releaseEnv(),activeReleaseEvidence,publicCustomerTransactionsAuthorized).paymentsAllowed;
