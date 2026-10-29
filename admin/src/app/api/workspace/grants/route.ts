@@ -49,7 +49,7 @@ async function change(req:NextRequest,kind:"grant"|"revoke"){
  if(!value||typeof value!=="object"||Array.isArray(value))return reject(400,"INVALID_JSON");
  const body=value as Record<string,unknown>;
  if(Object.keys(body).sort().join(",")!=="capability,staff_user_id")return reject(400,"UNKNOWN_FIELDS");
- if(typeof body.staff_user_id!=="string"||!/^([0-9a-f]{8}-){4}[0-9a-f]{12}$/i.test(body.staff_user_id))
+ if(typeof body.staff_user_id!=="string"||!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(body.staff_user_id))
   return reject(400,"INVALID_STAFF_ID");
  if(typeof body.capability!=="string"||!isStaffCapability(body.capability))
   return reject(400,"UNKNOWN_CAPABILITY");
