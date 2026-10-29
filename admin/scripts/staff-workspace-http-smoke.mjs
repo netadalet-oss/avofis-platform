@@ -11,6 +11,8 @@ const port=32319,base="http://127.0.0.1:"+port;
 const require=createRequire(import.meta.url);
 const nextCli=require.resolve("next/dist/bin/next");
 const routes=[
+ {method:"GET",path:"/api/client-documents"},
+ {method:"POST",path:"/api/client-documents",body:{draft_id:"aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",note:"Verified staff note"}},
  {method:"GET",path:"/api/workspace"},
  {method:"GET",path:"/api/workspace?section=people"},
  {method:"GET",path:"/api/workspace/drafts?module=payables"},
@@ -60,7 +62,7 @@ try{
   assert.equal(typeof body.error,"string");
   assert.doesNotMatch(JSON.stringify(body),/staff_user_id|access_token|api_key|personalDocument/);
  }
- console.log("PASS: 11/11 protected staff admin HTTP routes fail closed (503, no-store) without real staging");
+ console.log("PASS: 13/13 protected staff admin HTTP routes fail closed (503, no-store) without real staging");
  console.log("PASS: private login shell 200 without service key / JWT leakage");
 }finally{
  child.kill("SIGTERM");
