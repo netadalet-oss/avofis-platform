@@ -9,7 +9,6 @@ const stages=[
  {name:"Ödeme kapısı",nl:"Betaalcontrole",en:"Payment gate",detail:"Ödeme yapılmaz. Testte, ödenmemiş dosyanın tamamlanması reddedilir; sağlayıcı ödemesi yalnızca sentetik PG durumu olarak taklit edilir.",code:"payment"},
  {name:"Kapanış ve kayıt",nl:"Afsluiting en audit",en:"Closing and audit",detail:"Kapanış statüsü ve olay geçmişi sentetik PG testinde sınanır; gerçek saklama/DSAR, geri ödeme ve tam denetim kabulü açık.",code:"closed"}
 ] as const;
-export const runtime="edge";
 export default function SyntheticCasePreview(){
  const [selected,setSelected]=useState(0);
  return <main className="avofis-theme min-h-screen px-5 py-9 sm:px-7">
