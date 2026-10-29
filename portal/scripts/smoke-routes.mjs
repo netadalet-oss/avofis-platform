@@ -33,7 +33,7 @@ async function check(path,expected,method="GET"){
 }
 try{
  await waitUntilReady();
- for(const route of ["/","/hizmetler","/katalog","/islemler","/nasil-calisir","/iletisim","/bilgi","/gizlilik","/cerezler","/diller","/triyaj","/ornek-dosya","/uyum","/ictihat","/yargi-baglantilari","/ornek-yargi-dosyasi","/katalog?lang=ar","/katalog?lang=ru","/katalog?lang=de","/basvuru","/auth/login","/musteri","/yonetim","/yonetim/ind-inceleme"]){
+ for(const route of ["/","/hizmetler","/katalog","/islemler","/nasil-calisir","/iletisim","/bilgi","/gizlilik","/cerezler","/diller","/triyaj","/ornek-dosya","/uyum","/ictihat","/yargi-baglantilari","/ornek-yargi-dosyasi","/belge-hazirla","/belge-hazirla?lang=ar&hizmet=konut-kira-sigorta","/katalog?lang=ar","/katalog?lang=ru","/katalog?lang=de","/basvuru","/auth/login","/musteri","/yonetim","/yonetim/ind-inceleme"]){
   const response=await check(route,200);
   assert.match(response.headers.get("content-type")||"",/text\/html/,route+" content type");
  }
