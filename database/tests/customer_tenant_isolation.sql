@@ -39,6 +39,7 @@ grant select,insert,update,delete on storage.objects to anon,authenticated;
 \ir ../migrations/20261027_staff_deliverables.sql
 \ir ../migrations/20261027_case_transition_guard.sql
 \ir ../migrations/20261029_ind_case_activation_guard.sql
+\ir ../migrations/20261029_ind_mandate_asylum_regime_guard.sql
 \ir ../migrations/20261029_case_assignment_scope.sql
 
 insert into auth.users(id,email,email_confirmed_at) values
