@@ -73,3 +73,45 @@ test("J03 lack of a receipt never becomes a verified official filing",()=>{
  assert.equal(res.canImpersonatePortalUser,false);
  assert.equal(res.canShareIndData,false);
 });
+
+import {auditCourtEvent,safeDemoEvents,syntheticCase} from "../src/lib/court-case-tracker.ts";
+test("J07 model holds synthetic, non-identifying case metadata only",()=>{
+ assert.equal(syntheticCase.synthetic,true);
+ assert.equal(syntheticCase.clientIdentityReference,null);
+ assert.equal(syntheticCase.officialCaseNumber,null);
+ assert.equal(syntheticCase.deadlineBasis,"HUMAN_REVIEW_REQUIRED");
+ assert.equal(safeDemoEvents.length,3);
+ assert.ok(safeDemoEvents.every(x=>x.source==="local"&&x.reference===null));
+});
+test("J10 local actions cannot become official receipt status",()=>{
+ const ctx={verifiedProfessional:false,procedureAuthorityVerified:false,
+  independentReviewer:false,officialReceiptAuthenticityVerified:false,indG1ToG4:false};
+ for(const kind of ["DRAFT_PREPARED","OFFICIAL_PORTAL_OPENED","DOCUMENT_PREPARED",
+  "UNVERIFIED_RECEIPT_REPORTED","RECEIPT_VERIFIED_INDEPENDENTLY","COURT_DECISION_REFERENCED"]){
+  const v=auditCourtEvent(syntheticCase,{kind,actorRole:"assigned_staff",
+   when:"2026-10-29",reference:null,source:"local"},ctx);
+  assert.equal(v.canMarkOfficiallySubmitted,false,kind);
+  assert.equal(v.willSendToCourt,false,kind);
+  assert.equal(v.status,"NOT_SUBMITTED",kind);
+ }
+});
+test("J10 even self-attested independent receipt cannot claim verified official submission",()=>{
+ const ctx={verifiedProfessional:true,procedureAuthorityVerified:true,
+ independentReviewer:true,officialReceiptAuthenticityVerified:true,indG1ToG4:true};
+ const fakeCase={...syntheticCase,mandateVerified:true};
+ const result=auditCourtEvent(fakeCase,{kind:"RECEIPT_VERIFIED_INDEPENDENTLY",
+ actorRole:"independent_reviewer",when:"2026-10-29",
+ reference:"SYNTHETIC_REFERENCE",source:"official_portal"},ctx);
+ assert.equal(result.canMarkOfficiallySubmitted,false);
+ assert.equal(result.status,"NOT_SUBMITTED");
+});
+test("J07/J10 IND/asylum/detention never inherit court manual submission",()=>{
+ const ctx={verifiedProfessional:true,procedureAuthorityVerified:true,
+  independentReviewer:true,officialReceiptAuthenticityVerified:true,indG1ToG4:true};
+ for(const procedure of ["asylum","detention","ind"]){
+  const v=auditCourtEvent({...syntheticCase,procedure,mandateVerified:true},
+  {kind:"DRAFT_PREPARED",actorRole:"assigned_staff",when:"2026-10-29",reference:null,source:"local"},ctx);
+  assert.equal(v.accepted,false);
+  assert.ok(v.issues.includes("SPECIAL_IND_OR_ASYLUM_PROCEDURE"));
+ }
+});
