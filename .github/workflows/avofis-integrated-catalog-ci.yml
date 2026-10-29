@@ -124,6 +124,7 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f database/tests/customer_tenant_isolation.sql
           psql -v ON_ERROR_STOP=1 -f database/tests/judicial_metadata_synthetic.sql
           psql -v ON_ERROR_STOP=1 -f database/tests/client_case_workflow_synthetic.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/staff_personal_capability_scope_synthetic.sql
       - name: Dump, corrupt disposable source, restore into a new disposable DB, and re-test RLS
         env:
           PGPASSWORD: synthetic-tenant-test
@@ -161,6 +162,30 @@ jobs:
             sudo apt-get install -y -qq redis-tools
           fi
           node --experimental-strip-types portal/scripts/rechtspraak-redis-atomic-ci.mjs
+  admin-workspace-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: admin
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: "https://example.supabase.co"
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: "synthetic-public-test-key"
+      AVOFIS_STAFF_WORKSPACE_STAGING_ENABLED: "false"
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install workspace dependencies
+        run: npm install --no-package-lock --no-audit --no-fund
+      - name: Personal role, module and sourced workflow tests
+        run: node --experimental-strip-types --test scripts/staff-workspace.test.mjs
+      - name: Admin TypeScript and role-screen compile
+        run: npm run typecheck
+      - name: Build private staff app with all live actions locked
+        run: npm run build
   portal-validation:
     runs-on: ubuntu-latest
     timeout-minutes: 20
