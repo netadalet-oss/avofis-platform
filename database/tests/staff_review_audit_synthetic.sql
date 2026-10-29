@@ -13,25 +13,26 @@ set role authenticated;
 insert into public.avofis_staff_work_items(staff_user_id,module,title,summary,flow,amount_eur_cents)
  values(auth.uid(),'payables','Synthetic invoice payable','Internal preparatory note','expense',640)
  returning id \gset d_
+select set_config('avofis.test_d_id', :'d_id', false);
 -- Work item owner submits for independent internal review.
 update public.avofis_staff_work_items
- set state='review_requested' where id=:'d_id';
+ set state='review_requested' where id=current_setting('avofis.test_d_id')::uuid;
 do $locked$
 begin
  begin
   update public.avofis_staff_work_items
-  set title='Tampered after review' where id=:'d_id';
+  set title='Tampered after review' where id=current_setting('avofis.test_d_id')::uuid;
   raise exception 'P04 submitted note mutated';
  exception when others then
    if sqlerrm not like 'P04 internal review lock:%'
       then raise; end if;
  end;
  if (select count(*) from public.avofis_staff_work_item_events
-     where work_item_id=:'d_id')<>2 then
+     where work_item_id=current_setting('avofis.test_d_id')::uuid)<>2 then
   raise exception 'P04 event sequence not complete'; end if;
  begin
   insert into public.avofis_staff_work_item_signoffs(work_item_id,reviewer_user_id,decision)
-  values(:'d_id',auth.uid(),'reviewed_internal');
+  values(current_setting('avofis.test_d_id')::uuid,auth.uid(),'reviewed_internal');
   raise exception 'P04 owner self signed review';
  exception when insufficient_privilege then null; end;
 end $locked$;
@@ -40,12 +41,12 @@ reset role;
 select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
 set role authenticated;
 insert into public.avofis_staff_work_item_signoffs(work_item_id,reviewer_user_id,decision)
-values(:'d_id',auth.uid(),'reviewed_internal');
+values(current_setting('avofis.test_d_id')::uuid,auth.uid(),'reviewed_internal');
 do $twice$
 begin
  begin
   insert into public.avofis_staff_work_item_signoffs(work_item_id,reviewer_user_id,decision)
-  values(:'d_id',auth.uid(),'reviewed_internal');
+  values(current_setting('avofis.test_d_id')::uuid,auth.uid(),'reviewed_internal');
   raise exception 'P05 reviewer signed twice';
  exception when unique_violation then null; end;
 end $twice$;
@@ -53,12 +54,13 @@ end $twice$;
 insert into public.avofis_staff_work_items(staff_user_id,module,title,summary,flow,amount_eur_cents)
 values(auth.uid(),'payables','Admin-owned expense note','Internal only','expense',700)
  returning id \gset c_
-update public.avofis_staff_work_items set state='review_requested' where id=:'c_id';
+select set_config('avofis.test_c_id', :'c_id', false);
+update public.avofis_staff_work_items set state='review_requested' where id=current_setting('avofis.test_c_id')::uuid;
 do $own$
 begin
  begin
   insert into public.avofis_staff_work_item_signoffs(work_item_id,reviewer_user_id,decision)
-  values(:'c_id',auth.uid(),'reviewed_internal');
+  values(current_setting('avofis.test_c_id')::uuid,auth.uid(),'reviewed_internal');
   raise exception 'P05 admin self reviewed';
  exception when insufficient_privilege then null; end;
 end $own$;
@@ -70,16 +72,16 @@ do $spoof$
 begin
  begin
   insert into public.avofis_staff_work_item_signoffs(work_item_id,reviewer_user_id,decision)
-  values(:'c_id','cccccccc-cccc-4ccc-cccc-cccccccccccc','reviewed_internal');
+  values(current_setting('avofis.test_c_id')::uuid,'cccccccc-cccc-4ccc-cccc-cccccccccccc','reviewed_internal');
   raise exception 'P05 reviewer impersonation permitted';
  exception when insufficient_privilege then null; end;
 end $spoof$;
 insert into public.avofis_staff_work_item_signoffs(work_item_id,reviewer_user_id,decision)
- values(:'d_id',auth.uid(),'reviewed_internal');
+ values(current_setting('avofis.test_d_id')::uuid,auth.uid(),'reviewed_internal');
 do $count$
 begin
  if (select count(distinct reviewer_user_id) from public.avofis_staff_work_item_signoffs
-     where work_item_id=:'d_id')<>2 then
+     where work_item_id=current_setting('avofis.test_d_id')::uuid)<>2 then
   raise exception 'P05 distinct reviewers not recorded'; end if;
  if exists(select 1 from public.avofis_staff_work_item_signoffs
      where decision not in('reviewed_internal','changes_requested')) then
@@ -115,9 +117,9 @@ select set_config('request.jwt.claim.sub','dddddddd-dddd-4ddd-8ddd-dddddddddddd'
 set role authenticated;
 do $revoked$
 begin
- if (select count(*) from public.avofis_staff_work_items where id=:'d_id')<>0
+ if (select count(*) from public.avofis_staff_work_items where id=current_setting('avofis.test_d_id')::uuid)<>0
     or (select count(*) from public.avofis_staff_work_item_signoffs
-      where work_item_id=:'d_id')<>0 then
+      where work_item_id=current_setting('avofis.test_d_id')::uuid)<>0 then
   raise exception 'P05 revoked operator retained finance drafts/reviews'; end if;
 end $revoked$;
 reset role;
