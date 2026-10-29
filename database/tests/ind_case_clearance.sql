@@ -49,6 +49,7 @@ insert into public.avofis_agreements(case_id,signed_at)
        ('22222222-2222-4222-8222-222222222222',now());
 \ir ../migrations/20261027_case_transition_guard.sql
 \ir ../migrations/20261029_ind_case_activation_guard.sql
+\ir ../migrations/20261029_ind_mandate_asylum_regime_guard.sql
 
 -- Privileges: RLS enabled, anon cannot read or write; operator cannot approve.
 do $$
@@ -95,6 +96,12 @@ update public.avofis_case_clearances
      deadline_reviewed=true,deadline_basis='Human reviewed decision route',
      stay_consequences_reviewed=true,representation_requested=true,
      special_mandate_verified=true,mandate_reference='signed-ind-mandate-ref',
+     requested_action='submit_objection',
+     mandate_authorised_actions=array['submit_objection'],
+     mandate_excluded_actions=array['request_file_copy'],
+     mandate_scope_reviewed=true,principal_identity_verified=true,
+     principal_signature_verified=true,mandate_signed_on='2026-10-15',
+     mandate_valid_until='2099-12-31',mandate_document_sha256=repeat('a',64),
      privacy_legal_basis_reviewed=true,secure_document_channel_verified=true,
      disclosure_and_retention_reviewed=true
  where case_id='11111111-1111-4111-8111-111111111111';
