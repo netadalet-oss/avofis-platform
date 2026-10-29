@@ -14,6 +14,7 @@ begin
    or (select count(*) from public.avofis_cases)<>0
    or (select count(*) from public.avofis_payments)<>0
    or (select count(*) from public.avofis_messages)<>0
+   or (select count(*) from storage.objects where bucket_id='avofis-private')<>0
  then raise exception 'P01 ungranted operator obtained case/message/finance records'; end if;
  begin
   insert into public.avofis_staff_capability_grants(staff_user_id,capability,granted_by)
@@ -39,6 +40,7 @@ begin
   or (select count(*) from public.avofis_cases)<>1
   or (select count(*) from public.avofis_payments)<>0
   or (select count(*) from public.avofis_messages)<>0
+   or (select count(*) from storage.objects where bucket_id='avofis-private')<>0
  then raise exception 'P01 matters grant leaked finance or messages'; end if;
 end $$;
 reset role;
@@ -60,6 +62,22 @@ begin
  then raise exception 'P01 case-scoped messages and payment were not visible with matching grants'; end if;
 end $$;
 reset role;
+
+-- A separate documents capability is necessary to read private objects.
+select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
+set role authenticated;
+insert into public.avofis_staff_capability_grants(staff_user_id,capability,granted_by)
+values('dddddddd-dddd-4ddd-8ddd-dddddddddddd','documents',auth.uid());
+reset role;
+select set_config('request.jwt.claim.sub','dddddddd-dddd-4ddd-8ddd-dddddddddddd',false);
+set role authenticated;
+do $
+begin
+ if (select count(*) from storage.objects where bucket_id='avofis-private')<>2
+ then raise exception 'P01 explicit document grant did not restore A-only object access'; end if;
+end $;
+reset role;
+
 
 -- Revoke billing, recheck immediately under the SAME synthetic JWT subject.
 select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
