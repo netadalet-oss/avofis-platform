@@ -77,7 +77,7 @@ export default function JusticeConnectionsPage(){
     </div>
    </section>
    <div className="mt-7 text-sm text-[#b9c5df]">
-    <Link href="/uyum" className="text-[#dfbf59] underline">Mevcut B01/B02 RLS ve GDPR NO-GO durumu</Link> · Gerçek dava açma, resmî gönderme, makbuz kaydetme, otomatik giriş ve veri aktarımı bu önizlemede bulunmaz.
+    <Link href="/uyum" className="text-[#dfbf59] underline">Mevcut B01/B02 RLS ve GDPR NO-GO durumu</Link> · <Link href="/ornek-yargi-dosyasi" className="text-[#dfbf59] underline">Sentetik dava dosyası</Link> · Gerçek dava açma, resmî gönderme, makbuz kaydetme, otomatik giriş ve veri aktarımı bu önizlemede bulunmaz.
    </div>
   </div>
  </main>;
