@@ -73,7 +73,8 @@ export async function PATCH(req:NextRequest){
  const {data,error}=await a.db.from("avofis_client_document_drafts")
   .update({content:parsed.draft,status:parsed.status,consent_to_staff:parsed.consent_to_staff})
   .eq("id",parsed.id).eq("owner_user_id",a.uid).eq("revision",parsed.revision)
-  .eq("service_slug",parsed.draft.service).eq("locale",parsed.draft.locale).eq("status","draft")
+  .eq("service_slug",parsed.draft.service).eq("locale",parsed.draft.locale)
+  .eq("status",parsed.status==="withdrawn"?"review_requested":"draft")
   .select("id,revision,status,updated_at").maybeSingle();
  if(error)return deny(403,"DRAFT_UPDATE_REFUSED");
  if(!data)return deny(409,"REVISION_CONFLICT_OR_NOT_AUTHORIZED");
