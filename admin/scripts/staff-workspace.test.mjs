@@ -31,7 +31,7 @@ test("P01 every action that changes outside systems is disabled",()=>{
   "externalMessageDispatch","personalDocumentUpload"])assert.equal(productionActions[key],false);
 });
 test("P02 source-grounded workstreams have scope, legal checklist and draft, not fabricated official forms",()=>{
- assert.ok(workstreams.length>=13);
+ assert.ok(workstreams.length>=14);
  assert.ok(legalSources.length>=10);
  for(const w of workstreams){
   assert.ok(w.steps.length>=3&&w.documents.length>=3&&w.templateBody.length>=100,w.id);
@@ -43,6 +43,8 @@ test("P02 source-grounded workstreams have scope, legal checklist and draft, not
  }
  assert.equal(workstreams.filter(x=>x.id==="nl-ind-asylum").length,1);
  assert.equal(workstreams.some(x=>x.id==="nl-bestuursrecht"),true);
+ assert.ok(workstreams.some(x=>x.id==="nl-regular-immigration-court"));
+ assert.notEqual(workstreams.find(x=>x.id==="nl-regular-immigration-court")?.source,workstreams.find(x=>x.id==="nl-ind-asylum")?.source);
  assert.ok(findWorkstreams("vergi").length>0);
  assert.equal(findWorkstreams("imkansız-bir-konu").length,0);
 });
