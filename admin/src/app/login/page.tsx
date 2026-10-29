@@ -1,95 +1,52 @@
 "use client";
-
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
-
-export default function LoginPage() {
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-
-  async function handleLogin() {
-    try {
-      setLoading(true);
-      setMessage("");
-
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        setMessage(`Giriş başarısız: ${error.message}`);
-        return;
-      }
-
-      router.replace("/cms");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  return (
-    <main>
-      <SiteHeader />
-
-      <section className="container-shell py-24">
-        <div className="mx-auto max-w-md rounded-[28px] border border-white/10 bg-white/5 p-8">
-          <h1 className="text-3xl font-semibold text-white">Admin Girişi</h1>
-          <p className="mt-3 text-sm leading-7 text-slate-300">
-            CMS ve yönetim alanına erişmek için giriş yapın.
-          </p>
-
-          <div className="mt-8 space-y-5">
-            <div>
-              <label className="mb-2 block text-sm text-slate-400">
-                E-posta
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white"
-                placeholder="ornek@avofis.com"
-              />
-            </div>
-
-            <div>
-              <label className="mb-2 block text-sm text-slate-400">
-                Şifre
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white"
-                placeholder="Şifreniz"
-              />
-            </div>
-
-            {message ? (
-              <div className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">
-                {message}
-              </div>
-            ) : null}
-
-            <button
-              onClick={handleLogin}
-              disabled={loading}
-              className="w-full rounded-xl bg-blue-600 px-6 py-3 text-white disabled:opacity-60"
-            >
-              {loading ? "Giriş yapılıyor..." : "Giriş Yap"}
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <SiteFooter />
-    </main>
-  );
+import {useState} from "react";
+import {useRouter} from "next/navigation";
+import {supabase} from "@/lib/supabase";
+export default function StaffLogin(){
+ const router=useRouter();
+ const [email,setEmail]=useState(""),[password,setPassword]=useState("");
+ const [loading,setLoading]=useState(false),[error,setError]=useState("");
+ async function enter(e:React.FormEvent<HTMLFormElement>){
+  e.preventDefault();if(loading)return;setLoading(true);setError("");
+  try{
+   const {error:authErr}=await supabase.auth.signInWithPassword({email:email.trim(),password});
+   if(authErr){setError("Giriş bilgileri doğrulanamadı. Lütfen hesabınızı kontrol ediniz.");return;}
+   const {data:{user},error:userErr}=await supabase.auth.getUser();
+   if(userErr||!user){setError("Oturum doğrulanamadı.");await supabase.auth.signOut();return;}
+   const {data,error:roleErr}=await supabase.from("avofis_staff")
+    .select("role").eq("user_id",user.id).maybeSingle();
+   if(roleErr||!data||!["admin","operator"].includes(data.role)){
+    await supabase.auth.signOut();
+    setError("Bu hesap için etkin personel yetkisi bulunmuyor.");
+    return;
+   }
+   router.replace("/dashboard");
+  }catch{setError("Giriş şu anda tamamlanamadı. Lütfen daha sonra yeniden deneyiniz.");}
+  finally{setLoading(false);}
+ }
+ return <main className="flex min-h-screen items-center justify-center bg-[#F3F6FA] px-5 py-12 text-[#1A2E45]">
+  <div className="w-full max-w-[425px] rounded-2xl border border-[#DFE7EF] bg-white px-7 py-9 shadow-[0_20px_65px_rgba(15,40,70,.065)] sm:px-9">
+   <div className="flex items-center justify-between">
+    <span className="text-[23px] font-semibold tracking-tight">AVOfis<span className="text-[#AA8A45]">.</span></span>
+    <span className="rounded-full bg-[#F0F4F8] px-3 py-1 text-[11px] font-medium text-[#5D738B]">Personel alanı</span>
+   </div>
+   <h1 className="mt-11 text-[24px] font-semibold tracking-tight">Güvenli personel girişi</h1>
+   <p className="mt-2 text-[13px] leading-7 text-[#65778B]">Yalnızca kayıtlı ve yetkilendirilmiş çalışanlar, kendi hesaplarıyla görev alanlarına erişebilir.</p>
+   <form onSubmit={e=>void enter(e)} className="mt-8 space-y-5">
+    <div><label htmlFor="staff-email" className="block text-[12px] font-semibold">Kurumsal e-posta</label>
+     <input id="staff-email" name="email" autoComplete="username" inputMode="email" type="email"
+      value={email} onChange={e=>setEmail(e.target.value)} required maxLength={254}
+      className="mt-2 w-full rounded-lg border border-[#D5DEEA] px-4 py-3 text-[13px] outline-none focus:border-[#315A83]" placeholder="ad.soyad@kurum.example"/>
+    </div>
+    <div><label htmlFor="staff-password" className="block text-[12px] font-semibold">Şifreniz</label>
+     <input id="staff-password" name="password" type="password" autoComplete="current-password"
+      value={password} onChange={e=>setPassword(e.target.value)} required
+      className="mt-2 w-full rounded-lg border border-[#D5DEEA] px-4 py-3 text-[13px] outline-none focus:border-[#315A83]"/>
+    </div>
+    {error&&<p role="alert" className="rounded-lg border border-[#EED6D0] bg-[#FFF5F2] px-4 py-3 text-[12px] leading-6 text-[#8B4538]">{error}</p>}
+    <button disabled={loading} type="submit" className="w-full rounded-lg bg-[#153A5B] py-3 text-[13px] font-semibold text-white hover:bg-[#205077] disabled:opacity-50">{loading?"Kimlik doğrulanıyor…":"Güvenli giriş"}</button>
+   </form>
+   <p className="mt-6 text-[11px] leading-6 text-[#7A8797]">Erişim, personel kaydı ve dosyaya özgü yetkiler ayrıca doğrulanır. Yetkisiz kişilerin iş kayıtlarına erişimi engellenir.</p>
+  </div>
+ </main>;
 }
