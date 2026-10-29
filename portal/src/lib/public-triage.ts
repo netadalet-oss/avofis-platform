@@ -24,6 +24,10 @@ export type TriageResult={
  disposition:"URGENT_SPECIALIST"|"SPECIALIST_REVIEW"|"OFFICIAL_INFORMATION"|"GENERAL_INFORMATION";
  mayCreateClientRecord:false;
  maySubmitOfficialAction:false;
+ mayAcceptPayment:false;
+ mayUploadDocuments:false;
+ mayShareWithExpert:false;
+ mayCollectPersonalData:false;
  deadlineCalculated:false;
  onlyGenericInformation:true;
  issues:string[];
@@ -46,10 +50,12 @@ export function evaluatePublicTriage(input:TriageInput):TriageResult{
     typeof input.professionalNeeded!=="boolean"){
   return {disposition:"SPECIALIST_REVIEW",issues:["INVALID_OR_UNKNOWN_INPUT"],
    officialSource:null,mayCreateClientRecord:false,maySubmitOfficialAction:false,
+   mayAcceptPayment:false,mayUploadDocuments:false,
+   mayShareWithExpert:false,mayCollectPersonalData:false,
    deadlineCalculated:false,onlyGenericInformation:true};
  }
  if(input.country==="unknown"||input.country==="other")issues.push("JURISDICTION_UNVERIFIED");
- if(input.personRole==="unknown"||input.personRole==="representative")issues.push("ROLE_OR_MANDATE_REQUIRES_REVIEW");
+ if(input.personRole!=="self")issues.push("ROLE_OR_MANDATE_REQUIRES_REVIEW");
  if(input.topic==="unknown")issues.push("PROCEDURE_UNVERIFIED");
  if(input.noticeCategory==="notice_received"||input.noticeCategory==="not_sure")
   issues.push("NOTICE_AND_SERVICE_DATE_REQUIRES_HUMAN_REVIEW");
@@ -70,7 +76,12 @@ export function evaluatePublicTriage(input:TriageInput):TriageResult{
  const disposition:TriageResult["disposition"]=urgent?"URGENT_SPECIALIST":
   specialist?"SPECIALIST_REVIEW":
   ["nl","de","tr"].includes(input.country)?"OFFICIAL_INFORMATION":"GENERAL_INFORMATION";
- return {disposition,issues,officialSource:sources[input.country]||null,
+ const officialSource=input.country==="nl" &&
+  ["asylum","residence","detention_or_removal"].includes(input.topic)?
+  "https://ind.nl/":sources[input.country]||null;
+ return {disposition,issues,officialSource,
   mayCreateClientRecord:false,maySubmitOfficialAction:false,
+  mayAcceptPayment:false,mayUploadDocuments:false,
+  mayShareWithExpert:false,mayCollectPersonalData:false,
   deadlineCalculated:false,onlyGenericInformation:true};
 }
