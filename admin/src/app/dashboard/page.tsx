@@ -40,6 +40,10 @@ export default function StaffDashboard(){
  const [selectedWorkflow,setSelectedWorkflow]=useState<Workstream|null>(null);
  const [draft,setDraft]=useState("");
  const [menu,setMenu]=useState(false);
+ const [drafts,setDrafts]=useState<StaffItem[]>([]);
+ const [draftTitle,setDraftTitle]=useState(""),[draftSummary,setDraftSummary]=useState("");
+ const [draftAmount,setDraftAmount]=useState(""),[savingDraft,setSavingDraft]=useState(false);
+ const [draftFeedback,setDraftFeedback]=useState("");
 
  const fetchWorkspace=useCallback(async(view:StaffCapability|null,phrase="")=>{
   const {data:{session}}=await supabase.auth.getSession();
@@ -88,9 +92,10 @@ export default function StaffDashboard(){
   return ()=>{mounted=false;subscription.unsubscribe();};
  },[router,fetchWorkspace]);
  async function openModule(id:StaffCapability){
-  setSection(id);setFilter("");setQuery("");setItems([]);setSelectedWorkflow(null);
+  setSection(id);setFilter("");setQuery("");setItems([]);setDrafts([]);
+  setDraftTitle("");setDraftSummary("");setDraftAmount("");setDraftFeedback("");setSelectedWorkflow(null);
   setDraft("");setLoading(true);setMenu(false);setStatus("");
-  try{await fetchWorkspace(id);}catch(e){setStatus(e instanceof Error?e.message:"İşlem başarısız.");}
+  try{await fetchWorkspace(id);await loadDrafts(id);}catch(e){setStatus(e instanceof Error?e.message:"İşlem başarısız.");}
   finally{setLoading(false);}
  }
  async function search(){
@@ -99,6 +104,41 @@ export default function StaffDashboard(){
   try{setQuery(filter);await fetchWorkspace(section,filter);}
   catch(e){setStatus(e instanceof Error?e.message:"Arama kullanılamıyor.");}
   finally{setLoading(false);}
+ }
+ async function loadDrafts(id:StaffCapability){
+  const {data:{session}}=await supabase.auth.getSession();
+  if(!session?.access_token)return;
+  try{
+   const response=await fetch("/api/workspace/drafts?module="+id,{cache:"no-store",
+    headers:{Authorization:"Bearer "+session.access_token}});
+   if(!response.ok)return;
+   const result=await response.json() as {items?:StaffItem[]};
+   setDrafts(result.items||[]);
+  }catch{/* no draft data is fabricated if staging isn't configured */}
+ }
+ async function saveWorkDraft(e:React.FormEvent<HTMLFormElement>){
+  e.preventDefault();if(!section||savingDraft)return;
+  setSavingDraft(true);setDraftFeedback("");
+  try{
+   const {data:{session}}=await supabase.auth.getSession();
+   if(!session?.access_token){router.replace("/login");return;}
+   const body:Record<string,unknown>={module:section,title:draftTitle.trim(),summary:draftSummary.trim()};
+   if(section==="billing"||section==="payables"){
+    const parsed=Math.round(Number(draftAmount.replace(",","."))*100);
+    if(!Number.isSafeInteger(parsed)||parsed<0){setDraftFeedback("Lütfen geçerli ve pozitif bir tutar giriniz.");return;}
+    body.amount_eur_cents=parsed;
+   }
+   const response=await fetch("/api/workspace/drafts",{
+    method:"POST",headers:{"Content-Type":"application/json",
+     Authorization:"Bearer "+session.access_token},body:JSON.stringify(body)});
+   const res=await response.json() as {error?:string};
+   if(!response.ok){setDraftFeedback(res.error==="DRAFT_WRITES_DISABLED"?
+    "Staging ortamında taslak yazma henüz açılmadı.":"Taslak kaydedilemedi: "+(res.error||"Yetki veya bağlantı doğrulanamadı."));return;}
+   setDraftTitle("");setDraftSummary("");setDraftAmount("");
+   setDraftFeedback("İç çalışma taslağı güvenli kayıt alanına eklendi; resmî işlem başlatılmadı.");
+   await loadDrafts(section);
+  }catch{setDraftFeedback("Taslak kaydı şu anda kullanılamıyor.");}
+  finally{setSavingDraft(false);}
  }
  async function signOut(){
   setAuthorized(false);setSections([]);setItems([]);
@@ -243,6 +283,41 @@ export default function StaffDashboard(){
         <p className="mt-4 text-[11px] leading-6 text-[#7B8999]">Bu ekranda görüntüleme yetkisi ayrıca veritabanı satır politikalarıyla sınırlandırılır. Resmî başvuru, banka/PSP ödemesi ve dış mesaj gönderimi bu çalışma alanından başlatılamaz.</p>
        </div>}
       </>}
+      {current&&<div className="mt-7 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+       <section className="rounded-xl border border-[#DFE7EF] bg-white p-5 sm:p-6">
+        <h2 className="text-[15px] font-semibold">İç çalışma notu oluştur</h2>
+        <p className="mt-2 text-[12px] leading-6 text-[#64788D]">Bu kayıt yalnız görev alanınızdaki iç çalışma taslağıdır; banka işlemi, kurum başvurusu veya karşı tarafa gönderim değildir.</p>
+        <form onSubmit={e=>void saveWorkDraft(e)} className="mt-5 space-y-4">
+         <label className="block text-[12px] font-medium">İşlem başlığı
+          <input value={draftTitle} onChange={e=>setDraftTitle(e.target.value)} required minLength={4} maxLength={160}
+           placeholder="İç görev / işlem başlığı" className="mt-2 w-full rounded-lg border border-[#D7DFE9] px-3 py-2.5 text-[13px] focus:border-[#28547D] focus:outline-none"/>
+         </label>
+         <label className="block text-[12px] font-medium">Kısa çalışma notu
+          <textarea value={draftSummary} onChange={e=>setDraftSummary(e.target.value)}
+           placeholder="Kişisel veya gizli dosya bilgisi girmeyiniz."
+           rows={4} maxLength={2500} className="mt-2 w-full rounded-lg border border-[#D7DFE9] px-3 py-2.5 text-[13px] focus:border-[#28547D] focus:outline-none"/>
+         </label>
+         {(section==="billing"||section==="payables")&&<label className="block text-[12px] font-medium">Taslak tutar (EUR)
+          <input value={draftAmount} type="text" inputMode="decimal" onChange={e=>setDraftAmount(e.target.value)}
+           placeholder="0,00" required className="mt-2 w-full rounded-lg border border-[#D7DFE9] px-3 py-2.5 text-[13px] focus:border-[#28547D] focus:outline-none"/>
+          <span className="mt-1 block text-[11px] leading-5 text-[#7B899B]">Muhasebe taslağıdır; tahsilat, ödeme emri veya banka bakiyesi değildir.</span>
+         </label>}
+         <button disabled={savingDraft} className="rounded-lg bg-[#193C5E] px-5 py-2.5 text-[12px] font-semibold text-white disabled:opacity-50" type="submit">{savingDraft?"Kaydediliyor…":"İç taslak olarak kaydet"}</button>
+        </form>
+        {draftFeedback&&<p role="status" className="mt-3 text-[12px] leading-6 text-[#685326]">{draftFeedback}</p>}
+       </section>
+       <section className="rounded-xl border border-[#DFE7EF] bg-white p-5 sm:p-6">
+        <h2 className="text-[15px] font-semibold">Kendi çalışma taslaklarım</h2>
+        <p className="mt-2 text-[12px] leading-6 text-[#718398]">{drafts.length} iç taslak · yalnızca sizin yetki alanınız</p>
+        {drafts.length===0?<p className="mt-6 text-[12px] leading-7 text-[#7C8C9F]">Henüz görüntülenebilir kayıt bulunmuyor. Erişim ve staging bağlantısı etkinleştirilmeden kayıtlar sunulmaz.</p>:
+         <div className="mt-4 space-y-2">{drafts.map((item,i)=><article key={String(item.id||i)} className="rounded-lg border border-[#E7EBF1] p-4">
+          <h3 className="text-[12px] font-semibold">{fmt(item.title)}</h3>
+          <p className="mt-1 line-clamp-3 whitespace-pre-wrap text-[12px] leading-6 text-[#62748B]">{fmt(item.summary)}</p>
+          <p className="mt-1 text-[11px] text-[#8190A3]">{fmt(item.state)} · {readableDate(item.created_at)}</p>
+          {(section==="billing"||section==="payables")&&<p className="mt-1 text-[12px] font-semibold">{money(item.amount_eur_cents)} · Yalnız taslak</p>}
+         </article>)}</div>}
+       </section>
+      </div>}
       <footer className="mt-12 border-t border-[#E1E8F0] pt-5 text-[11px] leading-6 text-[#718298]">
        AVOfis · Personel çalışma alanı · Kurumsal ve mevzuata uygun işlem süreçleri
        <p>Bu ekran yalnız yetkili personel içindir. Gerçek resmî işlemlerde dosya kapsamı, insan onayı ve dış sistem makbuzu ayrıca doğrulanır.</p>
