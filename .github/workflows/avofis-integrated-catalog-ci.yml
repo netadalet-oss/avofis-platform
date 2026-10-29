@@ -69,6 +69,7 @@ jobs:
             sudo apt-get install -y -qq postgresql-client
           fi
           psql -v ON_ERROR_STOP=1 -f database/tests/legacy_rls_hardening.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/legacy_cms_publication_hold.sql
       - name: Prove B01/B02 migration rejects unexpected RLS policies (disposable only)
         env:
           PGPASSWORD: synthetic-test-password
