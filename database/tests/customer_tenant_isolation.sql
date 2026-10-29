@@ -39,15 +39,18 @@ grant select,insert,update,delete on storage.objects to anon,authenticated;
 \ir ../migrations/20261027_staff_deliverables.sql
 \ir ../migrations/20261027_case_transition_guard.sql
 \ir ../migrations/20261029_ind_case_activation_guard.sql
+\ir ../migrations/20261029_case_assignment_scope.sql
 
 insert into auth.users(id,email,email_confirmed_at) values
  ('aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa','synthetic-a@example.invalid',now()),
  ('bbbbbbbb-bbbb-4bbb-bbbb-bbbbbbbbbbbb','synthetic-b@example.invalid',now()),
  ('cccccccc-cccc-4ccc-cccc-cccccccccccc','synthetic-admin@example.invalid',now()),
- ('dddddddd-dddd-4ddd-8ddd-dddddddddddd','synthetic-operator@example.invalid',now());
+ ('dddddddd-dddd-4ddd-8ddd-dddddddddddd','synthetic-operator@example.invalid',now()),
+ ('eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee','synthetic-second-admin@example.invalid',now());
 insert into public.avofis_staff(user_id,role) values
  ('cccccccc-cccc-4ccc-cccc-cccccccccccc','admin'),
- ('dddddddd-dddd-4ddd-8ddd-dddddddddddd','operator');
+ ('dddddddd-dddd-4ddd-8ddd-dddddddddddd','operator'),
+ ('eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee','admin');
 insert into public.avofis_cases(id,client_user_id,title,service_key,status) values
  ('11111111-1111-4111-8111-111111111111','aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa','Synthetic A only','housing','review'),
  ('22222222-2222-4222-8222-222222222222','bbbbbbbb-bbbb-4bbb-bbbb-bbbbbbbbbbbb','Synthetic B only','housing','review');
@@ -70,13 +73,48 @@ insert into public.avofis_deliverables(case_id,uploaded_by,storage_path,original
  ('11111111-1111-4111-8111-111111111111','cccccccc-cccc-4ccc-cccc-cccccccccccc','11111111-1111-4111-8111-111111111111/cccccccc-cccc-4ccc-cccc-cccccccccccc/71111111-1111-4111-8111-111111111111.pdf','a.pdf'),
  ('22222222-2222-4222-8222-222222222222','cccccccc-cccc-4ccc-cccc-cccccccccccc','22222222-2222-4222-8222-222222222222/cccccccc-cccc-4ccc-cccc-cccccccccccc/72222222-2222-4222-8222-222222222222.pdf','b.pdf');
 
+
+-- C reviews; E independently approves G1-G4. Case A can then become open.
+select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
+set role authenticated;
+insert into public.avofis_case_clearances(
+ case_id,jurisdiction,procedure_family,representative_name,representative_role,
+ work_right_verified,professional_authority_verified,authority_evidence_reference,
+ procedure_reviewed,notified_or_filed_on,deadline_reviewed,deadline_basis,
+ stay_consequences_reviewed,privacy_legal_basis_reviewed,secure_document_channel_verified,
+ disclosure_and_retention_reviewed
+) values (
+ '11111111-1111-4111-8111-111111111111','Netherlands','other',
+ 'Synthetic Approved Admin','administrative reviewer',true,true,'test-authority-ref',
+ true,current_date,true,'Synthetic deadline and jurisdiction check',
+ true,true,true,true
+);
+insert into public.avofis_case_assignments(case_id,staff_user_id,assigned_by)
+values('11111111-1111-4111-8111-111111111111',
+ 'dddddddd-dddd-4ddd-8ddd-dddddddddddd',auth.uid());
+reset role;
+select set_config('request.jwt.claim.sub','eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee',false);
+set role authenticated;
+update public.avofis_case_clearances set human_approved=true
+where case_id='11111111-1111-4111-8111-111111111111';
+reset role;
+select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
+set role authenticated;
+update public.avofis_cases set status='awaiting_agreement'
+where id='11111111-1111-4111-8111-111111111111';
+update public.avofis_cases set status='open'
+where id='11111111-1111-4111-8111-111111111111';
+reset role;
+
+-- Assigned operator access does not extend to the other client's matter.
 -- All customer-facing public tables, documents and private objects require RLS.
 do $$
 declare tab text;
 begin
  foreach tab in array array[
   'avofis_cases','avofis_agreements','avofis_messages','avofis_payments',
-  'avofis_case_events','avofis_document_requests','avofis_deliverables'
+  'avofis_case_events','avofis_document_requests','avofis_deliverables',
+  'avofis_case_assignments'
  ] loop
   if not (select relrowsecurity from pg_class where oid=format('public.%I',tab)::regclass) then
    raise exception 'RLS missing on %',tab;
@@ -114,7 +152,7 @@ begin
     (select count(*) from public.avofis_agreements)<>1 or
     (select count(*) from public.avofis_messages)<>1 or
     (select count(*) from public.avofis_payments)<>1 or
-    (select count(*) from public.avofis_case_events)<>1 or
+    (select count(*) from public.avofis_case_events)<>3 or
     (select count(*) from public.avofis_document_requests)<>1 or
     (select count(*) from public.avofis_deliverables)<>1 or
     (select count(*) from storage.objects where bucket_id='avofis-private')<>1 then
@@ -177,15 +215,29 @@ begin
 end $$;
 reset role;
 
--- Operator sees assigned-to-staff records by existing policy, but cannot
--- create new matters or agreements or mutate a quotation through Data API.
+-- Operator sees only explicitly assigned case A (never unassigned B).
+-- Creation of matters/agreements and quote updates remain admin-only.
 select set_config('request.jwt.claim.sub','dddddddd-dddd-4ddd-8ddd-dddddddddddd',false);
 set role authenticated;
 do $$
 begin
- if (select count(*) from public.avofis_cases)<>2 then
-  raise exception 'Operator read of staff workload broke';
+ if (select count(*) from public.avofis_cases)<>1 or
+    (select count(*) from public.avofis_agreements)<>1 or
+    (select count(*) from public.avofis_messages)<>1 or
+    (select count(*) from public.avofis_payments)<>1 or
+    (select count(*) from public.avofis_deliverables)<>1 or
+    (select count(*) from public.avofis_document_requests)<>1 or
+    (select count(*) from storage.objects where bucket_id='avofis-private')<>2 then
+  raise exception 'Unassigned operator saw tenant B records or lost tenant A access';
  end if;
+ if (select count(*) from public.avofis_case_assignments)<>1 then
+  raise exception 'Operator assignment disclosure failed';
+ end if;
+ begin
+  update public.avofis_cases set status='awaiting_agreement'
+   where id='22222222-2222-4222-8222-222222222222';
+  if found then raise exception 'Operator updated unassigned case B'; end if;
+ end;
  begin
   insert into public.avofis_cases(client_user_id,title,service_key)
   values('aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa','Unauthorised operator case','housing');
@@ -199,20 +251,23 @@ begin
 end $$;
 reset role;
 
--- A missing clearance blocks even the verified admin from opening a case.
+-- Case B (no G1-G4 clearance) remains blocked for the verified admin.
+-- Synthetic post-review agreement is inserted as the fixture owner.
+update public.avofis_agreements set client_signature='Synthetic B',signed_at=now()
+ where case_id='22222222-2222-4222-8222-222222222222';
 select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
 set role authenticated;
 do $$
 begin
  begin
   update public.avofis_cases set status='awaiting_agreement'
-   where id='11111111-1111-4111-8111-111111111111';
+   where id='22222222-2222-4222-8222-222222222222';
   update public.avofis_cases set status='open'
-   where id='11111111-1111-4111-8111-111111111111';
+   where id='22222222-2222-4222-8222-222222222222';
   raise exception 'No-clearance matter activated';
  exception when others then
   if sqlerrm not like 'Case activation blocked:%' then raise; end if;
  end;
 end $$;
 reset role;
-\echo 'PASS: actual migration chain + 7-table A/B RLS + storage path/consent + operator/admin + IND fail-closed (synthetic only)'
+\echo 'PASS: scoped staff assignment, two-person G1-G4, A/B RLS, private Storage and activation (synthetic only)'
