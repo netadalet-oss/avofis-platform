@@ -34,7 +34,7 @@ async function verify(req:NextRequest,cap:string){
 export async function GET(req:NextRequest){
  const cap=req.nextUrl.searchParams.get("module")||"";
  const a=await verify(req,cap);
- if("code" in a)return refuse(a.code,a.why);
+ if(typeof a.code==="number")return refuse(a.code,a.why||"AUTHORIZATION_FAILED");
  const {data,error}=await a.db.from("avofis_staff_work_items")
   .select("id,module,title,summary,state,flow,amount_eur_cents,created_at,case_id")
   .eq("staff_user_id",a.uid).eq("module",a.cap)
@@ -54,7 +54,7 @@ export async function POST(req:NextRequest){
  const module=body.module;
  if(typeof module!=="string")return refuse(400,"MODULE_REQUIRED");
  const a=await verify(req,module);
- if("code" in a)return refuse(a.code,a.why);
+ if(typeof a.code==="number")return refuse(a.code,a.why||"AUTHORIZATION_FAILED");
  if(!writable)return refuse(503,"DRAFT_WRITES_DISABLED");
  const allow=new Set(["module","title","summary","case_id","amount_eur_cents"]);
  if(Object.keys(body).some(k=>!allow.has(k)))return refuse(400,"UNKNOWN_FIELD");
