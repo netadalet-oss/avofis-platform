@@ -48,3 +48,25 @@ test("FORM02 revision and consent are mandatory, official states disallowed",()=
   {...good,draft:{...draft,service:"does-not-exist"}}
  ])assert.equal(parsePatchDraft(bad),null);
 });
+
+test("production document storage remains denied until correct project and security gates",()=>{
+ const ref="verifiedproduction001";
+ const enabled={
+  VERCEL_ENV:"production",AVOFIS_DOCUMENT_DRAFT_ENV:"production",
+  AVOFIS_PRODUCTION_SUPABASE_PROJECT_REF:ref,
+  AVOFIS_DOCUMENT_DRAFT_STAGING_PROJECT_REF:"separatestaging001",
+  AVOFIS_DOCUMENT_DRAFT_PRODUCTION_ENABLED:"true",
+  AVOFIS_DOCUMENT_DRAFT_SECURITY_REVIEWED:"true",
+  NEXT_PUBLIC_SUPABASE_URL:"https://"+ref+".supabase.co"
+ };
+ assert.equal(documentDraftStageEnabled(enabled),true);
+ for(const bad of [
+  {AVOFIS_DOCUMENT_DRAFT_PRODUCTION_ENABLED:"false"},
+  {AVOFIS_DOCUMENT_DRAFT_SECURITY_REVIEWED:"false"},
+  {VERCEL_ENV:"preview"},
+  {AVOFIS_DOCUMENT_DRAFT_STAGING_PROJECT_REF:ref},
+  {NEXT_PUBLIC_SUPABASE_URL:"https://"+ref+".supabase.co.evil.invalid"},
+  {NEXT_PUBLIC_SUPABASE_URL:"https://"+ref+".supabase.co/private"},
+  {AVOFIS_PRODUCTION_SUPABASE_PROJECT_REF:""}
+ ])assert.equal(documentDraftStageEnabled({...enabled,...bad}),false);
+});
