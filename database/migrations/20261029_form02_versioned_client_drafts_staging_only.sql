@@ -44,7 +44,7 @@ create index avofis_client_drafts_case_idx on public.avofis_client_document_draf
 -- Only a currently assigned operator with BOTH personal grants may review.
 create function public.avofis_can_read_shared_document(p_case uuid)
 returns boolean language sql stable security definer set search_path='' as $$
- select auth.uid() is not null and exists(
+ select auth.uid() is not null and auth.jwt()->>'aal'='aal2' and exists(
   select 1 from public.avofis_case_assignments a
   join public.avofis_staff s on s.user_id=a.staff_user_id and s.role='operator'
   join public.avofis_staff_capability_grants g on g.staff_user_id=a.staff_user_id and g.capability='documents'
