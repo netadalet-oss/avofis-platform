@@ -33,7 +33,7 @@ async function check(path,expected,method="GET"){
 }
 try{
  await waitUntilReady();
- for(const route of ["/","/hizmetler","/katalog","/islemler","/nasil-calisir","/iletisim","/bilgi","/gizlilik","/cerezler","/diller","/triyaj","/ornek-dosya","/uyum","/ictihat","/yargi-baglantilari","/katalog?lang=ar","/katalog?lang=ru","/katalog?lang=de","/basvuru","/auth/login","/musteri","/yonetim","/yonetim/ind-inceleme"]){
+ for(const route of ["/","/hizmetler","/katalog","/islemler","/nasil-calisir","/iletisim","/bilgi","/gizlilik","/cerezler","/diller","/triyaj","/ornek-dosya","/uyum","/ictihat","/yargi-baglantilari","/ornek-yargi-dosyasi","/katalog?lang=ar","/katalog?lang=ru","/katalog?lang=de","/basvuru","/auth/login","/musteri","/yonetim","/yonetim/ind-inceleme"]){
   const response=await check(route,200);
   assert.match(response.headers.get("content-type")||"",/text\/html/,route+" content type");
  }
@@ -63,6 +63,8 @@ try{
  for(const e of ["ECLI:NL:HR:2026:1684","ECLI:NL:HR:2026:1682","ECLI:NL:HR:2026:1587"])
   assert.match(lawHtml,new RegExp(e),"Documented real ECLI reference must be source-linked");
  await check("/yargi-baglantilari",200);
+ const casePreview=await check("/ornek-yargi-dosyasi",200);
+ assert.match(await casePreview.text(),/NOT_SUBMITTED/);
  await check("/api/rechtspraak?ecli=ECLI:NL:HR:2026:1684",503);
  console.log("Route and disabled-action smoke test passed");
 }finally{
