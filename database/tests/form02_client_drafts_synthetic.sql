@@ -70,9 +70,13 @@ set role authenticated;
 update public.avofis_client_document_drafts set status='review_requested',consent_to_staff=true
 where id=current_setting('avofis.test.shared')::uuid and revision=1;
 do $test$ begin
- update public.avofis_client_document_drafts set content='{}'::jsonb
- where id=current_setting('avofis.test.shared')::uuid;
- if found then raise exception 'FORM02 review lock bypassed'; end if;
+ begin
+  update public.avofis_client_document_drafts set content='{}'::jsonb
+   where id=current_setting('avofis.test.shared')::uuid;
+  raise exception 'FORM02 review lock bypassed';
+ exception when others then
+  if sqlerrm not like 'FORM02 reviewed content is immutable%' then raise; end if;
+ end;
 end $test$;
 reset role;
 select set_config('request.jwt.claim.sub','dddddddd-dddd-4ddd-8ddd-dddddddddddd',false);
@@ -117,11 +121,39 @@ end $test$;
 reset role;
 select set_config('request.jwt.claim.sub','aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa',false);
 set role authenticated;
+update public.avofis_client_document_drafts
+ set status='withdrawn',consent_to_staff=false
+ where id=current_setting('avofis.test.shared')::uuid
+ and status='review_requested' and revision=2;
 do $test$ begin
  if (select count(*) from public.avofis_client_document_drafts)<>2 or
-    (select count(*) from public.avofis_client_document_versions)<>4 or
-    (select count(*) from public.avofis_client_document_review_notes)<>1 then
-  raise exception 'FORM02 owner lost revisions/review note'; end if;
+    (select count(*) from public.avofis_client_document_versions)<>5 or
+    (select count(*) from public.avofis_client_document_review_notes)<>1 or
+    (select status from public.avofis_client_document_drafts
+      where id=current_setting('avofis.test.shared')::uuid)<>'withdrawn' then
+  raise exception 'FORM02 owner withdrawal lost revisions or review note'; end if;
+ begin
+  update public.avofis_client_document_drafts set consent_to_staff=true,status='review_requested'
+   where id=current_setting('avofis.test.shared')::uuid;
+  raise exception 'FORM02 withdrawn consent silently restored';
+ exception when others then
+  if sqlerrm not like 'FORM02 withdrawn document is immutable%' then raise; end if;
+ end;
+end $test$;
+reset role;
+-- Regrant employee privilege after withdrawal; withdrawn consent MUST still deny access.
+select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
+set role authenticated;
+insert into public.avofis_staff_capability_grants(staff_user_id,capability,granted_by)
+values('dddddddd-dddd-4ddd-8ddd-dddddddddddd','pleadings',auth.uid());
+reset role;
+select set_config('request.jwt.claim.sub','dddddddd-dddd-4ddd-8ddd-dddddddddddd',false);
+set role authenticated;
+do $test$ begin
+ if (select count(*) from public.avofis_client_document_drafts)<>0 or
+    (select count(*) from public.avofis_client_document_versions)<>0 or
+    (select count(*) from public.avofis_client_document_review_notes)<>0 then
+   raise exception 'FORM02 withdrawn consent resurrected staff access'; end if;
 end $test$;
 reset role;
 rollback;
