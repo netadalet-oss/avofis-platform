@@ -130,6 +130,78 @@ create policy "cleared case participants upload private objects"
       and public.avofis_can_access_case(c.id)
    )
  );
+
+-- No lead-to-case assignment exists yet. Operators must not see all unassigned
+-- enquiry PII or update any lead status by inheriting staff-wide RLS.
+drop policy if exists "staff view enquiries" on public.avofis_leads;
+drop policy if exists "staff update enquiries" on public.avofis_leads;
+create policy "admin-only enquiry review" on public.avofis_leads
+ for select to authenticated using(public.avofis_is_admin());
+create policy "admin-only enquiry status" on public.avofis_leads
+ for update to authenticated using(public.avofis_is_admin())
+ with check(public.avofis_is_admin());
+
+-- Permit verified admins to resolve operator IDs from the protected roster,
+-- without exposing it to customers or unrelated operators.
+drop policy if exists "admin reads staff roster" on public.avofis_staff;
+create policy "admin reads staff roster" on public.avofis_staff
+ for select to authenticated using(public.avofis_is_admin());
+
+-- Append-only audit: no API role has UPDATE/DELETE/INSERT permission.
+-- These records do not replace access logs (R-533), signature evidence or
+-- a tamper-evident external audit trail.
+create table if not exists public.avofis_assignment_events (
+ id uuid primary key default gen_random_uuid(),
+ case_id uuid not null references public.avofis_cases(id) on delete restrict,
+ staff_user_id uuid not null references auth.users(id) on delete restrict,
+ actor_user_id uuid references auth.users(id),
+ action text not null check(action in ('assigned','unassigned')),
+ created_at timestamptz not null default now()
+);
+create index if not exists avofis_assignment_events_case_idx
+ on public.avofis_assignment_events(case_id,created_at,id);
+alter table public.avofis_assignment_events enable row level security;
+revoke all on public.avofis_assignment_events from public,anon,authenticated;
+grant select on public.avofis_assignment_events to authenticated;
+create policy "admin reads assignment audit" on public.avofis_assignment_events
+ for select to authenticated using(public.avofis_is_admin());
+
+create or replace function public.avofis_log_assignment_change()
+returns trigger language plpgsql security definer set search_path='' as $
+begin
+ insert into public.avofis_assignment_events(case_id,staff_user_id,actor_user_id,action)
+ values(
+  case when tg_op='INSERT' then new.case_id else old.case_id end,
+  case when tg_op='INSERT' then new.staff_user_id else old.staff_user_id end,
+  auth.uid(),
+  case when tg_op='INSERT' then 'assigned' else 'unassigned' end
+ );
+ return null;
+end;$;
+revoke all on function public.avofis_log_assignment_change()
+ from public,anon,authenticated;
+drop trigger if exists avofis_assignment_audit on public.avofis_case_assignments;
+create trigger avofis_assignment_audit
+ after insert or delete on public.avofis_case_assignments
+ for each row execute function public.avofis_log_assignment_change();
+
+-- A deleted or demoted operator must lose their case assignments permanently.
+-- Re-granting staff membership cannot resurrect stale case access.
+create or replace function public.avofis_purge_demoted_operator_assignments()
+returns trigger language plpgsql security definer set search_path='' as $
+begin
+ if old.role='operator' and (tg_op='DELETE' or new.role is distinct from 'operator') then
+  delete from public.avofis_case_assignments where staff_user_id=old.user_id;
+ end if;
+ return null;
+end;$;
+revoke all on function public.avofis_purge_demoted_operator_assignments()
+ from public,anon,authenticated;
+drop trigger if exists avofis_purge_staff_assignments on public.avofis_staff;
+create trigger avofis_purge_staff_assignments
+ after update of role or delete on public.avofis_staff
+ for each row execute function public.avofis_purge_demoted_operator_assignments();
+
 commit;
 
 -- Scope limits:
