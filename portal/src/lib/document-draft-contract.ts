@@ -20,7 +20,8 @@ export function parsePatchDraft(v:unknown):PatchDraft|null{
 export function documentDraftStageEnabled(e:Record<string,string|undefined>):boolean{
  if(e.AVOFIS_DOCUMENT_DRAFT_STAGING_ENABLED!=="true"||e.AVOFIS_DOCUMENT_DRAFT_ENV!=="staging")return false;
  const ref=e.AVOFIS_DOCUMENT_DRAFT_STAGING_PROJECT_REF;
- if(!ref||!/^[-a-z0-9]{12,32}$/.test(ref))return false;
+ if(!ref||!/^[-a-z0-9]{12,32}$/.test(ref)||e.VERCEL_ENV==="production"||
+  !e.AVOFIS_PRODUCTION_SUPABASE_PROJECT_REF||ref===e.AVOFIS_PRODUCTION_SUPABASE_PROJECT_REF)return false;
  try{
   const u=new URL(e.NEXT_PUBLIC_SUPABASE_URL||"");
   return u.protocol==="https:"&&u.port===""&&u.pathname==="/"&&u.username===""&&u.password===""&&u.hostname===ref+".supabase.co";
