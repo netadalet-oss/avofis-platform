@@ -27,6 +27,27 @@ begin
   raise exception 'Private Storage upload policy absent after recovery';
  end if;
 end $$;
+-- Verify backup preserved the new default-deny personal staff grants.
+select set_config('request.jwt.claim.sub','dddddddd-dddd-4ddd-8ddd-dddddddddddd',false);
+set role authenticated;
+do $$
+begin
+ if (select count(*) from public.avofis_cases)<>0
+  or (select count(*) from public.avofis_messages)<>0
+  or (select count(*) from storage.objects where bucket_id='avofis-private')<>0 then
+  raise exception 'Recovered worker could access a record with no individually assigned module privileges';
+ end if;
+end $$;
+reset role;
+-- An independent admin issues the minimum three synthetic role grants.
+select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
+set role authenticated;
+insert into public.avofis_staff_capability_grants(staff_user_id,capability,granted_by)
+values
+ ('dddddddd-dddd-4ddd-8ddd-dddddddddddd','matters',auth.uid()),
+ ('dddddddd-dddd-4ddd-8ddd-dddddddddddd','messages',auth.uid()),
+ ('dddddddd-dddd-4ddd-8ddd-dddddddddddd','documents',auth.uid());
+reset role;
 select set_config('request.jwt.claim.sub','dddddddd-dddd-4ddd-8ddd-dddddddddddd',false);
 set role authenticated;
 do $$
@@ -34,7 +55,7 @@ begin
  if (select count(*) from public.avofis_cases)<>1
     or (select count(*) from public.avofis_messages)<>1
     or (select count(*) from storage.objects where bucket_id='avofis-private')<>2 then
-  raise exception 'Restored operator access is not limited to assigned tenant A';
+  raise exception 'Recovered staff access is not limited to assigned tenant A and explicit grants';
  end if;
 end $$;
 reset role;
@@ -49,4 +70,4 @@ begin
  end if;
 end $$;
 reset role;
-\echo 'PASS: synthetic pg_dump/pg_restore preserved data, RLS, triggers and A/assigned operator isolation'
+\echo 'PASS: synthetic pg_dump/pg_restore preserved data, RLS, triggers and default-deny staff grant/regrant isolation'
