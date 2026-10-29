@@ -6,6 +6,7 @@ import {supabase} from "@/lib/supabase";
 import type {StaffCapability,WorkspaceSection} from "@/lib/workspace-model";
 import type {Workstream} from "@/lib/legal-workflows";
 import {StaffReviewQueue} from "@/components/staff-review-queue";
+import {StaffGrantManager} from "@/components/staff-grant-manager";
 
 type StaffItem=Record<string,unknown>;
 type WorkspaceResponse={
@@ -340,6 +341,7 @@ export default function StaffDashboard(){
          </article>)}</div>}
        </section>
       </div>}
+      {role==="admin"&&section==="people"&&<StaffGrantManager/>}
       {role==="admin"&&section&&<StaffReviewQueue module={section}/>}
       <footer className="mt-12 border-t border-[#E1E8F0] pt-5 text-[11px] leading-6 text-[#718298]">
        AVOfis · Personel çalışma alanı · Kurumsal ve mevzuata uygun işlem süreçleri
