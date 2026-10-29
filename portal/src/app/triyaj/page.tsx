@@ -1,0 +1,87 @@
+"use client";
+import {useMemo,useState} from "react";
+import Link from "next/link";
+import {PageFrame} from "@/components/avofis/PageFrame";
+import {usePortalLanguage} from "@/hooks/usePortalLanguage";
+import {countries,topics,personRoles,noticeCategories,timeBands,
+ evaluatePublicTriage,type TriageInput} from "@/lib/public-triage";
+
+const wording={
+ tr:{eyebrow:"T09 · GÜVENLİ ÖN YÖNLENDİRME",title:"Hangi bilgi yolu uygun?",
+ intro:"Bu ekran yalnızca genel bilgi ve gerektiğinde yetkili uzmana yönlendirme gösterir. Ad, e-posta, telefon, kimlik, dosya numarası, özel tarih veya belge istemez; seçimler cihazınızda kaydedilmez.",
+ country:"İlgili hukuk ülkesi",topic:"Konu",role:"Kim adına bilgi aranıyor?",notice:"Resmî karar/tebliğ var mı?",time:"Kendi bildirdiğiniz olası süre yakınlığı (hesaplanmaz)",harm:"Özgürlük, sınır dışı, barınma veya başka geri döndürülemez risk bildirimi",professional:"Bağımsız yetkili uzmana ihtiyaç olabileceğini düşünüyorum",result:"Güvenli bilgi yönü",
+ urgent:"Acil insan/uzman değerlendirmesi gerekli olabilir. AVOfis üzerinden yanıt beklemeyin; ilgili yetkili kurum, acil yardım veya ehil profesyonele kendi güvenilir kanallarından başvurun.",
+ specialist:"İşlem, süre, temsil yetkisi ve ilgili ülke insan tarafından doğrulanmalıdır. Bu siteden dosya açılamaz; gerekirse bağımsız yetkili uzmana doğrudan başvurun.",
+ official:"Genel resmî kaynak bilgisi gösterilebilir. İşleme özgü şartları yetkili makamdan teyit edin.",
+ general:"Ülke veya konu yeterince belli değil. Resmî kaynağı ve yetkili gerçek kişiyi önce doğrulayın.",
+ source:"Resmî genel başlangıç kaynağı",closed:"Başvuru, dosya ve ödeme kanalları kapalıdır. Bu yönlendirme hiçbir süreyi durdurmaz ve hukukî tavsiye/temsil oluşturmaz.",back:"17 hizmet alanı"},
+ nl:{eyebrow:"T09 · VEILIGE ORIËNTATIE",title:"Welke informatieroute past?",
+ intro:"Alleen algemene informatie en zo nodig een verwijzing naar een bevoegde deskundige. Geen namen, contactgegevens, dossiernummers, documenten of exacte datums. Keuzes worden niet opgeslagen.",
+ country:"Land van de procedure",topic:"Onderwerp",role:"Voor wie zoekt u informatie?",notice:"Is er een besluit of betekening?",time:"Zelf ingeschatte spoed (geen termijnberekening)",harm:"Mogelijk onomkeerbaar nadeel, bewaring of uitzetting",professional:"Mogelijk onafhankelijke bevoegde deskundige nodig",result:"Veilige oriëntatie",
+ urgent:"Mogelijk dringend menselijk deskundig advies nodig. Wacht niet op AVOfis; neem zelf contact op met de bevoegde instantie of een bevoegde deskundige.",
+ specialist:"Procedure, termijn, bevoegdheden en rechtsgebied vereisen menselijke controle. Hier kunt u geen dossier starten.",
+ official:"Alleen algemene officiële informatie. Verifieer de actuele procedure rechtstreeks.",
+ general:"Land of onderwerp is onvoldoende duidelijk. Verifieer de bevoegde instantie.",
+ source:"Algemene officiële startbron",closed:"Aanvragen, dossiers en betalingen zijn gesloten. Dit stopt geen wettelijke termijn en is geen individueel advies.",back:"17 dienstgebieden"},
+ en:{eyebrow:"T09 · SAFE ORIENTATION",title:"Which information route fits?",
+ intro:"This page gives general orientation and possible referral to a qualified professional. It collects no names, contact details, exact dates, case numbers or documents, and does not save your choices.",
+ country:"Relevant country",topic:"Topic",role:"Whose matter?",notice:"Has a decision/notice been received?",time:"Your own urgency estimate (not a deadline calculation)",harm:"Possible irreparable harm, detention or removal",professional:"An independently authorised specialist may be needed",result:"Safe information outcome",
+ urgent:"You may need urgent human expert help. Do not wait for an AVOfis response; use an official channel or contact an authorised professional directly.",
+ specialist:"Procedure, time limits, jurisdiction and representation require human verification. No client matter can be opened here.",
+ official:"Only general official starting information is available. Confirm the exact requirements with the competent authority.",
+ general:"Country or subject is unclear. Verify the competent authority before taking action.",
+ source:"Official general starting point",closed:"Intake, cases and payments are closed. This does not stop legal time limits or create representation.",back:"17 service areas"}
+} as const;
+const countryOptions={nl:"Nederland",de:"Deutschland",tr:"Türkiye",other:"Other / Diğer",unknown:"Not sure / Emin değilim"};
+const topicOptions={document:"Document / Belge",administrative_objection:"Administrative objection / İtiraz",court_procedure:"Court / Mahkeme",asylum:"Asylum / İltica",detention_or_removal:"Detention or removal / Gözetim veya sınır dışı",residence:"Residence / Oturum",family:"Family / Aile",work:"Work / Çalışma",housing:"Housing / Konut",debt:"Debt / Alacak",business:"Business / Şirket",unknown:"Not sure / Emin değilim"};
+const roleOptions={self:"Self / Kendim",relative:"Relative / Yakınım",employer:"Employer / İşveren",organisation:"Organisation / Kurum",representative:"Representative / Temsilci",unknown:"Not sure / Emin değilim"};
+const noticeOptions={no_notice:"No / Hayır",notice_received:"Received / Tebliğ alındı",not_sure:"Not sure / Emin değilim"};
+const timeOptions={unknown:"Unknown / Bilinmiyor",less_than_48h:"Within 48 hours? / 48 saat içinde olabilir",within_7d:"Within a week? / Bir hafta içinde olabilir",later:"Later / Daha sonra"};
+const initial:TriageInput={country:"unknown",topic:"unknown",personRole:"unknown",
+ noticeCategory:"not_sure",timeBand:"unknown",immediateHarm:false,professionalNeeded:false};
+export default function SafeTriagePage(){
+ const lang=usePortalLanguage(),t=wording[lang];
+ const [input,setInput]=useState<TriageInput>({...initial});
+ const result=useMemo(()=>evaluatePublicTriage(input),[input]);
+ const select=(key:"country"|"topic"|"personRole"|"noticeCategory"|"timeBand",
+ label:string,options:readonly string[],labels:Record<string,string>)=><label className="block text-sm">
+  <span className="font-semibold">{label}</span>
+  <select className="avofis-field mt-2 w-full" value={input[key]}
+    onChange={e=>setInput(p=>({...p,[key]:e.target.value}))}>
+   {options.map(v=><option key={v} value={v}>{labels[v]??v}</option>)}
+  </select>
+ </label>;
+ const message=result.disposition==="URGENT_SPECIALIST"?t.urgent:
+  result.disposition==="SPECIALIST_REVIEW"?t.specialist:
+  result.disposition==="OFFICIAL_INFORMATION"?t.official:t.general;
+ return <PageFrame wide lang={lang} eyebrow={t.eyebrow} title={t.title} description={t.intro}>
+  <section aria-label="Non-identifying, local-only selections" className="avofis-card rounded-2xl border p-5 sm:p-7">
+   <div className="grid gap-5 sm:grid-cols-2">
+    {select("country",t.country,countries,countryOptions)}
+    {select("topic",t.topic,topics,topicOptions)}
+    {select("personRole",t.role,personRoles,roleOptions)}
+    {select("noticeCategory",t.notice,noticeCategories,noticeOptions)}
+    {select("timeBand",t.time,timeBands,timeOptions)}
+   </div>
+   <div className="mt-5 grid gap-3">
+    <label className="flex items-start gap-3 text-sm leading-6">
+     <input type="checkbox" className="mt-1" checked={input.immediateHarm} onChange={e=>setInput(p=>({...p,immediateHarm:e.target.checked}))}/>
+     <span>{t.harm}</span>
+    </label>
+    <label className="flex items-start gap-3 text-sm leading-6">
+     <input type="checkbox" className="mt-1" checked={input.professionalNeeded} onChange={e=>setInput(p=>({...p,professionalNeeded:e.target.checked}))}/>
+     <span>{t.professional}</span>
+    </label>
+   </div>
+  </section>
+  <section aria-live="polite" className="mt-5 rounded-xl border border-[#dfbf59]/40 bg-[#071738] p-5 sm:p-6">
+   <h2 className="text-lg font-semibold text-[#dfbf59]">{t.result}</h2>
+   <p className="mt-3 text-sm leading-7">{message}</p>
+   {result.issues.length>0&&<p className="mt-3 text-xs text-[#b9c5df]">Kontrol / review: {result.issues.join(" · ")}</p>}
+   {result.officialSource&&<a href={result.officialSource} target="_blank" rel="noopener noreferrer"
+      className="mt-4 inline-block text-sm font-semibold text-[#dfbf59] underline underline-offset-4">{t.source}</a>}
+   <p className="mt-4 border-t border-[#dfbf59]/20 pt-4 text-xs leading-6 text-[#b9c5df]">{t.closed}</p>
+  </section>
+  <Link href={"/katalog?lang="+lang} className="avofis-outline avofis-btn mt-5 inline-flex">{t.back}</Link>
+ </PageFrame>;
+}
