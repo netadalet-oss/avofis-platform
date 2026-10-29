@@ -33,7 +33,7 @@ async function check(path,expected,method="GET"){
 }
 try{
  await waitUntilReady();
- for(const route of ["/","/hizmetler","/katalog","/islemler","/nasil-calisir","/iletisim","/bilgi","/gizlilik","/cerezler","/diller","/uyum","/katalog?lang=ar","/katalog?lang=ru","/katalog?lang=de","/basvuru","/auth/login","/musteri","/yonetim","/yonetim/ind-inceleme"]){
+ for(const route of ["/","/hizmetler","/katalog","/islemler","/nasil-calisir","/iletisim","/bilgi","/gizlilik","/cerezler","/diller","/triyaj","/ornek-dosya","/uyum","/katalog?lang=ar","/katalog?lang=ru","/katalog?lang=de","/basvuru","/auth/login","/musteri","/yonetim","/yonetim/ind-inceleme"]){
   const response=await check(route,200);
   assert.match(response.headers.get("content-type")||"",/text\/html/,route+" content type");
  }
@@ -52,6 +52,12 @@ try{
  assert.match(sixHtml,/dir="rtl"/,"Arabic RTL block must be present");
  const noGo=await check("/uyum",200);
  assert.match(await noGo.text(),/KAPALI/,"Release status must not claim customer intake enabled");
+ const triagePage=await check("/triyaj",200);
+ const triageHTML=await triagePage.text();
+ assert.match(triageHTML,/GÜVENLİ ÖN YÖNLENDİRME/);
+ assert.doesNotMatch(triageHTML,/action="\/api\/intake"/);
+ const examplePage=await check("/ornek-dosya",200);
+ assert.match(await examplePage.text(),/Örnek müşteri dosyası/);
  console.log("Route and disabled-action smoke test passed");
 }finally{
  server.kill("SIGTERM");
