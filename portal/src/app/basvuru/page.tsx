@@ -88,7 +88,7 @@ export default function IntakePage(){
            </select>
          </label>)}
        </fieldset>
-       <Link href={"/islemler?lang="+lang} className="avofis-outline avofis-btn mt-5">{t.services}</Link>
+       <div className="mt-5 flex flex-wrap gap-3"><Link href={"/islemler?lang="+lang} className="avofis-outline avofis-btn">{t.services}</Link><Link href={"/triyaj?lang="+lang} className="avofis-outline avofis-btn">{lang==="tr"?"Kayıtsız güvenli triyaj":lang==="nl"?"Veilige oriëntatie zonder registratie":"Safe triage without registration"}</Link></div>
      </div>:reference?<div className="mt-7 rounded-xl border border-[#dfbf59]/25 bg-[#04102C] p-5" role="status">
        <h2 className="text-[18px] font-semibold">{t.success}</h2><p className="mt-2 text-[14px] leading-7 text-[#B9C5DF]">{t.successInfo}</p>
        <p className="mt-3 text-[15px] font-semibold text-[#dfbf59]">{t.reference}: {reference}</p>
