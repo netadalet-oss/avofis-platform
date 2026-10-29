@@ -1,4 +1,4 @@
-import { publicCustomerTransactionsAuthorized } from "./public-release-status";
+import { publicCustomerTransactionsAuthorized } from "./public-release-status.ts";
 /**
  * AVOfis v17 T08: release-authorisation gate.
  *
