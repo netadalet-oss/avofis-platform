@@ -129,6 +129,7 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f database/tests/staff_work_items_synthetic.sql
           psql -v ON_ERROR_STOP=1 -f database/tests/staff_review_audit_synthetic.sql
           psql -v ON_ERROR_STOP=1 -f database/tests/staff_mfa_sensitive_scope_synthetic.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/form02_client_drafts_synthetic.sql
       - name: Dump, corrupt disposable source, restore into a new disposable DB, and re-test RLS
         env:
           PGPASSWORD: synthetic-tenant-test
@@ -232,6 +233,8 @@ jobs:
         run: node --experimental-strip-types --test scripts/rechtspraak-shared-rate-limit.test.mjs
       - name: FORM-01 contextual document and DOCX privacy regression
         run: node --experimental-strip-types --test scripts/document-preparation.test.mjs
+      - name: FORM-02 stage-only account drafts, strict revisions and consent checks
+        run: node --experimental-strip-types --test scripts/document-draft-contract.test.mjs
       - name: Non-gating one-call Rechtspraak public XML authenticity probe
         continue-on-error: true
         timeout-minutes: 1
