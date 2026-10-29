@@ -167,7 +167,7 @@ create policy "admin reads assignment audit" on public.avofis_assignment_events
  for select to authenticated using(public.avofis_is_admin());
 
 create or replace function public.avofis_log_assignment_change()
-returns trigger language plpgsql security definer set search_path='' as $
+returns trigger language plpgsql security definer set search_path='' as $$
 begin
  insert into public.avofis_assignment_events(case_id,staff_user_id,actor_user_id,action)
  values(
@@ -177,7 +177,7 @@ begin
   case when tg_op='INSERT' then 'assigned' else 'unassigned' end
  );
  return null;
-end;$;
+end;$$;
 revoke all on function public.avofis_log_assignment_change()
  from public,anon,authenticated;
 drop trigger if exists avofis_assignment_audit on public.avofis_case_assignments;
@@ -188,13 +188,13 @@ create trigger avofis_assignment_audit
 -- A deleted or demoted operator must lose their case assignments permanently.
 -- Re-granting staff membership cannot resurrect stale case access.
 create or replace function public.avofis_purge_demoted_operator_assignments()
-returns trigger language plpgsql security definer set search_path='' as $
+returns trigger language plpgsql security definer set search_path='' as $$
 begin
  if old.role='operator' and (tg_op='DELETE' or new.role is distinct from 'operator') then
   delete from public.avofis_case_assignments where staff_user_id=old.user_id;
  end if;
  return null;
-end;$;
+end;$$;
 revoke all on function public.avofis_purge_demoted_operator_assignments()
  from public,anon,authenticated;
 drop trigger if exists avofis_purge_staff_assignments on public.avofis_staff;
