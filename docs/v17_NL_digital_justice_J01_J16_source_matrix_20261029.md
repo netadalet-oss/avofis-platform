@@ -96,3 +96,11 @@ Met vriendelijke groet,
 AVOfis – ontwikkelproject (afzender en rechtsvorm nog niet gevalideerd)
 
 **Gönderim olmadı.** Gerçek şirket unvanı, yetkili imzacı, iletişim bilgileri ve temsil kapasitesi onaylanmadan kurum adına gönderilmez.
+
+## 7. J07/J10 staging-yalnız metaveri ve negatif güvenlik testleri — 29.10.2026
+
+- `database/migrations/20261029_judicial_metadata_staging_only.sql`: Mevcut `avofis_cases` UUID'sine FK ile bağlı **iç metaveri** (`country`, `court_code`, `procedure_family`, resmî numara, ECLI, tebliğ ve insan inceleme bazlı tarih). Genel yargı tablosunda `asylum`, `detention`, `ind` türleri **CHECK ile yasaklı**. Sahip veya yetkiyle atanmış personel, yalnız kendi dosyasını SELECT edebilir; yeni kayıt veya değişiklik yalnız doğrulanmış admin politikalarıyla yapılabilir.
+- `public.avofis_judicial_local_events`: yalnız `draft_prepared`, `official_portal_opened`, `document_prepared`, `unverified_receipt_reported` olay tipleri; **`submitted`, `delivered`, `accepted` tipleri şemada yok**. UPDATE/DELETE yetkisi yok; yalnız admin ve `recorded_by=auth.uid()` insert. Bu, bağımsız değiştirilemez haricî audit veya doğrulanmış mahkeme makbuzu değildir.
+- `database/tests/judicial_metadata_synthetic.sql`: disposable PostgreSQL17, admin C/A/B iki dosya, A/B satır izolasyonu, müşteri olay üretiminin reddi, `submitted` sahte kayıt reddi, iltica türü reddi, insan inceleme gerekçesi olmadan kesin deadline işaretleme reddi. İşlem sonunda `ROLLBACK`; **canlı veri yazımı yok**.
+- `portal/src/lib/court-case-tracker.ts` ve `/ornek-yargi-dosyasi`: sentetik vaka/olay görünümü; gerçek makbuz olmasa bile kullanıcı simulasyonunun "gönderildi" durumuna dönmemesi test ediliyor.
+- Gerçek Supabase staging Auth/JWT/Storage, RLS tenant/role, gerçek belgeler ve imzalı iki kişi onayı **halen zorunlu**. Buradaki migration **canlıya uygulanmadı**.
