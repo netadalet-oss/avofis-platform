@@ -59,6 +59,7 @@ export default function StaffDashboard(){
   const result=await response.json() as WorkspaceResponse;
   if(!response.ok){
    if(response.status===401){router.replace("/login");return;}
+   if(response.status===403&&result.error==="MFA_REQUIRED"){router.replace("/mfa");return;}
    if(response.status===403){setAuthorized(false);setSections([]);setStatus("Bu alan için personel erişim yetkisi bulunmuyor.");return;}
    throw new Error(result.error||"Çalışma alanı şu anda kullanılamıyor.");
   }
