@@ -1,5 +1,6 @@
 import {createClient} from "@supabase/supabase-js";
 import {NextRequest,NextResponse} from "next/server";
+import {evaluateStaffMfa} from "@/lib/staff-mfa";
 import {isStaffCapability} from "@/lib/workspace-model";
 export const dynamic="force-dynamic";
 export const runtime="nodejs";
@@ -22,6 +23,8 @@ async function admin(req:NextRequest){
  const {data:role,error}=await db.from("avofis_staff").select("role")
   .eq("user_id",user.user.id).maybeSingle();
  if(error||role?.role!=="admin")return {code:403,error:"INDEPENDENT_ADMIN_REQUIRED"} as const;
+ const assurance=await evaluateStaffMfa(db,token);
+ if(!assurance.allowed)return {code:403,error:assurance.reason} as const;
  return {db,uid:user.user.id} as const;
 }
 export async function GET(req:NextRequest){
