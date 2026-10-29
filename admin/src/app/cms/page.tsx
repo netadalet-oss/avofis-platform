@@ -69,7 +69,11 @@ export default function Page() {
       return;
     }
 
-    const userId = session.user.id;
+    const { data: aal, error: aalError } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+    if (aalError || aal?.currentLevel !== "aal2") {router.replace("/mfa"); return;}
+    const {data:{user},error:userError}=await supabase.auth.getUser();
+    if(userError || !user) {router.replace("/login"); return;}
+    const userId = user.id;
     // Staff privilege comes from a server-governed table, never editable user metadata.
     const { data: staff } = await supabase.from("avofis_staff").select("role").eq("user_id",userId).maybeSingle();
     const allowed = staff?.role === "admin";
