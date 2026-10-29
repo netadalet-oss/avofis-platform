@@ -1,11 +1,21 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {indProcedureIds,evaluateINDAdmission} from "../src/lib/ind-admission.ts";
+const actionMap={ind_objection:"submit_objection",ind_file_request:"request_file_copy",
+ court_appeal:"court_appeal",higher_appeal:"higher_appeal"};
 const valid=(procedure="ind_objection")=>({
  procedure,
  person:{fullName:"Test Employee",roleDescription:"Juridisch medewerker",workRightVerified:true,professionalAuthorityVerified:true},
- timing:{notifiedOrFiledOn:"2026-10-29",deadlineReviewed:true,deadlineBasis:"Human-confirmed official case route",stayConsequencesReviewed:true,asylumPrePost12June2026Reviewed:true},
- representation:{requested:true,signedSpecialMandate:true,procedureSpecificINDFormReviewed:true,serviceAgreementSigned:true},
+ timing:{notifiedOrFiledOn:"2026-10-29",deadlineReviewed:true,deadlineBasis:"Human-confirmed official case route",stayConsequencesReviewed:true,asylumPrePost12June2026Reviewed:true,
+  asylumApplicationDate:"2026-06-12",asylumTransitionRegime:"from_2026_06_12",
+  asylumTransitionSourceReference:"https://ind.nl/nl/asiel-en-nareis",asylumTransitionExpertReviewed:true},
+ representation:{requested:!!actionMap[procedure],signedSpecialMandate:true,procedureSpecificINDFormReviewed:true,serviceAgreementSigned:true,
+  requestedAction:actionMap[procedure]||"review_only",
+  mandateAuthorisedActions:actionMap[procedure]?[actionMap[procedure]]:[],
+  mandateExcludedActions:[],mandateScopeReviewed:true,
+  principalIdentityVerified:true,principalSignatureVerified:true,
+  mandateSignedOn:"2026-10-15",mandateValidUntil:"2099-12-31",
+  mandateDocumentSHA256:"a".repeat(64)},
  privacy:{legalBasisReviewed:true,secureDocumentChannelVerified:true,disclosureAndRetentionReviewed:true},
  specialist:{credentialVerified:true,specialistIdentity:"Independent qualified specialist"},
  humanApproval:{approved:true,reviewerId:"independent-reviewer"}
@@ -108,4 +118,48 @@ test("IND-T06/T07: admission check never grants delegated personal asylum filing
  assert.equal(result.filingNotAuthorisedByThisCheck,true);
  assert.equal(result.reviewOnly,true);
  // This is a domain flag only: no authenticated IND/advocaat portal E2E asserted.
+});
+
+test("IND-T02: file-copy mandate cannot authorise objection",()=>{
+ const x=valid("ind_objection");
+ x.representation.mandateAuthorisedActions=["request_file_copy"];
+ const y=evaluateINDAdmission(x);
+ assert.equal(y.canActivate,false);
+ assert.ok(y.issues.includes("MANDATE_SCOPE_MISMATCH"));
+});
+test("IND-T02: explicit mandate exclusion overrides otherwise matching scope",()=>{
+ const x=valid("ind_objection");
+ x.representation.mandateExcludedActions=["submit_objection"];
+ assert.ok(evaluateINDAdmission(x).issues.includes("MANDATE_SCOPE_MISMATCH"));
+});
+test("IND-T02: missing signed evidence hash fails closed",()=>{
+ const x=valid("ind_objection");
+ x.representation.mandateDocumentSHA256="";
+ assert.ok(evaluateINDAdmission(x).issues.includes("MANDATE_EVIDENCE_MISSING"));
+});
+test("IND-T04: 11 and 12 June 2026 require distinct asylum regimes",()=>{
+ const before=valid("asylum");
+ before.timing.asylumApplicationDate="2026-06-11";
+ before.timing.asylumTransitionRegime="before_2026_06_12";
+ const on=valid("asylum");
+ on.timing.asylumApplicationDate="2026-06-12";
+ on.timing.asylumTransitionRegime="from_2026_06_12";
+ assert.equal(evaluateINDAdmission(before).canActivate,true);
+ assert.equal(evaluateINDAdmission(on).canActivate,true);
+ const wrong=valid("asylum");
+ wrong.timing.asylumApplicationDate="2026-06-11";
+ assert.ok(evaluateINDAdmission(wrong).issues.includes("ASYLUM_REGIME_MISMATCH"));
+});
+test("IND-T04: regime without official source and independent expert stays on hold",()=>{
+ const x=valid("asylum");
+ x.timing.asylumTransitionSourceReference="";
+ x.timing.asylumTransitionExpertReviewed=false;
+ assert.equal(evaluateINDAdmission(x).canActivate,false);
+ assert.ok(evaluateINDAdmission(x).issues.includes("ASYLUM_SOURCE_REVIEW_MISSING"));
+});
+test("IND-T06: initial asylum registration must never be delegated",()=>{
+ const x=valid("asylum");
+ x.representation.requestedAction="initial_asylum_registration";
+ x.representation.requested=true;
+ assert.ok(evaluateINDAdmission(x).issues.includes("PERSONAL_ASYLUM_FILING_BLOCKED"));
 });
