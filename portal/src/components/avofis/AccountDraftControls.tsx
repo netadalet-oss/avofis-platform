@@ -5,6 +5,8 @@ import {supabase} from "@/lib/supabase";
 import type {PreparationDraft,DraftLocale} from "@/lib/document-preparation";
 type Item={id:string;case_id:string|null;service_slug:string;locale:string;revision:number;status:string;updated_at:string};
 type Matter={id:string;title:string};
+type Revision={revision:number;status:string;recorded_at:string;content:PreparationDraft};
+type ReviewNote={note:string;created_at:string};
 const labels:Record<DraftLocale,[string,string,string,string,string,string,string,string]>={
  tr:["Belgelerim ve taslaklarım","Taslağınız hesabınızda korunur. Dosyaya bağlayıp açıkça izin verirseniz yalnız yetkili ve atanmış personel inceleyebilir. Bu işlem resmî gönderim değildir.","Dosyaya bağla (isteğe bağlı)","Yalnız bana özel","Hesabıma kaydet","Taslaklarımı getir","Taslağı aç","İncelemeye devret"],
  nl:["Mijn documentconcepten","Concepten worden in uw account bewaard. Alleen na uw toestemming kan toegewezen bevoegd personeel ze beoordelen; dit is geen officiële indiening.","Koppel aan zaak (optioneel)","Privéconcept","Opslaan","Concepten ophalen","Openen","Ter beoordeling delen"],
@@ -28,6 +30,8 @@ export function AccountDraftControls({draft,onLoad}:{draft:PreparationDraft;onLo
  const [cases,setCases]=useState<Matter[]>([]);
  const [caseId,setCaseId]=useState("");
  const [items,setItems]=useState<Item[]>([]);
+ const [versions,setVersions]=useState<Revision[]>([]);
+ const [notes,setNotes]=useState<ReviewNote[]>([]);
  const [current,setCurrent]=useState<Item|null>(null);
  const [busy,setBusy]=useState(false);
  const [notice,setNotice]=useState("");
@@ -70,6 +74,8 @@ export function AccountDraftControls({draft,onLoad}:{draft:PreparationDraft;onLo
     status:result.draft.status,updated_at:result.draft.updated_at,
     case_id:current?.case_id??(caseId||null),service_slug:draft.service,locale:draft.locale};
    setCurrent(value);setNotice(review?"REVIEW_REQUESTED_LOCKED":"DRAFT_SAVED");
+   const detail=await api("GET",undefined,value.id);
+   setVersions(detail.versions||[]);setNotes(detail.notes||[]);
    const loaded=await api("GET");setItems(loaded.items||[]);
   }catch(e){setNotice(e instanceof Error&&e.message==="409"?"REVISION_CONFLICT":"STAGING_UNAVAILABLE");}
   finally{setBusy(false);}
@@ -80,6 +86,7 @@ export function AccountDraftControls({draft,onLoad}:{draft:PreparationDraft;onLo
    const loaded=await api("GET",undefined,id);
    onLoad(loaded.draft.content as PreparationDraft);
    setCurrent(loaded.draft as Item);
+   setVersions(loaded.versions||[]);setNotes(loaded.notes||[]);
    setCaseId(loaded.draft.case_id||"");
    if(loaded.draft.status==="review_requested")setNotice("REVIEW_REQUESTED_LOCKED");
   }catch{setNotice("STAGING_UNAVAILABLE");}finally{setBusy(false);}
@@ -93,7 +100,7 @@ export function AccountDraftControls({draft,onLoad}:{draft:PreparationDraft;onLo
       <option value="">{w[3]}</option>{cases.map(c=><option key={c.id} value={c.id}>{c.title}</option>)}
      </select></label>}
     <div className="flex flex-wrap gap-2">
-     {current&&<button type="button" className="avofis-btn avofis-outline" disabled={busy} onClick={()=>{setCurrent(null);setCaseId("");setNotice("");}}>{({tr:"Yeni taslak",nl:"Nieuw concept",de:"Neuer Entwurf",en:"New draft",ar:"مسودة جديدة",ru:"Новый черновик"})[draft.locale]}</button>}
+     {current&&<button type="button" className="avofis-btn avofis-outline" disabled={busy} onClick={()=>{setCurrent(null);setCaseId("");setNotice("");setVersions([]);setNotes([]);}}>{({tr:"Yeni taslak",nl:"Nieuw concept",de:"Neuer Entwurf",en:"New draft",ar:"مسودة جديدة",ru:"Новый черновик"})[draft.locale]}</button>}
      <button type="button" disabled={busy||current?.status==="review_requested"} className="avofis-btn avofis-outline disabled:opacity-50" onClick={()=>void save()}>{w[4]}</button>
      <button type="button" disabled={busy} className="avofis-btn avofis-outline" onClick={()=>void list()}>{w[5]}</button>
      {current?.case_id&&current.status==="draft"&&<button type="button" disabled={busy} className="avofis-btn avofis-outline" onClick={()=>void save(true)}>{w[7]}</button>}
@@ -101,6 +108,17 @@ export function AccountDraftControls({draft,onLoad}:{draft:PreparationDraft;onLo
     {items.length>0&&<ul className="space-y-2">{items.map(d=><li key={d.id} className="flex flex-wrap justify-between gap-3 rounded-lg bg-[#102142] p-3 text-sm">
      <span>{d.service_slug} · v{d.revision} · {d.status}</span><button type="button" className="underline" disabled={busy} onClick={()=>void open(d.id)}>{w[6]}</button>
     </li>)}</ul>}
+    {current&&<div className="mt-4 rounded-lg border border-[#dfbf59]/25 p-4">
+      <h3 className="text-sm font-semibold">{({tr:"Sürüm geçmişi ve inceleme notları",nl:"Versies en opmerkingen",de:"Versionen und Prüfnotizen",en:"Version history and reviewer notes",ar:"سجل النسخ وملاحظات المراجعة",ru:"История версий и замечания"})[draft.locale]}</h3>
+      <ol className="mt-3 space-y-1 text-xs">{versions.map(v=><li key={v.revision}>
+       <details><summary className="cursor-pointer">{({tr:"Sürüm",nl:"Versie",de:"Version",en:"Revision",ar:"نسخة",ru:"Версия"})[draft.locale]} {v.revision} · {v.status} · {new Date(v.recorded_at).toLocaleString()}</summary>
+        <pre className="mt-2 max-h-64 overflow-auto whitespace-pre-wrap break-words rounded bg-[#071738] p-3" dir="auto">{JSON.stringify(v.content,null,2)}</pre>
+       </details></li>)}</ol>
+      <ul className="mt-3 space-y-2">{notes.map((n,i)=><li key={i} className="rounded-lg bg-[#071738] p-3 text-xs">
+       <span className="text-[#c1cbdf]">{new Date(n.created_at).toLocaleString()}</span>
+       <p className="mt-2 whitespace-pre-wrap break-words">{n.note}</p>
+      </li>)}</ul>
+     </div>}
     {notice&&<p role="status" className="text-sm text-[#dfbf59]">{notice}</p>}
    </div>}
  </section>;
