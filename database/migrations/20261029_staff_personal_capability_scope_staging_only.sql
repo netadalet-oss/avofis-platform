@@ -77,6 +77,32 @@ create policy "staff capability finance select" on public.avofis_payments
  using(exists(select 1 from public.avofis_cases c
   where c.id=case_id and (c.client_user_id=(select auth.uid()) or
   (public.avofis_staff_scope_access(c.id) and public.avofis_has_staff_capability('billing')))));
+-- No assigned employee may read confidential private file objects without
+-- a specific 'documents' grant. Other Storage buckets remain outside this
+-- AVOfis product migration. Client owner read still follows its own case.
+drop policy if exists "avofis private document capability" on storage.objects;
+create policy "avofis private document capability" on storage.objects
+ as restrictive for select to authenticated
+ using(bucket_id <> 'avofis-private' or exists(
+  select 1 from public.avofis_cases c
+  where c.id=(storage.foldername(name))[1]::uuid
+    and (c.client_user_id=(select auth.uid()) or
+     (public.avofis_staff_scope_access(c.id) and public.avofis_has_staff_capability('documents')))
+ ));
+
+drop policy if exists "staff capability document requests select" on public.avofis_document_requests;
+create policy "staff capability document requests select" on public.avofis_document_requests
+ as restrictive for select to authenticated
+ using(exists(select 1 from public.avofis_cases c where c.id=case_id and
+  (c.client_user_id=(select auth.uid()) or
+   (public.avofis_staff_scope_access(c.id) and public.avofis_has_staff_capability('documents')))));
+drop policy if exists "staff capability deliverables select" on public.avofis_deliverables;
+create policy "staff capability deliverables select" on public.avofis_deliverables
+ as restrictive for select to authenticated
+ using(exists(select 1 from public.avofis_cases c where c.id=case_id and
+  (c.client_user_id=(select auth.uid()) or
+   (public.avofis_staff_scope_access(c.id) and public.avofis_has_staff_capability('documents')))));
+
 -- RESTRICTIVE SELECT policies do not block SECURITY DEFINER source roles and
 -- cannot replace least-privilege policies for all related case-bearing tables.
 -- New tables must have their own independent RLS policy and E2E review.
