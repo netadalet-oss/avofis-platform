@@ -140,5 +140,7 @@ jobs:
         run: npm run build
       - name: IND admission gate unit checks (no client data)
         run: node --experimental-strip-types --test scripts/ind-clearance.test.mjs
+      - name: Release authorisation cannot be bypassed by env flags
+        run: node --experimental-strip-types --test scripts/release-authorization.test.mjs
       - name: HTTP route and disabled-endpoint smoke tests
         run: npm run smoke
