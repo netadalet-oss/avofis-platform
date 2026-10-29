@@ -100,7 +100,7 @@ update public.avofis_case_clearances
  where case_id='11111111-1111-4111-8111-111111111111';
 
 -- Self-approval must fail even for a complete draft.
-do $
+do $$
 begin
  begin
   update public.avofis_case_clearances set human_approved=true
@@ -109,13 +109,13 @@ begin
  exception when others then
   if sqlerrm not like 'Independent second admin approval%' then raise; end if;
  end;
-end $;
+end $$;
 
 -- A different verified admin must approve the previously saved evidence.
 reset role;
 select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
 set role authenticated;
-do $
+do $$
 begin
  begin
   update public.avofis_case_clearances
@@ -125,7 +125,7 @@ begin
  exception when others then
   if sqlerrm not like 'Approval cannot change saved review evidence%' then raise; end if;
  end;
-end $;
+end $$;
 update public.avofis_case_clearances set human_approved=true
  where case_id='11111111-1111-4111-8111-111111111111';
 update public.avofis_cases set status='open'
@@ -169,7 +169,7 @@ insert into public.avofis_case_clearances(
 reset role;
 select set_config('request.jwt.claim.sub','aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa',false);
 set role authenticated;
-do $
+do $$
 begin
  begin
   update public.avofis_case_clearances set human_approved=true
@@ -178,7 +178,7 @@ begin
  exception when others then
   if sqlerrm not like 'IND file request requires separate form%' then raise; end if;
  end;
-end $;
+end $$;
 
 -- Operator cannot see internal approvals, even though authenticated has table grants.
 reset role;
