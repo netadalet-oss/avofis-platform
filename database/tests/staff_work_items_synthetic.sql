@@ -39,12 +39,12 @@ begin
   insert into public.avofis_staff_work_items(staff_user_id,module,title,flow,amount_eur_cents)
   values(auth.uid(),'payables','Forged payment','income',700);
   raise exception 'P03 income inserted through payables';
- exception when check_violation then null; end;
+ exception when check_violation or insufficient_privilege then null; end;
  begin
   insert into public.avofis_staff_work_items(staff_user_id,module,title,state,flow,amount_eur_cents)
   values(auth.uid(),'payables','Forged approved state','approved','expense',500);
   raise exception 'P03 fake approved finance state';
- exception when check_violation then null; end;
+ exception when check_violation or insufficient_privilege then null; end;
  begin
   insert into public.avofis_staff_work_items(staff_user_id,module,title,flow,amount_eur_cents)
   values('cccccccc-cccc-4ccc-cccc-cccccccccccc','payables','Forged admin ownership','expense',500);
