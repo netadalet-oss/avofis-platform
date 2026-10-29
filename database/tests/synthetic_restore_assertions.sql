@@ -39,7 +39,8 @@ begin
  end if;
 end $$;
 reset role;
--- An independent admin issues the minimum three synthetic role grants.
+-- An independent admin with the *synthetic* AAL2 JWT issues only needed grants.
+select set_config('request.jwt.claims','{"aal":"aal2"}',false);
 select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
 set role authenticated;
 insert into public.avofis_staff_capability_grants(staff_user_id,capability,granted_by)
@@ -59,6 +60,8 @@ begin
  end if;
 end $$;
 reset role;
+-- The customer remains AAL1 and still owns both accepted synthetic PDFs.
+select set_config('request.jwt.claims','{"aal":"aal1"}',false);
 select set_config('request.jwt.claim.sub','aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa',false);
 set role authenticated;
 do $$
@@ -70,4 +73,4 @@ begin
  end if;
 end $$;
 reset role;
-\echo 'PASS: synthetic pg_dump/pg_restore preserved data, RLS, triggers and default-deny staff grant/regrant isolation'
+\echo 'PASS: synthetic pg_dump/pg_restore preserved data, RLS, triggers and AAL2-only staff grant/regrant, AAL1 customer isolation'
