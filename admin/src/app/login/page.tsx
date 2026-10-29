@@ -20,6 +20,8 @@ export default function StaffLogin(){
     setError("Bu hesap için etkin personel yetkisi bulunmuyor.");
     return;
    }
+   const {data:aal,error:aalError}=await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+   if(aalError||aal?.currentLevel!=="aal2"){router.replace("/mfa");return;}
    router.replace("/dashboard");
   }catch{setError("Giriş şu anda tamamlanamadı. Lütfen daha sonra yeniden deneyiniz.");}
   finally{setLoading(false);}
