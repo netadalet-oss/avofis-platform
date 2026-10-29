@@ -69,12 +69,21 @@ export default function StaffDashboard(){
    try{
     const {data:{user}}=await supabase.auth.getUser();
     if(!user){router.replace("/login");return;}
-    if(mounted)await fetchWorkspace(null);
+    if(mounted){
+     const initial=new URLSearchParams(window.location.search).get("section");
+     const valid=initial&&[
+      "inbox","triage","matters","calendar","documents","pleadings",
+      "research","judicial","ind","messages","billing","payables",
+      "reporting","audit","people","settings"
+     ].includes(initial)?initial as StaffCapability:null;
+     await fetchWorkspace(valid);
+     if(valid)setSection(valid);
+    }
    }catch(e){if(mounted)setStatus(e instanceof Error?e.message:"Bağlantı hatası.");}
    finally{if(mounted)setLoading(false);}
   })();
   const {data:{subscription}}=supabase.auth.onAuthStateChange((event)=>{
-   if(event==="SIGNED_OUT"||event==="USER_DELETED"){setAuthorized(false);router.replace("/login");}
+   if(event==="SIGNED_OUT"){setAuthorized(false);router.replace("/login");}
   });
   return ()=>{mounted=false;subscription.unsubscribe();};
  },[router,fetchWorkspace]);
