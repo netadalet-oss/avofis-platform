@@ -26,6 +26,8 @@ export function PublicNav({lang}: {lang: Language}) {
     {title:lang==="tr"?"Güvenli triyaj":lang==="nl"?"Veilige oriëntatie":"Safe triage",href:"/triyaj"},
     {title:t.process,href:"/nasil-calisir"},
     {title:t.info,href:"/bilgi"},
+    {title:"ECLI",href:"/ictihat"},
+    {title:"Rechtspraak",href:"/yargi-baglantilari"},
     {title:"6 dil / 6 talen",href:"/diller"},
     {title:t.contact,href:"/iletisim"},
     {title:t.login,href:"/auth/login"}
