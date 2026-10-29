@@ -5,6 +5,7 @@ import {useRouter} from "next/navigation";
 import {supabase} from "@/lib/supabase";
 import type {StaffCapability,WorkspaceSection} from "@/lib/workspace-model";
 import type {Workstream} from "@/lib/legal-workflows";
+import {StaffReviewQueue} from "@/components/staff-review-queue";
 
 type StaffItem=Record<string,unknown>;
 type WorkspaceResponse={
@@ -138,6 +139,24 @@ export default function StaffDashboard(){
    setDraftFeedback("İç çalışma taslağı güvenli kayıt alanına eklendi; resmî işlem başlatılmadı.");
    await loadDrafts(section);
   }catch{setDraftFeedback("Taslak kaydı şu anda kullanılamıyor.");}
+  finally{setSavingDraft(false);}
+ }
+ async function requestReview(item:StaffItem){
+  if(!section||savingDraft||item.state!=="draft")return;
+  setSavingDraft(true);setDraftFeedback("");
+  try{
+   const {data:{session}}=await supabase.auth.getSession();
+   if(!session?.access_token){router.replace("/login");return;}
+   const res=await fetch("/api/workspace/drafts",{method:"PATCH",
+    headers:{"Content-Type":"application/json",Authorization:"Bearer "+session.access_token},
+    body:JSON.stringify({module:section,id:item.id,state:"review_requested"})});
+   const body=await res.json() as {error?:string};
+   if(!res.ok){setDraftFeedback(res.status===503?
+    "Staging ortamında iç inceleme talebi henüz etkinleştirilmedi.":
+    "İnceleme talebi kabul edilmedi. Yetki veya taslak durumu doğrulanamadı.");return;}
+   setDraftFeedback("Taslak iç incelemeye yönlendirildi. Resmî işlem gerçekleştirilmedi.");
+   await loadDrafts(section);
+  }catch{setDraftFeedback("İnceleme talebi şu anda kaydedilemedi.");}
   finally{setSavingDraft(false);}
  }
  async function signOut(){
@@ -314,10 +333,14 @@ export default function StaffDashboard(){
           <h3 className="text-[12px] font-semibold">{fmt(item.title)}</h3>
           <p className="mt-1 line-clamp-3 whitespace-pre-wrap text-[12px] leading-6 text-[#62748B]">{fmt(item.summary)}</p>
           <p className="mt-1 text-[11px] text-[#8190A3]">{fmt(item.state)} · {readableDate(item.created_at)}</p>
+          {item.state==="draft"&&<button type="button" disabled={savingDraft}
+           onClick={()=>void requestReview(item)}
+           className="mt-2 rounded-md border border-[#D5E0EA] px-3 py-1.5 text-[11px] font-semibold text-[#234F75] disabled:opacity-50">İç inceleme iste</button>}
           {(section==="billing"||section==="payables")&&<p className="mt-1 text-[12px] font-semibold">{money(item.amount_eur_cents)} · Yalnız taslak</p>}
          </article>)}</div>}
        </section>
       </div>}
+      {role==="admin"&&section&&<StaffReviewQueue module={section}/>}
       <footer className="mt-12 border-t border-[#E1E8F0] pt-5 text-[11px] leading-6 text-[#718298]">
        AVOfis · Personel çalışma alanı · Kurumsal ve mevzuata uygun işlem süreçleri
        <p>Bu ekran yalnız yetkili personel içindir. Gerçek resmî işlemlerde dosya kapsamı, insan onayı ve dış sistem makbuzu ayrıca doğrulanır.</p>
