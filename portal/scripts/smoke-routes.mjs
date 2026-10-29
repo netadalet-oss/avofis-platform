@@ -44,6 +44,10 @@ try{
  assert.ok([301,302,303,307,308].includes(forum.status),"Old forum must redirect");
  await check("/api/intake",503,"POST");
  await check("/api/payments/checkout",503,"POST");
+ const draftGet=await check("/api/document-drafts",503);
+ assert.match(draftGet.headers.get("cache-control")||"",/no-store/);
+ await check("/api/document-drafts",503,"POST");
+ await check("/api/document-drafts",503,"PATCH");
  const six=await check("/diller",200);
  const sixHtml=await six.text();
  for(const locale of ["?lang=tr","?lang=nl","?lang=de","?lang=en","?lang=ar","?lang=ru"]){
