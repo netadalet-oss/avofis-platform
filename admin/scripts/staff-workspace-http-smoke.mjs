@@ -6,7 +6,7 @@
  */
 import assert from "node:assert/strict";
 import {spawn} from "node:child_process";
-const port=32319,base="http://127.0.0.1:"+port;
+const port=3001,base="http://127.0.0.1:"+port;
 const routes=[
  {method:"GET",path:"/api/workspace"},
  {method:"GET",path:"/api/workspace?section=people"},
@@ -20,7 +20,7 @@ const routes=[
  {method:"DELETE",path:"/api/workspace/grants",body:{staff_user_id:"11111111-1111-4111-8111-111111111111",capability:"billing"}},
  {method:"POST",path:"/api/workspace/reviews",body:{work_item_id:"11111111-1111-4111-8111-111111111111",decision:"reviewed_internal"}}
 ];
-const child=spawn(process.execPath,["node_modules/next/dist/bin/next","start","-p",String(port)],{
+const child=spawn("npm",["run","start"],{
  cwd:process.cwd(),env:{...process.env,AVOFIS_STAFF_WORKSPACE_STAGING_ENABLED:"false",
  AVOFIS_STAFF_GRANTS_ENABLED:"false",AVOFIS_STAFF_INTERNAL_REVIEW_ENABLED:"false",
  AVOFIS_STAFF_WORK_ITEM_WRITES_ENABLED:"false"},stdio:["ignore","pipe","pipe"]});
