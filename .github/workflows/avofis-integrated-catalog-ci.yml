@@ -126,6 +126,7 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f database/tests/client_case_workflow_synthetic.sql
           psql -v ON_ERROR_STOP=1 -f database/tests/staff_personal_capability_scope_synthetic.sql
           psql -v ON_ERROR_STOP=1 -f database/tests/staff_work_items_synthetic.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/staff_review_audit_synthetic.sql
       - name: Dump, corrupt disposable source, restore into a new disposable DB, and re-test RLS
         env:
           PGPASSWORD: synthetic-tenant-test
