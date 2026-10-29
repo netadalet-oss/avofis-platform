@@ -128,8 +128,8 @@ export function evaluateINDAdmission(r:INDAdmissionReview):{
   if(!r.representation.mandateScopeReviewed ||
      !r.representation.principalIdentityVerified ||
      !r.representation.principalSignatureVerified ||
-     !/^\\d{4}-\\d{2}-\\d{2}$/.test(signed) ||
-     !/^\\d{4}-\\d{2}-\\d{2}$/.test(until) ||
+     !/^\d{4}-\d{2}-\d{2}$/.test(signed) ||
+     !/^\d{4}-\d{2}-\d{2}$/.test(until) ||
      signed>today || until<today || until<signed ||
      !/^[a-fA-F0-9]{64}$/.test(r.representation.mandateDocumentSHA256)){
    issues.push("MANDATE_EVIDENCE_MISSING");
@@ -141,7 +141,7 @@ export function evaluateINDAdmission(r:INDAdmissionReview):{
   if(requested!=="review_only" || r.representation.requested){
    issues.push("PERSONAL_ASYLUM_FILING_BLOCKED");
   }
-  if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(date) ||
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(date) ||
      !r.timing.asylumPrePost12June2026Reviewed ||
      !r.timing.asylumTransitionExpertReviewed ||
      r.timing.asylumTransitionSourceReference.trim().length<12){
