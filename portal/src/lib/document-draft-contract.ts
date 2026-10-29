@@ -1,6 +1,6 @@
 import {validatePreparation,type PreparationDraft} from "./document-preparation.ts";
 export type CreateDraft={draft:PreparationDraft;case_id:string|null};
-export type PatchDraft={id:string;revision:number;draft:PreparationDraft;status:"draft"|"review_requested";consent_to_staff:boolean};
+export type PatchDraft={id:string;revision:number;draft:PreparationDraft;status:"draft"|"review_requested"|"withdrawn";consent_to_staff:boolean};
 const object=(v:unknown):v is Record<string,unknown>=>v!==null&&typeof v==="object"&&!Array.isArray(v);
 const keys=(v:Record<string,unknown>,k:string[])=>Object.keys(v).length===k.length&&Object.keys(v).every(x=>k.includes(x));
 export const isUUID=(v:unknown):v is string=>typeof v==="string"&&/^[a-f0-9]{8}-[a-f0-9]{4}-[1-8][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i.test(v);
@@ -13,8 +13,8 @@ export function parsePatchDraft(v:unknown):PatchDraft|null{
  if(!object(v)||!keys(v,["id","revision","draft","status","consent_to_staff"]))return null;
  const draft=validatePreparation(v.draft);
  if(!draft||!isUUID(v.id)||!Number.isSafeInteger(v.revision)||Number(v.revision)<1||Number(v.revision)>1000000||
-  !["draft","review_requested"].includes(String(v.status))||typeof v.consent_to_staff!=="boolean"||
-  (v.status==="review_requested"&&!v.consent_to_staff))return null;
+  !["draft","review_requested","withdrawn"].includes(String(v.status))||typeof v.consent_to_staff!=="boolean"||
+  (v.status==="review_requested"&&!v.consent_to_staff)||(v.status==="withdrawn"&&v.consent_to_staff))return null;
  return {id:v.id,revision:v.revision as number,draft,status:v.status as PatchDraft["status"],consent_to_staff:v.consent_to_staff};
 }
 /** Enable real account storage only in its explicitly matched deployment/project.
