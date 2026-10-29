@@ -104,3 +104,23 @@ AVOfis – ontwikkelproject (afzender en rechtsvorm nog niet gevalideerd)
 - `database/tests/judicial_metadata_synthetic.sql`: disposable PostgreSQL17, admin C/A/B iki dosya, A/B satır izolasyonu, müşteri olay üretiminin reddi, `submitted` sahte kayıt reddi, iltica türü reddi, insan inceleme gerekçesi olmadan kesin deadline işaretleme reddi. İşlem sonunda `ROLLBACK`; **canlı veri yazımı yok**.
 - `portal/src/lib/court-case-tracker.ts` ve `/ornek-yargi-dosyasi`: sentetik vaka/olay görünümü; gerçek makbuz olmasa bile kullanıcı simulasyonunun "gönderildi" durumuna dönmemesi test ediliyor.
 - Gerçek Supabase staging Auth/JWT/Storage, RLS tenant/role, gerçek belgeler ve imzalı iki kişi onayı **halen zorunlu**. Buradaki migration **canlıya uygulanmadı**.
+
+## 8. J05/J06 — atomik global limit, resmî Atom XML ve çalıştırma sınırı (29.10.2026)
+
+**Kaynak/sözleşme:** [Rechtspraak Open Data](https://www.rechtspraak.nl/uitspraken/open-data) API çağrılarını **en çok 10/s** ile sınırlar. Sayfadaki [resmî v1.15 teknik PDF](https://www.rechtspraak.nl/SiteCollectionDocuments/Technische-documentatie-Open-Data-van-de-Rechtspraak.pdf) §§4.3 ve 5.1, `zoeken` için **iki `date` parametresi = kapsayıcı tarih aralığı**, `return=DOC`, `max` ve Atom `entry/id` yapısını doğrular. Bunlar resmî 2019 sürümü şartlarıdır; sağlayıcının güncel API değişim takibi gerekir.
+
+**Kod:**
+- `portal/src/lib/rechtspraak-shared-rate-limit.ts`: Redis `TIME` kullanan atomik `EVAL`, `ZREMRANGEBYSCORE` + `ZCARD` + `ZADD` ile **her kayan 1000 ms pencerede en fazla 8** resmî kaynak isteği; kapasite sınırının altında güvenlik payı bırakır. Aynı URL/token/Redis namespace **tüm Vercel dağıtımlarınca ortak** kullanılmalıdır; yerel tarayıcı/sunucu sayacı yeterli değildir.
+- Bu Redis anahtarı ECLI, IP, ad, belge veya kullanıcı verisi almaz; sadece sabit `avofis:rechtspraak:upstream:global:v1` ve otomatik sıra numarası. Standart Redis erişim anahtarı yalnız sunucu gizli ortam değişkenindedir. Sunucu HTTPS `*.upstash.io` adresi dışında Redis hedefi kabul etmez.
+- `portal/src/app/api/rechtspraak/route.ts`: mevcut 5 dk instance cache + local 2s ikincil sınır ve kaynak `fetch` öncesinde paylaşımlı rezervasyon; eksik Redis, HTTP hata, yanlış JSON veya kapasite aşımıyla **fail-closed**; yinelenen arama parametreleri reddedilir.
+- **ÇOK ÖNEMLİ:** `LIVE_PUBLIC_API_ENABLED=false` ve varsayılan ENV kapalı. Bu teknik test kamu aramasını etkinleştirmez. Üretim Redis provision edilmedi; gerçek Upstash REST E2E, Redis sağlayıcı DPA/GDPR ve token rotation yetkilendirmesi yapılmadı.
+
+**İşletim ve kabul kontrolü:** Sağlayıcının güvenli tek bölgeli Redis erişimi / sunucuların ortak namespace'i / servis kesintisinde 503 / Redis token ve bağlantı başına beklenmeyen maliyet/limit / gerçek Vercel çok-instance/çok-region stres testi / kaynak değişikliği ve indeks silinme yönetimi / erişim loglarında kişisel veri sızıntısı gözlemi ve GDPR incelemesi **BEKLİYOR**. Redis testinin başarıyla çalışması tek başına insan/yayın GO kararı değildir.
+
+**Kanıt:** [Actions #40932745725](https://github.com/netadalet-oss/avofis-platform/actions/runs/40932745725) **5/5 SUCCESS**.
+- Disposable Redis 7: ilk 8 istek ALLOW, 9. istek DENY; 32 paralel istemcide **8 ALLOW, 24 DENY**; 1100 ms sonra pencere yeniden izin verdi (`portal/scripts/rechtspraak-redis-atomic-ci.mjs`).
+- Sunucu REST istemcisi sentetik HTTP birim testleri: geçersiz HTTPS/host, credential eksikliği, kullanıcı verisi taşımayan EVAL gövdesi, Redis 0/1 JSON, 500, bozuk JSON, timeout ve immutable namespace (`portal/scripts/rechtspraak-shared-rate-limit.test.mjs`).
+- Resmî Rechtspraak XML: `content?id=ECLI:NL:HR:2026:1684&return=META` metaverisi **PASS**, 1.2 s arayla `zoeken?date=2026-10-16&date=2026-10-16&return=DOC&max=20&sort=DESC` isteği **PASS, 20 gerçek Atom entry** (`portal/scripts/rechtspraak-live-xml-probe.mjs`). Bu **resmî açık veri erişim kanıtıdır**, gerçek müşterinin dosyasına veya resmî yargı portalına erişim değildir.
+- Portal CI: 18 IND + 12 triyaj + 4 release + 12 judicial + 4 Redis REST = **50/50 Node test**. B01/B02 eski PostgreSQL sentetik sertleştirme ve gerçek bağlı Supabase'deki RLS açığı hâlâ birbirinden ayrılır.
+
+**İki kilometre taşı sonrası inceleme:** `/ictihat` mevcut kapalı API durumunu açıkça gösterir. Çevrimdışı etkileşimli HTML inceleme dosyası sadece üç resmi ECLI bağlantısını *tarayıcı içinde yerel olarak filtreler*, hiçbir ağ isteği yapmaz; dolayısıyla canlı veri entegrasyonu veya tam arşiv araması gibi gösterilemez.
