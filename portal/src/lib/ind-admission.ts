@@ -20,7 +20,8 @@ export type ClearanceIssue =
  | "IND_PROCEDURE_UNKNOWN" | "PERSON_UNVERIFIED" | "DEADLINE_UNREVIEWED"
  | "ASYLUM_REGIME_UNREVIEWED" | "MANDATE_MISSING" | "IND_FORM_UNREVIEWED"
  | "AGREEMENT_MISSING" | "PRIVACY_UNVERIFIED" | "SPECIALIST_REQUIRED"
- | "HUMAN_APPROVAL_MISSING";
+ | "HUMAN_APPROVAL_MISSING" | "MANDATE_SCOPE_MISMATCH" | "MANDATE_EVIDENCE_MISSING"
+ | "ASYLUM_REGIME_MISMATCH" | "ASYLUM_SOURCE_REVIEW_MISSING" | "PERSONAL_ASYLUM_FILING_BLOCKED";
 
 export type INDAdmissionReview = {
  procedure: string;
@@ -36,12 +37,25 @@ export type INDAdmissionReview = {
   deadlineBasis: string;
   stayConsequencesReviewed: boolean;
   asylumPrePost12June2026Reviewed: boolean;
+  asylumApplicationDate: string;
+  asylumTransitionRegime: string;
+  asylumTransitionSourceReference: string;
+  asylumTransitionExpertReviewed: boolean;
  };
  representation: {
   requested: boolean;
   signedSpecialMandate: boolean;
   procedureSpecificINDFormReviewed: boolean;
   serviceAgreementSigned: boolean;
+  requestedAction: string;
+  mandateAuthorisedActions: string[];
+  mandateExcludedActions: string[];
+  mandateScopeReviewed: boolean;
+  principalIdentityVerified: boolean;
+  principalSignatureVerified: boolean;
+  mandateSignedOn: string;
+  mandateValidUntil: string;
+  mandateDocumentSHA256: string;
  };
  privacy: {
   legalBasisReviewed: boolean;
@@ -88,6 +102,55 @@ export function evaluateINDAdmission(r:INDAdmissionReview):{
     !r.representation.procedureSpecificINDFormReviewed){
   issues.push("IND_FORM_UNREVIEWED");
  }
+
+ // These labels limit *internal* admissibility; there is no IND API submission
+ // capability. Official action and advice still require case-specific human review.
+ const requested=r.representation.requestedAction;
+ const expected:{[key:string]:string}={
+   ind_objection:"submit_objection",ind_file_request:"request_file_copy",
+   court_appeal:"court_appeal",higher_appeal:"higher_appeal"
+ };
+ if(requested==="initial_asylum_registration"){
+  issues.push("PERSONAL_ASYLUM_FILING_BLOCKED");
+ }else if(requested!=="review_only" && (expected[r.procedure]!==requested ||
+           !r.representation.requested)){
+  issues.push("MANDATE_SCOPE_MISMATCH");
+ }
+ if(r.representation.requested){
+  const signed=r.representation.mandateSignedOn;
+  const until=r.representation.mandateValidUntil;
+  const today=new Date().toISOString().slice(0,10);
+  if(requested==="review_only" ||
+     !r.representation.mandateAuthorisedActions.includes(requested) ||
+     r.representation.mandateExcludedActions.includes(requested)){
+   issues.push("MANDATE_SCOPE_MISMATCH");
+  }
+  if(!r.representation.mandateScopeReviewed ||
+     !r.representation.principalIdentityVerified ||
+     !r.representation.principalSignatureVerified ||
+     !/^\\d{4}-\\d{2}-\\d{2}$/.test(signed) ||
+     !/^\\d{4}-\\d{2}-\\d{2}$/.test(until) ||
+     signed>today || until<today || until<signed ||
+     !/^[a-fA-F0-9]{64}$/.test(r.representation.mandateDocumentSHA256)){
+   issues.push("MANDATE_EVIDENCE_MISSING");
+  }
+ }
+ if(r.procedure==="asylum"){
+  const date=r.timing.asylumApplicationDate;
+  const expectedRegime=date<"2026-06-12"?"before_2026_06_12":"from_2026_06_12";
+  if(requested!=="review_only" || r.representation.requested){
+   issues.push("PERSONAL_ASYLUM_FILING_BLOCKED");
+  }
+  if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(date) ||
+     !r.timing.asylumPrePost12June2026Reviewed ||
+     !r.timing.asylumTransitionExpertReviewed ||
+     r.timing.asylumTransitionSourceReference.trim().length<12){
+   issues.push("ASYLUM_SOURCE_REVIEW_MISSING");
+  }
+  if(r.timing.asylumTransitionRegime!==expectedRegime){
+   issues.push("ASYLUM_REGIME_MISMATCH");
+  }
+ }
  if(!r.representation.serviceAgreementSigned)issues.push("AGREEMENT_MISSING");
  if(!r.privacy.legalBasisReviewed || !r.privacy.secureDocumentChannelVerified ||
     !r.privacy.disclosureAndRetentionReviewed)issues.push("PRIVACY_UNVERIFIED");
@@ -104,7 +167,7 @@ export function evaluateINDAdmission(r:INDAdmissionReview):{
  return {
   canActivate:issues.length===0,
   issues,
-  reviewOnly:highRisk,
+  reviewOnly:highRisk || requested==="review_only",
   // No general private mandate enables filing an initial asylum application
   // on behalf of the applicant or accessing reserved advocate portals.
   filingNotAuthorisedByThisCheck:true,
