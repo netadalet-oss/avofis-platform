@@ -9,6 +9,35 @@ on:
 permissions:
   contents: read
 jobs:
+  ind-db-guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: test-only-password
+          POSTGRES_DB: avofis_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d avofis_ci"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate SQL guard against disposable Postgres 17
+        env:
+          PGPASSWORD: test-only-password
+          PGHOST: 127.0.0.1
+          PGPORT: "5432"
+          PGUSER: postgres
+          PGDATABASE: avofis_ci
+        run: |
+          if ! command -v psql >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq postgresql-client
+          fi
+          psql -v ON_ERROR_STOP=1 -f database/tests/ind_case_clearance.sql
   portal-validation:
     runs-on: ubuntu-latest
     timeout-minutes: 20
