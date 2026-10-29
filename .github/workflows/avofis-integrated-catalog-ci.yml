@@ -172,5 +172,9 @@ jobs:
         run: node --experimental-strip-types --test scripts/release-authorization.test.mjs
       - name: Dutch judicial Open Data and no-official-filing security regression
         run: node --experimental-strip-types --test scripts/judicial-integration.test.mjs
+      - name: Non-gating one-call Rechtspraak public XML authenticity probe
+        continue-on-error: true
+        timeout-minutes: 1
+        run: node --experimental-strip-types scripts/rechtspraak-live-xml-probe.mjs
       - name: HTTP route and disabled-endpoint smoke tests
         run: npm run smoke
