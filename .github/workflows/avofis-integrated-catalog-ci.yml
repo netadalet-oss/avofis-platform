@@ -188,6 +188,8 @@ jobs:
         run: npm run typecheck
       - name: Build private staff app with all live actions locked
         run: npm run build
+      - name: P08 HTTP smoke confirms every protected admin API fails closed without staging
+        run: node scripts/staff-workspace-http-smoke.mjs
   portal-validation:
     runs-on: ubuntu-latest
     timeout-minutes: 20
