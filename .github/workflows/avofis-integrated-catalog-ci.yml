@@ -1,0 +1,99 @@
+name: AVOfis integrated catalogue validation
+on:
+  push:
+    branches:
+      - feature/avofis-integrated-catalog-20261029
+  pull_request:
+    branches:
+      - feature/avofis-customer-portal-restructure-20261027
+permissions:
+  contents: read
+jobs:
+  ind-db-guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: test-only-password
+          POSTGRES_DB: avofis_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d avofis_ci"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate SQL guard against disposable Postgres 17
+        env:
+          PGPASSWORD: test-only-password
+          PGHOST: 127.0.0.1
+          PGPORT: "5432"
+          PGUSER: postgres
+          PGDATABASE: avofis_ci
+        run: |
+          if ! command -v psql >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq postgresql-client
+          fi
+          psql -v ON_ERROR_STOP=1 -f database/tests/ind_case_clearance.sql
+  legacy-rls-hardening:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: synthetic-test-password
+          POSTGRES_DB: avofis_legacy_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d avofis_legacy_ci"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assert legacy RLS migration with synthetic A/B/admin principals
+        env:
+          PGPASSWORD: synthetic-test-password
+          PGHOST: 127.0.0.1
+          PGPORT: "5432"
+          PGUSER: postgres
+          PGDATABASE: avofis_legacy_ci
+        run: |
+          if ! command -v psql >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq postgresql-client
+          fi
+          psql -v ON_ERROR_STOP=1 -f database/tests/legacy_rls_hardening.sql
+  portal-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: portal
+    env:
+      AVOFIS_LEGAL_READY: "false"
+      AVOFIS_INTAKE_ENABLED: "false"
+      AVOFIS_PAYMENT_ENABLED: "false"
+      NEXT_TELEMETRY_DISABLED: "1"
+      NEXT_PUBLIC_SUPABASE_URL: "https://example.supabase.co"
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: "ci-only-invalid-public-key"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: npm install --no-package-lock --no-audit --no-fund
+      - name: Type-check
+        run: npm run lint
+      - name: Build with unsafe features disabled
+        run: npm run build
+      - name: IND admission gate unit checks (no client data)
+        run: node --experimental-strip-types --test scripts/ind-clearance.test.mjs
+      - name: HTTP route and disabled-endpoint smoke tests
+        run: npm run smoke
