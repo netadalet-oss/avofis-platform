@@ -11,6 +11,38 @@
 -- Existing data are preserved. No privileged functions or SECURITY DEFINER.
 begin;
 
+-- Fail closed if a policy was added since the observed audit. PostgreSQL
+-- PERMISSIVE policies combine by OR: preserving an unreviewed one would
+-- silently defeat an otherwise correct RLS hardening migration.
+do $
+declare unexpected_policies text;
+begin
+ select string_agg(p.tablename||'.'||p.policyname,', ' order by p.tablename,p.policyname)
+ into unexpected_policies
+ from pg_policies p
+ where p.schemaname='public' and p.tablename in
+   ('offices','office_members','topics','posts','jobs','applications','media_assets')
+ and not (
+   (p.tablename='office_members' and p.policyname='legacy member reads own membership')
+   or (p.tablename='applications' and p.policyname='legacy applicant reads own application')
+ );
+ if unexpected_policies is not null then
+    raise exception 'B01/B02 unexpected legacy policies; manual review required: %',unexpected_policies;
+ end if;
+ if not exists(select 1 from information_schema.columns
+   where table_schema='public' and table_name='office_members' and column_name='user_id')
+ or not exists(select 1 from information_schema.columns
+   where table_schema='public' and table_name='applications' and column_name='user_id') then
+   raise exception 'B01/B02 source schema drift: user_id column missing';
+ end if;
+ if not exists(select 1 from pg_policies
+    where schemaname='public' and tablename='pages' and policyname='Only admins can read pages')
+ or not exists(select 1 from pg_policies
+    where schemaname='public' and tablename='site_settings' and policyname='Only admins can read settings') then
+   raise exception 'B02 source schema drift: reviewed restrictive admin policies missing';
+ end if;
+end $;
+
 alter table public.offices enable row level security;
 alter table public.office_members enable row level security;
 alter table public.topics enable row level security;
