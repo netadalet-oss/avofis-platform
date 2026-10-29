@@ -71,11 +71,11 @@ values('dddddddd-dddd-4ddd-8ddd-dddddddddddd','documents',auth.uid());
 reset role;
 select set_config('request.jwt.claim.sub','dddddddd-dddd-4ddd-8ddd-dddddddddddd',false);
 set role authenticated;
-do $
+do $proof$
 begin
  if (select count(*) from storage.objects where bucket_id='avofis-private')<>2
  then raise exception 'P01 explicit document grant did not restore A-only object access'; end if;
-end $;
+end $proof$;
 reset role;
 
 
