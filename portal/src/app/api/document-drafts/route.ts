@@ -3,7 +3,7 @@ import {NextRequest,NextResponse} from "next/server";
 import {documentDraftStageEnabled,isUUID,parseCreateDraft,parsePatchDraft} from "@/lib/document-draft-contract";
 export const runtime="nodejs";export const dynamic="force-dynamic";
 const safeHeaders={"Cache-Control":"private, no-store, max-age=0","Vary":"Authorization","X-Content-Type-Options":"nosniff"};
-const deny=(status:number,error:string)=>NextResponse.json({error},{status,headers:safeHeaders});
+const deny=(status:number|undefined,error:string)=>NextResponse.json({error},{status:status??503,headers:safeHeaders});
 const MAX_BYTES=27000;
 async function verified(req:NextRequest){
  if(!documentDraftStageEnabled(process.env))return {error:"STAGING_ONLY",status:503} as const;
