@@ -127,6 +127,7 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f database/tests/staff_personal_capability_scope_synthetic.sql
           psql -v ON_ERROR_STOP=1 -f database/tests/staff_work_items_synthetic.sql
           psql -v ON_ERROR_STOP=1 -f database/tests/staff_review_audit_synthetic.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/staff_mfa_sensitive_scope_synthetic.sql
       - name: Dump, corrupt disposable source, restore into a new disposable DB, and re-test RLS
         env:
           PGPASSWORD: synthetic-tenant-test
@@ -184,6 +185,8 @@ jobs:
         run: npm install --no-package-lock --no-audit --no-fund
       - name: Personal role, module and sourced workflow tests
         run: node --experimental-strip-types --test scripts/staff-workspace.test.mjs
+      - name: P09 staff MFA assurance unit checks
+        run: node --experimental-strip-types --test scripts/staff-mfa.test.mjs
       - name: Admin TypeScript and role-screen compile
         run: npm run typecheck
       - name: Build private staff app with all live actions locked
