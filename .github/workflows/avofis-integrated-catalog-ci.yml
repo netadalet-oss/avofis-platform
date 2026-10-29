@@ -35,5 +35,7 @@ jobs:
         run: npm run lint
       - name: Build with unsafe features disabled
         run: npm run build
+      - name: IND admission gate unit checks (no client data)
+        run: node --experimental-strip-types --test scripts/ind-clearance.test.mjs
       - name: HTTP route and disabled-endpoint smoke tests
         run: npm run smoke
