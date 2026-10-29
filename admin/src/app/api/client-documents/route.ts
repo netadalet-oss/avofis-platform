@@ -4,7 +4,7 @@ import {evaluateStaffMfa} from "@/lib/staff-mfa";
 import {documentReviewEnabled,documentReviewUUID,parseReviewNote} from "@/lib/client-document-review";
 export const runtime="nodejs";export const dynamic="force-dynamic";
 const headers={"Cache-Control":"private, no-store, max-age=0","Vary":"Authorization","X-Content-Type-Options":"nosniff"};
-const fail=(status:number,code:string)=>NextResponse.json({error:code},{status,headers});
+const fail=(status:number|undefined,code:string|undefined)=>NextResponse.json({error:code??"ACCESS_DENIED"},{status:status??503,headers});
 const MAX_BODY=3600;
 async function verify(req:NextRequest){
  if(!documentReviewEnabled(process.env))return {status:503,reason:"DOCUMENT_REVIEW_NOT_CONFIGURED"} as const;
