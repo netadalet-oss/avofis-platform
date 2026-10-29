@@ -3,9 +3,11 @@ on:
   push:
     branches:
       - feature/avofis-integrated-catalog-20261029
+      - feature/avofis-v17-two-person-clearance-20261029
   pull_request:
     branches:
       - feature/avofis-customer-portal-restructure-20261027
+      - feature/avofis-integrated-catalog-20261029
 permissions:
   contents: read
 jobs:
