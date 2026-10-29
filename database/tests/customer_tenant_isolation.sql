@@ -46,11 +46,15 @@ insert into auth.users(id,email,email_confirmed_at) values
  ('bbbbbbbb-bbbb-4bbb-bbbb-bbbbbbbbbbbb','synthetic-b@example.invalid',now()),
  ('cccccccc-cccc-4ccc-cccc-cccccccccccc','synthetic-admin@example.invalid',now()),
  ('dddddddd-dddd-4ddd-8ddd-dddddddddddd','synthetic-operator@example.invalid',now()),
- ('eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee','synthetic-second-admin@example.invalid',now());
+ ('eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee','synthetic-second-admin@example.invalid',now()),
+ ('ffffffff-ffff-4fff-8fff-ffffffffffff','synthetic-revoked-operator@example.invalid',now());
 insert into public.avofis_staff(user_id,role) values
  ('cccccccc-cccc-4ccc-cccc-cccccccccccc','admin'),
  ('dddddddd-dddd-4ddd-8ddd-dddddddddddd','operator'),
- ('eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee','admin');
+ ('eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee','admin'),
+ ('ffffffff-ffff-4fff-8fff-ffffffffffff','operator');
+insert into public.avofis_leads(full_name,email,country,service_key,privacy_notice_version,privacy_accepted_at)
+ values('Sensitive Synthetic Enquiry','synthetic-private@example.invalid','NL','housing','test-only',now());
 insert into public.avofis_cases(id,client_user_id,title,service_key,status) values
  ('11111111-1111-4111-8111-111111111111','aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa','Synthetic A only','housing','review'),
  ('22222222-2222-4222-8222-222222222222','bbbbbbbb-bbbb-4bbb-bbbb-bbbbbbbbbbbb','Synthetic B only','housing','review');
@@ -91,7 +95,9 @@ insert into public.avofis_case_clearances(
 );
 insert into public.avofis_case_assignments(case_id,staff_user_id,assigned_by)
 values('11111111-1111-4111-8111-111111111111',
- 'dddddddd-dddd-4ddd-8ddd-dddddddddddd',auth.uid());
+ 'dddddddd-dddd-4ddd-8ddd-dddddddddddd',auth.uid()),
+ ('11111111-1111-4111-8111-111111111111',
+ 'ffffffff-ffff-4fff-8fff-ffffffffffff',auth.uid());
 reset role;
 select set_config('request.jwt.claim.sub','eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee',false);
 set role authenticated;
@@ -114,7 +120,7 @@ begin
  foreach tab in array array[
   'avofis_cases','avofis_agreements','avofis_messages','avofis_payments',
   'avofis_case_events','avofis_document_requests','avofis_deliverables',
-  'avofis_case_assignments'
+  'avofis_case_assignments','avofis_assignment_events'
  ] loop
   if not (select relrowsecurity from pg_class where oid=format('public.%I',tab)::regclass) then
    raise exception 'RLS missing on %',tab;
@@ -233,6 +239,13 @@ begin
  if (select count(*) from public.avofis_case_assignments)<>1 then
   raise exception 'Operator assignment disclosure failed';
  end if;
+ if (select count(*) from public.avofis_leads)<>0 then
+  raise exception 'Operator read confidential unassigned lead PII';
+ end if;
+ update public.avofis_leads set status='reviewed';
+ if found then
+  raise exception 'Operator reviewed unassigned lead';
+ end if;
  begin
   update public.avofis_cases set status='awaiting_agreement'
    where id='22222222-2222-4222-8222-222222222222';
@@ -249,6 +262,56 @@ begin
   raise exception 'Operator modified a quote';
  exception when insufficient_privilege then null; end;
 end $$;
+reset role;
+
+
+-- Staff removal must automatically purge and audit all F assignments.
+-- A rehire (same Auth UUID) must not resurrect the previous case assignment.
+select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
+set role authenticated;
+do $
+begin
+ if (select count(*) from public.avofis_leads)<>1 then
+  raise exception 'Admin lost authorised lead review access';
+ end if;
+ if (select count(*) from public.avofis_staff)<>4 then
+  raise exception 'Admin cannot inspect protected staff roster';
+ end if;
+end $;
+reset role;
+delete from public.avofis_staff
+where user_id='ffffffff-ffff-4fff-8fff-ffffffffffff';
+insert into public.avofis_staff(user_id,role)
+values('ffffffff-ffff-4fff-8fff-ffffffffffff','operator');
+select set_config('request.jwt.claim.sub','ffffffff-ffff-4fff-8fff-ffffffffffff',false);
+set role authenticated;
+do $
+begin
+ if (select count(*) from public.avofis_cases)<>0
+    or (select count(*) from public.avofis_messages)<>0
+    or (select count(*) from storage.objects where bucket_id='avofis-private')<>0 then
+  raise exception 'Revoked and re-added operator retained stale case access';
+ end if;
+end $;
+reset role;
+select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
+set role authenticated;
+do $
+begin
+ if (select count(*) from public.avofis_assignment_events
+     where staff_user_id='ffffffff-ffff-4fff-8fff-ffffffffffff')<>2 then
+  raise exception 'Missing append-only revoke audit event';
+ end if;
+ if (select count(*) from public.avofis_case_assignments)<>1 then
+  raise exception 'Revoked operator assignment was not purged';
+ end if;
+ begin
+  insert into public.avofis_assignment_events(case_id,staff_user_id,action)
+  values('11111111-1111-4111-8111-111111111111',
+   'ffffffff-ffff-4fff-8fff-ffffffffffff','assigned');
+  raise exception 'Direct audit injection unexpectedly allowed';
+ exception when insufficient_privilege then null; end;
+end $;
 reset role;
 
 -- Case B (no G1-G4 clearance) remains blocked for the verified admin.
@@ -270,4 +333,4 @@ begin
  end;
 end $$;
 reset role;
-\echo 'PASS: scoped staff assignment, two-person G1-G4, A/B RLS, private Storage and activation (synthetic only)'
+\echo 'PASS: scoped staff assignment, revoke/re-hire purging + audit, admin-only lead PII, two-person G1-G4, A/B RLS and activation (synthetic only)'
