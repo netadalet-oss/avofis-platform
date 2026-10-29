@@ -84,7 +84,7 @@ end $$;
 
 -- Read-only baseline should report 7 insecure legacy tables.
 \ir ../ops/legacy_rls_readonly_preflight.sql
-do $
+do $$
 declare unsafe_count integer;
 begin
  select count(*) into unsafe_count from pg_class c join pg_namespace n on n.oid=c.relnamespace
@@ -92,7 +92,7 @@ begin
     and c.relname in ('offices','office_members','topics','posts','jobs','applications','media_assets')
     and not c.relrowsecurity;
  if unsafe_count<>7 then raise exception 'Expected all 7 old tables insecure for baseline, found %',unsafe_count; end if;
-end $;
+end $$;
 
 \ir ../migrations/20261029_legacy_public_rls_hardening.sql
 
