@@ -15,7 +15,7 @@ create table public.avofis_client_document_drafts (
  locale text not null check(locale in ('tr','nl','de','en','ar','ru')),
  content jsonb not null,
  revision integer not null default 1 check(revision>=1),
- status text not null default 'draft' check(status in ('draft','review_requested')),
+ status text not null default 'draft' check(status in ('draft','review_requested','withdrawn')),
  consent_to_staff boolean not null default false,
  created_at timestamptz not null default clock_timestamp(),
  updated_at timestamptz not null default clock_timestamp(),
@@ -35,6 +35,7 @@ create table public.avofis_client_document_drafts (
  constraint sharing_requires_case check(
   (not consent_to_staff or case_id is not null)
   and (status<>'review_requested' or (consent_to_staff and case_id is not null))
+  and (status<>'withdrawn' or not consent_to_staff)
  )
 );
 create index avofis_client_drafts_owner_idx on public.avofis_client_document_drafts(owner_user_id,updated_at desc);
@@ -72,8 +73,8 @@ create policy "only owner starts private draft"
    select 1 from public.avofis_cases c where c.id=case_id and c.client_user_id=(select auth.uid()))));
 create policy "only client updates unlocked draft"
  on public.avofis_client_document_drafts for update to authenticated
- using(owner_user_id=(select auth.uid()) and status='draft')
- with check(owner_user_id=(select auth.uid()) and status in ('draft','review_requested')
+ using(owner_user_id=(select auth.uid()) and status in ('draft','review_requested'))
+ with check(owner_user_id=(select auth.uid()) and status in ('draft','review_requested','withdrawn')
   and (case_id is null or exists(
    select 1 from public.avofis_cases c where c.id=case_id and c.client_user_id=(select auth.uid()))));
 
@@ -81,7 +82,7 @@ create table public.avofis_client_document_versions (
  draft_id uuid not null references public.avofis_client_document_drafts(id) on delete restrict,
  revision integer not null check(revision>=1),
  content jsonb not null,
- status text not null check(status in ('draft','review_requested')),
+ status text not null check(status in ('draft','review_requested','withdrawn')),
  consent_to_staff boolean not null,
  actor_user_id uuid references auth.users(id) on delete restrict,
  recorded_at timestamptz not null default clock_timestamp(),
@@ -100,15 +101,24 @@ create policy "version history follows current scoped access"
 create function public.avofis_guard_client_document_revision()
 returns trigger language plpgsql security invoker set search_path='' as $$
 begin
- if old.status<>'draft' or new.id is distinct from old.id
+ if new.id is distinct from old.id
   or new.owner_user_id is distinct from old.owner_user_id
   or new.case_id is distinct from old.case_id
   or new.service_slug is distinct from old.service_slug
   or new.locale is distinct from old.locale
   or new.revision is distinct from old.revision
   or new.created_at is distinct from old.created_at
-  or new.status not in ('draft','review_requested')
  then raise exception 'FORM02 locked or immutable field'; end if;
+ if old.status='draft' then
+  if new.status not in ('draft','review_requested') then
+   raise exception 'FORM02 invalid draft transition'; end if;
+ elsif old.status='review_requested' then
+  -- Withdrawal is always owner initiated, immediate and irreversible.
+  -- Content/history remain intact for audit; no further staff access.
+  if new.status<>'withdrawn' or new.consent_to_staff
+    or new.content is distinct from old.content then
+   raise exception 'FORM02 reviewed content is immutable'; end if;
+ else raise exception 'FORM02 withdrawn document is immutable'; end if;
  new.revision:=old.revision+1;
  new.updated_at:=clock_timestamp();
  return new;
