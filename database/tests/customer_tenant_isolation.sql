@@ -269,7 +269,7 @@ reset role;
 -- A rehire (same Auth UUID) must not resurrect the previous case assignment.
 select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
 set role authenticated;
-do $
+do $$
 begin
  if (select count(*) from public.avofis_leads)<>1 then
   raise exception 'Admin lost authorised lead review access';
@@ -277,7 +277,7 @@ begin
  if (select count(*) from public.avofis_staff)<>4 then
   raise exception 'Admin cannot inspect protected staff roster';
  end if;
-end $;
+end $$;
 reset role;
 delete from public.avofis_staff
 where user_id='ffffffff-ffff-4fff-8fff-ffffffffffff';
@@ -285,18 +285,18 @@ insert into public.avofis_staff(user_id,role)
 values('ffffffff-ffff-4fff-8fff-ffffffffffff','operator');
 select set_config('request.jwt.claim.sub','ffffffff-ffff-4fff-8fff-ffffffffffff',false);
 set role authenticated;
-do $
+do $$
 begin
  if (select count(*) from public.avofis_cases)<>0
     or (select count(*) from public.avofis_messages)<>0
     or (select count(*) from storage.objects where bucket_id='avofis-private')<>0 then
   raise exception 'Revoked and re-added operator retained stale case access';
  end if;
-end $;
+end $$;
 reset role;
 select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
 set role authenticated;
-do $
+do $$
 begin
  if (select count(*) from public.avofis_assignment_events
      where staff_user_id='ffffffff-ffff-4fff-8fff-ffffffffffff')<>2 then
@@ -311,7 +311,7 @@ begin
    'ffffffff-ffff-4fff-8fff-ffffffffffff','assigned');
   raise exception 'Direct audit injection unexpectedly allowed';
  exception when insufficient_privilege then null; end;
-end $;
+end $$;
 reset role;
 
 -- Case B (no G1-G4 clearance) remains blocked for the verified admin.
