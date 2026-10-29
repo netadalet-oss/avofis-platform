@@ -1,5 +1,6 @@
 import {createClient} from "@supabase/supabase-js";
 import {NextRequest,NextResponse} from "next/server";
+import {evaluateStaffMfa} from "@/lib/staff-mfa";
 export const runtime="nodejs";export const dynamic="force-dynamic";
 const fail=(status:number,error:string)=>NextResponse.json({error},{status,headers:{"Cache-Control":"no-store"}});
 export async function GET(req:NextRequest){
@@ -20,6 +21,8 @@ export async function GET(req:NextRequest){
  const {data:staff,error:staffError}=await db.from("avofis_staff")
   .select("role").eq("user_id",identity.user.id).maybeSingle();
  if(staffError||staff?.role!=="admin")return fail(403,"AUDIT_ADMIN_ONLY");
+ const assurance=await evaluateStaffMfa(db,token);
+ if(!assurance.allowed)return fail(403,assurance.reason);
  const [privilege,work,signoff]=await Promise.all([
   db.from("avofis_staff_capability_events")
    .select("staff_user_id,capability,actor_user_id,action,recorded_at")
