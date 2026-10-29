@@ -98,6 +98,20 @@ jobs:
             sudo apt-get install -y -qq postgresql-client
           fi
           psql -v ON_ERROR_STOP=1 -f database/tests/customer_tenant_isolation.sql
+      - name: Dump, corrupt disposable source, restore into a new disposable DB, and re-test RLS
+        env:
+          PGPASSWORD: synthetic-tenant-test
+          PGHOST: 127.0.0.1
+          PGPORT: "5432"
+          PGUSER: postgres
+          PGDATABASE: avofis_tenant_ci
+        run: |
+          set -euo pipefail
+          pg_dump --format=custom --file="$RUNNER_TEMP/avofis_tenant_ci.backup"
+          psql -v ON_ERROR_STOP=1 -c "update public.avofis_cases set title='TAMPERED ONLY IN DISPOSABLE SOURCE' where id='11111111-1111-4111-8111-111111111111';"
+          createdb avofis_restored_ci
+          pg_restore --no-owner --exit-on-error --dbname=avofis_restored_ci "$RUNNER_TEMP/avofis_tenant_ci.backup"
+          PGDATABASE=avofis_restored_ci psql -v ON_ERROR_STOP=1 -f database/tests/synthetic_restore_assertions.sql
   portal-validation:
     runs-on: ubuntu-latest
     timeout-minutes: 20
