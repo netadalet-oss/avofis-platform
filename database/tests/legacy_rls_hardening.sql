@@ -83,7 +83,9 @@ begin
 end $$;
 
 -- Read-only baseline should report 7 insecure legacy tables.
+begin read only;
 \ir ../ops/legacy_rls_readonly_preflight.sql
+commit;
 do $$
 declare unsafe_count integer;
 begin
@@ -203,5 +205,7 @@ begin
 end $$;
 -- Re-run the identical read-only inventory after the candidate migration.
 -- Production remains untouched; this is the disposable PG17 fixture.
+begin read only;
 \ir ../ops/legacy_rls_readonly_preflight.sql
+commit;
 \echo 'PASS: all seven legacy tables RLS hardened; anon CRUD removed; A/B private rows isolated; admin-only read restored'
