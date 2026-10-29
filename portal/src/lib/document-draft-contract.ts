@@ -17,13 +17,27 @@ export function parsePatchDraft(v:unknown):PatchDraft|null{
   (v.status==="review_requested"&&!v.consent_to_staff))return null;
  return {id:v.id,revision:v.revision as number,draft,status:v.status as PatchDraft["status"],consent_to_staff:v.consent_to_staff};
 }
+/** Enable real account storage only in its explicitly matched deployment/project.
+ * Disabled by default; environment variables are deployment controls, not legal approval.
+ * Production must pass a separate pre-launch security review of ALL exposed tables. */
 export function documentDraftStageEnabled(e:Record<string,string|undefined>):boolean{
- if(e.AVOFIS_DOCUMENT_DRAFT_STAGING_ENABLED!=="true"||e.AVOFIS_DOCUMENT_DRAFT_ENV!=="staging")return false;
- const ref=e.AVOFIS_DOCUMENT_DRAFT_STAGING_PROJECT_REF;
- if(!ref||!/^[-a-z0-9]{12,32}$/.test(ref)||e.VERCEL_ENV==="production"||
-  !e.AVOFIS_PRODUCTION_SUPABASE_PROJECT_REF||ref===e.AVOFIS_PRODUCTION_SUPABASE_PROJECT_REF)return false;
+ const ref=e.AVOFIS_DOCUMENT_DRAFT_ENV==="production"?
+  e.AVOFIS_PRODUCTION_SUPABASE_PROJECT_REF:e.AVOFIS_DOCUMENT_DRAFT_STAGING_PROJECT_REF;
+ if(!ref||!/^[-a-z0-9]{12,32}$/.test(ref))return false;
  try{
   const u=new URL(e.NEXT_PUBLIC_SUPABASE_URL||"");
-  return u.protocol==="https:"&&u.port===""&&u.pathname==="/"&&u.username===""&&u.password===""&&u.hostname===ref+".supabase.co";
+  if(u.protocol!=="https:"||u.port!==""||u.pathname!=="/"||u.search||u.hash||
+     u.username||u.password||u.hostname!==ref+".supabase.co")return false;
  }catch{return false;}
+ if(e.AVOFIS_DOCUMENT_DRAFT_ENV==="production")
+  return e.VERCEL_ENV==="production"&&
+   e.AVOFIS_DOCUMENT_DRAFT_PRODUCTION_ENABLED==="true"&&
+   e.AVOFIS_DOCUMENT_DRAFT_SECURITY_REVIEWED==="true"&&
+   e.AVOFIS_DOCUMENT_DRAFT_STAGING_PROJECT_REF!==ref;
+ if(e.AVOFIS_DOCUMENT_DRAFT_ENV==="staging")
+  return e.VERCEL_ENV!=="production"&&
+   e.AVOFIS_DOCUMENT_DRAFT_STAGING_ENABLED==="true"&&
+   !!e.AVOFIS_PRODUCTION_SUPABASE_PROJECT_REF&&
+   ref!==e.AVOFIS_PRODUCTION_SUPABASE_PROJECT_REF;
+ return false;
 }
