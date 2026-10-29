@@ -92,7 +92,8 @@ export function AccountDraftControls({draft,onLoad}:{draft:PreparationDraft;onLo
     {!current&&<label className="block text-sm">{w[2]}<select className="mt-2 block w-full rounded-lg bg-[#102142] p-3" value={caseId} onChange={e=>setCaseId(e.target.value)}>
       <option value="">{w[3]}</option>{cases.map(c=><option key={c.id} value={c.id}>{c.title}</option>)}
      </select></label>}
-    <div className="flex flex-wrap gap-2">\n     {current&&<button type="button" className="avofis-btn avofis-outline" disabled={busy} onClick={()=>{setCurrent(null);setCaseId("");setNotice("");}}>{({tr:"Yeni taslak",nl:"Nieuw concept",de:"Neuer Entwurf",en:"New draft",ar:"مسودة جديدة",ru:"Новый черновик"})[draft.locale]}</button>}
+    <div className="flex flex-wrap gap-2">
+     {current&&<button type="button" className="avofis-btn avofis-outline" disabled={busy} onClick={()=>{setCurrent(null);setCaseId("");setNotice("");}}>{({tr:"Yeni taslak",nl:"Nieuw concept",de:"Neuer Entwurf",en:"New draft",ar:"مسودة جديدة",ru:"Новый черновик"})[draft.locale]}</button>}
      <button type="button" disabled={busy||current?.status==="review_requested"} className="avofis-btn avofis-outline disabled:opacity-50" onClick={()=>void save()}>{w[4]}</button>
      <button type="button" disabled={busy} className="avofis-btn avofis-outline" onClick={()=>void list()}>{w[5]}</button>
      {current?.case_id&&current.status==="draft"&&<button type="button" disabled={busy} className="avofis-btn avofis-outline" onClick={()=>void save(true)}>{w[7]}</button>}
