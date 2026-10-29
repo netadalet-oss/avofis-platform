@@ -33,7 +33,7 @@ async function check(path,expected,method="GET"){
 }
 try{
  await waitUntilReady();
- for(const route of ["/","/hizmetler","/katalog","/islemler","/nasil-calisir","/iletisim","/bilgi","/gizlilik","/basvuru","/auth/login","/musteri","/yonetim","/yonetim/ind-inceleme"]){
+ for(const route of ["/","/hizmetler","/katalog","/islemler","/nasil-calisir","/iletisim","/bilgi","/gizlilik","/cerezler","/diller","/uyum","/katalog?lang=ar","/katalog?lang=ru","/katalog?lang=de","/basvuru","/auth/login","/musteri","/yonetim","/yonetim/ind-inceleme"]){
   const response=await check(route,200);
   assert.match(response.headers.get("content-type")||"",/text\/html/,route+" content type");
  }
@@ -44,6 +44,14 @@ try{
  assert.ok([301,302,303,307,308].includes(forum.status),"Old forum must redirect");
  await check("/api/intake",503,"POST");
  await check("/api/payments/checkout",503,"POST");
+ const six=await check("/diller",200);
+ const sixHtml=await six.text();
+ for(const locale of ["?lang=tr","?lang=nl","?lang=de","?lang=en","?lang=ar","?lang=ru"]){
+  assert.ok(sixHtml.includes("/katalog"+locale),"Missing 6-language route "+locale);
+ }
+ assert.match(sixHtml,/dir="rtl"/,"Arabic RTL block must be present");
+ const noGo=await check("/uyum",200);
+ assert.match(await noGo.text(),/KAPALI/,"Release status must not claim customer intake enabled");
  console.log("Route and disabled-action smoke test passed");
 }finally{
  server.kill("SIGTERM");
