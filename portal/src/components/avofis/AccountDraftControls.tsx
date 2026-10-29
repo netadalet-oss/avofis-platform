@@ -80,6 +80,26 @@ export function AccountDraftControls({draft,onLoad}:{draft:PreparationDraft;onLo
   }catch(e){setNotice(e instanceof Error&&e.message==="409"?"REVISION_CONFLICT":"STAGING_UNAVAILABLE");}
   finally{setBusy(false);}
  }
+ async function withdraw(){
+  if(!current||current.status!=="review_requested"||busy||!window.confirm(
+   ({tr:"Personelin bu belgeye erişimini şimdi kaldırmak istiyor musunuz? Belge ve sürümleriniz korunur.",
+   nl:"Toegang voor medewerkers nu intrekken? Uw documentgeschiedenis blijft bewaard.",
+   de:"Zugriff des Personals jetzt widerrufen? Die Versionen bleiben gespeichert.",
+   en:"Revoke staff access now? Your document and version history are retained.",
+   ar:"هل تريد إلغاء وصول الموظف الآن؟ سيبقى سجل المستند محفوظًا.",
+   ru:"Отозвать доступ сотрудника? История документа сохранится."})[draft.locale]))return;
+  setBusy(true);setNotice("");
+  try{
+   const result=await api("PATCH",{id:current.id,revision:current.revision,draft,
+    status:"withdrawn",consent_to_staff:false});
+   const detail=await api("GET",undefined,current.id);
+   setCurrent({...current,revision:result.draft.revision,status:"withdrawn"});
+   setVersions(detail.versions||[]);setNotes(detail.notes||[]);
+   const loaded=await api("GET");setItems(loaded.items||[]);
+   setNotice(({tr:"Personel erişimi kaldırıldı.",nl:"Toegang ingetrokken.",de:"Zugriff widerrufen.",
+    en:"Staff access revoked.",ar:"تم إلغاء وصول الموظف.",ru:"Доступ сотрудника отозван."})[draft.locale]);
+  }catch{setNotice("REVOCATION_FAILED");}finally{setBusy(false);}
+ }
  async function open(id:string){
   setBusy(true);setNotice("");
   try{
@@ -103,6 +123,11 @@ export function AccountDraftControls({draft,onLoad}:{draft:PreparationDraft;onLo
      {current&&<button type="button" className="avofis-btn avofis-outline" disabled={busy} onClick={()=>{setCurrent(null);setCaseId("");setNotice("");setVersions([]);setNotes([]);}}>{({tr:"Yeni taslak",nl:"Nieuw concept",de:"Neuer Entwurf",en:"New draft",ar:"مسودة جديدة",ru:"Новый черновик"})[draft.locale]}</button>}
      <button type="button" disabled={busy||current?.status==="review_requested"} className="avofis-btn avofis-outline disabled:opacity-50" onClick={()=>void save()}>{w[4]}</button>
      <button type="button" disabled={busy} className="avofis-btn avofis-outline" onClick={()=>void list()}>{w[5]}</button>
+     {current?.status==="review_requested"&&<button type="button" disabled={busy}
+       className="avofis-btn avofis-outline" onClick={()=>void withdraw()}>
+       {({tr:"Personel erişimini geri çek",nl:"Toegang intrekken",de:"Zugriff widerrufen",
+        en:"Revoke staff access",ar:"إلغاء وصول الموظف",ru:"Отозвать доступ"})[draft.locale]}
+      </button>}
      {current?.case_id&&current.status==="draft"&&<button type="button" disabled={busy} className="avofis-btn avofis-outline" onClick={()=>void save(true)}>{w[7]}</button>}
     </div>
     {items.length>0&&<ul className="space-y-2">{items.map(d=><li key={d.id} className="flex flex-wrap justify-between gap-3 rounded-lg bg-[#102142] p-3 text-sm">
