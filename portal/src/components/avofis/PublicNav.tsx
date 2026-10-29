@@ -23,6 +23,7 @@ export function PublicNav({lang}: {lang: Language}) {
   const items = [
     {title:t.home,href:"/"},
     {title:t.services,href:"/hizmetler"},
+    {title:lang==="tr"?"Güvenli triyaj":lang==="nl"?"Veilige oriëntatie":"Safe triage",href:"/triyaj"},
     {title:t.process,href:"/nasil-calisir"},
     {title:t.info,href:"/bilgi"},
     {title:"6 dil / 6 talen",href:"/diller"},
