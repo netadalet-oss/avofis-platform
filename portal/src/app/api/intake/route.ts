@@ -2,13 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { randomUUID } from "node:crypto";
 import { getJourney,validateJourneyDetails } from "@/lib/journeys";
+import { intakeReleased } from "@/lib/release-authorization";
 
 export const runtime="nodejs";
 const countries=new Set(["Netherlands","Türkiye","Germany","Other"]);
 const languages=new Set(["tr","nl","en"]);
 const fail=(status:number)=>NextResponse.json({error:"Invalid or unavailable request"},{status,headers:{"Cache-Control":"no-store"}});
 export async function POST(request:NextRequest){
- if(process.env.AVOFIS_LEGAL_READY!=="true"||process.env.AVOFIS_INTAKE_ENABLED!=="true"||process.env.NEXT_PUBLIC_AVOFIS_INTAKE_ENABLED!=="true")return fail(503);
+ if(!intakeReleased())return fail(503);
  const supabaseUrl=process.env.NEXT_PUBLIC_SUPABASE_URL,serviceKey=process.env.SUPABASE_SERVICE_ROLE_KEY,turnstileSecret=process.env.TURNSTILE_SECRET_KEY;
  if(!supabaseUrl||!serviceKey||!turnstileSecret)return fail(503);
  if(Number(request.headers.get("content-length")||0)>7000)return fail(413);
