@@ -2,6 +2,7 @@ import {createClient, type SupabaseClient} from "@supabase/supabase-js";
 import {NextRequest,NextResponse} from "next/server";
 import {availableWorkspaceSections,isStaffCapability,staffCapabilities,productionActions} from "@/lib/workspace-model";
 import {legalSources,workstreams} from "@/lib/legal-workflows";
+import {evaluateStaffMfa} from "@/lib/staff-mfa";
 
 export const runtime="nodejs";
 export const dynamic="force-dynamic";
@@ -25,6 +26,8 @@ export async function GET(req:NextRequest){
  const {data:identity,error:identityError}=await client.auth.getUser(token);
  if(identityError||!identity.user)return deny(401,"SESSION_NOT_VERIFIED");
  const uid=identity.user.id;
+ const assurance=await evaluateStaffMfa(client,token);
+ if(!assurance.allowed)return deny(403,assurance.reason);
  const {data:staff,error:roleError}=await client.from("avofis_staff")
   .select("user_id,role").eq("user_id",uid).maybeSingle();
  if(roleError||!staff||!["admin","operator"].includes(staff.role))
