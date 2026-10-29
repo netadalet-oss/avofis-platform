@@ -69,6 +69,35 @@ jobs:
             sudo apt-get install -y -qq postgresql-client
           fi
           psql -v ON_ERROR_STOP=1 -f database/tests/legacy_rls_hardening.sql
+  tenant-isolation-synthetic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: synthetic-tenant-test
+          POSTGRES_DB: avofis_tenant_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d avofis_tenant_ci"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exercise real migration chain under synthetic A/B/staff identities
+        env:
+          PGPASSWORD: synthetic-tenant-test
+          PGHOST: 127.0.0.1
+          PGPORT: "5432"
+          PGUSER: postgres
+          PGDATABASE: avofis_tenant_ci
+        run: |
+          if ! command -v psql >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq postgresql-client
+          fi
+          psql -v ON_ERROR_STOP=1 -f database/tests/customer_tenant_isolation.sql
   portal-validation:
     runs-on: ubuntu-latest
     timeout-minutes: 20
