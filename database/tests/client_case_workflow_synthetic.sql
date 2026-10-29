@@ -117,32 +117,74 @@ begin
 end $$;
 reset role;
 
--- Only a real, verified provider payment may enable completion.
--- Every non-paid synthetic state must remain blocked by the case-status trigger.
-reset role;
-do $$
-declare state text;
+-- Only the exact 'paid' state may advance the synthetic fee-bearing case.
+-- Payment mutations are fixture-owner operations, never customer UI/API writes.
+update public.avofis_payments set status='pending' where case_id='99999999-9999-4999-8999-999999999999';
+select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
+set role authenticated;
+do $$ 
 begin
- foreach state in array array['pending','authorized','failed','refunded','charged_back'] loop
-  update public.avofis_payments set status=state
-   where case_id='99999999-9999-4999-8999-999999999999';
-  perform set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',true);
-  begin
-   -- Must use authenticated role, not fixture owner's implicit bypass.
-   execute 'set local role authenticated';
-   update public.avofis_cases set status='completed'
-    where id='99999999-9999-4999-8999-999999999999';
-   raise exception 'Non-paid state % unexpectedly completed a case',state;
-  exception when others then
-   if sqlerrm not like 'Verified payment required before completion%' then
-    raise;
-   end if;
-  end;
-  reset role;
- end loop;
- update public.avofis_payments set status='open'
-  where case_id='99999999-9999-4999-8999-999999999999';
+ begin
+  update public.avofis_cases set status='completed' where id='99999999-9999-4999-8999-999999999999';
+  raise exception 'Non-paid status pending unexpectedly completed case';
+ exception when others then
+  if sqlerrm not like 'Verified payment required before completion%' then raise; end if;
+ end;
 end $$;
+reset role;
+update public.avofis_payments set status='authorized' where case_id='99999999-9999-4999-8999-999999999999';
+select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
+set role authenticated;
+do $$ 
+begin
+ begin
+  update public.avofis_cases set status='completed' where id='99999999-9999-4999-8999-999999999999';
+  raise exception 'Non-paid status authorized unexpectedly completed case';
+ exception when others then
+  if sqlerrm not like 'Verified payment required before completion%' then raise; end if;
+ end;
+end $$;
+reset role;
+update public.avofis_payments set status='failed' where case_id='99999999-9999-4999-8999-999999999999';
+select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
+set role authenticated;
+do $$ 
+begin
+ begin
+  update public.avofis_cases set status='completed' where id='99999999-9999-4999-8999-999999999999';
+  raise exception 'Non-paid status failed unexpectedly completed case';
+ exception when others then
+  if sqlerrm not like 'Verified payment required before completion%' then raise; end if;
+ end;
+end $$;
+reset role;
+update public.avofis_payments set status='refunded' where case_id='99999999-9999-4999-8999-999999999999';
+select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
+set role authenticated;
+do $$ 
+begin
+ begin
+  update public.avofis_cases set status='completed' where id='99999999-9999-4999-8999-999999999999';
+  raise exception 'Non-paid status refunded unexpectedly completed case';
+ exception when others then
+  if sqlerrm not like 'Verified payment required before completion%' then raise; end if;
+ end;
+end $$;
+reset role;
+update public.avofis_payments set status='charged_back' where case_id='99999999-9999-4999-8999-999999999999';
+select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
+set role authenticated;
+do $$ 
+begin
+ begin
+  update public.avofis_cases set status='completed' where id='99999999-9999-4999-8999-999999999999';
+  raise exception 'Non-paid status charged_back unexpectedly completed case';
+ exception when others then
+  if sqlerrm not like 'Verified payment required before completion%' then raise; end if;
+ end;
+end $$;
+reset role;
+update public.avofis_payments set status='open' where case_id='99999999-9999-4999-8999-999999999999';
 
 -- Database owner simulates a *verified PSP* callback; not a real PSP E2E.
 update public.avofis_payments set status='paid'
