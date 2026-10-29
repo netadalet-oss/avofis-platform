@@ -68,6 +68,7 @@ begin
  exception when insufficient_privilege then null; end;
 end $adminDenied$;
 reset role;
+-- Tenant A uploaded a second accepted synthetic PDF earlier in the fixture.
 -- Clients retain their own rights even with AAL1; staff privileges are not
 -- inferred from being the client and cross-client isolation remains.
 select set_config('request.jwt.claim.sub','aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa',false);
@@ -83,7 +84,7 @@ begin
  if (select count(*) from public.avofis_cases)<>1
   or (select count(*) from public.avofis_messages)<>1
   or (select count(*) from public.avofis_payments)<>1
-  or (select count(*) from storage.objects where bucket_id='avofis-private')<>1
+  or (select count(*) from storage.objects where bucket_id='avofis-private')<>2
   or (select count(*) from public.avofis_staff_work_items)<>0 then
   raise exception 'P09 normal client access broken or staff data leaked'; end if;
 end $client$;
