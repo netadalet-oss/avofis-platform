@@ -1,0 +1,39 @@
+name: AVOfis integrated catalogue validation
+on:
+  push:
+    branches:
+      - feature/avofis-integrated-catalog-20261029
+  pull_request:
+    branches:
+      - feature/avofis-customer-portal-restructure-20261027
+permissions:
+  contents: read
+jobs:
+  portal-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: portal
+    env:
+      AVOFIS_LEGAL_READY: "false"
+      AVOFIS_INTAKE_ENABLED: "false"
+      AVOFIS_PAYMENT_ENABLED: "false"
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: portal/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Type-check
+        run: npm run lint
+      - name: Build with unsafe features disabled
+        run: npm run build
+      - name: HTTP route and disabled-endpoint smoke tests
+        run: npm run smoke
