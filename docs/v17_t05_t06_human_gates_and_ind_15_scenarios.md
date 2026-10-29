@@ -22,9 +22,9 @@ Kanıt seviyeleri: **sentetik-birim**, **sentetik-SQL**, **kısmi (yalnızca bir
 | ID | Kullanıcı kaynağındaki hedef | Koda bağlı kanıt ve sınır |
 |---|---|---|
 | IND-T01 | İmzalı yetki var ama çalışma hakkı yok → ACTIVE yok | **Sentetik-birim + SQL kısmi:** `PERSON_UNVERIFIED`; gerçek çalışma belgesi incelenmedi |
-| IND-T02 | Dosya temini kapsamındaki yetkiyle bezwaar gönderimi → ret | **BEKLİYOR:** temsil belgesi işlem kapsamı makinece karşılaştırılmıyor; sadece var/yok |
+| IND-T02 | Dosya temini kapsamındaki yetkiyle bezwaar gönderimi → ret | **Sentetik SQL + birim kısmi:** işlem kapsamı / `authorised_actions`, açıkça hariç tutulan işlem, imzalı belgenin SHA-256 biçimi ve geçerlilik aralığı test edildi; gerçek vekâlet/IND gönderim E2E ve hukukî kontrol BEKLİYOR |
 | IND-T03 | Müşteri A, müşteri B'nin IND dosya URL'sine erişiyor → ret + audit | **Sentetik-SQL kısmi:** genel A/B case/Storage RLS; gerçek IND URL, HTTP statüsü, görüntüleme auditi yok |
-| IND-T04 | 11.06.2026 ve 12.06.2026 iltica başlangıçları aynı süre şablonuna düşmez | **BEKLİYOR:** tarih-odaklı rejim sınıflandırması ve uzman kaynak onayı henüz modellenmedi; mevcut bool yeterli değil |
+| IND-T04 | 11.06.2026 ve 12.06.2026 iltica başlangıçları aynı süre şablonuna düşmez | **Sentetik SQL + birim kısmi:** 11/12.06.2026 tarihi, zorunlu `asylum_transition_regime` ayrımı ve uzman/kaynak inceleme alanı; somut resmî karar ve süre hesabının hukukî doğrulaması BEKLİYOR |
 | IND-T05 | Hoger beroep, süre dayanağı yok → HOLD_DEADLINE | **Sentetik-birim kısmi:** `DEADLINE_UNREVIEWED`; uzman gerekliliği `SPECIALIST_REQUIRED`; resmî süre hesabı yapılmadı |
 | IND-T06 | İlk iltica kişisel başvurusu imzalı belgeyle devredilemez | **Kısmi:** `filingNotAuthorisedByThisCheck=true` bayrağı var, gerçek IND işlem API/E2E yok |
 | IND-T07 | Jurist avukat portalına gönderilmez | **BEKLİYOR:** gerçek portal yönlendirme/NOvA yetki testi yok; varsayılan açık temsil rotası kurulmamalı |
@@ -47,4 +47,14 @@ Kanıt seviyeleri: **sentetik-birim**, **sentetik-SQL**, **kısmi (yalnızca bir
 
 ## T06 sonraki zorunlu teknik paket
 
-Tarih-temelli iltica `IND-T04`, işlem kapsamlı vekâlet `IND-T02`, AEA dışına aktarım kararı `IND-T08`, gerçek Auth/Storage oturum/URL iptali `IND-T03/T13` ve işlem açma kapısına bağlı hukukî sorumluluk `IND-T09` henüz açık. Önce ayrı staging Supabase proje/hesap ve insan belge doğrulaması gerekir; canlı SQL uygulanmaz.
+Gerçek belge/karar incelemesi ve resmî gönderim E2E dahil `IND-T02/T04`, AEA dışına aktarım kararı `IND-T08`, gerçek Auth/Storage oturum/URL iptali `IND-T03/T13` ve işlem açma kapısına bağlı hukukî sorumluluk `IND-T09` henüz açık. Önce ayrı staging Supabase proje/hesap ve insan belge doğrulaması gerekir; canlı SQL uygulanmaz.
+
+## T06 devam yaması: işlem kapsamı ve iltica tarih rejimi (29.10.2026)
+
+- SQL: `database/migrations/20261029_ind_mandate_asylum_regime_guard.sql` **yalnızca draft, staging öncesi**. `requested_action` ile IND prosedürü arasında eşleştirme; imzalı özel yetki kanıtının belge hash/kimlik/imza/geçerlilik kontrolü; açıkça hariç tutulan işlem reddi.
+- İltica: `asylum_application_date` üzerinden `before_2026_06_12` veya `from_2026_06_12` zorunlu ve farklı; uzman ve kaynak notu olmadan G2 onayı yok; **hukukî süre otomatik hesaplanmaz**.
+- İlk iltica başvurusu gerçek şahıs adına herhangi bir resmî sisteme otomatik gönderilemez; `initial_asylum_registration` teknik olarak reddedilir.
+- Negatif/pozitif sentetik testler: `database/tests/ind_mandate_asylum_regime.sql`, `portal/scripts/ind-clearance.test.mjs`; gerçek Supabase Auth/JWT, IND portalı ve bağımsız hukukî dosya incelemesi **BEKLİYOR**.
+- Üretim ortamında kayıt/SQL değiştirilmedi; aktivasyon, ödeme ve müşteri kabulü kapalı. Kod değişikliği bazı eski onaylı IND taslaklarını yeniden inceleme gerektirecek biçimde **fail-closed** bloke eder. Gerçek staging ve planlı geri alma/migrasyon değerlendirmesi zorunlu.
+
+Kaynak doğrulaması: https://ind.nl/nl/asiel-en-nareis-het-migratiepact-en-andere-ontwikkelingen/asiel-aangevraagd-voor-12-juni-2026 ; https://ind.nl/nl/asiel-en-nareis-het-migratiepact-en-andere-ontwikkelingen/nieuwe-wetten-en-regels-asiel-en-nareis ; https://ind.nl/nl/service-contact/contact-met-ind/verzoek-om-stukken-of-gegevens-uit-uw-ind-dossier
