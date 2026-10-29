@@ -23,7 +23,8 @@ export async function GET(req:NextRequest){
  const s:SearchInput={...searchDefaults,...Object.fromEntries([...allow].map(k=>[k,q.get(k)||""]))};
  const issue=validatePublicSearch(s);if(issue)return fail(400,issue);
  const official=buildOfficialQuery(s);
- const now=Date.now(),hit=cache.get(official);if(hit&&hit.expires>now){
+ const cacheKey=JSON.stringify(s);
+ const now=Date.now(),hit=cache.get(cacheKey);if(hit&&hit.expires>now){
   const data=hit.value as {results:unknown[]};return NextResponse.json({
    ...data,fromCache:true},{headers:{"Cache-Control":"private, max-age=60"}});
  }
@@ -46,7 +47,7 @@ export async function GET(req:NextRequest){
   const value={results,source:"Rechtspraak Open Data",officialData:true,
    partialLocalFilters:!s.ecli&&!!(s.court||s.keyword||s.law||s.procedure),
    sourceLink:official,notice:"Local filters apply ONLY to the fetched first 20 ECLI entries. Not a full-text index."};
-  cache.set(official,{expires:now+5*60*1000,value});
+  cache.set(cacheKey,{expires:now+5*60*1000,value});
   return NextResponse.json(value,{headers:{"Cache-Control":"private, max-age=60"}});
  }catch{return fail(502,"UPSTREAM_UNAVAILABLE");}
 }
