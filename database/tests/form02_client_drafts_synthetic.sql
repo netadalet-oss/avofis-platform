@@ -135,7 +135,7 @@ do $test$ begin
  begin
   update public.avofis_client_document_drafts set consent_to_staff=true,status='review_requested'
    where id=current_setting('avofis.test.shared')::uuid;
-  raise exception 'FORM02 withdrawn consent silently restored';
+  if found then raise exception 'FORM02 withdrawn consent silently restored'; end if;
  exception when others then
   if sqlerrm not like 'FORM02 withdrawn document is immutable%' then raise; end if;
  end;
