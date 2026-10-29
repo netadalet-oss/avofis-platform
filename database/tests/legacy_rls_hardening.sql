@@ -1,4 +1,4 @@
-\\set ON_ERROR_STOP on
+\set ON_ERROR_STOP on
 -- Disposable PostgreSQL 17 verification of the observed 29 Oct 2026
 -- legacy schema. This is a synthetic RLS/grant regression, NOT a live
 -- Supabase/Auth/Data API E2E test.
@@ -77,7 +77,7 @@ begin
  end if;
 end $$;
 
-\\ir ../migrations/20261029_legacy_public_rls_hardening.sql
+\ir ../migrations/20261029_legacy_public_rls_hardening.sql
 
 -- RLS and grants must be hardened on every legacy table.
 do $$
@@ -175,7 +175,7 @@ end $$;
 reset role;
 
 -- Migration is idempotent: no new access and no duplicate-policy failure.
-\\ir ../migrations/20261029_legacy_public_rls_hardening.sql
+\ir ../migrations/20261029_legacy_public_rls_hardening.sql
 do $$
 begin
  if (select count(*) from pg_policies
@@ -184,4 +184,4 @@ begin
    raise exception 'Second application changed policy count';
  end if;
 end $$;
-\\echo 'PASS: all seven legacy tables RLS hardened; anon CRUD removed; A/B private rows isolated; admin-only read restored'
+\echo 'PASS: all seven legacy tables RLS hardened; anon CRUD removed; A/B private rows isolated; admin-only read restored'
