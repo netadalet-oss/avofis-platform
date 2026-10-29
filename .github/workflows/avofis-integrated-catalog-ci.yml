@@ -230,6 +230,8 @@ jobs:
         run: node --experimental-strip-types --test scripts/judicial-integration.test.mjs
       - name: J05 shared Redis REST limiter unit checks (no real credentials)
         run: node --experimental-strip-types --test scripts/rechtspraak-shared-rate-limit.test.mjs
+      - name: FORM-01 contextual document and DOCX privacy regression
+        run: node --experimental-strip-types --test scripts/document-preparation.test.mjs
       - name: Non-gating one-call Rechtspraak public XML authenticity probe
         continue-on-error: true
         timeout-minutes: 1
