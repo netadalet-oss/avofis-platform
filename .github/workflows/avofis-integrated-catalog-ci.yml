@@ -189,6 +189,8 @@ jobs:
         run: node --experimental-strip-types --test scripts/staff-workspace.test.mjs
       - name: P09 staff MFA assurance unit checks
         run: node --experimental-strip-types --test scripts/staff-mfa.test.mjs
+      - name: P11 real customer document review contract and production environment guard
+        run: node --experimental-strip-types --test scripts/client-document-review.test.mjs
       - name: Admin TypeScript and role-screen compile
         run: npm run typecheck
       - name: Build private staff app with all live actions locked
