@@ -208,4 +208,5 @@ end $$;
 begin read only;
 \ir ../ops/legacy_rls_readonly_preflight.sql
 commit;
+\ir ../ops/legacy_rls_readonly_postflight.sql
 \echo 'PASS: all seven legacy tables RLS hardened; anon CRUD removed; A/B private rows isolated; admin-only read restored'
