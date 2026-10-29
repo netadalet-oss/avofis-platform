@@ -1,6 +1,7 @@
 import {createClient} from "@supabase/supabase-js";
 import {NextRequest,NextResponse} from "next/server";
 import {isStaffCapability,type StaffCapability} from "@/lib/workspace-model";
+import {evaluateStaffMfa} from "@/lib/staff-mfa";
 export const runtime="nodejs";export const dynamic="force-dynamic";
 const refuse=(status:number,error:string)=>NextResponse.json({error},{status,headers:{"Cache-Control":"no-store"}});
 const enabled=process.env.AVOFIS_STAFF_WORKSPACE_STAGING_ENABLED==="true";
@@ -20,6 +21,8 @@ async function verify(req:NextRequest,cap:string){
  const {data:identity,error:userError}=await db.auth.getUser(token);
  if(userError||!identity.user)return {code:401,why:"SESSION_NOT_VERIFIED"} as const;
  const uid=identity.user.id;
+ const assurance=await evaluateStaffMfa(db,token);
+ if(!assurance.allowed)return {code:403,why:assurance.reason} as const;
  const {data:staff,error:staffError}=await db.from("avofis_staff")
   .select("role").eq("user_id",uid).maybeSingle();
  if(staffError||!staff||!["admin","operator"].includes(staff.role))
