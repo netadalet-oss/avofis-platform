@@ -2,6 +2,8 @@
 -- FORM-02 synthetic PG17 only, after customer_tenant_isolation and P01 migration.
 \ir ../migrations/20261029_form02_versioned_client_drafts_staging_only.sql
 begin;
+-- Existing P09 synthetic fixture requires and tests employee AAL2.
+select set_config('request.jwt.claims','{"aal":"aal2"}',false);
 select set_config('request.jwt.claim.sub','aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa',false);
 set role authenticated;
 insert into public.avofis_client_document_drafts(owner_user_id,service_slug,locale,content)
