@@ -40,11 +40,12 @@ test("FORM02 revision and consent are mandatory, official states disallowed",()=
  const good={id,revision:3,draft,status:"draft",consent_to_staff:false};
  assert.equal(parsePatchDraft(good)?.revision,3);
  assert.equal(parsePatchDraft({...good,status:"review_requested",consent_to_staff:true})?.status,"review_requested");
+ assert.equal(parsePatchDraft({...good,status:"withdrawn",consent_to_staff:false})?.status,"withdrawn");
  for(const bad of [
   {...good,revision:0},{...good,revision:-1},{...good,revision:1.5},
   {...good,revision:NaN},{...good,revision:1e9},{...good,id:"x"},
   {...good,status:"filed"},{...good,status:"review_requested"},
-  {...good,consent_to_staff:"true"},{...good,reviewer_user_id:id},
+  {...good,consent_to_staff:"true"},{...good,status:"withdrawn",consent_to_staff:true},{...good,reviewer_user_id:id},
   {...good,draft:{...draft,service:"does-not-exist"}}
  ])assert.equal(parsePatchDraft(bad),null);
 });
