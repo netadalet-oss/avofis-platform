@@ -91,7 +91,9 @@ export function evaluateINDAdmission(r:INDAdmissionReview):{
  if(!r.representation.serviceAgreementSigned)issues.push("AGREEMENT_MISSING");
  if(!r.privacy.legalBasisReviewed || !r.privacy.secureDocumentChannelVerified ||
     !r.privacy.disclosureAndRetentionReviewed)issues.push("PRIVACY_UNVERIFIED");
- const highRisk=r.procedure==="asylum"||r.procedure==="detention_or_removal";
+ // Match the SQL activation guard: judicial appeals also require a verified
+ // independent professional. Domain validation alone never grants filing rights.
+ const highRisk=["court_appeal","higher_appeal","asylum","detention_or_removal"].includes(r.procedure);
  if(highRisk && (!r.specialist.credentialVerified ||
                 !nonempty(r.specialist.specialistIdentity))){
    issues.push("SPECIALIST_REQUIRED");
