@@ -1,6 +1,7 @@
 import {NextRequest,NextResponse} from "next/server";
 import {buildOfficialQuery,matchesLocalFilters,parseAtomEntries,parseContentMetadata,
  searchDefaults,validatePublicSearch,type SearchInput} from "@/lib/rechtspraak-open-data";
+import {reserveRechtspraakUpstreamSlot} from "@/lib/rechtspraak-shared-rate-limit";
 export const runtime="nodejs";
 export const dynamic="force-dynamic";
 const fail=(status:number,message:string)=>NextResponse.json({error:message,source:"Rechtspraak Open Data",officialData:false},{status,headers:{"Cache-Control":"no-store"}});
@@ -19,7 +20,9 @@ export async function GET(req:NextRequest){
    return fail(503,"NOT_ENABLED_PENDING_SHARED_RATE_LIMIT_VALIDATION");
  const q=req.nextUrl.searchParams;
  const allow=new Set(["ecli","court","dateFrom","dateTo","law","keyword","procedure"]);
- if([...q.keys()].some(key=>!allow.has(key))||q.size>7)return fail(400,"UNKNOWN_PARAMETER");
+ if([...q.keys()].some(key=>!allow.has(key))||q.size>7||
+  [...new Set(q.keys())].some(key=>q.getAll(key).length!==1))
+  return fail(400,"UNKNOWN_OR_DUPLICATE_PARAMETER");
  const s:SearchInput={...searchDefaults,...Object.fromEntries([...allow].map(k=>[k,q.get(k)||""]))};
  const issue=validatePublicSearch(s);if(issue)return fail(400,issue);
  const official=buildOfficialQuery(s);
@@ -32,6 +35,11 @@ export async function GET(req:NextRequest){
  // Local per-instance budget. A global limit is mandatory before enabling.
  if(now-lastOutbound<2000)return fail(429,"LOCAL_UPSTREAM_RATE_LIMIT");
  lastOutbound=now;
+ // A local lock cannot protect the 10/s upstream budget across deployments.
+ // Reserve an atomic, shared 8/s rolling-window slot BEFORE any source request.
+ const slot=await reserveRechtspraakUpstreamSlot();
+ if(!slot.allowed)return fail(slot.reason==="LIMITED"?429:503,
+  slot.reason==="LIMITED"?"GLOBAL_UPSTREAM_RATE_LIMIT":"SHARED_LIMITER_"+slot.reason);
  try{
   const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),7000);
   let response:Response;
