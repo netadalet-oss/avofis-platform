@@ -74,6 +74,12 @@ select set_config('request.jwt.claim.sub','aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa'
 set role authenticated;
 do $client$
 begin
+ raise notice 'P09 client A post-MFA RLS counts: case %, msg %, payment %, storage %, work %',
+  (select count(*) from public.avofis_cases),
+  (select count(*) from public.avofis_messages),
+  (select count(*) from public.avofis_payments),
+  (select count(*) from storage.objects where bucket_id='avofis-private'),
+  (select count(*) from public.avofis_staff_work_items);
  if (select count(*) from public.avofis_cases)<>1
   or (select count(*) from public.avofis_messages)<>1
   or (select count(*) from public.avofis_payments)<>1
