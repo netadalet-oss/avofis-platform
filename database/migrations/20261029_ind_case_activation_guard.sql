@@ -82,14 +82,14 @@ begin
    if new.case_id is distinct from old.case_id then
      raise exception 'The clearance case cannot be reassigned';
    end if;
-   if old.human_approved and new.human_approved then
-     raise exception 'Approved clearance must be revoked before re-review';
-   end if;
    if old.human_approved and exists (
        select 1 from public.avofis_cases c
        where c.id=old.case_id and c.status in ('open','completed')
    ) then
      raise exception 'Active case clearance is immutable; use supervised re-review';
+   end if;
+   if old.human_approved and new.human_approved then
+     raise exception 'Approved clearance must be revoked before re-review';
    end if;
  end if;
  if new.human_approved then
