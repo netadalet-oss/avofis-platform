@@ -6,12 +6,12 @@ import type {PreparationDraft,DraftLocale} from "@/lib/document-preparation";
 type Item={id:string;case_id:string|null;service_slug:string;locale:string;revision:number;status:string;updated_at:string};
 type Matter={id:string;title:string};
 const labels:Record<DraftLocale,[string,string,string,string,string,string,string,string]>={
- tr:["Hesap taslakları (test ortamı)","Yalnız bağımsız staging ortamı; resmî başvuru değildir.","Dosyaya bağla (isteğe bağlı)","Yalnız bana özel","Hesabıma kaydet","Taslaklarımı getir","Taslağı aç","İncelemeye devret"],
- nl:["Concepten (testomgeving)","Uitsluitend test; geen officiële indiening.","Koppel aan zaak (optioneel)","Privéconcept","Opslaan","Concepten ophalen","Openen","Ter beoordeling delen"],
- de:["Entwürfe (Testumgebung)","Nur Test; keine amtliche Einreichung.","Akte (optional)","Privater Entwurf","Speichern","Entwürfe laden","Öffnen","Zur Prüfung teilen"],
- en:["Account drafts (staging)","Test environment only; no official submission.","Linked case (optional)","Private draft","Save to account","List drafts","Open draft","Request review"],
- ar:["مسودات الحساب (اختبار)","بيئة اختبار فقط، وليست تقديمًا رسميًا.","الملف (اختياري)","مسودة خاصة","حفظ في الحساب","عرض المسودات","فتح","طلب مراجعة"],
- ru:["Черновики (тест)","Только тестовая среда; не официальная подача.","Дело (необязательно)","Личный черновик","Сохранить","Показать черновики","Открыть","Передать на проверку"]
+ tr:["Belgelerim ve taslaklarım","Taslağınız hesabınızda korunur. Dosyaya bağlayıp açıkça izin verirseniz yalnız yetkili ve atanmış personel inceleyebilir. Bu işlem resmî gönderim değildir.","Dosyaya bağla (isteğe bağlı)","Yalnız bana özel","Hesabıma kaydet","Taslaklarımı getir","Taslağı aç","İncelemeye devret"],
+ nl:["Mijn documentconcepten","Concepten worden in uw account bewaard. Alleen na uw toestemming kan toegewezen bevoegd personeel ze beoordelen; dit is geen officiële indiening.","Koppel aan zaak (optioneel)","Privéconcept","Opslaan","Concepten ophalen","Openen","Ter beoordeling delen"],
+ de:["Meine Dokumententwürfe","Entwürfe bleiben in Ihrem Konto. Nur mit Ihrer Einwilligung kann zugewiesenes Personal sie prüfen; keine amtliche Einreichung.","Akte (optional)","Privater Entwurf","Speichern","Entwürfe laden","Öffnen","Zur Prüfung teilen"],
+ en:["My document drafts","Drafts are saved to your account. Assigned, authorized staff may review only after your consent. No official filing is performed.","Linked case (optional)","Private draft","Save to account","List drafts","Open draft","Request review"],
+ ar:["مستنداتي ومسوداتي","تُحفظ المسودات في حسابك. لا يطّلع الموظف المعين والمخوّل عليها إلا بموافقتك. لا يتم تقديم أي طلب رسمي.","الملف (اختياري)","مسودة خاصة","حفظ في الحساب","عرض المسودات","فتح","طلب مراجعة"],
+ ru:["Мои документы и черновики","Черновики сохраняются в вашем аккаунте. Уполномоченный сотрудник может читать их только с вашего согласия; официальной подачи нет.","Дело (необязательно)","Личный черновик","Сохранить","Показать черновики","Открыть","Передать на проверку"]
 };
 const reviewText:Record<DraftLocale,string>={
  tr:"Taslak kilitlenecek ve yalnız atanmış, iki ayrı belge yetkisi olan personelle paylaşılacak. Onaylıyor musunuz?",
@@ -21,7 +21,7 @@ const reviewText:Record<DraftLocale,string>={
  ar:"سيتم قفل المسودة ومشاركتها فقط مع الموظف المعين والمصرح له. هل توافق؟",
  ru:"Заблокировать документ и передать только назначенным уполномоченным сотрудникам?"
 };
-const stageUI=process.env.NEXT_PUBLIC_AVOFIS_DOCUMENT_DRAFT_STAGING_ENABLED==="true";
+const documentUI=process.env.NEXT_PUBLIC_AVOFIS_DOCUMENT_DRAFTS_ENABLED==="true";
 export function AccountDraftControls({draft,onLoad}:{draft:PreparationDraft;onLoad:(v:PreparationDraft)=>void}){
  const w=labels[draft.locale];
  const [signed,setSigned]=useState(false);
@@ -32,7 +32,7 @@ export function AccountDraftControls({draft,onLoad}:{draft:PreparationDraft;onLo
  const [busy,setBusy]=useState(false);
  const [notice,setNotice]=useState("");
  useEffect(()=>{
-  if(!stageUI)return;
+  if(!documentUI)return;
   let live=true;
   void supabase.auth.getSession().then(async ({data})=>{
    if(!live||!data.session)return;
@@ -84,7 +84,7 @@ export function AccountDraftControls({draft,onLoad}:{draft:PreparationDraft;onLo
    if(loaded.draft.status==="review_requested")setNotice("REVIEW_REQUESTED_LOCKED");
   }catch{setNotice("STAGING_UNAVAILABLE");}finally{setBusy(false);}
  }
- if(!stageUI)return null;
+ if(!documentUI)return null;
  return <section className="mt-7 rounded-xl border border-[#dfbf59]/35 bg-[#0b213d] p-5 print:hidden" lang={draft.locale} dir={draft.locale==="ar"?"rtl":"ltr"}>
   <h2 className="font-semibold">{w[0]}</h2><p className="mt-2 text-sm text-[#c1cbdf]">{w[1]}</p>
   {!signed?<p className="mt-3 text-sm"><Link href="/auth/login" className="underline">{w[4]}</Link></p>:
@@ -92,7 +92,7 @@ export function AccountDraftControls({draft,onLoad}:{draft:PreparationDraft;onLo
     {!current&&<label className="block text-sm">{w[2]}<select className="mt-2 block w-full rounded-lg bg-[#102142] p-3" value={caseId} onChange={e=>setCaseId(e.target.value)}>
       <option value="">{w[3]}</option>{cases.map(c=><option key={c.id} value={c.id}>{c.title}</option>)}
      </select></label>}
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2">\n     {current&&<button type="button" className="avofis-btn avofis-outline" disabled={busy} onClick={()=>{setCurrent(null);setCaseId("");setNotice("");}}>{({tr:"Yeni taslak",nl:"Nieuw concept",de:"Neuer Entwurf",en:"New draft",ar:"مسودة جديدة",ru:"Новый черновик"})[draft.locale]}</button>}
      <button type="button" disabled={busy||current?.status==="review_requested"} className="avofis-btn avofis-outline disabled:opacity-50" onClick={()=>void save()}>{w[4]}</button>
      <button type="button" disabled={busy} className="avofis-btn avofis-outline" onClick={()=>void list()}>{w[5]}</button>
      {current?.case_id&&current.status==="draft"&&<button type="button" disabled={busy} className="avofis-btn avofis-outline" onClick={()=>void save(true)}>{w[7]}</button>}
