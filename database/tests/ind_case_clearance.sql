@@ -39,7 +39,8 @@ insert into auth.users(id) values
  ('cccccccc-cccc-4ccc-cccc-cccccccccccc');
 insert into public.avofis_staff(user_id,role) values
  ('aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa','admin'),
- ('bbbbbbbb-bbbb-4bbb-bbbb-bbbbbbbbbbbb','operator');
+ ('bbbbbbbb-bbbb-4bbb-bbbb-bbbbbbbbbbbb','operator'),
+ ('cccccccc-cccc-4ccc-cccc-cccccccccccc','admin');
 insert into public.avofis_cases(id,status) values
  ('11111111-1111-4111-8111-111111111111','awaiting_agreement'),
  ('22222222-2222-4222-8222-222222222222','awaiting_agreement');
@@ -83,7 +84,7 @@ begin
    where case_id='11111111-1111-4111-8111-111111111111';
   raise exception 'Incomplete IND review unexpectedly approved';
  exception when others then
-  if sqlerrm not like 'Country and specific procedure%' then raise; end if;
+  if sqlerrm not like 'Independent second admin approval%' then raise; end if;
  end;
 end $$;
 update public.avofis_case_clearances
@@ -95,7 +96,37 @@ update public.avofis_case_clearances
      stay_consequences_reviewed=true,representation_requested=true,
      special_mandate_verified=true,mandate_reference='signed-ind-mandate-ref',
      privacy_legal_basis_reviewed=true,secure_document_channel_verified=true,
-     disclosure_and_retention_reviewed=true,human_approved=true
+     disclosure_and_retention_reviewed=true
+ where case_id='11111111-1111-4111-8111-111111111111';
+
+-- Self-approval must fail even for a complete draft.
+do $
+begin
+ begin
+  update public.avofis_case_clearances set human_approved=true
+   where case_id='11111111-1111-4111-8111-111111111111';
+  raise exception 'Same-admin approval unexpectedly succeeded';
+ exception when others then
+  if sqlerrm not like 'Independent second admin approval%' then raise; end if;
+ end;
+end $;
+
+-- A different verified admin must approve the previously saved evidence.
+reset role;
+select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
+set role authenticated;
+do $
+begin
+ begin
+  update public.avofis_case_clearances
+   set human_approved=true, representative_name='Edited during approval'
+   where case_id='11111111-1111-4111-8111-111111111111';
+  raise exception 'Approval-time evidence modification unexpectedly succeeded';
+ exception when others then
+  if sqlerrm not like 'Approval cannot change saved review evidence%' then raise; end if;
+ end;
+end $;
+update public.avofis_case_clearances set human_approved=true
  where case_id='11111111-1111-4111-8111-111111111111';
 update public.avofis_cases set status='open'
  where id='11111111-1111-4111-8111-111111111111';
@@ -132,7 +163,13 @@ insert into public.avofis_case_clearances(
  true,'2026-10-12',true,'Human reviewed decision route',
  true,true,true,'signed-ind-mandate-ref',true,true,true
 );
-do $$
+
+-- A separate admin now checks the unreviewed IND file request form.
+-- The file-request draft above was saved by admin C.
+reset role;
+select set_config('request.jwt.claim.sub','aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa',false);
+set role authenticated;
+do $
 begin
  begin
   update public.avofis_case_clearances set human_approved=true
@@ -141,7 +178,7 @@ begin
  exception when others then
   if sqlerrm not like 'IND file request requires separate form%' then raise; end if;
  end;
-end $$;
+end $;
 
 -- Operator cannot see internal approvals, even though authenticated has table grants.
 reset role;
@@ -163,4 +200,4 @@ begin
  end;
 end $$;
 reset role;
-\echo 'PASS: IND case-clearance RLS, draft denial, document guard and activation'
+\echo 'PASS: IND G1-G4 two-admin review/approval, evidence immutability, RLS and activation'
