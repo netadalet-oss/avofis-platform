@@ -7,6 +7,7 @@ import { PageFrame } from "@/components/avofis/PageFrame";
 import { usePortalLanguage } from "@/hooks/usePortalLanguage";
 import { getJourney, journeys, validateJourneyDetails } from "@/lib/journeys";
 import { officialSources } from "@/lib/journey-sources";
+import { publicCustomerTransactionsAuthorized } from "@/lib/public-release-status";
 
 declare global {
  interface Window {turnstile?:{render:(el:HTMLElement,options:{sitekey:string;callback:(token:string)=>void;"expired-callback":()=>void})=>string;reset:(id?:string)=>void};}
@@ -27,7 +28,7 @@ export default function IntakePage(){
  const [pending,setPending]=useState(false),[error,setError]=useState(""),[reference,setReference]=useState("");
  const widgetRef=useRef<HTMLDivElement>(null),rendered=useRef(false);
  const chosen=getJourney(journeyId)||journeys[0];
- const ready=enabled&&!!sitekey;
+ const ready=enabled&&!!sitekey&&publicCustomerTransactionsAuthorized;
  useEffect(()=>{
    const fromUrl=new URLSearchParams(window.location.search).get("islem")||"";
    if(getJourney(fromUrl))setJourneyId(fromUrl);
