@@ -69,6 +69,30 @@ jobs:
             sudo apt-get install -y -qq postgresql-client
           fi
           psql -v ON_ERROR_STOP=1 -f database/tests/legacy_rls_hardening.sql
+      - name: Prove B01/B02 migration rejects unexpected RLS policies (disposable only)
+        env:
+          PGPASSWORD: synthetic-test-password
+          PGHOST: 127.0.0.1
+          PGPORT: "5432"
+          PGUSER: postgres
+          PGDATABASE: avofis_legacy_ci
+        run: |
+          set -euo pipefail
+          createdb avofis_drift_guard_ci
+          set +e
+          PGDATABASE=avofis_drift_guard_ci psql -v ON_ERROR_STOP=1 -f database/tests/legacy_unreviewed_policy_drift.sql > "$RUNNER_TEMP/rls_drift_guard.log" 2>&1
+          code=$?
+          set -e
+          if [ "$code" -eq 0 ]; then
+            echo "ERROR: an unexpected broad policy did not block the migration"
+            exit 1
+          fi
+          if ! grep -Fq "B01/B02 unexpected legacy policies" "$RUNNER_TEMP/rls_drift_guard.log"; then
+            cat "$RUNNER_TEMP/rls_drift_guard.log"
+            echo "ERROR: failed for the wrong reason"
+            exit 1
+          fi
+          echo "PASS: B01/B02 migration refuses unreviewed permissive policies"
   tenant-isolation-synthetic:
     runs-on: ubuntu-latest
     timeout-minutes: 15
