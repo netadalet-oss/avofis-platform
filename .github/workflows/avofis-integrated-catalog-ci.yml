@@ -98,6 +98,7 @@ jobs:
             sudo apt-get install -y -qq postgresql-client
           fi
           psql -v ON_ERROR_STOP=1 -f database/tests/customer_tenant_isolation.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/client_case_workflow_synthetic.sql
       - name: Dump, corrupt disposable source, restore into a new disposable DB, and re-test RLS
         env:
           PGPASSWORD: synthetic-tenant-test
@@ -140,6 +141,8 @@ jobs:
         run: npm run build
       - name: IND admission gate unit checks (no client data)
         run: node --experimental-strip-types --test scripts/ind-clearance.test.mjs
+      - name: Non-identifying country/role/notice triage unit tests
+        run: node --experimental-strip-types --test scripts/public-triage.test.mjs
       - name: Release authorisation cannot be bypassed by env flags
         run: node --experimental-strip-types --test scripts/release-authorization.test.mjs
       - name: HTTP route and disabled-endpoint smoke tests
