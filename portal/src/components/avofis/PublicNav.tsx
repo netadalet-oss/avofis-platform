@@ -11,7 +11,9 @@ const labels = {
   nl: { home:"Home", services:"Diensten", process:"Hoe werkt het?", info:"Informatie", contact:"Contact", login:"Klantlogin", intake:"Aanvraag", menu:"Menu openen", close:"Menu sluiten", language:"Taalkeuze" },
   en: { home:"Home", services:"Services", process:"How it works", info:"Information", contact:"Contact", login:"Client login", intake:"Enquiry", menu:"Open menu", close:"Close menu", language:"Language" }
 };
-const languages: Language[] = ["tr","nl","en"];
+// Full six-language catalogue is navigable; only TR/NL/EN have these core
+// route translations. DE/AR/RU link to the explicitly review-pending catalogue.
+const languages = ["tr","nl","de","en","ar","ru"] as const;
 
 export function PublicNav({lang}: {lang: Language}) {
   const [open,setOpen] = useState(false);
@@ -23,11 +25,14 @@ export function PublicNav({lang}: {lang: Language}) {
     {title:t.services,href:"/hizmetler"},
     {title:t.process,href:"/nasil-calisir"},
     {title:t.info,href:"/bilgi"},
+    {title:"6 dil / 6 talen",href:"/diller"},
     {title:t.contact,href:"/iletisim"},
     {title:t.login,href:"/auth/login"}
   ];
-  const languageControl = <div className="flex items-center gap-1 rounded-lg border border-[#dfbf59]/25 p-1" aria-label={t.language}>
-    {languages.map(code=><a key={code} href={pathname+"?lang="+code} lang={code} hrefLang={code} aria-current={lang===code?"true":undefined} className={"flex min-h-11 min-w-11 items-center justify-center rounded-md text-xs font-semibold "+(code===lang?"bg-[#dfbf59] text-[#030A22]":"text-[#E1E8F5] hover:bg-[#071738]")}>{code.toUpperCase()}</a>)}
+  const languageHref=(code:(typeof languages)[number])=>
+   code==="de"||code==="ar"||code==="ru"?"/katalog?lang="+code:pathname+"?lang="+code;
+  const languageControl = <div className="flex flex-wrap items-center gap-1 rounded-lg border border-[#dfbf59]/25 p-1" aria-label={t.language}>
+    {languages.map(code=><a key={code} href={languageHref(code)} lang={code} hrefLang={code} aria-current={lang===code?"true":undefined} className={"flex min-h-11 min-w-11 items-center justify-center rounded-md text-xs font-semibold "+(code===lang?"bg-[#dfbf59] text-[#030A22]":"text-[#E1E8F5] hover:bg-[#071738]")}>{code.toUpperCase()}</a>)}
   </div>;
 
   return <header className="sticky top-0 z-50 border-b border-[#dfbf59]/20 bg-[#030A22]/95 backdrop-blur-xl">
