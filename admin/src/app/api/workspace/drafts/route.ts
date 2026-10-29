@@ -80,3 +80,34 @@ export async function POST(req:NextRequest){
  return NextResponse.json({item:data,status:"DRAFT_ONLY",canSubmitExternally:false},
   {status:201,headers:{"Cache-Control":"no-store"}});
 }
+
+/** Owner-only workflow transition. Database trigger makes submitted notes
+ * immutable even if an API caller bypasses this handler. */
+export async function PATCH(req:NextRequest){
+ if(!writable)return refuse(503,"DRAFT_REVIEW_WRITES_DISABLED");
+ if(req.headers.get("content-type")?.split(";")[0]!=="application/json")
+  return refuse(415,"JSON_REQUIRED");
+ const length=Number(req.headers.get("content-length")||0);
+ if(length>700)return refuse(413,"REQUEST_TOO_LARGE");
+ let body:unknown;
+ try{body=await req.json();}catch{return refuse(400,"INVALID_JSON");}
+ if(!body||typeof body!=="object"||Array.isArray(body))
+  return refuse(400,"INVALID_JSON");
+ const v=body as Record<string,unknown>;
+ if(Object.keys(v).sort().join(",")!=="id,module,state")return refuse(400,"UNKNOWN_FIELDS");
+ if(typeof v.module!=="string")return refuse(400,"INVALID_MODULE");
+ if(typeof v.id!=="string"||
+  !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(v.id))
+  return refuse(400,"INVALID_ID");
+ if(v.state!=="review_requested")return refuse(400,"STATE_NOT_ALLOWED");
+ const a=await verify(req,v.module);
+ if(typeof a.code==="number")return refuse(a.code,a.why||"AUTHORIZATION_FAILED");
+ const {data,error}=await a.db.from("avofis_staff_work_items")
+  .update({state:"review_requested"}).eq("id",v.id)
+  .eq("module",a.cap).eq("staff_user_id",a.uid).eq("state","draft")
+  .select("id,state").maybeSingle();
+ if(error||!data)return refuse(403,"REVIEW_REQUEST_REJECTED");
+ return NextResponse.json({status:"REVIEW_REQUESTED_INTERNAL_ONLY",item:data,
+  mayApproveBankTransfer:false,maySendToCourt:false},
+  {headers:{"Cache-Control":"no-store"}});
+}
