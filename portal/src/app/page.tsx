@@ -13,6 +13,23 @@ const extras={
   nl:{scope:"Vóór de opdracht",scopeIntro:"Het voorstel maakt de volgende punten afzonderlijk duidelijk.",scopeItems:["Wat wel en niet onder de opdracht valt","Benodigde stukken en de uitvoerende partij","Diensttarief, leges, btw en kosten van derden"],browse:"Bekijk de details",steps:"Niet elke stap is op ieder dossier van toepassing.",more:"Lees de volledige werkwijze",foot:"AVOfis verricht geen voorbehouden beroepswerkzaamheden zonder vereiste bevoegdheid. Waar nodig wordt verwezen naar onafhankelijke bevoegde specialisten.",closed:"Het online aanvraagformulier is nog niet actief. Stuur nog geen documenten of persoonsgegevens."},
   en:{scope:"Before work starts",scopeIntro:"The service proposal distinguishes these items.",scopeItems:["Included and excluded work","Required documents and responsible professionals","Service fee, official charges, VAT and third-party costs"],browse:"View service details",steps:"Not every stage applies to every case.",more:"Read the full process",foot:"AVOfis does not perform reserved professional services without the required authorisation. Where necessary, independent authorised specialists are engaged.",closed:"The online enquiry form is not yet active. Do not send documents or personal data."}
 };
+const audienceNavigation={
+ tr:{title:"Hizmet alanları ve kullanıcılar",info:"İhtiyacınıza uygun hizmet, ilgili ülkenin usulüne ve görevli uzmanın yetkisine göre belirlenir.",groups:[
+  {title:"Bireyler ve aileler",description:"İkamet, aile, konut, sosyal haklar, belgeler ve idarî başvurular",href:"/islemler"},
+  {title:"İşletmeler ve kurumlar",description:"Ticaret, iş, sözleşme, tahsilat, izin ve sınır ötesi işlemler",href:"/hizmetler"},
+  {title:"Hukukî araştırma",description:"Hollanda içtihatları, kaynaklar ve resmî işlem bağlantıları",href:"/ictihat"}
+ ]},
+ nl:{title:"Voor wie en welke diensten?",info:"De bevoegde professional en de juiste procedure worden per zaak en rechtsgebied beoordeeld.",groups:[
+  {title:"Particulieren en gezinnen",description:"Verblijf, familie, woning, sociale rechten en administratieve aanvragen",href:"/islemler"},
+  {title:"Ondernemers en organisaties",description:"Handel, arbeid, contracten, incasso en grensoverschrijdende procedures",href:"/hizmetler"},
+  {title:"Juridisch onderzoek",description:"Nederlandse jurisprudentie, officiële bronnen en digitale rechtspraak",href:"/ictihat"}
+ ]},
+ en:{title:"Services and who they support",info:"The appropriate route and qualified professional depend on the matter, country and procedural rules.",groups:[
+  {title:"Individuals and families",description:"Residence, family, housing, social rights, documents and administration",href:"/islemler"},
+  {title:"Businesses and organisations",description:"Trade, employment, agreements, recovery and cross-border processes",href:"/hizmetler"},
+  {title:"Legal research",description:"Dutch judgments, official sources and court access information",href:"/ictihat"}
+ ]}
+} as const;
 const enabled=process.env.NEXT_PUBLIC_AVOFIS_INTAKE_ENABLED==="true";
 const journeyLabels={
  tr:{heading:"Ne işlem yaptırmak istiyorsunuz?",description:"İkamet ettiğiniz yere veya işin adını bilmenize gerek yok. Belgenizin kaynağına ve kullanım yerine uygun işlemi seçin.",more:"Tüm işlem türlerini incele",choose:"İşlemi incele"},
@@ -41,6 +58,20 @@ export default function HomePage(){
           <ul className="mt-4 grid gap-3">{t.scopeItems.map((item,i)=><li key={item} className="flex gap-3 border-t border-[#dfbf59]/15 pt-3 text-[14px] leading-6 text-[#E1E8F5]"><span className="font-semibold text-[#dfbf59]">{i+1}.</span>{item}</li>)}</ul>
         </aside>
       </div>
+    </section>
+    <section className="border-b border-[#dfbf59]/15 py-9 sm:py-11" aria-label={audienceNavigation[lang].title}>
+     <div className="avofis-container">
+      <h2 className="text-[19px] font-semibold tracking-tight text-[#F2F5FF]">{audienceNavigation[lang].title}</h2>
+      <p className="mt-2 max-w-3xl text-[13px] leading-7 text-[#B9C5DF]">{audienceNavigation[lang].info}</p>
+      <div className="mt-5 grid gap-3 md:grid-cols-3">
+       {audienceNavigation[lang].groups.map(g=><Link key={g.title} href={link(g.href)}
+        className="group flex min-h-[124px] flex-col rounded-[13px] border border-[#dfbf59]/20 bg-[#071638] p-5 hover:border-[#dfbf59]/45">
+        <span className="text-[14px] font-semibold text-[#F2F5FF]">{g.title}</span>
+        <span className="mt-2 flex-1 text-[12px] leading-6 text-[#B9C5DF]">{g.description}</span>
+        <span className="mt-2 text-[11px] font-semibold text-[#dfbf59]"> {lang==="tr"?"İncele":lang==="nl"?"Bekijk":"Explore"} <ArrowUpRight className="ml-1 inline h-3 w-3" aria-hidden="true"/></span>
+       </Link>)}
+      </div>
+     </div>
     </section>
     <section className="border-b border-[#dfbf59]/15 py-14 sm:py-16">
       <div className="avofis-container">
