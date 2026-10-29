@@ -21,6 +21,11 @@ create table public.media_assets(id uuid primary key,url text,name text,type tex
 create table public.pages(id uuid primary key,title text);
 create table public.site_settings(id uuid primary key,key text,value jsonb);
 
+-- Minimal Storage catalogue shim for the *read-only* production inventory.
+-- This is not the managed Supabase Storage service.
+create schema storage;
+create table storage.buckets(id text primary key,public boolean not null default false);
+
 -- Reconstruct the broad grants and the relevant legacy RLS policies.
 grant all privileges on table
  public.offices,public.office_members,public.topics,public.posts,
@@ -76,6 +81,18 @@ begin
    raise exception 'Fixture does not reproduce the observed vulnerability';
  end if;
 end $$;
+
+-- Read-only baseline should report 7 insecure legacy tables.
+\ir ../ops/legacy_rls_readonly_preflight.sql
+do $
+declare unsafe_count integer;
+begin
+ select count(*) into unsafe_count from pg_class c join pg_namespace n on n.oid=c.relnamespace
+  where n.nspname='public'
+    and c.relname in ('offices','office_members','topics','posts','jobs','applications','media_assets')
+    and not c.relrowsecurity;
+ if unsafe_count<>7 then raise exception 'Expected all 7 old tables insecure for baseline, found %',unsafe_count; end if;
+end $;
 
 \ir ../migrations/20261029_legacy_public_rls_hardening.sql
 
@@ -184,4 +201,7 @@ begin
    raise exception 'Second application changed policy count';
  end if;
 end $$;
+-- Re-run the identical read-only inventory after the candidate migration.
+-- Production remains untouched; this is the disposable PG17 fixture.
+\ir ../ops/legacy_rls_readonly_preflight.sql
 \echo 'PASS: all seven legacy tables RLS hardened; anon CRUD removed; A/B private rows isolated; admin-only read restored'
