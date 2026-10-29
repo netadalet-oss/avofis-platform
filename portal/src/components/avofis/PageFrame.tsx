@@ -26,7 +26,7 @@ export function PageFrame({eyebrow,title,description,children,wide=false,lang="t
     <footer className="border-t border-[#dfbf59]/15 bg-[#04102C]">
       <div className="avofis-container flex flex-col gap-3 py-7 text-[13px] leading-6 text-[#B9C5DF] sm:flex-row sm:items-center sm:justify-between">
         <span>AVOfis · {t.description}</span>
-        <div className="flex gap-5"><Link href={"/gizlilik?lang="+lang} className="min-h-11 content-center hover:text-[#f0d56d]">{t.privacy}</Link><Link href={"/iletisim?lang="+lang} className="min-h-11 content-center hover:text-[#f0d56d]">{t.contact}</Link></div>
+        <div className="flex gap-5"><Link href={"/gizlilik?lang="+lang} className="min-h-11 content-center hover:text-[#f0d56d]">{t.privacy}</Link><Link href={"/iletisim?lang="+lang} className="min-h-11 content-center hover:text-[#f0d56d]">{t.contact}</Link><Link href={"/cerezler?lang="+lang} className="min-h-11 content-center hover:text-[#f0d56d]">{lang==="tr"?"Çerezler":lang==="nl"?"Cookies":"Cookies"}</Link><Link href="/uyum" className="min-h-11 content-center hover:text-[#f0d56d]">{lang==="tr"?"Yayın durumu":lang==="nl"?"Vrijgave":"Release status"}</Link></div>
       </div>
     </footer>
   </main>;
