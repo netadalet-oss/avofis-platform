@@ -88,9 +88,13 @@ reset role;
 -- IND-T04: exact same reviewed defaults except asylum submission dates.
 -- A single 12 June deadline regime label MUST NOT pass for both dates.
 insert into public.avofis_cases(id,status) values
- ('33333333-3333-4333-8333-333333333333','awaiting_agreement'),
- ('44444444-4444-4444-8444-444444444444','awaiting_agreement'),
- ('55555555-5555-4555-8555-555555555555','awaiting_agreement');
+ ('33333333-3333-4333-8333-333333333333','review'),
+ ('44444444-4444-4444-8444-444444444444','review'),
+ ('55555555-5555-4555-8555-555555555555','review');
+update public.avofis_cases set status='awaiting_agreement'
+ where id in ('33333333-3333-4333-8333-333333333333',
+              '44444444-4444-4444-8444-444444444444',
+              '55555555-5555-4555-8555-555555555555');
 insert into public.avofis_agreements(case_id,signed_at) values
  ('33333333-3333-4333-8333-333333333333',now()),
  ('44444444-4444-4444-8444-444444444444',now()),
