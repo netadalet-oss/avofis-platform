@@ -14,7 +14,7 @@ begin;
 -- Fail closed if a policy was added since the observed audit. PostgreSQL
 -- PERMISSIVE policies combine by OR: preserving an unreviewed one would
 -- silently defeat an otherwise correct RLS hardening migration.
-do $
+do $$
 declare unexpected_policies text;
 begin
  select string_agg(p.tablename||'.'||p.policyname,', ' order by p.tablename,p.policyname)
@@ -41,7 +41,7 @@ begin
     where schemaname='public' and tablename='site_settings' and policyname='Only admins can read settings') then
    raise exception 'B02 source schema drift: reviewed restrictive admin policies missing';
  end if;
-end $;
+end $$;
 
 alter table public.offices enable row level security;
 alter table public.office_members enable row level security;
