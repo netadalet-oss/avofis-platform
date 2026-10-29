@@ -17,6 +17,7 @@ export default function ServicesPage(){
   const lang=usePortalLanguage(),t=ui[lang],services=copy[lang].serviceList;
   return <PageFrame lang={lang} wide eyebrow={t.eyebrow} title={t.title} description={t.intro}>
     <section className="mb-8 border-b border-[#dfbf59]/20 pb-7"><h2 className="text-[18px] font-semibold">{lang==="tr"?"Doğrudan yapmak istediğiniz işlemi seçin":lang==="nl"?"Kies uw concrete procedure":"Choose your specific procedure"}</h2><p className="mt-2 text-[14px] leading-7 text-[#B9C5DF]">{lang==="tr"?"Hizmet kategorilerini bilmiyorsanız belgeyi nerede kullanacağınızı ve hangi işlemi yaptıracağınızı seçebilirsiniz.":lang==="nl"?"Selecteer op basis van uw situatie, zonder een dienstcategorie te hoeven kennen.":"Find the appropriate steps based on your situation without choosing a service category."}</p><Link href={"/islemler?lang="+lang} className="avofis-outline avofis-btn mt-4">{lang==="tr"?"İşlem türlerini göster":lang==="nl"?"Bekijk procedures":"View procedures"}</Link></section>
+    <Link href={"/katalog?lang="+lang} className="avofis-cta avofis-btn mb-6 inline-flex">17 hizmetlik geniş Avrupa kataloğu · 6 dil</Link>
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {serviceCodes.map(code=>{
         const service=services.find(s=>s.id===code);if(!service)return null;
