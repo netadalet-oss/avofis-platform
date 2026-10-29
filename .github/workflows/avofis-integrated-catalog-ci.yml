@@ -20,6 +20,8 @@ jobs:
       AVOFIS_INTAKE_ENABLED: "false"
       AVOFIS_PAYMENT_ENABLED: "false"
       NEXT_TELEMETRY_DISABLED: "1"
+      NEXT_PUBLIC_SUPABASE_URL: "https://example.supabase.co"
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: "ci-only-invalid-public-key"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
