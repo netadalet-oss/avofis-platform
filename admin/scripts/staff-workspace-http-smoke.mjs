@@ -6,7 +6,10 @@
  */
 import assert from "node:assert/strict";
 import {spawn} from "node:child_process";
-const port=3001,base="http://127.0.0.1:"+port;
+import {createRequire} from "node:module";
+const port=32319,base="http://127.0.0.1:"+port;
+const require=createRequire(import.meta.url);
+const nextCli=require.resolve("next/dist/bin/next");
 const routes=[
  {method:"GET",path:"/api/workspace"},
  {method:"GET",path:"/api/workspace?section=people"},
@@ -20,7 +23,7 @@ const routes=[
  {method:"DELETE",path:"/api/workspace/grants",body:{staff_user_id:"11111111-1111-4111-8111-111111111111",capability:"billing"}},
  {method:"POST",path:"/api/workspace/reviews",body:{work_item_id:"11111111-1111-4111-8111-111111111111",decision:"reviewed_internal"}}
 ];
-const child=spawn("npm",["run","start"],{
+const child=spawn(process.execPath,[nextCli,"start","-p",String(port)],{
  cwd:process.cwd(),env:{...process.env,AVOFIS_STAFF_WORKSPACE_STAGING_ENABLED:"false",
  AVOFIS_STAFF_GRANTS_ENABLED:"false",AVOFIS_STAFF_INTERNAL_REVIEW_ENABLED:"false",
  AVOFIS_STAFF_WORK_ITEM_WRITES_ENABLED:"false"},stdio:["ignore","pipe","pipe"]});
@@ -61,4 +64,6 @@ try{
  console.log("PASS: private login shell 200 without service key / JWT leakage");
 }finally{
  child.kill("SIGTERM");
+ // Close the real Next process, not an npm wrapper with orphaned children.
+ child.stdout?.destroy();child.stderr?.destroy();
 }
