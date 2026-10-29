@@ -63,3 +63,49 @@ test("unknown procedure and missing mandate never activate",()=>{
  assert.equal(evaluateINDAdmission(r).canActivate,false);
  assert.ok(evaluateINDAdmission(r).issues.includes("IND_PROCEDURE_UNKNOWN"));
 });
+
+test("IND-T01: written mandate cannot replace proof of work authority",()=>{
+ const x=valid("ind_objection");
+ x.person.workRightVerified=false;
+ const result=evaluateINDAdmission(x);
+ assert.equal(result.canActivate,false);
+ assert.ok(result.issues.includes("PERSON_UNVERIFIED"));
+});
+test("IND-T05: higher appeal without source-verified deadline or expert stays on hold",()=>{
+ const x=valid("higher_appeal");
+ x.timing.deadlineBasis="";
+ x.specialist.credentialVerified=false;
+ const result=evaluateINDAdmission(x);
+ assert.equal(result.canActivate,false);
+ assert.ok(result.issues.includes("DEADLINE_UNREVIEWED"));
+ assert.ok(result.issues.includes("SPECIALIST_REQUIRED"));
+});
+test("IND-T08: missing cross-border/GDPR review cannot authorise action",()=>{
+ const x=valid("ind_objection");
+ x.privacy.disclosureAndRetentionReviewed=false;
+ const result=evaluateINDAdmission(x);
+ assert.equal(result.canActivate,false);
+ assert.ok(result.issues.includes("PRIVACY_UNVERIFIED"));
+});
+test("IND-T10: detention/removal without independent expert is blocked",()=>{
+ const x=valid("detention_or_removal");
+ x.specialist.credentialVerified=false;
+ const result=evaluateINDAdmission(x);
+ assert.equal(result.canActivate,false);
+ assert.ok(result.issues.includes("SPECIALIST_REQUIRED"));
+});
+test("IND-T11: general contract is not IND file-request form approval",()=>{
+ const x=valid("ind_file_request");
+ x.representation.procedureSpecificINDFormReviewed=false;
+ x.representation.serviceAgreementSigned=true;
+ const result=evaluateINDAdmission(x);
+ assert.equal(result.canActivate,false);
+ assert.ok(result.issues.includes("IND_FORM_UNREVIEWED"));
+});
+test("IND-T06/T07: admission check never grants delegated personal asylum filing or advocate portal access",()=>{
+ const x=valid("asylum");
+ const result=evaluateINDAdmission(x);
+ assert.equal(result.filingNotAuthorisedByThisCheck,true);
+ assert.equal(result.reviewOnly,true);
+ // This is a domain flag only: no authenticated IND/advocaat portal E2E asserted.
+});
