@@ -70,6 +70,9 @@ jobs:
           fi
           psql -v ON_ERROR_STOP=1 -f database/tests/legacy_rls_hardening.sql
           psql -v ON_ERROR_STOP=1 -f database/tests/legacy_cms_publication_hold.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/identity_cms_profile_acl_hardening.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/future_public_default_acl_owner_synthetic.sql
+          psql -v ON_ERROR_STOP=1 -f database/ops/identity_cms_future_acl_readonly_postflight.sql
       - name: Prove B01/B02 migration rejects unexpected RLS policies (disposable only)
         env:
           PGPASSWORD: synthetic-test-password
@@ -94,6 +97,20 @@ jobs:
             exit 1
           fi
           echo "PASS: B01/B02 migration refuses unreviewed permissive policies"
+          set +e
+          psql -v ON_ERROR_STOP=1 -f database/ops/supabase_admin_public_default_acl_OWNER_ACTION.sql > "$RUNNER_TEMP/default_acl_owner_guard.log" 2>&1
+          owner_status=$?
+          set -e
+          if [ "$owner_status" -eq 0 ]; then
+            echo "ERROR: postgres executed a protected supabase_admin-only action"
+            exit 1
+          fi
+          if ! grep -Fq "B02-FUTURE owner-only action required" "$RUNNER_TEMP/default_acl_owner_guard.log"; then
+            cat "$RUNNER_TEMP/default_acl_owner_guard.log"
+            echo "ERROR: owner-only negative test failed for wrong reason"
+            exit 1
+          fi
+          echo "PASS: Owner-only default ACL guard refused postgres"
   tenant-isolation-synthetic:
     runs-on: ubuntu-latest
     timeout-minutes: 15
