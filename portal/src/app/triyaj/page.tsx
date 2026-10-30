@@ -69,6 +69,20 @@ export default function SafeTriagePage(){
  const message=result.disposition==="URGENT_SPECIALIST"?t.urgent:
   result.disposition==="SPECIALIST_REVIEW"?t.specialist:
   result.disposition==="OFFICIAL_INFORMATION"?t.official:t.general;
+ // R-355: all categorical statements are echoed locally before the acknowledgement.
+ const reviewFields:[string,string][]=[
+  [t.preferred,languageOptions[review.preferredLanguage as keyof typeof languageOptions]??review.preferredLanguage],
+  [t.residence,countryOptions[review.residenceCountry as keyof typeof countryOptions]??review.residenceCountry],
+  [t.country,countryOptions[review.matterCountry as keyof typeof countryOptions]??review.matterCountry],
+  [t.topic,topicOptions[review.topic as keyof typeof topicOptions]??review.topic],
+  [t.role,roleOptions[review.personRole as keyof typeof roleOptions]??review.personRole],
+  [t.counterparty,counterpartyOptions[review.counterpartyType as keyof typeof counterpartyOptions]??review.counterpartyType],
+  [t.request,requestTypeOptions[review.requestType as keyof typeof requestTypeOptions]??review.requestType],
+  [t.notice,noticeOptions[review.noticeCategory as keyof typeof noticeOptions]??review.noticeCategory],
+  [t.time,timeOptions[review.timeBand as keyof typeof timeOptions]??review.timeBand],
+  [t.harm,review.immediateHarm?"✓":"—"],
+  [t.professional,review.professionalNeeded?"✓":"—"]
+ ];
  return <PageFrame wide lang={lang} eyebrow={t.eyebrow} title={t.title} description={t.intro}>
   <aside className="mb-5 rounded-xl border border-[#dfbf59]/35 p-4 text-sm leading-7" aria-label="Privacy before orientation">
    <p>{privacy.text}</p>
@@ -139,7 +153,7 @@ export default function SafeTriagePage(){
     <h2 className="font-semibold text-[#dfbf59]">{t.reviewTitle}</h2>
     <p className="mt-2 leading-6 text-[#b9c5df]">{t.reviewText}</p>
     <dl className="mt-3 grid gap-2 sm:grid-cols-2">
-     <div><dt className="text-[#b9c5df]">{t.reviewCategory}</dt><dd className="font-semibold">{topicOptions[review.topic as keyof typeof topicOptions]??review.topic}</dd></div>
+     {reviewFields.map(([label,value],index)=><div key={index}><dt className="text-[#b9c5df]">{label}</dt><dd className="font-semibold">{value}</dd></div>)}
      {review.topicNote&&<div><dt className="text-[#b9c5df]">{t.reviewNote}</dt><dd className="font-semibold whitespace-pre-wrap break-words">{review.topicNote}</dd></div>}
      <div><dt className="text-[#b9c5df]">{t.reviewDate}</dt><dd className="font-semibold">
        {review.noticeDateStatus==="SELF_REPORTED_UNVERIFIED"?review.noticeDate:
