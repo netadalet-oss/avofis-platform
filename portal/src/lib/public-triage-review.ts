@@ -10,6 +10,8 @@ export type LocalReview={
   residenceCountry:string;
   preferredLanguage:string;
   topic:string;
+  topicNote:string;
+  topicNoteStatus:"NONE"|"LOCAL_DRAFT_UNVERIFIED"|"TOO_LONG";
   personRole:string;
   counterpartyType:string;
   requestType:string;
@@ -34,7 +36,12 @@ export function isValidCalendarDate(value:string):boolean{
   const d=new Date(Date.UTC(year,month-1,day));
   return d.getUTCFullYear()===year&&d.getUTCMonth()+1===month&&d.getUTCDate()===day;
 }
-export function buildLocalTriageReview(input:TriageInput,selfReportedNoticeDate:string):LocalReview{
+export function buildLocalTriageReview(input:TriageInput,selfReportedNoticeDate:string,topicNote=""):LocalReview{
+  // R-344: short local-only free-text supplement. Never sent to the classifier/server.
+  const noteValid=typeof topicNote==="string"&&topicNote.length<=160;
+  const safeNote=noteValid?topicNote.trim():"";
+  const noteStatus:LocalReview["topicNoteStatus"]=!noteValid?"TOO_LONG":
+    safeNote?"LOCAL_DRAFT_UNVERIFIED":"NONE";
   const noNotice=input.noticeCategory==="no_notice";
   const valid=typeof selfReportedNoticeDate==="string"&&isValidCalendarDate(selfReportedNoticeDate);
   const status:LocalReview["noticeDateStatus"]=noNotice?"NOT_APPLICABLE":
@@ -43,6 +50,7 @@ export function buildLocalTriageReview(input:TriageInput,selfReportedNoticeDate:
   return {
     matterCountry:input.country,residenceCountry:input.residenceCountry,
     preferredLanguage:input.preferredLanguage,topic:input.topic,
+    topicNote:safeNote,topicNoteStatus:noteStatus,
     personRole:input.personRole,counterpartyType:input.counterpartyType,
     requestType:input.requestType,noticeCategory:input.noticeCategory,
     noticeDate:status==="SELF_REPORTED_UNVERIFIED"?selfReportedNoticeDate:null,
