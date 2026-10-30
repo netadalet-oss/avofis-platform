@@ -318,6 +318,8 @@ jobs:
         run: node --experimental-strip-types --test scripts/document-preparation.test.mjs
       - name: Preserve historical 17 services 14 audiences 12 sourced problem routes
         run: node --experimental-strip-types --test scripts/avofis-scope-invariants.test.mjs
+      - name: L4 anonymous document preparation is fail-closed and privacy-first (R-397/399/400)
+        run: node --experimental-strip-types --test scripts/document-preparation-gate.test.mjs
       - name: L4 17 migration family administrative cross-border local preparation forms (R-379..R-395)
         run: node --experimental-strip-types --test scripts/international-form-preview.test.mjs
       - name: L4 14 anonymous employment tenancy consumer local preparation schemas (R-361..R-374)
