@@ -23,8 +23,8 @@ begin
  end if;
  if not exists (select 1 from pg_policies
     where schemaname='storage' and tablename='objects'
-      and policyname='cleared case participants upload private objects') then
-  raise exception 'Private Storage upload policy absent after recovery';
+      and policyname='avofis b04 private owner upload boundary' and permissive='RESTRICTIVE') then
+  raise exception 'B04 private Storage owner-restrictive upload boundary absent after recovery';
  end if;
 end $$;
 -- Verify backup preserved the new default-deny personal staff grants.
@@ -39,7 +39,9 @@ begin
  end if;
 end $$;
 reset role;
--- An independent admin with the *synthetic* AAL2 JWT issues only needed grants.
+-- An independent admin with the *synthetic* AAL2 JWT issues only needed
+-- grants; the B04 fixture previously gave D 'documents' to prove that even
+-- personally authorized staff cannot read client Storage without consent.
 select set_config('request.jwt.claims','{"aal":"aal2"}',false);
 select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
 set role authenticated;
@@ -47,7 +49,8 @@ insert into public.avofis_staff_capability_grants(staff_user_id,capability,grant
 values
  ('dddddddd-dddd-4ddd-8ddd-dddddddddddd','matters',auth.uid()),
  ('dddddddd-dddd-4ddd-8ddd-dddddddddddd','messages',auth.uid()),
- ('dddddddd-dddd-4ddd-8ddd-dddddddddddd','documents',auth.uid());
+ ('dddddddd-dddd-4ddd-8ddd-dddddddddddd','documents',auth.uid())
+on conflict (staff_user_id,capability) do nothing;
 reset role;
 select set_config('request.jwt.claim.sub','dddddddd-dddd-4ddd-8ddd-dddddddddddd',false);
 set role authenticated;
@@ -55,12 +58,13 @@ do $$
 begin
  if (select count(*) from public.avofis_cases)<>1
     or (select count(*) from public.avofis_messages)<>1
-    or (select count(*) from storage.objects where bucket_id='avofis-private')<>2 then
-  raise exception 'Recovered staff access is not limited to assigned tenant A and explicit grants';
+    or (select count(*) from storage.objects where bucket_id='avofis-private')<>0 then
+  raise exception 'Recovered B04 staff client-Storage disclosure hold or assigned case grants failed';
  end if;
 end $$;
 reset role;
--- The customer remains AAL1 and still owns both accepted synthetic PDFs.
+-- The customer remains AAL1 and still owns the two original plus one
+-- new B04 validated synthetic PDF. Invalid imported names remain invisible.
 select set_config('request.jwt.claims','{"aal":"aal1"}',false);
 select set_config('request.jwt.claim.sub','aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa',false);
 set role authenticated;
@@ -68,9 +72,9 @@ do $$
 begin
  if (select count(*) from public.avofis_cases)<>1
     or (select count(*) from public.avofis_messages)<>1
-    or (select count(*) from storage.objects where bucket_id='avofis-private')<>2 then
-  raise exception 'Restored customer A access failed';
+    or (select count(*) from storage.objects where bucket_id='avofis-private')<>3 then
+  raise exception 'Restored B04 client A private object access failed';
  end if;
 end $$;
 reset role;
-\echo 'PASS: synthetic pg_dump/pg_restore preserved data, RLS, triggers and AAL2-only staff grant/regrant, AAL1 customer isolation'
+\echo 'PASS: synthetic pg_dump/pg_restore preserved B04 owner-only Storage hold, RLS, case triggers, staff grants and AAL1 client A three PDFs'
