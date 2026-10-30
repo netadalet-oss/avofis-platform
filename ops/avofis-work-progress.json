@@ -85,6 +85,11 @@
           "id": "B03",
           "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41037114311",
           "scope": "Separate staging project URL/production reference boundary synthetic configuration unit tests only; no live staging was provisioned"
+        },
+        {
+          "id": "B04",
+          "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41050247084",
+          "scope": "Storage owner-only SELECT and signed/open case INSERT, operator AAL2 no implicit object-sharing, A/B/malformed paths, immutable upload, rogue OR policy, and pg_dump restore synthetic PostgreSQL 17 tests only; real Auth/Storage E2E and signed URL revocation unverified"
         }
       ]
     },
@@ -97,7 +102,7 @@
     }
   ],
   "productionStatus": "NO_GO",
-  "liveSecurityAdvisory": "7 public tables RLS OFF",
+  "liveSecurityAdvisory": "7 public tables RLS OFF and 1 Auth leaked-password WARN (read-only security advisor 2026-10-30)",
   "e2eStagingVerified": false,
   "liveDatabaseChangedByThisLedger": false
 }
