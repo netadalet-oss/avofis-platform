@@ -36,5 +36,6 @@ test("L4: no invented source ID or missing audited code/test file",()=>{
 });
 test("L4: unverified CI cannot be asserted successful",()=>{
  const a=fresh();a.plan.implementationEvidence[0].status="CI_SYNTHETIC_VERIFIED";
+ a.plan.implementationEvidence[0].ciRun=null;
  assert.throws(()=>inspectL4Evidence(a),/actions\/runs/);
 });
