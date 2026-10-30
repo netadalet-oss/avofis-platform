@@ -1,0 +1,33 @@
+{
+  "project": "AVOfis",
+  "date": "2026-10-31",
+  "current_operational_level": 5,
+  "stage_4_historically_completed": false,
+  "stage_4_historical_completion_ratio": null,
+  "prior_80_percent_threshold": "INFORMATIONAL_ONLY_NOT_GATE",
+  "per_item_per_level_attempt_limit": 2,
+  "per_item_per_round_attempt_limit": 2,
+  "carry_without_execution_if_blocked": true,
+  "carry_live_RLS_items": [
+    "RLS:public.applications",
+    "RLS:public.jobs",
+    "RLS:public.media_assets",
+    "RLS:public.office_members",
+    "RLS:public.offices",
+    "RLS:public.posts",
+    "RLS:public.topics"
+  ],
+  "carry_attempts_recorded": 0,
+  "carry_status": "OPEN_UNREMEDIATED",
+  "new_operational_items": [
+    "UYUM:NL-11",
+    "UYUM:NL-14"
+  ],
+  "real_attempts_level5": 0,
+  "open_decisions": 18,
+  "approved_original_work_count": 973,
+  "business_gov_checklist": "APPLY_IF_RELEVANT",
+  "main_modified": false,
+  "production_modified": false,
+  "original_stage5_contracts_verified": false
+}
