@@ -255,6 +255,8 @@ jobs:
         run: node --experimental-strip-types --test scripts/document-preparation.test.mjs
       - name: Preserve historical 17 services 14 audiences 12 sourced problem routes
         run: node --experimental-strip-types --test scripts/avofis-scope-invariants.test.mjs
+      - name: CONTENT01 original sixteen Dutch guides and editorial release gate
+        run: node --experimental-strip-types --test scripts/guide-catalog-regression.test.mjs
       - name: FORM-03 all 17 contextual service document schema validation
         run: node --experimental-strip-types --test scripts/service-document-forms.test.mjs
       - name: FORM-02 stage-only account drafts, strict revisions and consent checks
