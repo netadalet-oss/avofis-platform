@@ -56,6 +56,11 @@ jobs:
           --health-interval 5s --health-timeout 5s --health-retries 10
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: B03 reject production Supabase target before staging migration
+        run: node --test database/tests/b03_staging_target_guard.test.mjs
       - name: Assert legacy RLS migration with synthetic A/B/admin principals
         env:
           PGPASSWORD: synthetic-test-password
