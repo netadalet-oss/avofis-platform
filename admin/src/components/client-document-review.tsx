@@ -75,7 +75,7 @@ export function ClientDocumentReview(){
     <dd className="mt-2 whitespace-pre-wrap break-words text-xs leading-6" dir="auto">
      {typeof current.document.content[key]==="string"?String(current.document.content[key]):"—"}</dd>
    </div>)}</dl>
-   {current.document.content.version===2&&current.document.content.answers&&
+   {current.document.content.version===2&&Boolean(current.document.content.answers)&&
       typeof current.document.content.answers==="object"&&
       !Array.isArray(current.document.content.answers)&&
       <section className="mt-5 rounded-lg border border-[#E0E8EF] p-4">
