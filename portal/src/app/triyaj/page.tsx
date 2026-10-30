@@ -181,6 +181,9 @@ export default function SafeTriagePage(){
     </p>
   </section>
   <div className="mt-5 flex flex-wrap gap-3">
+   <Link href={"/belge-hazirlik?lang="+lang} className="avofis-outline avofis-btn inline-flex">
+    {lang==="tr"?"Belge güvenliği ve hazırlığı":lang==="nl"?"Veilige documentvoorbereiding":"Document privacy preparation"}
+   </Link>
    <Link href="/form-hazirlik?lang=tr" className="avofis-outline avofis-btn inline-flex">
     {lang==="tr"?"31 konu için gönderimsiz form hazırlığı (TR taslak)":
      lang==="nl"?"31 lokale voorbeeldformulieren (alleen Turks)":
