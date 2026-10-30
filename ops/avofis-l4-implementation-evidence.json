@@ -21,6 +21,40 @@
   },
   "implementationEvidence": [
     {
+      "id": "R-343",
+      "status": "CODE_CHANGED_PENDING_CI",
+      "kind": "LOCAL_ONLY_LANGUAGE_RESIDENCE_VS_MATTER_COUNTRY",
+      "codePaths": [
+        "portal/src/lib/public-triage.ts",
+        "portal/src/app/triyaj/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/public-triage.test.mjs"
+      ],
+      "claim": "First triage UI separates six preferred-language categories, country of current residence and country of legal matter; cross-border/unknown routes require human review; no six-language legal translation is implied.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": null
+    },
+    {
+      "id": "R-345",
+      "kind": "PUBLIC_TRIAGE_COUNTERPARTY_CATEGORY",
+      "claim": "Public intake-orientation offers bounded person/employer/authority/company/other/unsure counterpart categories without asking for an opposing party name; unsure and other conservatively route to human review.",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/public-triage.ts",
+        "portal/src/app/triyaj/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/public-triage.test.mjs"
+      ],
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41080322793"
+    },
+    {
       "id": "R-347",
       "status": "CI_SYNTHETIC_VERIFIED",
       "kind": "PUBLIC_TRIAGE_EARLY_WARNING",
@@ -55,23 +89,6 @@
       "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41078423203"
     },
     {
-      "id": "R-345",
-      "kind": "PUBLIC_TRIAGE_COUNTERPARTY_CATEGORY",
-      "claim": "Public intake-orientation offers bounded person/employer/authority/company/other/unsure counterpart categories without asking for an opposing party name; unsure and other conservatively route to human review.",
-      "status": "CI_SYNTHETIC_VERIFIED",
-      "codePaths": [
-        "portal/src/lib/public-triage.ts",
-        "portal/src/app/triyaj/page.tsx"
-      ],
-      "testPaths": [
-        "portal/scripts/public-triage.test.mjs"
-      ],
-      "realAuthStorageE2E": false,
-      "legalReview": false,
-      "independentAcceptance": false,
-      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41080322793"
-    },
-    {
       "id": "R-349",
       "kind": "PUBLIC_TRIAGE_REQUEST_CATEGORY",
       "claim": "Public orientation offers the four original general-information, brief-consultation, document-review and detailed-case-analysis choices; non-general selections require separate human and contract review, never automatic booking or intake.",
@@ -104,9 +121,77 @@
       "legalReview": false,
       "independentAcceptance": false,
       "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41080322793"
+    },
+    {
+      "id": "R-352",
+      "status": "CODE_CHANGED_PENDING_CI",
+      "kind": "UPFRONT_PRIVACY_NAVIGATION",
+      "codePaths": [
+        "portal/src/lib/public-triage.ts",
+        "portal/src/app/triyaj/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/public-triage.test.mjs"
+      ],
+      "claim": "Public triage puts a privacy disclosure and accessible privacy-page link before nonidentifying selectors; Article 13/DPO sign-off still outstanding.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": null
+    },
+    {
+      "id": "R-353",
+      "status": "CODE_CHANGED_PENDING_CI",
+      "kind": "NO_AUTOMATIC_CONTRACT_REPRESENTATION",
+      "codePaths": [
+        "portal/src/lib/public-triage.ts",
+        "portal/src/app/triyaj/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/public-triage.test.mjs"
+      ],
+      "claim": "Public triage explicitly distinguishes a request category/result from accepted filing, booked service, engagement contract, or fee obligation; real contract compliance remains unresolved.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": null
+    },
+    {
+      "id": "R-358",
+      "status": "CODE_CHANGED_PENDING_CI",
+      "kind": "UNSURE_HUMAN_REVIEW_ROUTE",
+      "codePaths": [
+        "portal/src/lib/public-triage.ts",
+        "portal/src/app/triyaj/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/public-triage.test.mjs"
+      ],
+      "claim": "Unknown topic or country routes to specialist review and records an explicit UNSURE_HUMAN_REVIEW_REQUIRED issue without automatic eligibility, official filing or live client record.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": null
+    },
+    {
+      "id": "R-359",
+      "status": "CODE_CHANGED_PENDING_CI",
+      "kind": "ANONYMOUS_TRIAGE_DOCUMENT_UPLOAD_BOUNDARY",
+      "codePaths": [
+        "portal/src/lib/public-triage.ts",
+        "portal/src/app/triyaj/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/public-triage.test.mjs"
+      ],
+      "claim": "Unregistered public orientation offers no document upload and explicitly states a separate authenticated, consent-gated private document channel is not released; real Auth/Storage E2E remains outstanding.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": null
     }
   ],
-  "unprovenImplementationCount": 968,
+  "unprovenImplementationCount": 963,
   "openDecisions": [
     "L3-DEC-01",
     "L3-DEC-02",
@@ -143,5 +228,6 @@
     "ops/avofis-work-progress.json"
   ],
   "verifiedTechnicalEvidenceAt": "2026-10-30",
-  "verificationScope": "Only synthetic CI/TypeScript/public-triage tests for R-345, R-347, R-348, R-349, R-350; no staging E2E, human legal review or independent acceptance"
+  "verificationScope": "Only synthetic CI/TypeScript/public-triage tests for R-345, R-347, R-348, R-349, R-350; no staging E2E, human legal review or independent acceptance",
+  "scopeClarification": "Every L4 evidence record proves only the specific coded public-triage sub-scope; no full R-ID acceptance, six-language publication, privacy-controller legal signoff, executed engagement or authenticated document channel."
 }
