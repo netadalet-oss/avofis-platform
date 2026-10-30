@@ -15,7 +15,7 @@
   },
   "evidence": {
     "independentAccepted": 0,
-    "originalRequirementsPartial": 51,
+    "originalRequirementsPartial": 54,
     "syntheticExtraPackages": 4,
     "stagingE2E": "NOT_VERIFIED",
     "production": "NO_GO"
