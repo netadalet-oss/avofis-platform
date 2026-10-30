@@ -1,7 +1,7 @@
 {
   "project": "AVOfis",
   "date": "2026-10-31",
-  "current_operational_level": 5,
+  "current_operational_level": 4,
   "stage_4_historically_completed": false,
   "stage_4_historical_completion_ratio": null,
   "prior_80_percent_threshold": "INFORMATIONAL_ONLY_NOT_GATE",
@@ -18,16 +18,24 @@
     "RLS:public.topics"
   ],
   "carry_attempts_recorded": 0,
-  "carry_status": "OPEN_UNREMEDIATED",
-  "new_operational_items": [
-    "UYUM:NL-11",
-    "UYUM:NL-14"
-  ],
+  "carry_status": "OPEN_IN_STAGE_4_CANDIDATE_FOR_STAGE_5",
+  "new_operational_items": [],
   "real_attempts_level5": 0,
   "open_decisions": 18,
   "approved_original_work_count": 973,
   "business_gov_checklist": "APPLY_IF_RELEVANT",
   "main_modified": false,
   "production_modified": false,
-  "original_stage5_contracts_verified": false
+  "original_stage5_contracts_verified": false,
+  "stage5_transition_status": "PENDING_EXPLICIT_USER_APPROVAL",
+  "stage5_transition_authorized": false,
+  "stage5_operationally_active": false,
+  "stage5_activities_prepared_as_draft_only": true,
+  "stage5_preparation_requires_review": true,
+  "carry_over_applied": false,
+  "proposed_stage5_items": [
+    "UYUM:NL-11",
+    "UYUM:NL-14"
+  ],
+  "note": "31 Ekim 2026 kullanıcı düzeltmesi: %80 eşiği geçişi engellemez ama her seviye geçişinden ÖNCE açık kullanıcı onayı zorunludur. Önceki 'aktif' beyanı izinsiz yapıldı; onay yok, taslak çalışmalar korunur."
 }
