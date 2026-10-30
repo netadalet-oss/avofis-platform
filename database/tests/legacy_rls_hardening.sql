@@ -2,8 +2,18 @@
 -- Disposable PostgreSQL 17 verification of the observed 29 Oct 2026
 -- legacy schema. This is a synthetic RLS/grant regression, NOT a live
 -- Supabase/Auth/Data API E2E test.
-create role anon nologin;
-create role authenticated nologin;
+-- Postgres roles are cluster-wide, even across disposable CI databases.
+-- Reuse synthetic test roles so isolated negative fixtures can run in the
+-- same PostgreSQL container without changing any production role.
+do $roles$
+begin
+ if not exists(select 1 from pg_roles where rolname='anon') then
+  create role anon nologin;
+ end if;
+ if not exists(select 1 from pg_roles where rolname='authenticated') then
+  create role authenticated nologin;
+ end if;
+end $roles$;
 create schema auth;
 grant usage on schema auth to authenticated;
 create function auth.uid() returns uuid language sql stable as $$
