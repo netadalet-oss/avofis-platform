@@ -50,3 +50,21 @@ Aşağıdaki sıra yalnız **ayrı Auth/Storage destekli staging** ortamında, g
 Resmî kaynaklar:
 - Supabase Data API, grants ve RLS: https://supabase.com/docs/guides/api/securing-your-api
 - PostgreSQL varsayılan ayrıcalık ve role üyeliği sınırı: https://www.postgresql.org/docs/17/sql-alterdefaultprivileges.html
+
+## B02 ek saldırı denetimi — 30 Ekim 2026 / ikinci güvenlik turu
+
+**Saptanan ve kodda düzeltilen zayıflık:** Eski B02 migration, `pg_policies` kontrolünde politika **adını** ve seçilen `cmd` değerlerini inceliyordu; adın aynı bırakılıp `USING(true)` yapılması durumunda tehlikeli izinleri migration sonrasında koruyabilirdi. Supabase'in gerçek `pg_policies` read-only dökümü `profiles`, `pages`, `site_settings` için önceki uygulamanın basit role/UID politikalarına dayandığını doğruladı.
+
+**Düzeltme:**
+1. `20261030_identity_cms_profile_acl_hardening.sql` artık yalnızca tanınan politika isimlerini değil **komut**, **PERMISSIVE/RESTRICTIVE**, **hedef DB rolü** ve altı yayın kilidi için `USING(false)` / `WITH CHECK(false)` koşullarını doğrular. Beklenmedik `FOR ALL`, farklı rol veya değiştirilmiş kilit için hata verip transaction'ı geri alır.
+2. Tanınan üç SELECT politikası korumalı transaction içinde tamamen **yeniden oluşturulur**: profil sahibi yalnız kendi profilini görür; sayfa ve ayarları yalnız `profiles.role` tablosunda `admin`/`super_admin` olarak kayıtlı kimlik görebilir. Geniş `USING(true)` içeren ama eski adı koruyan politika, artık yeni sürüme taşınmaz.
+3. Onaylı CMS editör/yayın akışı bulunmadığından eski iki `Only admins can update ...` politikası kaldırılır; altı RESTRICTIVE yayın kilidi ve `authenticated` SELECT-only tablo grant'leri korunur.
+4. `database/tests/identity_cms_profile_acl_hardening.sql` önce **üç sahte `USING(true)` politikası** yaratarak ardından gerçek migration'ın bunları düzelttiğini, müşteri A/B profil sızıntısı olmadığını, yalnız admin'in CMS'yi okuyabildiğini ve içerik değiştirilemediğini doğrular.
+5. İki ayrı PG17 veritabanında **beklenen hata** testleri:
+   - `database/tests/b02_named_policy_command_drift_expected_failure.sql`: güvenilir isim altına `FOR ALL USING(true)` gizlenince migration reddeder.
+   - `database/tests/b02_publication_hold_drift_expected_failure.sql`: RESTRICTIVE `false` yerine aynı isimli PERMISSIVE yazma politikasını reddeder.
+   Testlerin kontrolü GitHub Actions `legacy-rls-hardening` işine eklendi.
+
+**Canlı güvenlik kapısı değişmedi:** 30 Ekim 2026 read-only Security Advisor yenilemesinde `rls_disabled_in_public` hâlâ **7 ERROR**; `auth_leaked_password_protection` **1 WARN**. Hesapta tek Supabase proje kaydı (`avofis`) doğrulandı, **ayrı Auth/Storage staging yok**. Bu yamalar draft PR'da; canlı şema, kullanıcı verisi, RLS veya Auth yapılandırması değiştirilmedi. Kaynak PR ve CI yeşil olması **B01/B02 kapandı** anlamına gelmez.
+
+**Doğrudan kaynak:** Supabase RLS dokümantasyonu, permit/deny policy bileşimi ve Data API grants: https://supabase.com/docs/guides/database/postgres/row-level-security ; https://supabase.com/changelog/45329-breaking-change-tables-not-exposed-to-data-and-graphql-api-automatically .
