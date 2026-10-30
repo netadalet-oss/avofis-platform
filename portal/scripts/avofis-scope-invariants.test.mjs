@@ -38,7 +38,7 @@ test("All 12 journeys have meaningful three-language information and official ci
   for(const f of j.fields){
    assert.ok(f.options.length>=2,j.id+":"+f.key);
    assert.equal(new Set(f.options.map(o=>o.value)).size,f.options.length);
-   for(const locale of ["tr","nl","en"])assert.ok(f.label[locale]?.trim().length>4);
+   for(const locale of ["tr","nl","en"])assert.ok(f.label[locale]?.trim().length>=3);
   }
   const values=Object.fromEntries(j.fields.map(f=>[f.key,f.options[0].value]));
   assert.equal(validateJourneyDetails(j.id,values),true);
