@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import { isCmsAdminRole } from "@/lib/cms-role";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
@@ -78,21 +79,9 @@ export default function Page() {
       .eq("id", userId)
       .maybeSingle();
 
-    const profileRole =
-      typeof profile?.role === "string" ? profile.role.toLowerCase() : "";
-    const metaRole =
-      typeof session.user.user_metadata?.role === "string"
-        ? String(session.user.user_metadata.role).toLowerCase()
-        : "";
-
-    if (
-      profileRole === "admin" ||
-      profileRole === "super_admin" ||
-      metaRole === "admin" ||
-      metaRole === "super_admin"
-    ) {
-      allowed = true;
-    }
+    // Authorization comes exclusively from the database-backed profile role.
+    // Supabase user_metadata is user-editable and must not grant admin access.
+    allowed = isCmsAdminRole(profile?.role);
 
     if (!allowed) {
       if (isMounted) {
