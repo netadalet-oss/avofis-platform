@@ -182,9 +182,9 @@ export default function SafeTriagePage(){
   </section>
   <div className="mt-5 flex flex-wrap gap-3">
    <Link href="/form-hazirlik?lang=tr" className="avofis-outline avofis-btn inline-flex">
-    {lang==="tr"?"14 konu için gönderimsiz form hazırlığı (TR taslak)":
-     lang==="nl"?"14 lokale voorbeeldformulieren (alleen Turks)":
-     "14 local form preparation drafts (Turkish only)"}
+    {lang==="tr"?"31 konu için gönderimsiz form hazırlığı (TR taslak)":
+     lang==="nl"?"31 lokale voorbeeldformulieren (alleen Turks)":
+     "31 local form preparation drafts (Turkish only)"}
    </Link>
    <Link href={"/katalog?lang="+lang} className="avofis-outline avofis-btn inline-flex">{t.back}</Link>
   </div>
