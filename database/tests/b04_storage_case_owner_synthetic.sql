@@ -63,6 +63,18 @@ begin
 end $tenant_b$;
 reset role;
 
+-- Earlier P01/P09 smoke tests intentionally ROLLBACK their temporary grants.
+-- Set up an independently authorized synthetic AAL2 admin capability grant
+-- before proving that even a fully assigned/granted employee cannot read the
+-- owner-only Storage bucket without document-specific customer consent.
+select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
+select set_config('request.jwt.claims','{"aal":"aal2"}',false);
+set role authenticated;
+insert into public.avofis_staff_capability_grants(staff_user_id,capability,granted_by)
+values('dddddddd-dddd-4ddd-8ddd-dddddddddddd','documents',auth.uid())
+on conflict (staff_user_id,capability) do nothing;
+reset role;
+
 -- Even a correctly assigned operator with AAL2 and a personal documents
 -- grant may not read client private objects without a separately approved
 -- per-object consent mechanism. The staff draft review is a DIFFERENT table.
