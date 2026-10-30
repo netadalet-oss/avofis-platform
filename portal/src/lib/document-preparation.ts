@@ -1,4 +1,5 @@
 /** AVOfis FORM-01: offline preparation notes, not an official form or filing. */
+import {fieldsByService,localizedFieldLabels,validateServiceAnswers,formReadyForReview,formSchemaRevision,type ServiceAnswers} from "./service-document-forms.ts";
 export const serviceSlugs = [
   "hukuki-danismanlik","mahkeme-temsil","avrupa-turkiye-hukuki-uzman-koordinasyonu",
   "alacak-takibi","sozlesmeler-uyusmazliklar","konut-kira-sigorta",
@@ -11,8 +12,9 @@ export type ServiceSlug = typeof serviceSlugs[number];
 export type DraftLocale = "tr"|"nl"|"de"|"en"|"ar"|"ru";
 export const draftLocales:DraftLocale[] = ["tr","nl","de","en","ar","ru"];
 export type PreparationDraft = {
-  version:1; service:ServiceSlug; locale:DraftLocale;
+  version:1|2; service:ServiceSlug; locale:DraftLocale;
   country:string; institution:string; purpose:string; chronology:string; documentList:string;
+  schemaRevision?:1; answers?:ServiceAnswers;
 };
 const MAX_TEXT=4000;
 export const isServiceSlug=(s:unknown):s is ServiceSlug=>typeof s==="string"&&(serviceSlugs as readonly string[]).includes(s);
@@ -20,8 +22,11 @@ export const isDraftLocale=(s:unknown):s is DraftLocale=>typeof s==="string"&&dr
 export function validatePreparation(value:unknown):PreparationDraft|null{
   if(!value||typeof value!=="object"||Array.isArray(value))return null;
   const v=value as Record<string,unknown>;
-  const allowed=["version","service","locale","country","institution","purpose","chronology","documentList"];
-  if(Object.keys(v).length!==allowed.length||Object.keys(v).some(k=>!allowed.includes(k))||v.version!==1||!isServiceSlug(v.service)||!isDraftLocale(v.locale))return null;
+  const base=["version","service","locale","country","institution","purpose","chronology","documentList"];
+  const allowed=v.version===2?[...base,"schemaRevision","answers"]:base;
+  if(Object.keys(v).length!==allowed.length||Object.keys(v).some(k=>!allowed.includes(k))||
+   (v.version!==1&&v.version!==2)||!isServiceSlug(v.service)||!isDraftLocale(v.locale))return null;
+  if(v.version===2&&(v.schemaRevision!==formSchemaRevision||!validateServiceAnswers(v.service,v.answers)))return null;
   for(const key of ["country","institution","purpose","chronology","documentList"] as const){
     if(typeof v[key]!=="string"||v[key].length>MAX_TEXT||/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/.test(v[key]))return null;
   }
@@ -37,7 +42,14 @@ const titles:Record<DraftLocale,{head:string;warning:string;service:string;count
 };
 export function preparationLines(draft:PreparationDraft,serviceTitle:string):string[]{
  const t=titles[draft.locale];
- return [t.head,"",t.warning,"",`${t.service}: ${serviceTitle}`,`${t.country}: ${draft.country}`,`${t.institution}: ${draft.institution}`,`${t.purpose}: ${draft.purpose}`,"",t.chronology,draft.chronology,"",t.documents,draft.documentList];
+ const common=[t.head,"",t.warning,"",`${t.service}: ${serviceTitle}`,`${t.country}: ${draft.country}`,`${t.institution}: ${draft.institution}`,`${t.purpose}: ${draft.purpose}`,"",t.chronology,draft.chronology,"",t.documents,draft.documentList];
+ if(draft.version===2&&draft.answers&&validateServiceAnswers(draft.service,draft.answers)){
+  const labels=localizedFieldLabels[draft.locale];
+  for(const field of fieldsByService[draft.service]){
+   if(draft.answers[field])common.push("",labels[field],draft.answers[field]!);
+  }
+ }
+ return common;
 }
 export const preparationText=(draft:PreparationDraft,title:string)=>preparationLines(draft,title).join("\n")+"\n";
 const esc=(s:string)=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");
@@ -73,5 +85,11 @@ export function preparationDocx(draft:PreparationDraft,serviceTitle:string):Uint
  ]);
 }
 export function newPreparation(service:ServiceSlug,locale:DraftLocale):PreparationDraft{
- return {version:1,service,locale,country:"",institution:"",purpose:"",chronology:"",documentList:""};
+ return {version:2,service,locale,country:"",institution:"",purpose:"",chronology:"",documentList:"",schemaRevision:formSchemaRevision,answers:{}};
+}
+/** Review is a distinct consent+assignment operation; never imply official filing. */
+export function isPreparationReadyForReview(draft:PreparationDraft):boolean{
+ return !!validatePreparation(draft)&&draft.version===2&&!!draft.answers&&
+  !!draft.country.trim()&&!!draft.purpose.trim()&&!!draft.chronology.trim()&&
+  formReadyForReview(draft.service,draft.answers);
 }
