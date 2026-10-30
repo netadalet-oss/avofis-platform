@@ -73,9 +73,16 @@ create policy "avofis b04 private owner upload permit" on storage.objects
 --   <case-uuid>/<uploader-uuid>/<random-uuid>.(pdf|png|jpg|jpeg|webp)
 -- Comparison uses plain strings, NOT ::uuid casts of untrusted object names,
 -- so malformed paths never cause query-time invalid-UUID errors.
+-- Never reference private public.avofis_cases under anon: even a
+-- CASE short-circuit may be denied at query-plan privilege-check time.
+drop policy if exists "avofis b04 private anonymous read denial" on storage.objects;
+create policy "avofis b04 private anonymous read denial" on storage.objects
+ as restrictive for select to anon
+ using(bucket_id<>'avofis-private');
+
 drop policy if exists "avofis b04 private owner read boundary" on storage.objects;
 create policy "avofis b04 private owner read boundary" on storage.objects
- as restrictive for select to public
+ as restrictive for select to authenticated
  using(
    bucket_id<>'avofis-private' or
    (auth.uid() is not null
@@ -85,9 +92,14 @@ create policy "avofis b04 private owner read boundary" on storage.objects
         and c.client_user_id=(select auth.uid())))
  );
 
+drop policy if exists "avofis b04 private anonymous upload denial" on storage.objects;
+create policy "avofis b04 private anonymous upload denial" on storage.objects
+ as restrictive for insert to anon
+ with check(bucket_id<>'avofis-private');
+
 drop policy if exists "avofis b04 private owner upload boundary" on storage.objects;
 create policy "avofis b04 private owner upload boundary" on storage.objects
- as restrictive for insert to public
+ as restrictive for insert to authenticated
  with check(
    bucket_id<>'avofis-private' or
    (auth.uid() is not null
