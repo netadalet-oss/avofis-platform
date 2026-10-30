@@ -3,12 +3,13 @@
   "program": "AVOfis v18",
   "level": "L2",
   "date": "2026-10-30",
-  "proposalStatus": "AWAITING_USER_APPROVAL",
+  "proposalStatus": "APPROVED_BY_USER",
   "approvals": {
     "L0": "USER_APPROVED_2026-10-30",
     "L1": "USER_APPROVED_2026-10-30",
-    "L2": "PENDING_USER_APPROVAL",
-    "L3": "LOCKED"
+    "L2": "USER_APPROVED_2026-10-30",
+    "L3": "OPEN_FOR_DESIGN_AWAITING_USER_APPROVAL",
+    "L4": "LOCKED_UNTIL_EXPLICIT_L3_APPROVAL"
   },
   "scope": {
     "trackedWork": 973,
@@ -4471,5 +4472,6 @@
       "state": "DESIGN_NOT_VALIDATED",
       "actualExternalSubmission": false
     }
-  ]
+  ],
+  "userApprovalEvidence": "2026-10-30: user explicitly approved L2 and authorized L3, not L4"
 }
