@@ -16,12 +16,13 @@ test("L2: explicit L1 approval opens L2 only; L3 stays locked",()=>{
  assert.equal(root.approvalStatus,"APPROVED_BY_USER");
  assert.equal(l1.approvalStatus,"APPROVED_BY_USER");
  assert.equal(l1.depthL3,"LOCKED_UNTIL_EXPLICIT_L2_APPROVAL");
- assert.equal(l2.proposalStatus,"AWAITING_USER_APPROVAL");
- assert.equal(l2.approvals.L2,"PENDING_USER_APPROVAL");
- assert.equal(l2.approvals.L3,"LOCKED");
+ assert.equal(l2.proposalStatus,"APPROVED_BY_USER");
+ assert.equal(l2.approvals.L2,"USER_APPROVED_2026-10-30");
+ assert.equal(l2.approvals.L3,"OPEN_FOR_DESIGN_AWAITING_USER_APPROVAL");
  assert.equal(l2index.l1UserApproved,true);
- assert.equal(l2index.l2UserApproved,false);
- assert.equal(l2index.l3Locked,true);
+ assert.equal(l2index.l2UserApproved,true);
+ assert.equal(l2index.l3Locked,false);
+ assert.equal(l2index.l4Locked,true);
  assert.equal(ledger.productionStatus,"NO_GO");
  assert.equal(ledger.groups.reduce((s,g)=>s+g.accepted.length,0),0);
 });
