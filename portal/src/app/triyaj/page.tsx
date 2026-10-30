@@ -180,6 +180,13 @@ export default function SafeTriagePage(){
       {isReviewed?t.reviewChecked:t.reviewUnconfirmed}
     </p>
   </section>
-  <Link href={"/katalog?lang="+lang} className="avofis-outline avofis-btn mt-5 inline-flex">{t.back}</Link>
+  <div className="mt-5 flex flex-wrap gap-3">
+   <Link href="/form-hazirlik?lang=tr" className="avofis-outline avofis-btn inline-flex">
+    {lang==="tr"?"14 konu için gönderimsiz form hazırlığı (TR taslak)":
+     lang==="nl"?"14 lokale voorbeeldformulieren (alleen Turks)":
+     "14 local form preparation drafts (Turkish only)"}
+   </Link>
+   <Link href={"/katalog?lang="+lang} className="avofis-outline avofis-btn inline-flex">{t.back}</Link>
+  </div>
  </PageFrame>;
 }
