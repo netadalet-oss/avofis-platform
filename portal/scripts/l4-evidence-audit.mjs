@@ -21,8 +21,8 @@ export function inspectL4Evidence({plan,l3,l2index,decisions,ledger,atomic,root=
  assert.equal(ledger.groups.reduce((n,g)=>n+g.accepted.length,0),0);
  assert.equal(plan.denominator.tracked,973);
  const ids=atomic.map(x=>x.id),sourceIds=new Set(ids);
- assert.equal(sourceIds.size,973,"duplicate canonical source IDs");
- assert.equal(ids.length,973);
+ assert.equal(ids.length,sourceIds.size,"duplicate canonical source IDs");
+ assert.equal(ids.length,973,"wrong canonical source denominator");
  const previous=new Map(l2index.items.map(x=>[x.id,x]));
  assert.equal(previous.size,973);
  for(const item of atomic){
@@ -64,7 +64,8 @@ export function inspectL4Evidence({plan,l3,l2index,decisions,ledger,atomic,root=
      }
    }
    if(claim.status==="CI_SYNTHETIC_VERIFIED")
-     assert.match(claim.ciRun??"",/^https:\/\/github\.com\/netadalet-oss\/avofis-platform\/actions\/runs\/\d+$/);
+     assert.ok(/^https:\/\/github\.com\/netadalet-oss\/avofis-platform\/actions\/runs\/\d+$/.test(claim.ciRun??""),
+       "CI verification requires a real actions/runs link");
    else assert.equal(claim.ciRun,null);
  }
  assert.equal(plan.unprovenImplementationCount,973-seen.size);
