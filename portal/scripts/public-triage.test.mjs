@@ -1,15 +1,15 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {countries,preferredLanguages,topics,personRoles,counterpartyTypes,requestTypes,noticeCategories,timeBands,evaluatePublicTriage}
+import {countries,preferredLanguages,topics,personRoles,counterpartyTypes,requestTypes,evidenceKinds,noticeCategories,timeBands,evaluatePublicTriage}
  from "../src/lib/public-triage.ts";
 const valid=()=>({
  country:"nl",residenceCountry:"nl",preferredLanguage:"tr",topic:"document",personRole:"self",
- counterpartyType:"person",requestType:"general_information",
+ counterpartyType:"person",requestType:"general_information",evidenceKind:"none",
  noticeCategory:"no_notice",timeBand:"later",
  immediateHarm:false,professionalNeeded:false
 });
 test("T09: all non-identifying select options are bounded and distinct",()=>{
- for(const values of [countries,preferredLanguages,topics,personRoles,counterpartyTypes,requestTypes,noticeCategories,timeBands]){
+ for(const values of [countries,preferredLanguages,topics,personRoles,counterpartyTypes,requestTypes,evidenceKinds,noticeCategories,timeBands]){
   assert.ok(values.length>=3);
   assert.equal(values.length,new Set(values).size);
  }
@@ -288,4 +288,37 @@ test("L4 R-396: risk-specific inline warning appears inside time/notice fieldset
  assert.match(page,/aria-live="assertive"/);
  assert.match(page,/t\.earlyNote/);
  assert.doesNotMatch(page,/<button[^>]*type="submit"/);
+});
+
+test("L4 R-375: evidence kinds are anonymous, bounded and never require first-stage upload",()=>{
+ assert.deepEqual([...evidenceKinds],[
+  "none","official_decision","contract","correspondence","other","unknown"]);
+ for(const evidenceKind of evidenceKinds){
+  const result=evaluatePublicTriage({...valid(),evidenceKind});
+  assert.equal(result.mayUploadDocuments,false,evidenceKind);
+  assert.equal(result.mayCollectPersonalData,false,evidenceKind);
+  assert.equal(result.mayCreateClientRecord,false,evidenceKind);
+  if(["unknown","other"].includes(evidenceKind)){
+   assert.equal(result.disposition,"SPECIALIST_REVIEW",evidenceKind);
+   assert.ok(result.issues.includes("EVIDENCE_CATEGORY_REQUIRES_HUMAN_REVIEW"));
+  }
+ }
+ for(const evidenceKind of ["passport_scan",null,{},17]){
+  const r=evaluatePublicTriage({...valid(),evidenceKind});
+  assert.deepEqual(r.issues,["INVALID_OR_UNKNOWN_INPUT"]);
+  assert.equal(r.mayUploadDocuments,false);
+ }
+});
+test("L4 R-375/R-376: evidence and independent local accuracy confirmation never create a formal application",async()=>{
+ const {readFileSync}=await import("node:fs");
+ const {fileURLToPath}=await import("node:url");
+ const ui=readFileSync(fileURLToPath(new URL("../src/app/triyaj/page.tsx",import.meta.url)),"utf8");
+ assert.match(ui,/select\("evidenceKind",t\.evidence,evidenceKinds,evidenceOptions\)/);
+ assert.match(ui,/t\.evidenceNote/);
+ assert.match(ui,/evidenceOptions\[review\.evidenceKind/);
+ assert.match(ui,/checked=\{isTruthReviewed\}/);
+ assert.match(ui,/setTruthKey\(e\.target\.checked\?reviewSignature:null\)/);
+ assert.match(ui,/hukukî beyan veya gönderim değildir/);
+ assert.doesNotMatch(ui,/<input[^>]*type="file"/);
+ assert.doesNotMatch(ui,/<button[^>]*type="submit"/);
 });
