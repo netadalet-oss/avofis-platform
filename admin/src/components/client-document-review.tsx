@@ -75,6 +75,29 @@ export function ClientDocumentReview(){
     <dd className="mt-2 whitespace-pre-wrap break-words text-xs leading-6" dir="auto">
      {typeof current.document.content[key]==="string"?String(current.document.content[key]):"—"}</dd>
    </div>)}</dl>
+   {current.document.content.version===2&&current.document.content.answers&&
+      typeof current.document.content.answers==="object"&&
+      !Array.isArray(current.document.content.answers)&&
+      <section className="mt-5 rounded-lg border border-[#E0E8EF] p-4">
+       <h4 className="text-xs font-semibold">Hizmete özgü müşteri beyanları</h4>
+       <dl className="mt-3 space-y-2">{Object.entries(current.document.content.answers as Record<string,unknown>)
+        .filter(([,v])=>typeof v==="string"&&v.trim().length>0).map(([field,value])=>
+        <div key={field} className="rounded-md bg-[#F6F8FA] p-3">
+         <dt className="text-[11px] font-semibold">{({
+          requestedAction:"İstenen sonuç",incidentDate:"Olay tarihi",noticeDate:"Karar/tebligat tarihi",
+          contractDate:"Sözleşme tarihi",expiryDate:"Geçerlilik bitişi",appointmentDate:"Randevu tarihi",
+          decisionReference:"Karar referansı",caseReference:"Dosya numarası",courtOrAuthority:"Kurum/merci",
+          otherParty:"Karşı taraf",invoiceAmount:"Tutar (EUR)",employerName:"İşveren",
+          organizationName:"Şirket",documentOrigin:"Belgenin menşei",qualificationName:"Diploma",
+          benefitType:"Yardım/vergi türü",contractType:"Sözleşme türü",
+          employmentCategory:"İstihdam türü"})[field as
+           "requestedAction"|"incidentDate"|"noticeDate"|"contractDate"|"expiryDate"|"appointmentDate"|
+           "decisionReference"|"caseReference"|"courtOrAuthority"|"otherParty"|"invoiceAmount"|
+           "employerName"|"organizationName"|"documentOrigin"|"qualificationName"|"benefitType"|
+           "contractType"|"employmentCategory"]||field}</dt>
+         <dd className="mt-2 whitespace-pre-wrap break-words text-xs" dir="auto">{String(value)}</dd>
+        </div>)}</dl>
+      </section>}
    <details className="mt-4 rounded-md border border-[#E0E8EF] p-3">
     <summary className="cursor-pointer text-xs font-semibold">Değiştirilemeyen sürüm geçmişi ({current.versions.length})</summary>
     <ol className="mt-3 space-y-2 text-xs">{current.versions.map(v=><li key={v.revision}>
