@@ -22,7 +22,13 @@ const blank={
  special_mandate_verified:false,mandate_reference:"",
  ind_form_reviewed:false,privacy_legal_basis_reviewed:false,
  secure_document_channel_verified:false,disclosure_and_retention_reviewed:false,
- specialist_credential_verified:false,specialist_name:"",human_approved:false
+ specialist_credential_verified:false,specialist_name:"",human_approved:false,
+ requested_action:"review_only",mandate_authorised_actions:[] as string[],
+ mandate_excluded_actions:[] as string[],mandate_scope_reviewed:false,
+ principal_identity_verified:false,principal_signature_verified:false,
+ mandate_signed_on:"",mandate_valid_until:"",mandate_document_sha256:"",
+ asylum_application_date:"",asylum_transition_regime:"",
+ asylum_transition_source_ref:"",asylum_transition_expert_reviewed:false
 };
 type Draft=typeof blank;
 const inputFields:{key:keyof Draft;label:string;date?:boolean}[]=[
@@ -33,7 +39,12 @@ const inputFields:{key:keyof Draft;label:string;date?:boolean}[]=[
  {key:"notified_or_filed_on",label:"Tebliğ veya başvuru tarihi",date:true},
  {key:"deadline_basis",label:"Hukukî süre ve resmî kaynak kontrolü"},
  {key:"mandate_reference",label:"İşlem kapsamlı imzalı temsil belgesi referansı"},
- {key:"specialist_name",label:"Bağımsız yetkili uzman kimliği"}
+ {key:"specialist_name",label:"Bağımsız yetkili uzman kimliği"},
+ {key:"mandate_signed_on",label:"Özel vekâletname imza tarihi",date:true},
+ {key:"mandate_valid_until",label:"Özel vekâletname son geçerlilik tarihi",date:true},
+ {key:"mandate_document_sha256",label:"İmzalı belge SHA-256 (64 karakter)"},
+ {key:"asylum_application_date",label:"İltica başvuru tarihi",date:true},
+ {key:"asylum_transition_source_ref",label:"12.06.2026 geçiş rejimi resmî kaynak URL'si"}
 ];
 const checks:{key:keyof Draft;label:string}[]=[
  {key:"work_right_verified",label:"G1 · Çalışma hakkı doğrulandı"},
@@ -48,7 +59,11 @@ const checks:{key:keyof Draft;label:string}[]=[
  {key:"privacy_legal_basis_reviewed",label:"G4 · Veri işleme dayanağı incelendi"},
  {key:"secure_document_channel_verified",label:"G4 · Güvenli belge kanalı doğrulandı"},
  {key:"disclosure_and_retention_reviewed",label:"G4 · Veri paylaşımı ve saklama incelendi"},
- {key:"specialist_credential_verified",label:"Yüksek riskli işlemde uzman yetkisi doğrulandı"}
+ {key:"specialist_credential_verified",label:"Yüksek riskli işlemde uzman yetkisi doğrulandı"},
+ {key:"mandate_scope_reviewed",label:"G3 · Vekâletname işlem kapsamı bağımsız incelendi"},
+ {key:"principal_identity_verified",label:"G3 · Vekâlet veren gerçek kişi kimliği doğrulandı"},
+ {key:"principal_signature_verified",label:"G3 · Gerçek imza doğrulandı"},
+ {key:"asylum_transition_expert_reviewed",label:"G2 · İltica geçiş rejimi uzman tarafından incelendi"}
 ];
 export default function INDStaffReviewPage(){
  const lang=usePortalLanguage(),{user,loading:authLoading}=useUser();
@@ -85,7 +100,10 @@ export default function INDStaffReviewPage(){
  },[user?.id,authLoading]);
  useEffect(()=>{
    const old=reviews.find(r=>r.case_id===selected);
-   setForm(old?{...blank,...old}:{...blank});
+   setForm(old?{...blank,...old,
+     mandate_authorised_actions:old.mandate_authorised_actions||[],
+     mandate_excluded_actions:old.mandate_excluded_actions||[]
+   }:{...blank});
  },[selected,reviews]);
  async function save(approve:boolean){
   if(!enabled||role!=="admin"||!user||!selected||busy||approved)return;
@@ -104,10 +122,23 @@ export default function INDStaffReviewPage(){
         professionalAuthorityVerified:form.professional_authority_verified},
       timing:{notifiedOrFiledOn:form.notified_or_filed_on,deadlineReviewed:form.deadline_reviewed,
         deadlineBasis:form.deadline_basis,stayConsequencesReviewed:form.stay_consequences_reviewed,
-        asylumPrePost12June2026Reviewed:form.asylum_transition_reviewed},
+        asylumPrePost12June2026Reviewed:form.asylum_transition_reviewed,
+        asylumApplicationDate:form.asylum_application_date,
+        asylumTransitionRegime:form.asylum_transition_regime,
+        asylumTransitionSourceReference:form.asylum_transition_source_ref,
+        asylumTransitionExpertReviewed:form.asylum_transition_expert_reviewed},
       representation:{requested:form.representation_requested,
         signedSpecialMandate:form.special_mandate_verified,
-        procedureSpecificINDFormReviewed:form.ind_form_reviewed,serviceAgreementSigned:true},
+        procedureSpecificINDFormReviewed:form.ind_form_reviewed,serviceAgreementSigned:true,
+        requestedAction:form.requested_action,
+        mandateAuthorisedActions:form.mandate_authorised_actions,
+        mandateExcludedActions:form.mandate_excluded_actions,
+        mandateScopeReviewed:form.mandate_scope_reviewed,
+        principalIdentityVerified:form.principal_identity_verified,
+        principalSignatureVerified:form.principal_signature_verified,
+        mandateSignedOn:form.mandate_signed_on,
+        mandateValidUntil:form.mandate_valid_until,
+        mandateDocumentSHA256:form.mandate_document_sha256},
       privacy:{legalBasisReviewed:form.privacy_legal_basis_reviewed,
         secureDocumentChannelVerified:form.secure_document_channel_verified,
         disclosureAndRetentionReviewed:form.disclosure_and_retention_reviewed},
@@ -124,6 +155,11 @@ export default function INDStaffReviewPage(){
     ...form,case_id:selected,
     ind_procedure:form.procedure_family==="ind"?form.ind_procedure:null,
     notified_or_filed_on:form.notified_or_filed_on||null,
+    mandate_signed_on:form.mandate_signed_on||null,
+    mandate_valid_until:form.mandate_valid_until||null,
+    mandate_document_sha256:form.mandate_document_sha256||null,
+    asylum_application_date:form.asylum_application_date||null,
+    asylum_transition_regime:form.asylum_transition_regime||null,
     human_approved:approve
   },{onConflict:"case_id"});
   setFeedback(error?"Veritabanı reddetti: "+error.message:
@@ -162,7 +198,28 @@ export default function INDStaffReviewPage(){
         <option value="ind">IND</option><option value="other">Diğer hukukî işlem</option>
        </select>
       </label>
-      {form.procedure_family==="ind"&&<label className="text-sm">IND işlemi
+      {form.procedure_family==="ind"&&<>
+       <label className="text-sm">İşlem kapsamı (başvuru / resmî gönderim izni değildir)
+        <select className="avofis-field mt-2 w-full" value={form.requested_action}
+         onChange={e=>setForm(f=>({...f,requested_action:e.target.value}))}>
+         <option value="review_only">Yalnızca inceleme (resmî işlem yok)</option>
+         <option value="request_file_copy">IND dosya örneği talebi</option>
+         <option value="submit_objection">IND bezwaar / itiraz</option>
+         <option value="court_appeal">Mahkeme beroep</option>
+         <option value="higher_appeal">Hoger beroep</option>
+         <option value="initial_asylum_registration" disabled>İlk iltica kaydı devredilemez</option>
+        </select>
+       </label>
+       {form.ind_procedure==="asylum"&&<label className="text-sm">12 Haziran 2026 iltica tarih sınıfı
+        <select className="avofis-field mt-2 w-full" value={form.asylum_transition_regime}
+         onChange={e=>setForm(f=>({...f,asylum_transition_regime:e.target.value}))}>
+         <option value="">Hukukî geçiş incelemesi bekleniyor</option>
+         <option value="before_2026_06_12">12.06.2026 öncesi başvuru</option>
+         <option value="from_2026_06_12">12.06.2026 itibarıyla başvuru</option>
+        </select>
+       </label>}
+       </>}
+       {form.procedure_family==="ind"&&<label className="text-sm">IND işlemi
         <select className="avofis-field mt-2 w-full" value={form.ind_procedure}
          onChange={e=>setForm(f=>({...f,ind_procedure:e.target.value}))}>
          {indProcedureIds.map(p=><option value={p} key={p}>{p.replaceAll("_"," ")}</option>)}
@@ -172,9 +229,21 @@ export default function INDStaffReviewPage(){
      <div className="grid gap-3 sm:grid-cols-2">
       {inputFields.map(field=><label key={field.key} className="text-sm">{field.label}
        <input className="avofis-field mt-2 w-full" type={field.date?"date":"text"}
-        value={String(form[field.key])}
+        value={form[field.key]==null?"":String(form[field.key])}
         onChange={e=>setForm(f=>({...f,[field.key]:e.target.value}))}/>
       </label>)}
+     </div>
+     <div className="grid gap-3 sm:grid-cols-2">
+      <label className="text-sm">Vekâlette açıkça izinli işlemler (virgülle ayrılmış işlem kodları)
+       <input className="avofis-field mt-2 w-full"
+        value={form.mandate_authorised_actions.join(",")}
+        onChange={e=>setForm(f=>({...f,mandate_authorised_actions:e.target.value.split(",").map(v=>v.trim()).filter(Boolean)}))}/>
+      </label>
+      <label className="text-sm">Vekâlette açıkça hariç tutulan işlemler
+       <input className="avofis-field mt-2 w-full"
+        value={form.mandate_excluded_actions.join(",")}
+        onChange={e=>setForm(f=>({...f,mandate_excluded_actions:e.target.value.split(",").map(v=>v.trim()).filter(Boolean)}))}/>
+      </label>
      </div>
      <div className="grid gap-2 sm:grid-cols-2">
       {checks.map(field=><label key={field.key} className="flex gap-3 rounded-lg border border-[#dfbf59]/20 p-3 text-sm">

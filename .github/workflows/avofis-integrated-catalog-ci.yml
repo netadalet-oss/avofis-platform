@@ -3,9 +3,11 @@ on:
   push:
     branches:
       - feature/avofis-integrated-catalog-20261029
+      - feature/avofis-v17-two-person-clearance-20261029
   pull_request:
     branches:
       - feature/avofis-customer-portal-restructure-20261027
+      - feature/avofis-integrated-catalog-20261029
 permissions:
   contents: read
 jobs:
@@ -37,7 +39,7 @@ jobs:
             sudo apt-get update -qq
             sudo apt-get install -y -qq postgresql-client
           fi
-          psql -v ON_ERROR_STOP=1 -f database/tests/ind_case_clearance.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/ind_mandate_asylum_regime.sql
   legacy-rls-hardening:
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -54,6 +56,11 @@ jobs:
           --health-interval 5s --health-timeout 5s --health-retries 10
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: B03 reject production Supabase target before staging migration
+        run: node --test database/tests/b03_staging_target_guard.test.mjs
       - name: Assert legacy RLS migration with synthetic A/B/admin principals
         env:
           PGPASSWORD: synthetic-test-password
@@ -67,6 +74,210 @@ jobs:
             sudo apt-get install -y -qq postgresql-client
           fi
           psql -v ON_ERROR_STOP=1 -f database/tests/legacy_rls_hardening.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/legacy_cms_publication_hold.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/identity_cms_profile_acl_hardening.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/future_public_default_acl_owner_synthetic.sql
+          psql -v ON_ERROR_STOP=1 -f database/ops/identity_cms_future_acl_readonly_postflight.sql
+          psql -v ON_ERROR_STOP=1 -f database/ops/b02_policy_readonly_postflight.sql
+      - name: Prove B01/B02 migration rejects unexpected RLS policies (disposable only)
+        env:
+          PGPASSWORD: synthetic-test-password
+          PGHOST: 127.0.0.1
+          PGPORT: "5432"
+          PGUSER: postgres
+          PGDATABASE: avofis_legacy_ci
+        run: |
+          set -euo pipefail
+          createdb avofis_drift_guard_ci
+          set +e
+          PGDATABASE=avofis_drift_guard_ci psql -v ON_ERROR_STOP=1 -f database/tests/legacy_unreviewed_policy_drift.sql > "$RUNNER_TEMP/rls_drift_guard.log" 2>&1
+          code=$?
+          set -e
+          if [ "$code" -eq 0 ]; then
+            echo "ERROR: an unexpected broad policy did not block the migration"
+            exit 1
+          fi
+          if ! grep -Fq "B01/B02 unexpected legacy policies" "$RUNNER_TEMP/rls_drift_guard.log"; then
+            cat "$RUNNER_TEMP/rls_drift_guard.log"
+            echo "ERROR: failed for the wrong reason"
+            exit 1
+          fi
+          echo "PASS: B01/B02 migration refuses unreviewed permissive policies"
+          set +e
+          psql -v ON_ERROR_STOP=1 -f database/ops/supabase_admin_public_default_acl_OWNER_ACTION.sql > "$RUNNER_TEMP/default_acl_owner_guard.log" 2>&1
+          owner_status=$?
+          set -e
+          if [ "$owner_status" -eq 0 ]; then
+            echo "ERROR: postgres executed a protected supabase_admin-only action"
+            exit 1
+          fi
+          if ! grep -Fq "B02-FUTURE owner-only action required" "$RUNNER_TEMP/default_acl_owner_guard.log"; then
+            cat "$RUNNER_TEMP/default_acl_owner_guard.log"
+            echo "ERROR: owner-only negative test failed for wrong reason"
+            exit 1
+          fi
+          echo "PASS: Owner-only default ACL guard refused postgres"
+      - name: Reject B02 same-name policy command drift and permissive publication-hold tampering
+        env:
+          PGPASSWORD: synthetic-test-password
+          PGHOST: 127.0.0.1
+          PGPORT: "5432"
+          PGUSER: postgres
+          PGDATABASE: avofis_legacy_ci
+        run: |
+          set -euo pipefail
+          for scenario in command hold; do
+            createdb "avofis_b02_${scenario}_ci"
+            if [ "$scenario" = command ]; then
+              proof=database/tests/b02_named_policy_command_drift_expected_failure.sql
+            else
+              proof=database/tests/b02_publication_hold_drift_expected_failure.sql
+            fi
+            set +e
+            PGDATABASE="avofis_b02_${scenario}_ci" psql -v ON_ERROR_STOP=1 -f "$proof" > "$RUNNER_TEMP/b02_${scenario}.log" 2>&1
+            code=$?
+            set -e
+            if [ "$code" -eq 0 ] || ! grep -Fq "B02 identity/CMS policy signature drift:" "$RUNNER_TEMP/b02_${scenario}.log"; then
+              cat "$RUNNER_TEMP/b02_${scenario}.log"
+              echo "ERROR: B02 migration did not fail for expected security drift ($scenario)"
+              exit 1
+            fi
+            echo "PASS B02 $scenario: unexpected command/role/hold rejected"
+          done
+      - name: Read-only postflight must detect B02 policy tampering after migration
+        env:
+          PGPASSWORD: synthetic-test-password
+          PGHOST: 127.0.0.1
+          PGPORT: "5432"
+          PGUSER: postgres
+          PGDATABASE: avofis_legacy_ci
+        run: |
+          set -euo pipefail
+          for scenario in broad_read hold; do
+            createdb "avofis_b02_post_${scenario}"
+            if [ "$scenario" = broad_read ]; then
+              fixture=database/tests/b02_postflight_broad_read_expected_failure.sql
+              expected='B02-POST canonical SELECT policy drift:'
+            else
+              fixture=database/tests/b02_postflight_hold_expected_failure.sql
+              expected='B02-POST CMS publication hold drift:'
+            fi
+            set +e
+            PGDATABASE="avofis_b02_post_${scenario}" psql -v ON_ERROR_STOP=1 -f "$fixture" > "$RUNNER_TEMP/b02_post_${scenario}.log" 2>&1
+            status=$?
+            set -e
+            if [ "$status" -eq 0 ] || ! grep -Fq "$expected" "$RUNNER_TEMP/b02_post_${scenario}.log"; then
+              cat "$RUNNER_TEMP/b02_post_${scenario}.log"
+              echo "ERROR: B02 read-only postflight failed to identify $scenario attack"
+              exit 1
+            fi
+            echo "PASS: B02 read-only postflight rejected $scenario"
+          done
+  tenant-isolation-synthetic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: synthetic-tenant-test
+          POSTGRES_DB: avofis_tenant_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d avofis_tenant_ci"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exercise real migration chain under synthetic A/B/staff identities
+        env:
+          PGPASSWORD: synthetic-tenant-test
+          PGHOST: 127.0.0.1
+          PGPORT: "5432"
+          PGUSER: postgres
+          PGDATABASE: avofis_tenant_ci
+        run: |
+          if ! command -v psql >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq postgresql-client
+          fi
+          psql -v ON_ERROR_STOP=1 -f database/tests/customer_tenant_isolation.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/judicial_metadata_synthetic.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/client_case_workflow_synthetic.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/staff_personal_capability_scope_synthetic.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/staff_work_items_synthetic.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/staff_review_audit_synthetic.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/staff_mfa_sensitive_scope_synthetic.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/form02_client_drafts_synthetic.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/form03_contextual_drafts_synthetic.sql
+          psql -v ON_ERROR_STOP=1 -f database/tests/b04_storage_case_owner_synthetic.sql
+      - name: Dump, corrupt disposable source, restore into a new disposable DB, and re-test RLS
+        env:
+          PGPASSWORD: synthetic-tenant-test
+          PGHOST: 127.0.0.1
+          PGPORT: "5432"
+          PGUSER: postgres
+          PGDATABASE: avofis_tenant_ci
+        run: |
+          set -euo pipefail
+          pg_dump --format=custom --file="$RUNNER_TEMP/avofis_tenant_ci.backup"
+          psql -v ON_ERROR_STOP=1 -c "update public.avofis_cases set title='TAMPERED ONLY IN DISPOSABLE SOURCE' where id='11111111-1111-4111-8111-111111111111';"
+          createdb avofis_restored_ci
+          pg_restore --no-owner --exit-on-error --dbname=avofis_restored_ci "$RUNNER_TEMP/avofis_tenant_ci.backup"
+          PGDATABASE=avofis_restored_ci psql -v ON_ERROR_STOP=1 -f database/tests/synthetic_restore_assertions.sql
+  rechtspraak-distributed-limiter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Test real atomic Lua Redis budget with 32 parallel clients (disposable only)
+        run: |
+          if ! command -v redis-cli >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq redis-tools
+          fi
+          node --experimental-strip-types portal/scripts/rechtspraak-redis-atomic-ci.mjs
+  admin-workspace-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: admin
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: "https://example.supabase.co"
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: "synthetic-public-test-key"
+      AVOFIS_STAFF_WORKSPACE_STAGING_ENABLED: "false"
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install workspace dependencies
+        run: npm install --no-package-lock --no-audit --no-fund
+      - name: Personal role, module and sourced workflow tests
+        run: node --experimental-strip-types --test scripts/staff-workspace.test.mjs
+      - name: P09 staff MFA assurance unit checks
+        run: node --experimental-strip-types --test scripts/staff-mfa.test.mjs
+      - name: P11 real customer document review contract and production environment guard
+        run: node --experimental-strip-types --test scripts/client-document-review.test.mjs
+      - name: Admin TypeScript and role-screen compile
+        run: npm run typecheck
+      - name: Build private staff app with all live actions locked
+        run: npm run build
+      - name: P08 HTTP smoke confirms every protected admin API fails closed without staging
+        run: node scripts/staff-workspace-http-smoke.mjs
   portal-validation:
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -95,5 +306,49 @@ jobs:
         run: npm run build
       - name: IND admission gate unit checks (no client data)
         run: node --experimental-strip-types --test scripts/ind-clearance.test.mjs
+      - name: Non-identifying country/role/notice triage unit tests
+        run: node --experimental-strip-types --test scripts/public-triage.test.mjs scripts/public-triage-review.test.mjs
+      - name: Release authorisation cannot be bypassed by env flags
+        run: node --experimental-strip-types --test scripts/release-authorization.test.mjs
+      - name: Dutch judicial Open Data and no-official-filing security regression
+        run: node --experimental-strip-types --test scripts/judicial-integration.test.mjs
+      - name: J05 shared Redis REST limiter unit checks (no real credentials)
+        run: node --experimental-strip-types --test scripts/rechtspraak-shared-rate-limit.test.mjs
+      - name: FORM-01 contextual document and DOCX privacy regression
+        run: node --experimental-strip-types --test scripts/document-preparation.test.mjs
+      - name: Preserve historical 17 services 14 audiences 12 sourced problem routes
+        run: node --experimental-strip-types --test scripts/avofis-scope-invariants.test.mjs
+      - name: L4 anonymous document preparation is fail-closed and privacy-first (R-397/399/400)
+        run: node --experimental-strip-types --test scripts/document-preparation-gate.test.mjs
+      - name: L4 17 migration family administrative cross-border local preparation forms (R-379..R-395)
+        run: node --experimental-strip-types --test scripts/international-form-preview.test.mjs
+      - name: L4 14 anonymous employment tenancy consumer local preparation schemas (R-361..R-374)
+        run: node --experimental-strip-types --test scripts/sector-intake-preview.test.mjs
+      - name: L4 source-scoped code evidence, 973 denominator, 18 open decisions and L5 lock
+        run: |
+          node --test scripts/l4-evidence-audit.test.mjs
+          node scripts/l4-evidence-audit.mjs
+      - name: L3 source-linked 973 atomic contracts, 63 logical modules, 154 flows and L4 approval lock
+        run: node --test scripts/master-atomic-contracts-l3.test.mjs
+      - name: L2 approved 63 modules and 154 flows map 973 unchanged tasks, keep L4 locked
+        run: node --test scripts/master-modules-workflows-l2.test.mjs
+      - name: L1 63 source-aligned subprograms map exact 973 IDs and keep L2 gated
+        run: node --test scripts/master-subprograms-l1.test.mjs
+      - name: L0 user-approved hierarchy remains exact 8 pillars and 973 tracked work records
+        run: node --test scripts/master-skeleton-l0.test.mjs
+      - name: PROGRESS 973-work completion denominator, independent evidence and NO-GO assertions
+        run: |
+          node --test scripts/work-progress.test.mjs
+          node scripts/work-progress.mjs
+      - name: CONTENT01 original sixteen Dutch guides and editorial release gate
+        run: node --experimental-strip-types --test scripts/guide-catalog-regression.test.mjs
+      - name: FORM-03 all 17 contextual service document schema validation
+        run: node --experimental-strip-types --test scripts/service-document-forms.test.mjs
+      - name: FORM-02 stage-only account drafts, strict revisions and consent checks
+        run: node --experimental-strip-types --test scripts/document-draft-contract.test.mjs
+      - name: Non-gating one-call Rechtspraak public XML authenticity probe
+        continue-on-error: true
+        timeout-minutes: 1
+        run: node --experimental-strip-types scripts/rechtspraak-live-xml-probe.mjs
       - name: HTTP route and disabled-endpoint smoke tests
         run: npm run smoke

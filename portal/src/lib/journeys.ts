@@ -1,7 +1,7 @@
 import type { Language } from "./avofis-content";
 
 export type Localized = Record<Language,string>;
-export type JourneyService = "documents"|"translation"|"administration"|"diplomas"|"business"|"expert";
+export type JourneyService = "documents"|"translation"|"administration"|"diplomas"|"business"|"expert"|"housing"|"employment"|"immigration";
 export type Choice = {value:string; label:Localized};
 export type JourneyField = {key:string;label:Localized;options:Choice[]};
 export type Journey = {
@@ -120,6 +120,86 @@ export const journeys:Journey[]=[
  fields:[
   {key:"profession",label:l("Hangi uzmanlık?","Welk beroep?","Professional expertise"),options:[opt("lawyer","Avukat","Advocaat","Lawyer"),opt("notary","Noter","Notaris","Civil-law notary"),opt("translator","Yeminli tercüman","Beëdigd vertaler","Sworn translator"),opt("tax","Vergi uzmanı","Belastingadviseur","Tax professional"),opt("other","Diğer yetkili uzman","Andere specialist","Other specialist")]},
   {key:"country",label:l("Hangi ülke?","Welk land?","Country"),options:origins}
+ ]},
+ {id:"rent-repairs",service:"housing",
+ title:l("Kiradaki konutta bakım veya onarım sorunu","Onderhoud of gebreken in uw huurwoning","Repairs or defects in a rented home"),
+ audience:l("Hollanda'da kiracı olarak onarım sorunu yaşayan veya sorumluluk paylaşımını öğrenmek isteyenler.",
+  "Huurders in Nederland met onderhoudsproblemen of vragen over verantwoordelijkheden.",
+  "Tenants in the Netherlands who face repair issues or need to understand responsibilities."),
+ need:l("Sorunun türü, konutun kira türü ve ev sahibine daha önce bildirim yapılıp yapılmadığı önemlidir. Huurcommissie'nin yetkisi her kira ilişkisi için aynı değildir.",
+  "Het type gebrek, huursegment en een eerdere melding aan de verhuurder zijn relevant. De Huurcommissie is niet in alle gevallen bevoegd.",
+  "The defect, tenancy type and any notice to the landlord matter. Huurcommissie jurisdiction differs between tenancies."),
+ preparation:l("Sorunun nerede olduğunu ve ev sahibine bildirilip bildirilmediğini belirleyin. Fotoğraf ve yazışmalar yalnız güvenli dosyada paylaşılır.",
+  "Bepaal het gebrek en of de verhuurder al is geïnformeerd. Foto's en berichten horen alleen in een beveiligd dossier.",
+  "Identify the defect and whether you informed the landlord. Share photos and correspondence only in a protected case."),
+ responsibility:l("Kiracı ile ev sahibinin onarım yükümlülükleri ayrıdır. Gereken resmî değerlendirmeyi Huurcommissie veya yetkili mahkeme yapar.",
+  "De onderhoudsplichten van huurder en verhuurder verschillen. De Huurcommissie of bevoegde rechter beoordeelt formele geschillen.",
+  "Landlord and tenant duties differ. Huurcommissie or the competent court handles formal disputes."),
+ next:l("Kira durumunuzu ve onarım ihtiyacınızı seçin.",
+  "Kies uw huursituatie en de aard van het onderhoud.",
+  "Choose tenancy type and the nature of the repair problem."),
+ fields:[
+  {key:"tenancy",label:l("Kira durumu","Type huur","Tenancy category"),
+   options:[opt("social","Sosyal / orta segment","Sociale of middenhuur","Social or regulated mid-rent"),
+    opt("private","Serbest piyasa","Vrije sector","Private sector"),
+    opt("unknown","Emin değilim","Weet ik niet","Not sure")]},
+  {key:"problem",label:l("Sorunun türü","Wat is het probleem?","Type of defect"),
+   options:[opt("leak","Sızıntı / nem","Lekkage of vocht","Leak or damp"),
+    opt("heating","Isıtma / sıcak su","Verwarming of warm water","Heating or hot water"),
+    opt("other","Diğer bakım","Ander onderhoud","Other maintenance")]}
+ ]},
+ {id:"unpaid-wages",service:"employment",
+ title:l("Ödenmeyen ücret veya son maaş","Achterstallig loon of eindafrekening","Unpaid wages or final salary"),
+ audience:l("Hollanda'da işvereninden ücret veya son hesaplaşma bekleyen çalışanlar.",
+  "Werknemers in Nederland die loon of een eindafrekening missen.",
+  "Employees in the Netherlands who have not received wages or final pay."),
+ need:l("İş sözleşmesi, ödeme dönemi ve bordrolar incelenir. Hukukî talep ve faiz/ceza koşulları ülke ve sözleşmeye göre değerlendirilir.",
+  "Arbeidsovereenkomst, betaalperiode en loonstroken zijn relevant. Juridische aanspraken vragen beoordeling per geval.",
+  "Employment contract, payment periods and payslips matter. Legal entitlements require case-specific review."),
+ preparation:l("Hangi dönem için ödeme yapılmadığını ve hangi belgelerin mevcut olduğunu seçin. İşveren yazışmalarını yalnız güvenli dosyada paylaşın.",
+  "Bepaal de onbetaalde periode en aanwezige stukken. Deel werkgeverscorrespondentie alleen in een beveiligd dossier.",
+  "Identify the unpaid period and available records. Share employer correspondence only in a secure case."),
+ responsibility:l("Ücret borcunu işveren karşılar; ihtar veya dava yolunu yetkili hukukçu somut olayda değerlendirir.",
+  "De werkgever is verantwoordelijk voor loonbetaling; een bevoegde adviseur beoordeelt een ingebrekestelling of vordering.",
+  "The employer is responsible for wages. A competent adviser reviews any demand or claim."),
+ next:l("Ücret durumu ve elinizdeki delil türünü seçin.",
+  "Selecteer de loonstatus en beschikbare bewijsstukken.",
+  "Select payment status and available evidence."),
+ fields:[
+  {key:"payment",label:l("Hangi ödeme eksik?","Welke betaling ontbreekt?","Which payment is missing?"),
+   options:[opt("salary","Düzenli maaş","Regulier loon","Regular salary"),
+    opt("final","İşten ayrılma hesabı","Eindafrekening","Final pay"),
+    opt("other","Diğer ödeme","Andere betaling","Other payment")]},
+  {key:"record",label:l("Hangi kayıt var?","Welke documenten heeft u?","What evidence is available?"),
+   options:[opt("payslip","Bordro","Loonstrook","Payslip"),
+    opt("agreement","Sözleşme","Arbeidsovereenkomst","Employment contract"),
+    opt("unknown","Emin değilim","Weet ik niet","Not sure")]}
+ ]},
+ {id:"ind-decision-objection",service:"immigration",
+ title:l("IND kararına itiraz veya mahkemeye başvuru","Bezwaar of beroep tegen een IND-besluit","Object to or appeal an IND decision"),
+ audience:l("Hollanda IND tarafından yazılı karar alan ve hangi inceleme yolunun uygun olduğunu anlamak isteyenler.",
+  "Mensen met een schriftelijk IND-besluit die de mogelijke rechtsgang willen begrijpen.",
+  "People with a written IND decision who need to understand possible review routes."),
+ need:l("Kararın türü, veriliş ve tebliğ tarihleri ve kişinin ülkede bekleme hakkı ayrı kontrol edilir. Acil sınır dışı veya iltica dosyası doğrudan yetkili uzmana yöneltilmelidir.",
+  "Soort besluit, bekendmaking, ontvangst en rechtmatig verblijf vereisen afzonderlijke controle. Spoedeisende terugkeer- en asielzaken vragen direct bevoegde hulp.",
+  "Decision type, service dates and permission to remain require individual checks. Urgent removal and asylum matters need qualified help immediately."),
+ preparation:l("Önce kararın konusunu belirleyin; kimlik, BSN veya kararın tam metnini açık ön başvuruya girmeyin.",
+  "Kies eerst het type besluit; voer geen BSN of volledige beschikking in op een openbare pagina.",
+  "Choose the decision category. Do not enter identity numbers or decision text into the public form."),
+ responsibility:l("İtirazı IND, mahkeme başvurusunu yetkili mahkeme inceler. Temsil ve acil tedbir yetkisi işlemin türüne göre değerlendirilir.",
+  "De IND beoordeelt bezwaar; bevoegde gerechten behandelen beroep. Vertegenwoordiging en spoedmaatregelen hangen van de procedure af.",
+  "The IND decides objections; competent courts hear appeals. Representation and urgent remedies depend on the procedure."),
+ next:l("Kararın türünü ve yazılı karar alıp almadığınızı seçin.",
+  "Selecteer het type besluit en of u een schriftelijke beschikking hebt.",
+  "Select decision type and whether a written decision has been received."),
+ fields:[
+  {key:"decision",label:l("IND kararının konusu","Onderwerp IND-besluit","Type of IND decision"),
+   options:[opt("residence","Oturum / vize","Verblijf of visum","Residence or visa"),
+    opt("asylum","İltica / sınır dışı riski","Asiel / risico van verwijdering","Asylum or removal risk"),
+    opt("other","Diğer karar","Ander besluit","Other decision")]},
+  {key:"notice",label:l("Yazılı karar elinizde mi?","Heeft u een schriftelijk besluit?","Do you have the written decision?"),
+   options:[opt("yes","Evet","Ja","Yes"),opt("no","Hayır","Nee","No"),
+    opt("unknown","Emin değilim","Weet ik niet","Not sure")]}
  ]}
 ];
 export const journeyIds=journeys.map(x=>x.id);

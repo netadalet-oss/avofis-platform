@@ -1,5 +1,2 @@
-import { redirect } from "next/navigation";
-
-export default function AdminHome() {
-  redirect("/cms");
-}
+import {redirect} from "next/navigation";
+export default function AdminHome(){redirect("/dashboard");}

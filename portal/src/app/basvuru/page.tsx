@@ -7,6 +7,7 @@ import { PageFrame } from "@/components/avofis/PageFrame";
 import { usePortalLanguage } from "@/hooks/usePortalLanguage";
 import { getJourney, journeys, validateJourneyDetails } from "@/lib/journeys";
 import { officialSources } from "@/lib/journey-sources";
+import { publicCustomerTransactionsAuthorized } from "@/lib/public-release-status";
 
 declare global {
  interface Window {turnstile?:{render:(el:HTMLElement,options:{sitekey:string;callback:(token:string)=>void;"expired-callback":()=>void})=>string;reset:(id?:string)=>void};}
@@ -27,7 +28,7 @@ export default function IntakePage(){
  const [pending,setPending]=useState(false),[error,setError]=useState(""),[reference,setReference]=useState("");
  const widgetRef=useRef<HTMLDivElement>(null),rendered=useRef(false);
  const chosen=getJourney(journeyId)||journeys[0];
- const ready=enabled&&!!sitekey;
+ const ready=enabled&&!!sitekey&&publicCustomerTransactionsAuthorized;
  useEffect(()=>{
    const fromUrl=new URLSearchParams(window.location.search).get("islem")||"";
    if(getJourney(fromUrl))setJourneyId(fromUrl);
@@ -87,7 +88,7 @@ export default function IntakePage(){
            </select>
          </label>)}
        </fieldset>
-       <Link href={"/islemler?lang="+lang} className="avofis-outline avofis-btn mt-5">{t.services}</Link>
+       <div className="mt-5 flex flex-wrap gap-3"><Link href={"/islemler?lang="+lang} className="avofis-outline avofis-btn">{t.services}</Link><Link href={"/triyaj?lang="+lang} className="avofis-outline avofis-btn">{lang==="tr"?"Kayıtsız güvenli triyaj":lang==="nl"?"Veilige oriëntatie zonder registratie":"Safe triage without registration"}</Link></div>
      </div>:reference?<div className="mt-7 rounded-xl border border-[#dfbf59]/25 bg-[#04102C] p-5" role="status">
        <h2 className="text-[18px] font-semibold">{t.success}</h2><p className="mt-2 text-[14px] leading-7 text-[#B9C5DF]">{t.successInfo}</p>
        <p className="mt-3 text-[15px] font-semibold text-[#dfbf59]">{t.reference}: {reference}</p>

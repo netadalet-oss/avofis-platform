@@ -1,0 +1,125 @@
+/**
+ * Internal source index and editable drafting checklists.
+ * An official SOURCE link is not a verified form or accepted filing path.
+ * Never fill with real client data while workspace staging is disabled.
+ * Local example drafts are deliberately non-official and require legal review.
+ */
+export type Workstream={
+ id:string;title:string;country:string;domain:string;
+ audience:string;professional:string;officialForm:boolean;
+ source:string;sourceLabel:string;
+ documents:readonly string[];steps:readonly string[];
+ templateTitle:string;templateBody:string;
+ risk:"high"|"standard";review:string;
+};
+export const workstreams:readonly Workstream[]=[
+ {id:"nl-bestuursrecht",title:"İdari işleme itiraz ve dava",country:"NL",domain:"İdare",audience:"Birey / kuruluş",professional:"Usule göre yetkili hukukçu/avukat",officialForm:false,
+  source:"https://www.rechtspraak.nl/voor-advocaten-en-juristen/reglementen-procedures-en-formulieren/bestuursrecht",sourceLabel:"Rechtspraak · Bestuursrecht",
+  documents:["İşlem/karar örneği","Tebliğ kanıtı","İlgili makamın yazışmaları","İşlem bazlı yazılı temsil belgesi","Dayanak belgeler ve ek listesi"],
+  steps:["Ülke ve yetkili makamı belirle","Gerçek tebliğ ve süreyi insan incelemesine sun","İdari itiraz/dava yolunu ayrı doğrula","Taslak gerekçe ve ekleri incelet","Resmî işlem ancak makbuzla tamamlanır"],
+  templateTitle:"İdari itiraz / dava ön taslağı",templateBody:"Konu: [işlem türü]\nMuhatap makam: [insan tarafından doğrulanır]\nİtiraz edilen işlem ve tebliğ: [doğrulanmış bilgiler]\nOlay ve hukuki gerekçeler: [yetkili uzman doldurur]\nTalep: [usule uygun]\nEkler: [numaralı liste]\nYetki, imza ve süre kontrolü: [bağımsız inceleme]",
+  risk:"high",review:"Süre, geçiş rejimi, zorunlu avukatlık ve yetkili mahkeme ayrı doğrulanır."},
+ {id:"nl-civil",title:"Medeni ve ticari dava hazırlığı",country:"NL",domain:"Dava",audience:"Birey / işletme",professional:"Usule göre advocaat zorunlu olabilir",officialForm:false,
+  source:"https://www.rechtspraak.nl/voor-advocaten-en-juristen/reglementen-procedures-en-formulieren/procesreglement",sourceLabel:"Rechtspraak · Procesreglementen",
+  documents:["Sözleşme ve ekleri","İhtar ve tebliğ kanıtı","Talebin dayandığı belgeler","Taraf/temsil yetkisi","Bilirkişi/hesap dökümü gerekiyorsa"],
+  steps:["Kanton/handel/temyiz prosedürünü ayır","Zorunlu advocaat denetle","Uyuşmazlığın parasal ve usul kapsamını kontrol et","Dilekçe ve ek listesini gözden geçir","Portal veya tebligat makamı makbuzu doğrula"],
+  templateTitle:"Medeni dava vaka inceleme notu",templateBody:"Mahkeme ve süreç: [doğrulama]\nTaraflar: [yetkili kayıt]\nTalep ve dayanak: [analiz]\nOlaylar/kronoloji: [doğrulanacak]\nDeliller: [numaralı üretim]\nHukukî dayanak: [güncel mevzuat]\nUygun usul ve temsil: [avukat kontrolü]\nİmza ve makbuz: [resmî teyit]",
+  risk:"high",review:"Resmî dagvaarding veya verzoekschrift yerine geçmez."},
+ {id:"nl-family",title:"Aile ve velayet süreçleri",country:"NL",domain:"Aile",audience:"Birey",professional:"Yetkili aile hukuku avukatı incelemesi",officialForm:false,
+  source:"https://www.rechtspraak.nl/voor-advocaten-en-juristen/reglementen-procedures-en-formulieren/procesreglement",sourceLabel:"Rechtspraak · Aile/rekest reglementleri",
+  documents:["Nüfus/aile durumu kaydı","Mahkeme veya kurum kararları","İlgili ebeveyn rızaları","Mali durum (gereken dosyalarda)","Mahrem çocuk belgeleri için özel erişim"],
+  steps:["Menfaat çatışması ve çocuk verisi kontrolü","Zorunlu avukatlık incelemesi","Yetkili mahkeme/usul","Güvenli belge erişimi","Yalnız resmî onaylı gönderim"],
+  templateTitle:"Aile hukuku dosya inceleme kontrolü",templateBody:"İlgili usul: [belirlenecek]\nİlgili kişiler: [korunan kayıtlarda]\nÇocuğun menfaati: [yetkili uzman değerlendirmesi]\nGerekli karar ve belgeler: [liste]\nUzman/onay: [imza]\nResmî dosya ve tebliğ kontrolü: [zorunlu]",
+  risk:"high",review:"Çocukların özel nitelikli/veri mahremiyeti ayrıca korunur."},
+ {id:"nl-ind-residence",title:"Oturum ve ikamet başvuruları",country:"NL",domain:"Göç",audience:"Başvuru sahibi / izinli temsilci",professional:"İşlem özelinde yetkili IND temsilcisi",officialForm:true,
+  source:"https://ind.nl/nl/verblijfsvergunningen",sourceLabel:"IND · Verblijfsvergunningen",
+  documents:["İşleme özgü güncel IND formu","Seyahat belgesi (gerekliyse)","İkamet sebebi kanıtı","Resmî yabancı belge tercüme/tasdikleri","İşleme özgü vekâlet/izin"],
+  steps:["IND kategorisini ayır","G1–G4 ve işleme özgü yetki","İlgili form sürümünü resmî kaynaktan al","Ücret ve belge listesini kontrol et","Yalnız izinli kanaldan resmî başvuru"],
+  templateTitle:"IND işlem dosyası ön kontrolü",templateBody:"IND işlem adı/kategorisi: [yazınız]\nİlgili resmî form kodu: [resmî IND kaynağı]\nKişi/temsil yetkisi: [G1–G4]\nResmî belge gereksinimleri: [kaynaklı liste]\nSüre ve geçiş hukuku: [uzman]\nResmî gönderim/teslim makbuzu: [yoksa tamamlanmadı]",
+  risk:"high",review:"İltica, idari gözetim veya sınır dışı bu genel süreçten bağımsızdır."},
+ {id:"nl-ind-asylum",title:"İltica ve sonraki başvurular",country:"NL",domain:"Göç",audience:"Başvuru sahibi ve yetkili avukat",professional:"Asiel ve NOvA erişimi bağımsız hukukçu/advocaat",officialForm:true,
+  source:"https://ind.nl/nl/verblijfsvergunningen/asiel/tweede-of-volgende-asielaanvraag",sourceLabel:"IND · Tweede of volgende asielaanvraag",
+  documents:["İşleme ait resmî IND formu","Yazılı yetki ve avukat sıfatı","Karar/tebliğ ve geçiş rejimi doğrulaması","Gerekli güvenli korunan belgeler"],
+  steps:["İlk başvuru kişisel kayıt gerekliliğini ayır","12.06.2026 geçiş hükümlerini doğrula","G1–G4 ve NOvA erişimini incele","Acil süreyi insan doğrulasın","Korumalı resmî portala AVOfis ile otomatik giriş yapılmaz"],
+  templateTitle:"İltica özel uzman yönlendirme kontrolü",templateBody:"Başvuru kategorisi: [ilk / sonraki / dava]\nKimlik ve vekâlet denetimi: [yetkili uzman]\n12 Haziran 2026 geçiş rejimi: [insan doğrulaması]\nDosya süresi, tebliğ, hukuki etkiler: [uzman]\nGüvenli iletişim: [onaylı kanal]",
+  risk:"high",review:"İlk iltica başvurusu AVOfis adına otomatik olarak yapılamaz."},
+ {id:"nl-regular-immigration-court",title:"Düzenli yabancılar hukuku — mahkeme yolu",country:"NL",domain:"Göç / dava",audience:"Başvuru sahibi / yetkili temsilci",professional:"İşlem ve mahkemeye göre yetkili advocaat",officialForm:true,
+  source:"https://www.rechtspraak.nl/voor-advocaten-en-juristen/reglementen-procedures-en-formulieren/bestuursrecht/procederen-in-reguliere-vreemdelingenzaken",sourceLabel:"Rechtspraak · Reguliere vreemdelingenzaken",
+  documents:["IND'nin ret/itiraz kararı ve ilgili belgeler","Tebliğ/karar tarihi kanıtı","İşlem için geçerli yazılı yetki veya avukat kaydı","Güncel resmî DPC/CIV başvuru kanalı ve ek listesi","İlgili usule göre harç ve tebligat"],
+  steps:["İltica/gözetim konularından ayrı sınıflandır","IND kararı, yetkili mahkeme ve usulü doğrula","12 Haziran 2026 geçiş etkisini dosya bazında incele","Güncel DPC/CIV resmî formunu kaynakta doğrula","Yetkili profesyonel imzası ve resmî makbuz"],
+  templateTitle:"Reguliere vreemdelingenzaken — dava kontrol taslağı",templateBody:"Usul: [reguliere vreemdelingenzaak; asiel/bewaring değil]\\nIND kararı ve tebliğ: [doğrulama]\\nMahkeme ve dava/başvuru türü: [yetkili inceleme]\\nDPC/CIV resmî form yolu: [Rechtspraak kaynağı]\\nYazılı temsil/advocatenpas: [yetki]\\n12.06.2026 geçiş rejimi: [ilgiliyse uzman denetimi]\\nEkler ve resmî teslim makbuzu: [kontrol]",
+  risk:"high",review:"DPC/CIV yolu her avukat ve her dava için otomatik değildir; geçerli yetki ve kaynak/süre teyidi zorunludur."},
+ {id:"nl-ind-delay",title:"IND karar gecikmesi başvurusu",country:"NL",domain:"Göç",audience:"Başvuru sahibi / izinli temsilci",professional:"İlgili hukukçu",officialForm:true,
+  source:"https://ind.nl/nl/formulieren/9001.pdf",sourceLabel:"IND · Formulier 9001 (resmî PDF)",
+  documents:["İlgili IND başvurusunun kaydı","Karar süresi ve uzatma yazıları","Tebliğ ve diğer resmî yazışmalar","İşlem bazında gerekli temsil belgesi"],
+  steps:["Uygun IND usulünü doğrula","Karar süresinin gerçekten dolduğunu uzman incelesin","En güncel resmî formu aç","Ekleri ve gönderim kanalını kontrol et","Makbuzu doğrulamadan teslim edildi işaretleme"],
+  templateTitle:"Geç karar için iç kontrol formu",templateBody:"İlgili IND prosedürü: [doğrulama]\nResmî karar süresi ve varsa uzatma: [kaynak]\nGüncel form: 9001 (resmî siteden doğrula)\nBildirim uygunluğu: [yetkili uzman]\nEkler: [resmî belge listesi]\nGönderim ve makbuz: [resmî teyit]",
+  risk:"high",review:"Gecikme/karar süreleri dosyaya ve güncel mevzuata bağlıdır."},
+ {id:"nl-work",title:"Çalışma izni ve istihdam",country:"NL",domain:"Çalışma",audience:"Çalışan / işveren",professional:"Göç/iş hukuku uzmanı",officialForm:true,
+  source:"https://ind.nl/nl/verblijfsvergunningen/werken",sourceLabel:"IND · Werken",
+  documents:["İstihdam sözleşmesi veya teklif","İşveren yetki/erkend referent kontrolü","Başvuru türüne göre gelir ve diplomalar","Kimlik/oturum belgeleri (gereken hallerde)"],
+  steps:["Göç ve iş hukuku yollarını ayır","İşveren/temsil yetkisini kontrol et","Güncel resmî formu belirle","Süre/ücret ve belge listesini insan doğrulasın","Resmî portal işlemi ayrı yetki ister"],
+  templateTitle:"Çalışma izni inceleme şablonu",templateBody:"İşlem türü: [çalışma/oturum]\nYetkili kişi ve işveren: [doğrulama]\nŞartlar ve kanıtlar: [kaynaklı]\nGerekli resmî form: [güncel]\nBelgeler/eksikler: [liste]\nSon işlem: [yetkili inceleme]",
+  risk:"high",review:"TWV/GVVA/göç prosedürleri karıştırılmamalı."},
+ {id:"nl-rent",title:"Kira ve konut uyuşmazlıkları",country:"NL",domain:"Konut",audience:"Kiracı / kiraya veren",professional:"Konut hukuku danışmanı",officialForm:false,
+  source:"https://www.huurcommissie.nl/",sourceLabel:"Huurcommissie · Resmî rehber",
+  documents:["Kira sözleşmesi","Kira artışı/hesap ve yazışmalar","Olay tarihleri","Fatura ve ödemeler","Emlak/onarım kanıtı"],
+  steps:["Kira konusunu sınıflandır","Huurcommissie veya mahkeme yolunu ayır","Ücret/süreyi kaynakta kontrol et","Taslak yazışmayı gözden geçir","Yetkili kanal ve makbuz"],
+  templateTitle:"Konut uyuşmazlığı değerlendirme notu",templateBody:"Konut/işlem tipi: [genel]\nSözleşme hükmü: [inceleme]\nTalebin özeti: [uzman yazar]\nKullanılan resmî yol: [Huurcommissie/Rechtspraak]\nDeliller ve ekler: [liste]\nYetki ve süre: [kontrol]",
+  risk:"standard",review:"Kira tipi ve kuruluşun yetkisi her işlem için farklı olabilir."},
+ {id:"nl-social",title:"Sosyal güvenlik ve yardımlar",country:"NL",domain:"Sosyal güvenlik",audience:"Birey / kuruluş",professional:"İdare hukuku uzmanı",officialForm:false,
+  source:"https://www.rechtspraak.nl/voor-advocaten-en-juristen/reglementen-procedures-en-formulieren/bestuursrecht",sourceLabel:"Rechtspraak · Sosyal güvenlik ve idare",
+  documents:["UWV/SVB/gemeente kararı","Tebliğ kaydı","İlgili dönem belgeleri","İtiraz/dava için yetki belgesi"],
+  steps:["Karar makamını ayır","Doğru itiraz aşamasını belirle","Dava yolunu ve süreyi uzman doğrulasın","Gerekli ekleri hazırla"],
+  templateTitle:"Sosyal güvenlik itiraz değerlendirmesi",templateBody:"Karar veren makam: [doğrulama]\nKarar ve bildirim: [kaynak]\nTalep/itiraz noktaları: [inceleme]\nDayanak mevzuat: [güncel resmî kaynak]\nİlgili kayıtlar ve ekler: [liste]\nYetkili imza: [kontrol]",
+  risk:"high",review:"Tebliğ ve olası hak kaybı süreleri insan denetimine tabidir."},
+ {id:"nl-tax",title:"Vergi ve idarî vergi süreçleri",country:"NL",domain:"Vergi",audience:"Birey / işletme",professional:"Yetkili vergi uzmanı / avukat",officialForm:false,
+  source:"https://www.belastingdienst.nl/",sourceLabel:"Belastingdienst · Resmî portal",
+  documents:["İlgili vergi kararı veya tahakkuk","Muhasebe kayıtları","Tebliğ kanıtı","Mali temsil yetkisi"],
+  steps:["Vergi makamını ve dönemini kontrol et","Usul/itiraz/dava ayrımı","Özel muhasebe erişim yetkisini doğrula","Resmî belge ve imzayı gözden geçir"],
+  templateTitle:"Vergi uyuşmazlığı çalışma notu",templateBody:"Vergi türü/dönemi: [kontrol]\nİlgili karar: [kaynak]\nİtiraz nedeni: [yetkili uzman]\nMali kayıtlar: [korumalı referans]\nİlgili mevzuat: [tarihli kaynak]\nGönderim: [makbuz olmadan kapatılmaz]",
+  risk:"high",review:"Finans ve vergi verisi yalnız yetkili personelce görülebilir."},
+ {id:"nl-debt",title:"Alacak ve icra ön hazırlığı",country:"NL",domain:"Alacak",audience:"Birey / işletme",professional:"Yetkili alacak/medeni hukuk uzmanı",officialForm:false,
+  source:"https://www.rechtspraak.nl/voor-advocaten-en-juristen/reglementen-procedures-en-formulieren/procesreglement",sourceLabel:"Rechtspraak · Medeni usul",
+  documents:["Sözleşme, fatura ve ödeme kaydı","İhtarlar ve teslim kanıtları","Faiz/kosten hesap incelemesi","İlgili temsil yetkisi"],
+  steps:["Borç/talebin hukukî niteliğini incele","Temerrüt/dava şartları","Mahkeme/icra yolunu ayır","Gider/tahsilat mutabakatı"],
+  templateTitle:"Alacak takip ön dosyası",templateBody:"Alacak kaynağı: [belge]\nDönem ve talep: [doğrulanmış tutar]\nİhtar ve tebliğ: [kontrol]\nBaşvuru/mahkeme yolu: [uzman]\nEkler: [liste]\nMasraf, faiz ve KDV: [onaylı hesap]",
+  risk:"standard",review:"Tahsil yetkisi, kişisel veri ve tüketici koruması ayrı değerlendirilir."},
+ {id:"nl-business",title:"Şirket ve ticaret hukuku",country:"NL",domain:"Ticaret",audience:"Şirket / girişimci",professional:"Ticaret hukukçusu / noter (gereken işlemlerde)",officialForm:false,
+  source:"https://www.kvk.nl/",sourceLabel:"KVK · Kamer van Koophandel",
+  documents:["Ticaret sicili kaydı","Şirket sözleşmeleri","Yetkili imza ve temsil belgesi","Ortaklık/yönetim kararları"],
+  steps:["Şirket tipi/ülke","İmza ve yetki","Noterlik ve kayıt işlemi ayrımı","Belgeleri/güncelliği incele"],
+  templateTitle:"Şirket kuruluş ve değişiklik kontrolü",templateBody:"İşlem: [kuruluş/değişiklik]\nŞirket türü/yetki: [KVK]\nGerekli belgeler: [kaynaklı]\nİmza ve noterlik: [yetkili uzman]\nTescil/makbuz: [resmî onay]",
+  risk:"high",review:"Noterlik gerektiren işler yetkili notere sevk edilir."},
+ {id:"eu-crossborder",title:"Avrupa sınır ötesi hukuk işleri",country:"EU",domain:"Uluslararası",audience:"Birey / işletme",professional:"Ülke mevzuatına göre bağımsız uzman",officialForm:false,
+  source:"https://e-justice.europa.eu/",sourceLabel:"EU e-Justice Portal",
+  documents:["Ülkeler/ilgili makam","Belge kökeni ve kullanım yeri","Apostil/tercüme koşulları","Temsil ve aktarım dayanağı"],
+  steps:["Yargı yetkisi ve uygulanacak hukuk","Ülkeye göre hukukî hizmet sınırı","AB veri aktarımı ve saklama","Uygun uzman bağlantısı"],
+  templateTitle:"Sınır ötesi işlem kontrolü",templateBody:"Ülkeler: [yetki alanları]\nİşlem/usul: [güncel resmî kaynak]\nBelgeler/tasdik/tercüme: [liste]\nTemsil/hizmet yetkisi: [ülke uzmanı]\nGDPR/özel veri: [kontrol]\nSüre ve resmî kanal: [insan onayı]",
+  risk:"high",review:"Dil, ülke ve resmî şekil şartları birbirinden ayrı doğrulanır."},
+ {id:"nl-privacy",title:"GDPR veri erişim ve silme talepleri",country:"EU",domain:"Uyum",audience:"Veri konusu kişi / kurum",professional:"Veri koruma sorumlusu",officialForm:false,
+  source:"https://autoriteitpersoonsgegevens.nl/",sourceLabel:"Autoriteit Persoonsgegevens",
+  documents:["Kimlik teyidinin veri minimizasyonu","Veri kategorileri ve işleme amacı","İlgili kayıt ve saklama dayanakları","İşleyici/DPA bilgisi"],
+  steps:["Talep ve kimlik doğrulaması","Hukukî istisna/saklama yükümlülüğü","Yetkili sorumlu incelemesi","Güvenli yanıt ve kayıt"],
+  templateTitle:"GDPR/AVG talep inceleme taslağı",templateBody:"Talep türü: [erişim/düzeltme/silme]\nİlgili veri kategorileri: [en az veri]\nİşleme dayanağı: [GDPR 6/9]\nKimlik doğrulama düzeyi: [DPO]\nSaklama/istisna ve yanıt: [hukukî kontrol]\nAudit kayıt referansı: [izleme]",
+  risk:"high",review:"Otomatik silme yok; dava saklama yükümlülüğü ve haklar birlikte incelenir."}
+];
+export const legalSources=[
+ {title:"Rechtspraak · Procesreglementen",url:"https://www.rechtspraak.nl/voor-advocaten-en-juristen/reglementen-procedures-en-formulieren/procesreglement",type:"Mahkeme usulü"},
+ {title:"Rechtspraak · Bestuursrecht",url:"https://www.rechtspraak.nl/voor-advocaten-en-juristen/reglementen-procedures-en-formulieren/bestuursrecht",type:"İdare hukuku"},
+ {title:"Rechtspraak · Reguliere vreemdelingenzaken",url:"https://www.rechtspraak.nl/voor-advocaten-en-juristen/reglementen-procedures-en-formulieren/bestuursrecht/procederen-in-reguliere-vreemdelingenzaken",type:"IND sonrası ayrı mahkeme süreci"},
+  {title:"Rechtspraak · Mijn Rechtspraak",url:"https://www.rechtspraak.nl/voor-advocaten-en-juristen/reglementen-procedures-en-formulieren/veelgestelde-vragen-digitaal-procederen",type:"Dijital işlem"},
+ {title:"Rechtspraak · ECLI Open Data",url:"https://www.rechtspraak.nl/uitspraken/open-data",type:"İçtihat"},
+ {title:"IND · Formulieren",url:"https://ind.nl/nl/formulieren-en-brochures",type:"Göç/resmî form"},
+ {title:"IND · Verblijfsvergunningen",url:"https://ind.nl/nl/verblijfsvergunningen",type:"İkamet"},
+ {title:"EU e-Justice",url:"https://e-justice.europa.eu/",type:"AB hukuk kaynakları"},
+ {title:"Wetten.overheid.nl",url:"https://wetten.overheid.nl/",type:"Hollanda mevzuatı"},
+ {title:"Officiële bekendmakingen",url:"https://zoek.officielebekendmakingen.nl/",type:"Resmî duyurular"},
+ {title:"Autoriteit Persoonsgegevens",url:"https://autoriteitpersoonsgegevens.nl/",type:"GDPR/AVG"},
+ {title:"Kamer van Koophandel",url:"https://www.kvk.nl/",type:"Şirket"},
+ {title:"Belastingdienst",url:"https://www.belastingdienst.nl/",type:"Vergi"}
+] as const;
+export function findWorkstreams(q:string){
+ const term=q.trim().toLocaleLowerCase("tr-TR");
+ return workstreams.filter(x=>!term||[x.title,x.domain,x.country,x.professional,x.audience,x.templateTitle].join(" ").toLocaleLowerCase("tr-TR").includes(term));
+}

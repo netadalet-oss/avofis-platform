@@ -6,6 +6,10 @@ import { supabase } from "@/lib/supabase";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
+// Previous CMS wrote directly to existing public site tables; legacy RLS and
+// independent legal/editor acceptance remain open. Fail closed by default.
+const CMS_PUBLICATION_ALLOWED = false;
+
 type NavItem = {
   label: string;
   href: string;
@@ -69,7 +73,11 @@ export default function Page() {
       return;
     }
 
-    const userId = session.user.id;
+    const { data: aal, error: aalError } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+    if (aalError || aal?.currentLevel !== "aal2") {router.replace("/mfa"); return;}
+    const {data:{user},error:userError}=await supabase.auth.getUser();
+    if(userError || !user) {router.replace("/login"); return;}
+    const userId = user.id;
     // Staff privilege comes from a server-governed table, never editable user metadata.
     const { data: staff } = await supabase.from("avofis_staff").select("role").eq("user_id",userId).maybeSingle();
     const allowed = staff?.role === "admin";
@@ -165,6 +173,10 @@ export default function Page() {
   }
 
   async function loadDefaults() {
+    if (!CMS_PUBLICATION_ALLOWED) {
+      setMessage("Yayın değişikliği, hukukî ve dilsel içerik onayı tamamlanmadan yapılamaz.");
+      return;
+    }
     try {
       setSaving(true);
       setMessage("");
@@ -346,6 +358,10 @@ export default function Page() {
   }
 
   async function saveHero() {
+    if (!CMS_PUBLICATION_ALLOWED) {
+      setMessage("Yayın değişikliği, hukukî ve dilsel içerik onayı tamamlanmadan yapılamaz.");
+      return;
+    }
     try {
       setSaving(true);
       setMessage("");
@@ -377,6 +393,10 @@ export default function Page() {
   }
 
   async function saveNavigation() {
+    if (!CMS_PUBLICATION_ALLOWED) {
+      setMessage("Yayın değişikliği, hukukî ve dilsel içerik onayı tamamlanmadan yapılamaz.");
+      return;
+    }
     try {
       setSaving(true);
       setMessage("");
@@ -403,6 +423,10 @@ export default function Page() {
   }
 
   async function saveModules() {
+    if (!CMS_PUBLICATION_ALLOWED) {
+      setMessage("Yayın değişikliği, hukukî ve dilsel içerik onayı tamamlanmadan yapılamaz.");
+      return;
+    }
     try {
       setSaving(true);
       setMessage("");
@@ -429,6 +453,10 @@ export default function Page() {
   }
 
   async function saveFooter() {
+    if (!CMS_PUBLICATION_ALLOWED) {
+      setMessage("Yayın değişikliği, hukukî ve dilsel içerik onayı tamamlanmadan yapılamaz.");
+      return;
+    }
     try {
       setSaving(true);
       setMessage("");
@@ -568,7 +596,11 @@ export default function Page() {
                   CMS Yönetimi
                 </h1>
                 <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300">
-                  Portal ana sayfasındaki temel içerikler buradan yönetilir.
+                  Mevcut portal içerikleri yalnız inceleme amacıyla görüntülenir.
+                  Değişikliklerin yayımlanması ayrı hukukî, dilsel ve yönetici onayına tabidir.
+                </p>
+                <p role="status" className="mt-3 rounded-lg border border-amber-300/30 bg-amber-300/10 px-4 py-3 text-xs leading-6 text-amber-100">
+                  İçerik yayımlama kapalıdır. Bu ekran onaylanmamış içerikleri canlı siteye aktaramaz.
                 </p>
               </div>
 
@@ -597,7 +629,7 @@ export default function Page() {
 
               <button
                 onClick={loadDefaults}
-                disabled={saving}
+                disabled={saving || !CMS_PUBLICATION_ALLOWED}
                 className="rounded-xl bg-orange-600 px-5 py-3 text-white disabled:opacity-60"
               >
                 {saving ? "Yükleniyor..." : "Varsayılan Verileri Yükle"}
@@ -644,7 +676,7 @@ export default function Page() {
 
               <button
                 onClick={saveHero}
-                disabled={saving}
+                disabled={saving || !CMS_PUBLICATION_ALLOWED}
                 className="rounded-xl bg-blue-600 px-6 py-3 text-white disabled:opacity-60"
               >
                 {saving ? "Kaydediliyor..." : "Hero Kaydet"}
@@ -698,7 +730,7 @@ export default function Page() {
 
                 <button
                   onClick={saveNavigation}
-                  disabled={saving}
+                  disabled={saving || !CMS_PUBLICATION_ALLOWED}
                   className="rounded-xl bg-blue-600 px-6 py-3 text-white disabled:opacity-60"
                 >
                   {saving ? "Kaydediliyor..." : "Menü Kaydet"}
@@ -755,7 +787,7 @@ export default function Page() {
 
                 <button
                   onClick={saveModules}
-                  disabled={saving}
+                  disabled={saving || !CMS_PUBLICATION_ALLOWED}
                   className="rounded-xl bg-blue-600 px-6 py-3 text-white disabled:opacity-60"
                 >
                   {saving ? "Kaydediliyor..." : "Modülleri Kaydet"}
@@ -820,7 +852,7 @@ export default function Page() {
 
                 <button
                   onClick={saveFooter}
-                  disabled={saving}
+                  disabled={saving || !CMS_PUBLICATION_ALLOWED}
                   className="rounded-xl bg-blue-600 px-6 py-3 text-white disabled:opacity-60"
                 >
                   {saving ? "Kaydediliyor..." : "Footer Kaydet"}

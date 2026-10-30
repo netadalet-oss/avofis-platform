@@ -39,7 +39,8 @@ insert into auth.users(id) values
  ('cccccccc-cccc-4ccc-cccc-cccccccccccc');
 insert into public.avofis_staff(user_id,role) values
  ('aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa','admin'),
- ('bbbbbbbb-bbbb-4bbb-bbbb-bbbbbbbbbbbb','operator');
+ ('bbbbbbbb-bbbb-4bbb-bbbb-bbbbbbbbbbbb','operator'),
+ ('cccccccc-cccc-4ccc-cccc-cccccccccccc','admin');
 insert into public.avofis_cases(id,status) values
  ('11111111-1111-4111-8111-111111111111','awaiting_agreement'),
  ('22222222-2222-4222-8222-222222222222','awaiting_agreement');
@@ -48,6 +49,7 @@ insert into public.avofis_agreements(case_id,signed_at)
        ('22222222-2222-4222-8222-222222222222',now());
 \ir ../migrations/20261027_case_transition_guard.sql
 \ir ../migrations/20261029_ind_case_activation_guard.sql
+\ir ../migrations/20261029_ind_mandate_asylum_regime_guard.sql
 
 -- Privileges: RLS enabled, anon cannot read or write; operator cannot approve.
 do $$
@@ -83,7 +85,7 @@ begin
    where case_id='11111111-1111-4111-8111-111111111111';
   raise exception 'Incomplete IND review unexpectedly approved';
  exception when others then
-  if sqlerrm not like 'Country and specific procedure%' then raise; end if;
+  if sqlerrm not like 'Independent second admin approval%' then raise; end if;
  end;
 end $$;
 update public.avofis_case_clearances
@@ -94,8 +96,44 @@ update public.avofis_case_clearances
      deadline_reviewed=true,deadline_basis='Human reviewed decision route',
      stay_consequences_reviewed=true,representation_requested=true,
      special_mandate_verified=true,mandate_reference='signed-ind-mandate-ref',
+     requested_action='submit_objection',
+     mandate_authorised_actions=array['submit_objection'],
+     mandate_excluded_actions=array['request_file_copy'],
+     mandate_scope_reviewed=true,principal_identity_verified=true,
+     principal_signature_verified=true,mandate_signed_on='2026-10-15',
+     mandate_valid_until='2099-12-31',mandate_document_sha256=repeat('a',64),
      privacy_legal_basis_reviewed=true,secure_document_channel_verified=true,
-     disclosure_and_retention_reviewed=true,human_approved=true
+     disclosure_and_retention_reviewed=true
+ where case_id='11111111-1111-4111-8111-111111111111';
+
+-- Self-approval must fail even for a complete draft.
+do $$
+begin
+ begin
+  update public.avofis_case_clearances set human_approved=true
+   where case_id='11111111-1111-4111-8111-111111111111';
+  raise exception 'Same-admin approval unexpectedly succeeded';
+ exception when others then
+  if sqlerrm not like 'Independent second admin approval%' then raise; end if;
+ end;
+end $$;
+
+-- A different verified admin must approve the previously saved evidence.
+reset role;
+select set_config('request.jwt.claim.sub','cccccccc-cccc-4ccc-cccc-cccccccccccc',false);
+set role authenticated;
+do $$
+begin
+ begin
+  update public.avofis_case_clearances
+   set human_approved=true, representative_name='Edited during approval'
+   where case_id='11111111-1111-4111-8111-111111111111';
+  raise exception 'Approval-time evidence modification unexpectedly succeeded';
+ exception when others then
+  if sqlerrm not like 'Approval cannot change saved review evidence%' then raise; end if;
+ end;
+end $$;
+update public.avofis_case_clearances set human_approved=true
  where case_id='11111111-1111-4111-8111-111111111111';
 update public.avofis_cases set status='open'
  where id='11111111-1111-4111-8111-111111111111';
@@ -132,6 +170,12 @@ insert into public.avofis_case_clearances(
  true,'2026-10-12',true,'Human reviewed decision route',
  true,true,true,'signed-ind-mandate-ref',true,true,true
 );
+
+-- A separate admin now checks the unreviewed IND file request form.
+-- The file-request draft above was saved by admin C.
+reset role;
+select set_config('request.jwt.claim.sub','aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa',false);
+set role authenticated;
 do $$
 begin
  begin
@@ -163,4 +207,4 @@ begin
  end;
 end $$;
 reset role;
-\echo 'PASS: IND case-clearance RLS, draft denial, document guard and activation'
+\echo 'PASS: IND G1-G4 two-admin review/approval, evidence immutability, RLS and activation'

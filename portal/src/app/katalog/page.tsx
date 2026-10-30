@@ -101,6 +101,7 @@ export default function CatalogPage(){
         <Link href={"/katalog?lang=en"} className="mt-3 inline-block text-sm font-semibold text-[#dfbf59] underline underline-offset-4">English (reference)</Link>
        </div>
       }
+      <Link href={`/belge-hazirla?hizmet=${encodeURIComponent(s.slug)}&lang=${lang}`} className="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-[#dfbf59] underline underline-offset-4">{({tr:"Belge hazırlık notları oluşturun",nl:"Document voorbereiden",de:"Dokument vorbereiten",en:"Prepare document notes",ar:"إعداد ملاحظات المستند",ru:"Подготовить документ"} as const)[lang]}</Link>
      </article>)}
    </div>
    <aside className="mt-9 rounded-xl border border-[#dfbf59]/40 bg-[#0b1937] p-5 text-sm leading-7 text-[#e0e8f7]">{t.notice}</aside>

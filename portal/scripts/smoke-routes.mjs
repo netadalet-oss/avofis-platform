@@ -33,7 +33,7 @@ async function check(path,expected,method="GET"){
 }
 try{
  await waitUntilReady();
- for(const route of ["/","/hizmetler","/katalog","/islemler","/nasil-calisir","/iletisim","/bilgi","/gizlilik","/basvuru","/auth/login","/musteri","/yonetim","/yonetim/ind-inceleme"]){
+ for(const route of ["/","/hizmetler","/katalog","/islemler","/nasil-calisir","/iletisim","/bilgi","/gizlilik","/cerezler","/diller","/triyaj","/ornek-dosya","/uyum","/ictihat","/yargi-baglantilari","/ornek-yargi-dosyasi","/belge-hazirla","/belge-hazirla?lang=ar&hizmet=konut-kira-sigorta","/katalog?lang=ar","/katalog?lang=ru","/katalog?lang=de","/basvuru","/auth/login","/musteri","/yonetim","/yonetim/ind-inceleme"]){
   const response=await check(route,200);
   assert.match(response.headers.get("content-type")||"",/text\/html/,route+" content type");
  }
@@ -44,6 +44,32 @@ try{
  assert.ok([301,302,303,307,308].includes(forum.status),"Old forum must redirect");
  await check("/api/intake",503,"POST");
  await check("/api/payments/checkout",503,"POST");
+ const draftGet=await check("/api/document-drafts",503);
+ assert.match(draftGet.headers.get("cache-control")||"",/no-store/);
+ await check("/api/document-drafts",503,"POST");
+ await check("/api/document-drafts",503,"PATCH");
+ const six=await check("/diller",200);
+ const sixHtml=await six.text();
+ for(const locale of ["?lang=tr","?lang=nl","?lang=de","?lang=en","?lang=ar","?lang=ru"]){
+  assert.ok(sixHtml.includes("/katalog"+locale),"Missing 6-language route "+locale);
+ }
+ assert.match(sixHtml,/dir="rtl"/,"Arabic RTL block must be present");
+ const noGo=await check("/uyum",200);
+ assert.match(await noGo.text(),/KAPALI/,"Release status must not claim customer intake enabled");
+ const triagePage=await check("/triyaj",200);
+ const triageHTML=await triagePage.text();
+ assert.match(triageHTML,/GÜVENLİ ÖN YÖNLENDİRME/);
+ assert.doesNotMatch(triageHTML,/action="\/api\/intake"/);
+ const examplePage=await check("/ornek-dosya",200);
+ assert.match(await examplePage.text(),/Örnek müşteri dosyası/);
+ const law=await check("/ictihat",200);
+ const lawHtml=await law.text();
+ for(const e of ["ECLI:NL:HR:2026:1684","ECLI:NL:HR:2026:1682","ECLI:NL:HR:2026:1587"])
+  assert.match(lawHtml,new RegExp(e),"Documented real ECLI reference must be source-linked");
+ await check("/yargi-baglantilari",200);
+ const casePreview=await check("/ornek-yargi-dosyasi",200);
+ assert.match(await casePreview.text(),/NOT_SUBMITTED/);
+ await check("/api/rechtspraak?ecli=ECLI:NL:HR:2026:1684",503);
  console.log("Route and disabled-action smoke test passed");
 }finally{
  server.kill("SIGTERM");

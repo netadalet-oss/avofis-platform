@@ -2,8 +2,18 @@
 -- Disposable PostgreSQL 17 verification of the observed 29 Oct 2026
 -- legacy schema. This is a synthetic RLS/grant regression, NOT a live
 -- Supabase/Auth/Data API E2E test.
-create role anon nologin;
-create role authenticated nologin;
+-- Postgres roles are cluster-wide, even across disposable CI databases.
+-- Reuse synthetic test roles so isolated negative fixtures can run in the
+-- same PostgreSQL container without changing any production role.
+do $roles$
+begin
+ if not exists(select 1 from pg_roles where rolname='anon') then
+  create role anon nologin;
+ end if;
+ if not exists(select 1 from pg_roles where rolname='authenticated') then
+  create role authenticated nologin;
+ end if;
+end $roles$;
 create schema auth;
 grant usage on schema auth to authenticated;
 create function auth.uid() returns uuid language sql stable as $$
@@ -20,6 +30,11 @@ create table public.applications(id uuid primary key,job_id uuid,user_id uuid,cv
 create table public.media_assets(id uuid primary key,url text,name text,type text);
 create table public.pages(id uuid primary key,title text);
 create table public.site_settings(id uuid primary key,key text,value jsonb);
+
+-- Minimal Storage catalogue shim for the *read-only* production inventory.
+-- This is not the managed Supabase Storage service.
+create schema storage;
+create table storage.buckets(id text primary key,public boolean not null default false);
 
 -- Reconstruct the broad grants and the relevant legacy RLS policies.
 grant all privileges on table
@@ -75,6 +90,20 @@ begin
     (select relrowsecurity from pg_class where oid='public.applications'::regclass) then
    raise exception 'Fixture does not reproduce the observed vulnerability';
  end if;
+end $$;
+
+-- Read-only baseline should report 7 insecure legacy tables.
+begin read only;
+\ir ../ops/legacy_rls_readonly_preflight.sql
+commit;
+do $$
+declare unsafe_count integer;
+begin
+ select count(*) into unsafe_count from pg_class c join pg_namespace n on n.oid=c.relnamespace
+  where n.nspname='public'
+    and c.relname in ('offices','office_members','topics','posts','jobs','applications','media_assets')
+    and not c.relrowsecurity;
+ if unsafe_count<>7 then raise exception 'Expected all 7 old tables insecure for baseline, found %',unsafe_count; end if;
 end $$;
 
 \ir ../migrations/20261029_legacy_public_rls_hardening.sql
@@ -184,4 +213,10 @@ begin
    raise exception 'Second application changed policy count';
  end if;
 end $$;
+-- Re-run the identical read-only inventory after the candidate migration.
+-- Production remains untouched; this is the disposable PG17 fixture.
+begin read only;
+\ir ../ops/legacy_rls_readonly_preflight.sql
+commit;
+\ir ../ops/legacy_rls_readonly_postflight.sql
 \echo 'PASS: all seven legacy tables RLS hardened; anon CRUD removed; A/B private rows isolated; admin-only read restored'

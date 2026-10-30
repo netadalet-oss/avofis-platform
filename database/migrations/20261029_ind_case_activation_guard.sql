@@ -35,6 +35,8 @@ create table public.avofis_case_clearances (
  specialist_credential_verified boolean not null default false,
  specialist_name text not null default '' check (char_length(specialist_name)<=160),
  human_approved boolean not null default false,
+ -- The last independent draft reviewer. Only the trigger may assign this ID.
+ reviewed_by uuid references auth.users(id),
  approved_by uuid references auth.users(id),
  approved_at timestamptz,
  reviewed_at timestamptz not null default now(),
@@ -71,6 +73,11 @@ begin
  if auth.uid() is null or not public.avofis_is_admin() then
    raise exception 'A verified admin must perform case-clearance review';
  end if;
+ -- The approving admin must be distinct from the admin who last saved G1-G4.
+ -- A single INSERT cannot silently certify a complete case.
+ if tg_op='INSERT' and new.human_approved then
+   raise exception 'Independent second admin approval required';
+ end if;
  if tg_op='UPDATE' then
    if new.case_id is distinct from old.case_id then
      raise exception 'The clearance case cannot be reassigned';
@@ -81,8 +88,21 @@ begin
    ) then
      raise exception 'Active case clearance is immutable; use supervised re-review';
    end if;
+   if old.human_approved and new.human_approved then
+     raise exception 'Approved clearance must be revoked before re-review';
+   end if;
  end if;
  if new.human_approved then
+   if old.reviewed_by is null or old.reviewed_by=auth.uid() then
+     raise exception 'Independent second admin approval required';
+   end if;
+   -- No evidence, procedure, mandate or reviewer may be modified while
+   -- approving. The second admin must approve the previously saved version.
+   if (to_jsonb(new)-'human_approved'-'approved_by'-'approved_at'-'reviewed_at')
+      is distinct from
+      (to_jsonb(old)-'human_approved'-'approved_by'-'approved_at'-'reviewed_at') then
+     raise exception 'Approval cannot change saved review evidence';
+   end if;
    if new.procedure_family='unclassified' or char_length(btrim(new.jurisdiction))<2
      or not new.procedure_reviewed then
      raise exception 'Country and specific procedure must be reviewed';
@@ -127,6 +147,7 @@ begin
    new.approved_by=auth.uid();
    new.approved_at=now();
  else
+   new.reviewed_by=auth.uid();
    new.approved_by=null;
    new.approved_at=null;
  end if;
@@ -167,5 +188,5 @@ create trigger avofis_case_clearance_activation_guard
  for each row execute function public.avofis_require_clearance_before_activation();
 
 -- No grants to anon, no public read, no bypass using user_metadata.
--- Human sign-off is a recorded internal control, not proof of actual licensing.
+-- Two distinct authenticated admin identities are enforced for draft/release.\n-- This is not proof that either individual holds a professional licence.\n-- Human sign-off is a recorded internal control, not proof of actual licensing.
 -- The production rollout remains blocked until staging BOLA/RLS and role tests.

@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { paymentsReleased } from "@/lib/release-authorization";
 
 export const runtime="nodejs";
 const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const response=(error:string,status:number)=>NextResponse.json({error},{status,headers:{"Cache-Control":"no-store"}});
 export async function POST(request:NextRequest){
-  if(process.env.AVOFIS_LEGAL_READY!=="true"||process.env.AVOFIS_PAYMENT_ENABLED!=="true")return response("Payment is not available",503);
+  if(!paymentsReleased())return response("Payment is not available",503);
   const url=process.env.NEXT_PUBLIC_SUPABASE_URL,key=process.env.SUPABASE_SERVICE_ROLE_KEY,mollie=process.env.MOLLIE_API_KEY,base=process.env.AVOFIS_PUBLIC_BASE_URL;
   if(!url||!key||!mollie||!base||(process.env.NODE_ENV==="production"&&!base.startsWith("https://")))return response("Not configured",503);
   const auth=request.headers.get("authorization")||"";
