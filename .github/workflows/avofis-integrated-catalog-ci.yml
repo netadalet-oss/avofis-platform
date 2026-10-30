@@ -318,6 +318,8 @@ jobs:
         run: node --experimental-strip-types --test scripts/document-preparation.test.mjs
       - name: Preserve historical 17 services 14 audiences 12 sourced problem routes
         run: node --experimental-strip-types --test scripts/avofis-scope-invariants.test.mjs
+      - name: L0 user-approved hierarchy remains exact 8 pillars and 973 tracked work records
+        run: node --test scripts/master-skeleton-l0.test.mjs
       - name: PROGRESS 973-work completion denominator, independent evidence and NO-GO assertions
         run: |
           node --test scripts/work-progress.test.mjs
