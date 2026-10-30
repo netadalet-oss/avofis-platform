@@ -34,6 +34,38 @@ begin
  end if;
 end $guard$;
 
+-- Remove only known AVOfis legacy policies; in particular the older
+-- SELECT policies cast an untrusted path component to UUID, causing a 500
+-- for malformed or externally imported object names. Never rely on SQL AND
+-- evaluation order to make that cast safe.
+drop policy if exists "authorised users read case objects" on storage.objects;
+drop policy if exists "clients upload to their accepted cases" on storage.objects;
+drop policy if exists "cleared case participants upload private objects" on storage.objects;
+drop policy if exists "avofis private document capability" on storage.objects;
+drop policy if exists "staff mfa2 or case owner private file objects" on storage.objects;
+
+-- The explicitly permitted SELECT and INSERT actions remain bucket-scoped,
+-- with string-only case/path comparisons. No staff SELECT or INSERT grant.
+drop policy if exists "avofis b04 private owner read permit" on storage.objects;
+create policy "avofis b04 private owner read permit" on storage.objects
+ for select to authenticated using(
+   bucket_id='avofis-private' and auth.uid() is not null
+   and exists(select 1 from public.avofis_cases c
+     where c.id::text=split_part(name,'/',1)
+       and c.client_user_id=(select auth.uid()))
+);
+drop policy if exists "avofis b04 private owner upload permit" on storage.objects;
+create policy "avofis b04 private owner upload permit" on storage.objects
+ for insert to authenticated with check(
+   bucket_id='avofis-private' and auth.uid() is not null
+   and split_part(name,'/',2)=(select auth.uid())::text
+   and exists(select 1 from public.avofis_cases c
+      join public.avofis_agreements a
+       on a.case_id=c.id and a.signed_at is not null
+     where c.id::text=split_part(name,'/',1)
+      and c.client_user_id=(select auth.uid()) and c.status='open')
+);
+
 -- Other buckets are unchanged; AND these RESTRICTIVE policies with any
 -- existing permissible policy so even a new USING(true) does not open
 -- the AVOfis private bucket.
