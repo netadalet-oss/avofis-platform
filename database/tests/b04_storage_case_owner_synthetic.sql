@@ -7,8 +7,8 @@
 do $inventory$
 begin
  if (select count(*) from pg_policies where schemaname='storage'
-       and tablename='objects' and policyname like 'avofis b04 %')<>6 then
-   raise exception 'B04 expected two permits and four restrictive boundaries';
+       and tablename='objects' and policyname like 'avofis b04 %')<>8 then
+   raise exception 'B04 expected two permits, four authenticated restrictions and two anonymous restrictions';
  end if;
  if exists(select 1 from pg_policies where schemaname='storage'
        and tablename='objects' and policyname in
