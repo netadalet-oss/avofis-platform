@@ -7,6 +7,8 @@
  * booking, client intake or payment is authorised by this function.
  */
 export const countries=["nl","de","tr","other","unknown"] as const;
+// This identifies the user's preferred *contact language*, not a claim that legal translations exist.
+export const preferredLanguages=["tr","nl","de","en","ar","ru","unknown"] as const;
 export const topics=[
  "document","administrative_objection","court_procedure","asylum",
  "detention_or_removal","residence","family","work","housing",
@@ -19,7 +21,8 @@ export const requestTypes=["general_information","brief_consultation","document_
 export const noticeCategories=["no_notice","notice_received","not_sure"] as const;
 export const timeBands=["less_than_48h","within_7d","later","unknown"] as const;
 export type TriageInput={
- country:string;topic:string;personRole:string;
+ country:string;residenceCountry:string;preferredLanguage:string;
+ topic:string;personRole:string;
  counterpartyType:string;requestType:string;
  noticeCategory:string;timeBand:string;
  immediateHarm:boolean; professionalNeeded:boolean;
@@ -39,7 +42,7 @@ export type TriageResult={
 };
 const inSet=(item:string,allowed:readonly string[])=>allowed.includes(item);
 const allowedInputKeys=new Set([
- "country","topic","personRole","counterpartyType","requestType",
+ "country","residenceCountry","preferredLanguage","topic","personRole","counterpartyType","requestType",
  "noticeCategory","timeBand","immediateHarm","professionalNeeded"
 ]);
 const sources:Record<string,string>={
@@ -52,6 +55,8 @@ export function evaluatePublicTriage(input:TriageInput):TriageResult{
  // Runtime fail-closed: an accidental public PII field must not be silently accepted.
  if(!input||typeof input!=="object"||Object.keys(input).some(k=>!allowedInputKeys.has(k))||
     !inSet(input.country,countries)||
+    !inSet(input.residenceCountry,countries)||
+    !inSet(input.preferredLanguage,preferredLanguages)||
     !inSet(input.topic,topics)||
     !inSet(input.personRole,personRoles)||
     !inSet(input.counterpartyType,counterpartyTypes)||
@@ -67,13 +72,18 @@ export function evaluatePublicTriage(input:TriageInput):TriageResult{
    deadlineCalculated:false,onlyGenericInformation:true};
  }
  if(input.country==="unknown"||input.country==="other")issues.push("JURISDICTION_UNVERIFIED");
+ if(input.residenceCountry==="unknown"||input.residenceCountry==="other")
+  issues.push("RESIDENCE_COUNTRY_REQUIRES_HUMAN_REVIEW");
+ if(input.preferredLanguage==="unknown")issues.push("PREFERRED_LANGUAGE_REQUIRES_HUMAN_REVIEW");
+ if(["nl","de","tr"].includes(input.country)&&["nl","de","tr"].includes(input.residenceCountry)
+    &&input.country!==input.residenceCountry)issues.push("CROSS_BORDER_JURISDICTION_REVIEW");
  if(input.personRole!=="self")issues.push("ROLE_OR_MANDATE_REQUIRES_REVIEW");
  if(input.counterpartyType==="unknown"||input.counterpartyType==="other")
   issues.push("COUNTERPARTY_CATEGORY_REQUIRES_REVIEW");
  if(input.requestType==="unknown")issues.push("REQUEST_TYPE_REQUIRES_REVIEW");
  if(!["general_information","unknown"].includes(input.requestType))
   issues.push("PAID_OR_PERSONALISED_SERVICE_REQUIRES_SEPARATE_HUMAN_CONTRACT_REVIEW");
- if(input.topic==="unknown")issues.push("PROCEDURE_UNVERIFIED");
+ if(input.topic==="unknown")issues.push("PROCEDURE_UNVERIFIED","UNSURE_HUMAN_REVIEW_REQUIRED");
  if(input.noticeCategory==="notice_received"||input.noticeCategory==="not_sure")
   issues.push("NOTICE_AND_SERVICE_DATE_REQUIRES_HUMAN_REVIEW");
  if(input.noticeCategory!=="no_notice"&&input.timeBand==="unknown")
@@ -93,6 +103,8 @@ export function evaluatePublicTriage(input:TriageInput):TriageResult{
       input.professionalNeeded||input.requestType!=="general_information"||
       issues.some(x=>["JURISDICTION_UNVERIFIED","ROLE_OR_MANDATE_REQUIRES_REVIEW",
        "COUNTERPARTY_CATEGORY_REQUIRES_REVIEW",
+       "RESIDENCE_COUNTRY_REQUIRES_HUMAN_REVIEW","PREFERRED_LANGUAGE_REQUIRES_HUMAN_REVIEW",
+       "CROSS_BORDER_JURISDICTION_REVIEW",
        "PROCEDURE_UNVERIFIED","NOTICE_AND_SERVICE_DATE_REQUIRES_HUMAN_REVIEW",
        "DEADLINE_UNVERIFIED"].includes(x));
  if(urgent)issues.push("SEEK_PROMPT_HUMAN_SPECIALIST_OR_OFFICIAL_CHANNEL");
