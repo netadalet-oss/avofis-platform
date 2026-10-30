@@ -307,7 +307,7 @@ jobs:
       - name: IND admission gate unit checks (no client data)
         run: node --experimental-strip-types --test scripts/ind-clearance.test.mjs
       - name: Non-identifying country/role/notice triage unit tests
-        run: node --experimental-strip-types --test scripts/public-triage.test.mjs
+        run: node --experimental-strip-types --test scripts/public-triage.test.mjs scripts/public-triage-review.test.mjs
       - name: Release authorisation cannot be bypassed by env flags
         run: node --experimental-strip-types --test scripts/release-authorization.test.mjs
       - name: Dutch judicial Open Data and no-official-filing security regression
