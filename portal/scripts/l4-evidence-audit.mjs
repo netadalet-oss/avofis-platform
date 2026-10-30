@@ -44,8 +44,14 @@ export function inspectL4Evidence({plan,l3,l2index,decisions,ledger,atomic,root=
  }
  assert.ok(Array.isArray(plan.implementationEvidence));
  const seen=new Set();
+ const sourceKindById=new Map(atomic.map(x=>[x.id,x.sourceKind]));
+ const rPartial=new Set(ledger.groups.find(g=>g.key==="requirements")?.partial??[]);
+ assert.equal(rPartial.size,ledger.groups.find(g=>g.key==="requirements")?.partial.length,
+   "duplicate partial source IDs");
  for(const claim of plan.implementationEvidence){
    assert.ok(sourceIds.has(claim.id),"fabricated implementation ID "+claim.id);
+   if(sourceKindById.get(claim.id)==="requirements")
+     assert.ok(rPartial.has(claim.id),"L4 R code evidence absent from partial progress ledger "+claim.id);
    assert.ok(!seen.has(claim.id),"duplicate implementation claim "+claim.id);
    seen.add(claim.id);
    assert.ok(["CODE_CHANGED_PENDING_CI","CI_SYNTHETIC_VERIFIED"].includes(claim.status));
