@@ -61,7 +61,7 @@ test("L4 R-346/R-355: date field and review confirmation are local-only UI; no s
  assert.ok(ui.includes('type="date" className="avofis-field'));
  assert.ok(ui.includes('input.noticeCategory==="notice_received"'));
  assert.ok(ui.includes('setNoticeDate("")'));
- assert.ok(ui.includes("buildLocalTriageReview(input,noticeDate)"));
+ assert.ok(ui.includes("buildLocalTriageReview(input,noticeDate,topicNote)"));
  assert.ok(ui.includes("checked={isReviewed}"));
  assert.ok(ui.includes("setConfirmationKey(e.target.checked?reviewSignature:null)"));
  assert.ok(ui.includes("Local selection review — no submission"));
@@ -70,4 +70,33 @@ test("L4 R-346/R-355: date field and review confirmation are local-only UI; no s
  assert.ok(!/<button[^>]*type="submit"/.test(ui));
  assert.ok(!/<input[^>]*type="file"/.test(ui));
  assert.ok(!/\b(fetch|localStorage|sessionStorage|sendBeacon)\b/.test(helper));
+});
+
+test("L4 R-344: free-text topic note is limited, stays local and cannot classify or submit a case",()=>{
+ const basic=input();
+ const draft=buildLocalTriageReview(basic,"","  Housing deposit question  ");
+ assert.equal(draft.topicNote,"Housing deposit question");
+ assert.equal(draft.topicNoteStatus,"LOCAL_DRAFT_UNVERIFIED");
+ assert.equal(draft.topic,"work","route remains based only on selected category");
+ assert.equal(draft.officialActionSubmitted,false);
+ assert.equal(draft.clientRecordCreated,false);
+ assert.equal(draft.deadlineCalculated,false);
+ const overflow="a".repeat(161);
+ const invalid=buildLocalTriageReview(basic,"",overflow);
+ assert.equal(invalid.topicNote,"");
+ assert.equal(invalid.topicNoteStatus,"TOO_LONG");
+ assert.ok(!JSON.stringify(invalid).includes(overflow));
+ const blank=buildLocalTriageReview(basic,"","");
+ assert.equal(blank.topicNoteStatus,"NONE");
+});
+test("L4 R-344: selected route and short note must be reviewed, not filed",()=>{
+ const ui=readFileSync(fileURLToPath(new URL("../src/app/triyaj/page.tsx",import.meta.url)),"utf8");
+ assert.match(ui,/maxLength=\{160\}/);
+ assert.match(ui,/textarea className="avofis-field/);
+ assert.match(ui,/setTopicNote\(e\.target\.value\)/);
+ assert.match(ui,/\{review\.topicNote\}/);
+ assert.match(ui,/reviewSignature=JSON\.stringify\(input\)\+"\|"\+noticeDate\+"\|"\+topicNote/);
+ assert.match(ui,/setConfirmationKey\(e\.target\.checked\?reviewSignature:null\)/);
+ assert.match(ui,/özel kişisel bilgi yazmayın/);
+ assert.doesNotMatch(ui,/<button[^>]*type="submit"/);
 });
