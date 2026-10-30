@@ -15,7 +15,7 @@ begin
  foreach k in array array['country','institution','purpose','chronology','documentList'] loop
   v:=p->k;
   if jsonb_typeof(v)<>'string' or length(p->>k)>4000
-    or (p->>k) ~ '[[:cntrl:]]' then return false; end if;
+    or replace(replace(replace(p->>k,chr(10),''),chr(13),''),chr(9),'') ~ '[[:cntrl:]]' then return false; end if;
  end loop;
  if jsonb_typeof(p->'answers')<>'object' then return false; end if;
  allowed:=case p_slug
@@ -41,7 +41,7 @@ begin
  for k,v in select key,value from jsonb_each(p->'answers') loop
   if not k=any(allowed) or jsonb_typeof(v)<>'string' then return false; end if;
   raw:=v #>> '{}';
-  if length(raw)>1200 or raw ~ '[[:cntrl:]]' then return false; end if;
+  if length(raw)>1200 or replace(replace(replace(raw,chr(10),''),chr(13),''),chr(9),'') ~ '[[:cntrl:]]' then return false; end if;
   if raw<>'' and k=any(array['incidentDate','noticeDate','contractDate','expiryDate','appointmentDate']) then
    if raw !~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' then return false; end if;
    y:=substring(raw,1,4)::int;m:=substring(raw,6,2)::int;d:=substring(raw,9,2)::int;
@@ -84,6 +84,6 @@ alter table public.avofis_client_document_drafts
   or (length(btrim(content->>'country'))>=2 and
       length(btrim(content->>'purpose'))>=3 and
       length(btrim(content->>'chronology'))>=3 and
-      length(btrim(content#>>'{answers,requestedAction}'))>=3)
+      coalesce(length(btrim(content#>>'{answers,requestedAction}')),0)>=3)
  );
 commit;
