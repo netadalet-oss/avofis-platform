@@ -4,6 +4,8 @@ on:
     paths:
       - 'api/**'
       - 'admin/**'
+      - 'docs/security/**'
+      - 'tools/security/**'
       - '.github/workflows/api-verification.yml'
   push:
     branches:
@@ -11,6 +13,8 @@ on:
     paths:
       - 'api/**'
       - 'admin/**'
+      - 'docs/security/**'
+      - 'tools/security/**'
       - '.github/workflows/api-verification.yml'
 permissions:
   contents: read
@@ -36,3 +40,7 @@ jobs:
         run: npm run test --workspace api
       - name: Admin authorization regression tests
         run: npm run test --workspace admin
+      - name: RLS baseline integrity tests (no live DB connection)
+        run: node --test tools/security/rls-readiness.test.cjs
+      - name: RLS snapshot advisory (risk remains open)
+        run: node tools/security/rls-readiness.cjs
