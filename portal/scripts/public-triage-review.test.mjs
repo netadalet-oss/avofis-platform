@@ -100,3 +100,15 @@ test("L4 R-344: selected route and short note must be reviewed, not filed",()=>{
  assert.match(ui,/özel kişisel bilgi yazmayın/);
  assert.doesNotMatch(ui,/<button[^>]*type="submit"/);
 });
+
+test("L4 R-355: local pre-review includes every selected route/role/urgency statement",()=>{
+ const ui=readFileSync(fileURLToPath(new URL("../src/app/triyaj/page.tsx",import.meta.url)),"utf8");
+ for(const field of ["t.preferred","t.residence","t.country","t.topic","t.role",
+  "t.counterparty","t.request","t.notice","t.time","t.harm","t.professional"]){
+   assert.ok(ui.includes("["+field+","),"Missing review field "+field);
+ }
+ assert.match(ui,/reviewFields\.map\(\(\[label,value\],index\)/);
+ assert.match(ui,/reviewSignature=JSON\.stringify\(input\)\+"\|"\+noticeDate\+"\|"\+topicNote/);
+ assert.match(ui,/checked=\{isReviewed\}/);
+ assert.match(ui,/no submission/);
+});
