@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-30",
+  "ledgerBasis": "AVOfis_v18_594_Master_W1_B02_Guvenlik_Guncel_2026-10-30.xlsx",
+  "definitions": {
+    "accepted": "Independent acceptance requires attributable staging/production behavior plus human approval; passing CI alone does not qualify.",
+    "partial": "Partial evidence exists for an original R-ID; no complete acceptance is implied.",
+    "syntheticTechnical": "Actual automated PostgreSQL test in disposable CI; production rollout, genuine end users and Auth/Storage E2E are NOT evidenced."
+  },
+  "groups": [
+    {
+      "key": "requirements",
+      "label": "Özgün 594 gereksinim",
+      "total": 594,
+      "accepted": [],
+      "partial": [
+        "R-005",
+        "R-007",
+        "R-015",
+        "R-141",
+        "R-146",
+        "R-153",
+        "R-154",
+        "R-167",
+        "R-246",
+        "R-375",
+        "R-377",
+        "R-378",
+        "R-396",
+        "R-406",
+        "R-415",
+        "R-417",
+        "R-456",
+        "R-463",
+        "R-479",
+        "R-487",
+        "R-493",
+        "R-494",
+        "R-501",
+        "R-503",
+        "R-506",
+        "R-509",
+        "R-515",
+        "R-521",
+        "R-524",
+        "R-527",
+        "R-531",
+        "R-533",
+        "R-538",
+        "R-542",
+        "R-577",
+        "R-582",
+        "R-585",
+        "R-586",
+        "R-587",
+        "R-588",
+        "R-591"
+      ]
+    },
+    {
+      "key": "staff",
+      "label": "16 personel modülü × 12 kontrol",
+      "total": 192,
+      "accepted": [],
+      "partial": []
+    },
+    {
+      "key": "auxiliary",
+      "label": "B/J/P/IND/G/kuruluş/teknik ek işler",
+      "total": 113,
+      "accepted": [],
+      "partial": [],
+      "syntheticTechnical": [
+        {
+          "id": "B01",
+          "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41035448807",
+          "scope": "Seven legacy tables RLS and anon CRUD synthetic A/B test only"
+        },
+        {
+          "id": "B02",
+          "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41035448807",
+          "scope": "Profile/CMS policy spoof, restrictive publication holds, ACL owner synthetic test only"
+        }
+      ]
+    },
+    {
+      "key": "content",
+      "label": "66 kaynak içerik + 8 kontrol listesi",
+      "total": 74,
+      "accepted": [],
+      "partial": []
+    }
+  ],
+  "productionStatus": "NO_GO",
+  "liveSecurityAdvisory": "7 public tables RLS OFF",
+  "e2eStagingVerified": false,
+  "liveDatabaseChangedByThisLedger": false
+}
