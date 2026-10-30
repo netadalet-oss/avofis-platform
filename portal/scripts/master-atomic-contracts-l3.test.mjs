@@ -57,7 +57,7 @@ test("L3: immutable trace from L2 primary and acceptance flows; no fake physical
   assert.ok(prev,"not in source L2: "+x.id);
   assert.equal(x.parentL0,prev.l0,x.id);
   assert.equal(x.parentL1,prev.l1,x.id);
-  assert.equal(x.moduleId,"L3-"+prev.l2Module,x.id);
+  assert.equal(x.moduleId,prev.l2Module.replace(/^L2-M-/,"L3-M-"),x.id);
   assert.equal(x.primaryWorkflow,prev.primaryWorkflow,x.id);
   assert.equal(x.mandatoryAcceptanceWorkflow,prev.compulsoryAcceptanceWorkflow,x.id);
   assert.ok(mods.has(x.moduleId));
