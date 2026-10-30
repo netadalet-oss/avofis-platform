@@ -65,6 +65,7 @@ export const legalGuides:readonly GuideRecord[]=[
 /** Editorial preview must never be enabled on a production deployment. */
 export function guideEditorialPreviewAllowed(env:Record<string,string|undefined>):boolean{
  return env.AVOFIS_EDITORIAL_GUIDE_PREVIEW==="true"&&
-  env.VERCEL_ENV!=="production"&&env.AVOFIS_LEGAL_READY!=="true"&&
+  (env.VERCEL_ENV==="preview"||env.VERCEL_ENV==="development")&&
+  env.AVOFIS_LEGAL_READY!=="true"&&
   env.AVOFIS_EDITORIAL_REVIEW_MODE==="unapproved";
 }
