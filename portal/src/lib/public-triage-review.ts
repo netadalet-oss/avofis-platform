@@ -13,6 +13,7 @@ export type LocalReview={
   topicNote:string;
   topicNoteStatus:"NONE"|"LOCAL_DRAFT_UNVERIFIED"|"TOO_LONG";
   personRole:string;
+  contactPreference:string;
   counterpartyType:string;
   requestType:string;
   evidenceKind:string;
@@ -52,7 +53,8 @@ export function buildLocalTriageReview(input:TriageInput,selfReportedNoticeDate:
     matterCountry:input.country,residenceCountry:input.residenceCountry,
     preferredLanguage:input.preferredLanguage,topic:input.topic,
     topicNote:safeNote,topicNoteStatus:noteStatus,
-    personRole:input.personRole,counterpartyType:input.counterpartyType,
+    personRole:input.personRole,contactPreference:input.contactPreference??"none",
+    counterpartyType:input.counterpartyType,
     requestType:input.requestType,evidenceKind:input.evidenceKind,noticeCategory:input.noticeCategory,
     noticeDate:status==="SELF_REPORTED_UNVERIFIED"?selfReportedNoticeDate:null,
     noticeDateStatus:status,timeBand:input.timeBand,
