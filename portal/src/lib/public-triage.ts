@@ -18,12 +18,14 @@ export const personRoles=["self","relative","employer","organisation","represent
 export const counterpartyTypes=["person","employer","authority","company","other","unknown"] as const;
 // These represent the requested *orientation*, never an order, booking, agreement or fee.
 export const requestTypes=["general_information","brief_consultation","document_review","detailed_case_analysis","unknown"] as const;
+// R-375: anonymous evidence category only; it is not a private document request.
+export const evidenceKinds=["none","official_decision","contract","correspondence","other","unknown"] as const;
 export const noticeCategories=["no_notice","notice_received","not_sure"] as const;
 export const timeBands=["less_than_48h","within_7d","later","unknown"] as const;
 export type TriageInput={
  country:string;residenceCountry:string;preferredLanguage:string;
  topic:string;personRole:string;
- counterpartyType:string;requestType:string;
+ counterpartyType:string;requestType:string;evidenceKind:string;
  noticeCategory:string;timeBand:string;
  immediateHarm:boolean; professionalNeeded:boolean;
 };
@@ -43,7 +45,7 @@ export type TriageResult={
 const inSet=(item:string,allowed:readonly string[])=>allowed.includes(item);
 const allowedInputKeys=new Set([
  "country","residenceCountry","preferredLanguage","topic","personRole","counterpartyType","requestType",
- "noticeCategory","timeBand","immediateHarm","professionalNeeded"
+ "noticeCategory","timeBand","immediateHarm","professionalNeeded","evidenceKind"
 ]);
 const sources:Record<string,string>={
  nl:"https://www.rechtspraak.nl/",
@@ -61,6 +63,7 @@ export function evaluatePublicTriage(input:TriageInput):TriageResult{
     !inSet(input.personRole,personRoles)||
     !inSet(input.counterpartyType,counterpartyTypes)||
     !inSet(input.requestType,requestTypes)||
+    !inSet(input.evidenceKind,evidenceKinds)||
     !inSet(input.noticeCategory,noticeCategories)||
     !inSet(input.timeBand,timeBands)||
     typeof input.immediateHarm!=="boolean"||
@@ -84,6 +87,8 @@ export function evaluatePublicTriage(input:TriageInput):TriageResult{
  if(!["general_information","unknown"].includes(input.requestType))
   issues.push("PAID_OR_PERSONALISED_SERVICE_REQUIRES_SEPARATE_HUMAN_CONTRACT_REVIEW");
  if(input.topic==="unknown")issues.push("PROCEDURE_UNVERIFIED","UNSURE_HUMAN_REVIEW_REQUIRED");
+ if(input.evidenceKind==="unknown"||input.evidenceKind==="other")
+  issues.push("EVIDENCE_CATEGORY_REQUIRES_HUMAN_REVIEW");
  if(input.noticeCategory==="notice_received"||input.noticeCategory==="not_sure")
   issues.push("NOTICE_AND_SERVICE_DATE_REQUIRES_HUMAN_REVIEW");
  if(input.noticeCategory!=="no_notice"&&input.timeBand==="unknown")
@@ -104,7 +109,7 @@ export function evaluatePublicTriage(input:TriageInput):TriageResult{
       issues.some(x=>["JURISDICTION_UNVERIFIED","ROLE_OR_MANDATE_REQUIRES_REVIEW",
        "COUNTERPARTY_CATEGORY_REQUIRES_REVIEW",
        "RESIDENCE_COUNTRY_REQUIRES_HUMAN_REVIEW","PREFERRED_LANGUAGE_REQUIRES_HUMAN_REVIEW",
-       "CROSS_BORDER_JURISDICTION_REVIEW",
+       "CROSS_BORDER_JURISDICTION_REVIEW","EVIDENCE_CATEGORY_REQUIRES_HUMAN_REVIEW",
        "PROCEDURE_UNVERIFIED","NOTICE_AND_SERVICE_DATE_REQUIRES_HUMAN_REVIEW",
        "DEADLINE_UNVERIFIED"].includes(x));
  if(urgent)issues.push("SEEK_PROMPT_HUMAN_SPECIALIST_OR_OFFICIAL_CHANNEL");
