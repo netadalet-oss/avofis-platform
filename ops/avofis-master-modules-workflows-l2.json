@@ -22,7 +22,7 @@
     "auxiliary": 113,
     "content": 74,
     "independentAccepted": 0,
-    "partialR": 43,
+    "partialR": 46,
     "syntheticAuxiliary": 4
   },
   "principle": "L2 is a proposed module-and-workflow architecture derived from the original instructions, not implemented flows or final L3 UI/API/SQL specifications. L3 requires new explicit user approval.",
