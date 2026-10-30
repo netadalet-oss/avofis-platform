@@ -242,6 +242,244 @@
       "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41082197906"
     },
     {
+      "id": "R-361",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "kind": "LOCAL_SOURCE_SPECIFIC_PREPARATION_FORM",
+      "codePaths": [
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/sector-intake-preview.test.mjs"
+      ],
+      "claim": "A source-linked TR-only, anonymous no-submit form preview provides contract type and self-reported employment start/notice/decision dates. This is bounded local preparation only; real intake, private data/Storage, complete legal form and independent human acceptance are not implemented.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41093157446"
+    },
+    {
+      "id": "R-362",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "kind": "LOCAL_SOURCE_SPECIFIC_PREPARATION_FORM",
+      "codePaths": [
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/sector-intake-preview.test.mjs"
+      ],
+      "claim": "A source-linked TR-only, anonymous no-submit form preview provides VSO signature yes/no/unknown and self-reported response date. This is bounded local preparation only; real intake, private data/Storage, complete legal form and independent human acceptance are not implemented.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41093157446"
+    },
+    {
+      "id": "R-363",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "kind": "LOCAL_SOURCE_SPECIFIC_PREPARATION_FORM",
+      "codePaths": [
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/sector-intake-preview.test.mjs"
+      ],
+      "claim": "A source-linked TR-only, anonymous no-submit form preview provides unpaid wage period, approximate EUR amount, payslip and correspondence availability. This is bounded local preparation only; real intake, private data/Storage, complete legal form and independent human acceptance are not implemented.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41093157446"
+    },
+    {
+      "id": "R-364",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "kind": "LOCAL_SOURCE_SPECIFIC_PREPARATION_FORM",
+      "codePaths": [
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/sector-intake-preview.test.mjs"
+      ],
+      "claim": "A source-linked TR-only, anonymous no-submit form preview provides approximate employee count, requested document category and other-party role. This is bounded local preparation only; real intake, private data/Storage, complete legal form and independent human acceptance are not implemented.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41093157446"
+    },
+    {
+      "id": "R-365",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "kind": "LOCAL_SOURCE_SPECIFIC_PREPARATION_FORM",
+      "codePaths": [
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/sector-intake-preview.test.mjs"
+      ],
+      "claim": "A source-linked TR-only, anonymous no-submit form preview provides voluntary sensitive-disclosure preference ONLY; content restricted behind unavailable private channel. This is bounded local preparation only; real intake, private data/Storage, complete legal form and independent human acceptance are not implemented.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41093157446"
+    },
+    {
+      "id": "R-366",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "kind": "LOCAL_SOURCE_SPECIFIC_PREPARATION_FORM",
+      "codePaths": [
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/sector-intake-preview.test.mjs"
+      ],
+      "claim": "A source-linked TR-only, anonymous no-submit form preview provides tenant/landlord role and residential/commercial property choice. This is bounded local preparation only; real intake, private data/Storage, complete legal form and independent human acceptance are not implemented.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41093157446"
+    },
+    {
+      "id": "R-367",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "kind": "LOCAL_SOURCE_SPECIFIC_PREPARATION_FORM",
+      "codePaths": [
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/sector-intake-preview.test.mjs"
+      ],
+      "claim": "A source-linked TR-only, anonymous no-submit form preview provides rental end date, approximate deposit amount and last correspondence date. This is bounded local preparation only; real intake, private data/Storage, complete legal form and independent human acceptance are not implemented.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41093157446"
+    },
+    {
+      "id": "R-368",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "kind": "LOCAL_SOURCE_SPECIFIC_PREPARATION_FORM",
+      "codePaths": [
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/sector-intake-preview.test.mjs"
+      ],
+      "claim": "A source-linked TR-only, anonymous no-submit form preview provides maintenance issue category, reported date and photo availability without uploads. This is bounded local preparation only; real intake, private data/Storage, complete legal form and independent human acceptance are not implemented.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41093157446"
+    },
+    {
+      "id": "R-369",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "kind": "LOCAL_SOURCE_SPECIFIC_PREPARATION_FORM",
+      "codePaths": [
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/sector-intake-preview.test.mjs"
+      ],
+      "claim": "A source-linked TR-only, anonymous no-submit form preview provides eviction risk official notice presence and self-reported date with priority human-review flag. This is bounded local preparation only; real intake, private data/Storage, complete legal form and independent human acceptance are not implemented.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41093157446"
+    },
+    {
+      "id": "R-370",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "kind": "LOCAL_SOURCE_SPECIFIC_PREPARATION_FORM",
+      "codePaths": [
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/sector-intake-preview.test.mjs"
+      ],
+      "claim": "A source-linked TR-only, anonymous no-submit form preview provides rent increase written notice, new approximate rent and effective date. This is bounded local preparation only; real intake, private data/Storage, complete legal form and independent human acceptance are not implemented.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41093157446"
+    },
+    {
+      "id": "R-371",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "kind": "LOCAL_SOURCE_SPECIFIC_PREPARATION_FORM",
+      "codePaths": [
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/sector-intake-preview.test.mjs"
+      ],
+      "claim": "A source-linked TR-only, anonymous no-submit form preview provides consumer product/service, purchase channel and delivery date. This is bounded local preparation only; real intake, private data/Storage, complete legal form and independent human acceptance are not implemented.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41093157446"
+    },
+    {
+      "id": "R-372",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "kind": "LOCAL_SOURCE_SPECIFIC_PREPARATION_FORM",
+      "codePaths": [
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/sector-intake-preview.test.mjs"
+      ],
+      "claim": "A source-linked TR-only, anonymous no-submit form preview provides defective-goods seller notification and generic seller-response state. This is bounded local preparation only; real intake, private data/Storage, complete legal form and independent human acceptance are not implemented.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41093157446"
+    },
+    {
+      "id": "R-373",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "kind": "LOCAL_SOURCE_SPECIFIC_PREPARATION_FORM",
+      "codePaths": [
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/sector-intake-preview.test.mjs"
+      ],
+      "claim": "A source-linked TR-only, anonymous no-submit form preview provides subscription start date, cancellation request and fee dispute. This is bounded local preparation only; real intake, private data/Storage, complete legal form and independent human acceptance are not implemented.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41093157446"
+    },
+    {
+      "id": "R-374",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "kind": "LOCAL_SOURCE_SPECIFIC_PREPARATION_FORM",
+      "codePaths": [
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/sector-intake-preview.test.mjs"
+      ],
+      "claim": "A source-linked TR-only, anonymous no-submit form preview provides creditor CATEGORY only (no identity), collection stage and self-reported service date. This is bounded local preparation only; real intake, private data/Storage, complete legal form and independent human acceptance are not implemented.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41093157446"
+    },
+    {
       "id": "R-375",
       "kind": "NONIDENTIFYING_EVIDENCE_KIND_WITHOUT_UPLOAD",
       "claim": "The public non-identified triage asks for broad evidence type including none or unknown but never requires, requests or accepts a file upload; every real form family and real Storage acceptance remain pending.",
@@ -297,7 +535,7 @@
       "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41086492838"
     }
   ],
-  "unprovenImplementationCount": 957,
+  "unprovenImplementationCount": 943,
   "openDecisions": [
     "L3-DEC-01",
     "L3-DEC-02",
@@ -334,6 +572,6 @@
     "ops/avofis-work-progress.json"
   ],
   "verifiedTechnicalEvidenceAt": "2026-10-30",
-  "verificationScope": "16 source-ID scoped anonymous triage technical changes (including R-375/376 in green CI #41087341496), no real Auth/Storage E2E, legal review, full-form delivery or independent acceptance",
-  "scopeClarification": "Every L4 evidence record proves only the specific coded public-triage sub-scope; no full R-ID acceptance, six-language publication, privacy-controller legal signoff, executed engagement or authenticated document channel. R-344 free text and R-346 date are memory-only screen state and not a verified legal assessment, actual intake or transfer."
+  "verificationScope": "30 source-ID scoped code slices including 14 local-only employment/housing/consumer preparations R-361..R-374 tested in successful 6/6 CI #41093157446; 0 independently accepted, no real staging E2E, no live intake or private document channel",
+  "scopeClarification": "Every L4 evidence record proves only the specific coded public-triage sub-scope; no full R-ID acceptance, six-language publication, privacy-controller legal signoff, executed engagement or authenticated document channel. R-344 free text and R-346 date are memory-only screen state and not a verified legal assessment, actual intake or transfer. R-361..R-374 previews are not production forms: all answers local and optional with unknown; sensitive allegations and creditor identities deliberately not collected. PII/server-side controls require independent work."
 }
