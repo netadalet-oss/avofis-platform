@@ -88,6 +88,6 @@ test("L3: R-398 DOCX conflict, checklist source gap and production gates persist
  assert.ok(issues.items.some(i=>i.sourceBackedGap.includes("Seven live public tables")));
  assert.ok(issues.items.every(i=>i.state==="OPEN" && i.liveChanged===false && i.l4==="LOCKED"));
  assert.equal(all.filter(x=>x.id.startsWith("CHK-")).length,8);
- assert.equal(ledger.groups[0].partial.length,43);
+ assert.equal(ledger.groups[0].partial.length,46);
  assert.equal(ledger.groups[2].syntheticTechnical.length,4);
 });
