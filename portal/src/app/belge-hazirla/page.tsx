@@ -5,6 +5,7 @@ import {AccountDraftControls} from "@/components/avofis/AccountDraftControls";
 import {useEffect,useState} from "react";
 import {services} from "@/lib/avofis-site";
 import {draftLocales,isDraftLocale,isServiceSlug,newPreparation,preparationDocx,preparationText,validatePreparation,type DraftLocale,type PreparationDraft} from "@/lib/document-preparation";
+import {fieldsByService,localizedFieldLabels,serviceFieldTypes,type ServiceField} from "@/lib/service-document-forms";
 
 type Field = "country"|"institution"|"purpose"|"chronology"|"documentList";
 const words:Record<DraftLocale,{title:string;intro:string;service:string;language:string;country:string;institution:string;purpose:string;chronology:string;documentList:string;save:string;import:string;docx:string;text:string;print:string;reset:string;privacy:string;warning:string;invalid:string;reference:string;source:string}>={
@@ -31,7 +32,12 @@ export default function PreparationPage(){
  const sourceLang=draft.locale==="ar"||draft.locale==="ru"?"en":draft.locale;
  const name=current.title[sourceLang];
  const set=(field:Field,value:string)=>setDraft(d=>({...d,[field]:value}));
- const changeService=(service:string)=>{if(isServiceSlug(service))setDraft(d=>({...d,service}));};
+ const setAnswer=(field:ServiceField,value:string)=>setDraft(d=>d.version===2?
+  {...d,answers:{...d.answers,[field]:value}}:d);
+ const changeService=(service:string)=>{if(isServiceSlug(service))setDraft(d=>{
+   const fresh=newPreparation(service,d.locale);
+   return {...fresh,country:d.country,institution:d.institution};
+  });};
  const changeLocale=(locale:string)=>{if(isDraftLocale(locale))setDraft(d=>({...d,locale}));};
  const save=()=>localDownload(new Blob([JSON.stringify(draft,null,2)],{type:"application/json;charset=utf-8"}),`avofis-hazirlik-${draft.service}.json`);
  const downloadText=()=>localDownload(new Blob([preparationText(draft,name)],{type:"text/plain;charset=utf-8"}),`avofis-hazirlik-${draft.service}.txt`);
@@ -46,6 +52,17 @@ export default function PreparationPage(){
   catch{setError(t.invalid);}
  };
  const fields:Field[]=["country","institution","purpose","chronology","documentList"];
+ const additional=draft.version===2?fieldsByService[draft.service]:[];
+ const labels=localizedFieldLabels[draft.locale];
+ const contextualTitle=({tr:"Bu hizmete ilişkin ayrıntılar",nl:"Gegevens voor deze dienst",
+  de:"Angaben zu dieser Dienstleistung",en:"Details for this service",
+  ar:"تفاصيل هذا المجال",ru:"Сведения по услуге"})[draft.locale];
+ const contextualNote=({tr:"Tarihler beyanınıza dayanır; kesin süre ve yetkili makam otomatik hesaplanmaz.",
+  nl:"Datums zijn uw eigen opgave. Wettelijke termijnen en bevoegdheden worden niet automatisch vastgesteld.",
+  de:"Datums sind Ihre Angaben. Fristen und Zuständigkeit werden nicht automatisch bestätigt.",
+  en:"Dates are self-reported. Deadlines and legal jurisdiction are not calculated or confirmed.",
+  ar:"التواريخ حسب إفادتك؛ لا تُحسب المواعيد أو الصلاحية القضائية تلقائياً.",
+  ru:"Даты указаны с ваших слов. Сроки и компетенция органов автоматически не определяются."})[draft.locale];
  return <main dir={rtl?"rtl":"ltr"} lang={draft.locale} className="avofis-theme min-h-screen px-4 py-10 text-white sm:px-8">
   <div className="mx-auto max-w-4xl">
    <nav className="print:hidden"><Link href={`/katalog?lang=${draft.locale}`} className="text-sm text-[#dfbf59] underline underline-offset-4">AVOfis · {t.source}</Link></nav>
@@ -59,6 +76,27 @@ export default function PreparationPage(){
    <section className="mt-6 rounded-xl border border-[#dfbf59]/25 bg-[#101e3b] p-5"><h2 lang={sourceLang} className="text-lg font-semibold">{name}</h2><p lang={sourceLang} className="mt-2 text-sm leading-7 text-[#c1cbdf]">{current.firstDetails[sourceLang]}</p><p lang={sourceLang} className="mt-2 text-sm leading-7 text-[#c1cbdf]">{current.boundaries[sourceLang]}</p></section>
    <form onSubmit={e=>e.preventDefault()} className="mt-7 space-y-5">
     {fields.map(field=><label key={field} className="block text-sm font-semibold">{t[field]}{field==="chronology"||field==="documentList"?<textarea maxLength={4000} rows={5} value={draft[field]} onChange={e=>set(field,e.target.value)} className="mt-2 block w-full rounded-xl border border-[#dfbf59]/30 bg-[#102142] p-3 leading-6 text-white"/>:<input type="text" maxLength={4000} value={draft[field]} onChange={e=>set(field,e.target.value)} className="mt-2 block min-h-12 w-full rounded-xl border border-[#dfbf59]/30 bg-[#102142] p-3 text-white"/>}</label>)}
+    {draft.version===2&&<fieldset className="rounded-xl border border-[#dfbf59]/25 bg-[#101e3b] p-5">
+     <legend className="px-2 text-base font-semibold">{contextualTitle}</legend>
+     <p className="mb-4 text-sm leading-6 text-[#c1cbdf]">{contextualNote}</p>
+     <div className="space-y-4">{additional.map(field=>{
+      const kind=serviceFieldTypes[field],value=draft.answers?.[field]||"";
+      const base="mt-2 block w-full rounded-lg border border-[#dfbf59]/30 bg-[#102142] p-3 text-white";
+      return <label key={field} className="block text-sm font-semibold">{labels[field]}
+       {kind==="textarea"?<textarea value={value} maxLength={1200} rows={4}
+        onChange={e=>setAnswer(field,e.target.value)} className={base}/>:
+        <input value={value} maxLength={1200} type={kind==="date"?"date":"text"}
+         inputMode={kind==="amount"?"decimal":undefined}
+         onChange={e=>setAnswer(field,e.target.value)} className={base}/>}
+      </label>;
+     })}</div>
+    </fieldset>}
+    {draft.version===1&&<button type="button" className="avofis-btn avofis-outline print:hidden"
+      onClick={()=>setDraft(d=>({...d,version:2,schemaRevision:1,answers:{}}))}>
+      {({tr:"Bu taslağa hizmete özel alanlar ekle",nl:"Dienstspecifieke vragen toevoegen",
+       de:"Zusätzliche dienstbezogene Fragen",en:"Add service-specific fields",
+       ar:"إضافة حقول مخصصة للمجال",ru:"Добавить поля для этой услуги"})[draft.locale]}
+     </button>}
     <div className="flex flex-wrap gap-3 print:hidden">
      <button type="button" onClick={save} className="avofis-btn avofis-cta">{t.save}</button>
      <label className="avofis-btn avofis-outline cursor-pointer">{t.import}<input className="sr-only" type="file" accept=".json,application/json" onChange={e=>{void importSaved(e.target.files?.[0]);e.currentTarget.value="";}}/></label>
