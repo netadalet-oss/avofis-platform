@@ -10,8 +10,9 @@ const sums=(arr,field)=>arr.reduce((n,a)=>n+a[field],0);
 const byKey=(g)=>index.items.filter(x=>x.group===g);
 test("L1: full 63 programs and 973 immutable work-ID mappings",()=>{
  assert.equal(l1.level,"L1");
- assert.equal(l1.approvalStatus,"AWAITING_USER_APPROVAL");
- assert.equal(l1.depthL2,"LOCKED_UNTIL_L1_APPROVAL");
+ assert.equal(l1.approvalStatus,"APPROVED_BY_USER");
+ assert.equal(l1.depthL2,"OPEN_TO_STRUCTURE_AWAITING_USER_APPROVAL");
+ assert.equal(l1.depthL3,"LOCKED_UNTIL_EXPLICIT_L2_APPROVAL");
  assert.equal(root.approvalStatus,"APPROVED_BY_USER");
  assert.equal(index.workCount,973);
  assert.equal(index.items.length,973);
@@ -38,7 +39,7 @@ test("L1: no orphan, no duplicate, no moved or deleted item in any parent pillar
  }
  for(const p of l1.programs){
   assert.equal(index.items.filter(x=>x.parentL1===p.id).length,p.count,p.id);
-  assert.equal(p.status,"L1_DRAFT_AWAITING_USER_APPROVAL",p.id);
+  assert.equal(p.status,"L1_APPROVED_BY_USER",p.id);
   assert.equal(p.independentAccepted,0,p.id);
  }
  for(const parent of root.pillars){
