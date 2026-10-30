@@ -53,9 +53,60 @@
       "legalReview": false,
       "independentAcceptance": false,
       "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41078423203"
+    },
+    {
+      "id": "R-345",
+      "kind": "PUBLIC_TRIAGE_COUNTERPARTY_CATEGORY",
+      "claim": "Public intake-orientation offers bounded person/employer/authority/company/other/unsure counterpart categories without asking for an opposing party name; unsure and other conservatively route to human review.",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/public-triage.ts",
+        "portal/src/app/triyaj/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/public-triage.test.mjs"
+      ],
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41080322793"
+    },
+    {
+      "id": "R-349",
+      "kind": "PUBLIC_TRIAGE_REQUEST_CATEGORY",
+      "claim": "Public orientation offers the four original general-information, brief-consultation, document-review and detailed-case-analysis choices; non-general selections require separate human and contract review, never automatic booking or intake.",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/public-triage.ts",
+        "portal/src/app/triyaj/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/public-triage.test.mjs"
+      ],
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41080322793"
+    },
+    {
+      "id": "R-350",
+      "kind": "PUBLIC_TRIAGE_DATA_MINIMISATION",
+      "claim": "Public triage remains local-only and non-identifying; runtime input whitelist rejects all unexpected private-data keys and echoes no private test sentinel; full regulated client-intake data minimisation remains unaccepted.",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/public-triage.ts",
+        "portal/src/app/triyaj/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/public-triage.test.mjs"
+      ],
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41080322793"
     }
   ],
-  "unprovenImplementationCount": 971,
+  "unprovenImplementationCount": 968,
   "openDecisions": [
     "L3-DEC-01",
     "L3-DEC-02",
@@ -92,5 +143,5 @@
     "ops/avofis-work-progress.json"
   ],
   "verifiedTechnicalEvidenceAt": "2026-10-30",
-  "verificationScope": "Only synthetic CI/TypeScript/public-triage tests for R-347/R-348; no staging E2E, human legal review or independent acceptance"
+  "verificationScope": "Only synthetic CI/TypeScript/public-triage tests for R-345, R-347, R-348, R-349, R-350; no staging E2E, human legal review or independent acceptance"
 }
