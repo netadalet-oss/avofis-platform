@@ -1,14 +1,16 @@
-name: AVOfis API verification
+name: AVOfis API and admin security verification
 on:
   pull_request:
     paths:
       - 'api/**'
+      - 'admin/**'
       - '.github/workflows/api-verification.yml'
   push:
     branches:
       - seviye4-security-cms-cors-20261030
     paths:
       - 'api/**'
+      - 'admin/**'
       - '.github/workflows/api-verification.yml'
 permissions:
   contents: read
@@ -32,3 +34,5 @@ jobs:
         run: npm run build --workspace api
       - name: Unit and real Express HTTP integration tests
         run: npm run test --workspace api
+      - name: Admin authorization regression tests
+        run: npm run test --workspace admin
