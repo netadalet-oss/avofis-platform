@@ -6,11 +6,11 @@
  * deliberately held until authorised authenticated workflow and legal review.
  */
 export type PreviewField={
- key:string; label:string; kind:"choice"|"date"|"approx_money"|"count";
+ key:string; label:string; kind:"choice"|"date"|"approx_money"|"count"|"short_note";
  options?:readonly string[]; required:false; unknownAllowed:true;
 };
 export type SectorPreview={
- sourceId:string;title:string;section:"employment"|"housing"|"consumer";
+ sourceId:string;title:string;section:"employment"|"housing"|"consumer"|"migration"|"family"|"administration"|"cross_border";
  originalRequirement:string;fields:readonly PreviewField[];
  highRisk:boolean;sensitiveHold:boolean;
  requiresAuthenticatedDetails:boolean;
@@ -121,7 +121,7 @@ export function validateLocalSectorAnswers(template:SectorPreview,answers:Previe
  const fields=new Map(template.fields.map(x=>[x.key,x]));
  for(const [key,value] of Object.entries(answers)){
   const f=fields.get(key);
-  if(!f||typeof value!=="string"||value.length>40)return false;
+  if(!f||typeof value!=="string"||value.length>(f.kind==="short_note"?160:40))return false;
   if(value===""||value==="unknown")continue;
   if(f.kind==="choice"&&!f.options?.includes(value))return false;
   if(f.kind==="date"&&!validDate(value))return false;
@@ -130,8 +130,8 @@ export function validateLocalSectorAnswers(template:SectorPreview,answers:Previe
  }
  return true;
 }
-export function evaluateLocalSectorPreview(template:SectorPreview,answers:PreviewAnswers):PreviewResult{
- if(!sectorPreviews.includes(template)||!validateLocalSectorAnswers(template,answers))
+export function evaluateLocalSectorPreview(template:SectorPreview,answers:PreviewAnswers,catalogue:readonly SectorPreview[]=sectorPreviews):PreviewResult{
+ if(!catalogue.includes(template)||!validateLocalSectorAnswers(template,answers))
   throw new Error("INVALID_LOCAL_PREVIEW_INPUT");
  return{
   sourceId:template.sourceId,status:"LOCAL_DRAFT_ONLY",
