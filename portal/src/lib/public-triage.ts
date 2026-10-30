@@ -13,10 +13,14 @@ export const topics=[
  "debt","business","unknown"
 ] as const;
 export const personRoles=["self","relative","employer","organisation","representative","unknown"] as const;
+export const counterpartyTypes=["person","employer","authority","company","other","unknown"] as const;
+// These represent the requested *orientation*, never an order, booking, agreement or fee.
+export const requestTypes=["general_information","brief_consultation","document_review","detailed_case_analysis","unknown"] as const;
 export const noticeCategories=["no_notice","notice_received","not_sure"] as const;
 export const timeBands=["less_than_48h","within_7d","later","unknown"] as const;
 export type TriageInput={
  country:string;topic:string;personRole:string;
+ counterpartyType:string;requestType:string;
  noticeCategory:string;timeBand:string;
  immediateHarm:boolean; professionalNeeded:boolean;
 };
@@ -34,6 +38,10 @@ export type TriageResult={
  officialSource:string|null;
 };
 const inSet=(item:string,allowed:readonly string[])=>allowed.includes(item);
+const allowedInputKeys=new Set([
+ "country","topic","personRole","counterpartyType","requestType",
+ "noticeCategory","timeBand","immediateHarm","professionalNeeded"
+]);
 const sources:Record<string,string>={
  nl:"https://www.rechtspraak.nl/",
  de:"https://e-justice.europa.eu/",
@@ -41,9 +49,13 @@ const sources:Record<string,string>={
 };
 export function evaluatePublicTriage(input:TriageInput):TriageResult{
  const issues:string[]=[];
- if(!inSet(input.country,countries)||
+ // Runtime fail-closed: an accidental public PII field must not be silently accepted.
+ if(!input||typeof input!=="object"||Object.keys(input).some(k=>!allowedInputKeys.has(k))||
+    !inSet(input.country,countries)||
     !inSet(input.topic,topics)||
     !inSet(input.personRole,personRoles)||
+    !inSet(input.counterpartyType,counterpartyTypes)||
+    !inSet(input.requestType,requestTypes)||
     !inSet(input.noticeCategory,noticeCategories)||
     !inSet(input.timeBand,timeBands)||
     typeof input.immediateHarm!=="boolean"||
@@ -56,6 +68,11 @@ export function evaluatePublicTriage(input:TriageInput):TriageResult{
  }
  if(input.country==="unknown"||input.country==="other")issues.push("JURISDICTION_UNVERIFIED");
  if(input.personRole!=="self")issues.push("ROLE_OR_MANDATE_REQUIRES_REVIEW");
+ if(input.counterpartyType==="unknown"||input.counterpartyType==="other")
+  issues.push("COUNTERPARTY_CATEGORY_REQUIRES_REVIEW");
+ if(input.requestType==="unknown")issues.push("REQUEST_TYPE_REQUIRES_REVIEW");
+ if(!["general_information","unknown"].includes(input.requestType))
+  issues.push("PAID_OR_PERSONALISED_SERVICE_REQUIRES_SEPARATE_HUMAN_CONTRACT_REVIEW");
  if(input.topic==="unknown")issues.push("PROCEDURE_UNVERIFIED");
  if(input.noticeCategory==="notice_received"||input.noticeCategory==="not_sure")
   issues.push("NOTICE_AND_SERVICE_DATE_REQUIRES_HUMAN_REVIEW");
@@ -73,7 +90,9 @@ export function evaluatePublicTriage(input:TriageInput):TriageResult{
               input.timeBand==="less_than_48h";
  const specialist=urgent||input.timeBand==="within_7d"||
       ["asylum","court_procedure","administrative_objection","residence"].includes(input.topic)||
-      input.professionalNeeded||issues.some(x=>["JURISDICTION_UNVERIFIED","ROLE_OR_MANDATE_REQUIRES_REVIEW",
+      input.professionalNeeded||input.requestType!=="general_information"||
+      issues.some(x=>["JURISDICTION_UNVERIFIED","ROLE_OR_MANDATE_REQUIRES_REVIEW",
+       "COUNTERPARTY_CATEGORY_REQUIRES_REVIEW",
        "PROCEDURE_UNVERIFIED","NOTICE_AND_SERVICE_DATE_REQUIRES_HUMAN_REVIEW",
        "DEADLINE_UNVERIFIED"].includes(x));
  if(urgent)issues.push("SEEK_PROMPT_HUMAN_SPECIALIST_OR_OFFICIAL_CHANNEL");
