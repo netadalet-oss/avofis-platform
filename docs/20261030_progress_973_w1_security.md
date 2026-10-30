@@ -16,7 +16,7 @@
 973 sayısı 973 ayrı ve bağımsız ürün özelliği iddiası değildir.
 
 - Özgün 594 madde için **41 kısmi kanıt**, **553 özgün kanıtı bulunmayan madde**; bağımsız kabul **0/594**.
-- B01/B02 geçiş kodu ve gerçek PostgreSQL 17 sentetik saldırı testleri geçti; **iki B paketi için teknik sentetik kanıt**, bağımsız B kabulü **0/18**.
+- B01/B02 geçiş kodu ve gerçek PostgreSQL 17 sentetik saldırı testleri geçti; **B01/B02/B03 için teknik sentetik kanıt**, bağımsız B kabulü **0/18**.
 - B03 staging **hedef ayrılığı ve sahte URL** denetim kodu eklendi; gerçek staging erişimi ve Auth/Storage/E2E yeri başka kanıta tabidir.
 - PR ile gerçek canlı Supabase, gerçek müşteri verisi, yayım, ödeme ve resmî başvuru değişmedi.
 - Üretimde yedi eski public tabloda RLS kapalı; bu bulgu ortadan kalkmadan **NO-GO**.
@@ -31,7 +31,7 @@
 AVOFIS_ACCEPTED=0/973
 AVOFIS_REMAINING=973/973
 AVOFIS_PARTIAL_REQUIREMENTS=41/594
-AVOFIS_SYNTHETIC_AUXILIARY=2/113
+AVOFIS_SYNTHETIC_AUXILIARY=3/113
 AVOFIS_PRODUCTION=NO_GO
 AVOFIS_STAGING_E2E=NOT_VERIFIED
 ```
