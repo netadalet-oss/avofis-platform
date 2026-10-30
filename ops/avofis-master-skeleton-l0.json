@@ -3,7 +3,7 @@
   "program": "AVOfis v18",
   "date": "2026-10-30",
   "currentExpansionLevel": "L0",
-  "approvalStatus": "AWAITING_USER_APPROVAL",
+  "approvalStatus": "APPROVED_BY_USER",
   "denominator": {
     "trackedWork": 973,
     "sourceR": 594,
@@ -46,12 +46,12 @@
   "hierarchy": [
     {
       "level": "L0",
-      "stage": "NOW",
+      "stage": "APPROVED",
       "description": "8 ana çalışma kolu ve 973 kaydın eksiksiz yerleşimi"
     },
     {
       "level": "L1",
-      "stage": "REQUIRES_APPROVAL",
+      "stage": "CURRENT_AWAITING_USER_APPROVAL",
       "description": "Her ana kolun alt programları; 33 bölüm ve B/J/P/IND/T içerik kümelerinin iş paketleri"
     },
     {
@@ -77,7 +77,7 @@
   ],
   "approvalRules": {
     "granularity": "A whole depth level is submitted together for user approval; no deeper layer before explicit approval",
-    "required": "User's explicit approval of the submitted L0 work skeleton before L1",
+    "required": "L0 explicitly approved by user on 2026-10-30; L1 is now open for structuring, not yet approved; L2 remains locked",
     "changeControl": "Any addition/removal/scope reassignment requires a noted delta; original 594 unchanged",
     "independence": "No synthetic/CI result alone changes independent accepted / 973",
     "liveActions": "Production SQL, deployment, real money/IND filing and merging to main require separate operation-specific authorization"
@@ -331,5 +331,6 @@
         "R-577..R-594"
       ]
     }
-  ]
+  ],
+  "approvalEvidence": "2026-10-30 user message: 'Seviye 0 ana iskeletini onaylıyorum. Seviye 1'e geç ve 973 işin tamamının alt program iskeletini oluştur.'"
 }
