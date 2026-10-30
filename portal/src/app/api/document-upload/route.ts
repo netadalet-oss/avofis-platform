@@ -5,7 +5,7 @@
  * This is NOT the future authorised private upload endpoint.
  */
 export const dynamic="force-dynamic";
-export function POST():Response{
+function rejectPublicDocumentAccess():Response{
  return Response.json({
   error:"DOCUMENT_UPLOAD_NOT_RELEASED",
   accepted:false,
@@ -16,3 +16,10 @@ export function POST():Response{
   "X-Content-Type-Options":"nosniff"
  }});
 }
+
+// Do not let another HTTP verb expose private document creation or reads.
+export const POST=rejectPublicDocumentAccess;
+export const GET=rejectPublicDocumentAccess;
+export const PUT=rejectPublicDocumentAccess;
+export const PATCH=rejectPublicDocumentAccess;
+export const DELETE=rejectPublicDocumentAccess;
