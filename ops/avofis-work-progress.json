@@ -23,6 +23,8 @@
         "R-154",
         "R-167",
         "R-246",
+        "R-347",
+        "R-348",
         "R-375",
         "R-377",
         "R-378",
@@ -104,5 +106,6 @@
   "productionStatus": "NO_GO",
   "liveSecurityAdvisory": "7 public tables RLS OFF and 1 Auth leaked-password WARN (read-only security advisor 2026-10-30)",
   "e2eStagingVerified": false,
-  "liveDatabaseChangedByThisLedger": false
+  "liveDatabaseChangedByThisLedger": false,
+  "l4TechnicalEvidence": "R-347/R-348 public-triage source/test, synthetic CI https://github.com/netadalet-oss/avofis-platform/actions/runs/41078423203 ; 0 independent acceptance and no staging E2E"
 }
