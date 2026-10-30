@@ -12,7 +12,7 @@ const issues=load("avofis-l3-open-decisions.json");
 const ledger=load("avofis-work-progress.json");
 const shards=Array.from({length:8},(_,i)=>load("l3/avofis-l3-atomic-L0-"+String(i+1).padStart(2,"0")+".json"));
 const all=shards.flatMap(s=>s.items);
-test("L3: user approved L0 L1 L2; L3 remains pending, L4 explicitly locked",()=>{
+test("L3: user approved L0–L3; L4 authorized, L5 locked",()=>{
  assert.equal(l0.approvalStatus,"APPROVED_BY_USER");
  assert.equal(l1.approvalStatus,"APPROVED_BY_USER");
  assert.equal(l2.proposalStatus,"APPROVED_BY_USER");
@@ -20,8 +20,10 @@ test("L3: user approved L0 L1 L2; L3 remains pending, L4 explicitly locked",()=>
  assert.equal(l2.approvals.L4,"LOCKED_UNTIL_EXPLICIT_L3_APPROVAL");
  assert.equal(l2idx.l2UserApproved,true);
  assert.equal(l2idx.l4Locked,true);
- assert.equal(l3.approvalStatus,"AWAITING_USER_APPROVAL");
- assert.equal(l3.nextLevelL4,"LOCKED_UNTIL_EXPLICIT_L3_APPROVAL");
+ assert.equal(l3.approvalStatus,"APPROVED_BY_USER");
+ assert.equal(flow.approvalStatus,"APPROVED_BY_USER");
+ assert.equal(l3.nextLevelL4,"OPEN_FOR_IMPLEMENTATION_AWAITING_INDEPENDENT_ACCEPTANCE");
+ assert.equal(l3.nextLevelL5,"LOCKED_UNTIL_EXPLICIT_L4_APPROVAL");
  assert.equal(ledger.productionStatus,"NO_GO");
  assert.equal(ledger.groups.reduce((s,g)=>s+g.accepted.length,0),0);
 });
@@ -68,7 +70,9 @@ test("L3: immutable trace from L2 primary and acceptance flows; no fake physical
   assert.equal(x.l4,"LOCKED");
   assert.equal(x.accepted,false);
  }
- for(const m of l3.modules)assert.equal(m.l4Implementation,"LOCKED");
+ // The pre-approval L3 atomic shards are immutable source snapshots; only the
+ // separately signed L3 approval unlocks L4 without implying implementation.
+ for(const m of l3.modules)assert.equal(m.l4Implementation,"AUTHORIZED_NOT_IMPLEMENTED");
  for(const f of flow.flows){
    assert.equal(f.l4,"LOCKED");
    assert.equal(f.actualExternalSubmission,false);
