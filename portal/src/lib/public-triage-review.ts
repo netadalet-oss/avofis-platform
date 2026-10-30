@@ -15,6 +15,7 @@ export type LocalReview={
   personRole:string;
   counterpartyType:string;
   requestType:string;
+  evidenceKind:string;
   noticeCategory:string;
   noticeDate:string|null;
   noticeDateStatus:"NOT_APPLICABLE"|"NOT_SUPPLIED"|"SELF_REPORTED_UNVERIFIED"|"INVALID_FORMAT";
@@ -52,7 +53,7 @@ export function buildLocalTriageReview(input:TriageInput,selfReportedNoticeDate:
     preferredLanguage:input.preferredLanguage,topic:input.topic,
     topicNote:safeNote,topicNoteStatus:noteStatus,
     personRole:input.personRole,counterpartyType:input.counterpartyType,
-    requestType:input.requestType,noticeCategory:input.noticeCategory,
+    requestType:input.requestType,evidenceKind:input.evidenceKind,noticeCategory:input.noticeCategory,
     noticeDate:status==="SELF_REPORTED_UNVERIFIED"?selfReportedNoticeDate:null,
     noticeDateStatus:status,timeBand:input.timeBand,
     immediateHarm:input.immediateHarm,professionalNeeded:input.professionalNeeded,
