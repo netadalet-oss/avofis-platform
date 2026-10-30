@@ -1,21 +1,23 @@
 "use client";
 import {useState} from "react";
+import {internationalPreviews} from "@/lib/international-form-preview";
 import Link from "next/link";
 import {PageFrame} from "@/components/avofis/PageFrame";
 import {sectorPreviews,validateLocalSectorAnswers,evaluateLocalSectorPreview,
  type PreviewAnswers} from "@/lib/sector-intake-preview";
+const catalogue=[...sectorPreviews,...internationalPreviews];
 const tr=(value:string)=>value==="unknown"?"Bilmiyorum":value==="yes"?"Evet":value==="no"?"Hayır":value;
 export default function FormPreparation(){
  const [id,setId]=useState("R-361");
  const [answers,setAnswers]=useState<PreviewAnswers>({});
  const [confirmed,setConfirmed]=useState("");
- const template=sectorPreviews.find(x=>x.sourceId===id)??sectorPreviews[0];
+ const template=catalogue.find(x=>x.sourceId===id)??catalogue[0];
  const valid=validateLocalSectorAnswers(template,answers);
- const result=valid?evaluateLocalSectorPreview(template,answers):null;
+ const result=valid?evaluateLocalSectorPreview(template,answers,catalogue):null;
  const signature=id+JSON.stringify(answers);
  return <PageFrame lang="tr" eyebrow="L4 · GÖNDERİMSİZ TASLAK"
- title="İş, kira ve tüketici form hazırlığı"
- description="14 ayrı konu için yalnız yerel teknik önizleme. Dosya açılmaz; resmî başvuru, hukukî sonuç veya ödeme yapılmaz.">
+ title="İş, kira, tüketici ve uluslararası işlem hazırlığı"
+ description="31 ayrı konu için yalnız yerel teknik önizleme. Dosya açılmaz; resmî başvuru, hukukî sonuç veya ödeme yapılmaz.">
   <aside className="rounded-xl border p-4 text-sm">
    İsim, kimlik, özel belge veya hassas olay ayrıntısı girmeyin.
    Yanıtlar yalnız bu ekranda bulunur, gönderilmez veya kaydedilmez.
@@ -26,7 +28,7 @@ export default function FormPreparation(){
    <label htmlFor="sector" className="block font-semibold">Konu</label>
    <select id="sector" className="avofis-field mt-2 w-full" value={id}
     onChange={e=>{setId(e.target.value);setAnswers({});setConfirmed("");}}>
-    {sectorPreviews.map(x=><option key={x.sourceId} value={x.sourceId}>{x.sourceId} · {x.title}</option>)}
+    {catalogue.map(x=><option key={x.sourceId} value={x.sourceId}>{x.sourceId} · {x.title}</option>)}
    </select>
    <p className="mt-3 text-xs">{template.originalRequirement}</p>
    {template.highRisk&&<p role="alert" className="mt-3 border p-3 text-sm">
@@ -46,7 +48,7 @@ export default function FormPreparation(){
       </select>:
       <span className="mt-2 flex items-center gap-2">
        <input className="avofis-field min-w-0 flex-1"
-        type={field.kind==="date"?"date":"text"}
+        type={field.kind==="date"?"date":"text"} maxLength={field.kind==="short_note"?160:14}
         value={answers[field.key]==="unknown"?"":answers[field.key]||""}
         disabled={answers[field.key]==="unknown"}
         onChange={e=>setAnswers(p=>({...p,[field.key]:e.target.value}))}/>
