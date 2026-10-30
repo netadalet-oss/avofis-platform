@@ -126,3 +126,15 @@ test("L4 R-376: evidence category and truth-check are in same local review signa
  assert.match(ui,/reviewSignature=JSON\.stringify\(input\)\+"\|"\+noticeDate\+"\|"\+topicNote/);
  assert.doesNotMatch(ui,/<form[^>]*action=/);
 });
+
+test("L4 R-351: only contact-method preference is repeated during local review",()=>{
+ const chosen={...input(),contactPreference:"written"};
+ const r=buildLocalTriageReview(chosen,"","");
+ assert.equal(r.contactPreference,"written");
+ assert.equal(r.officialActionSubmitted,false);
+ assert.equal(r.clientRecordCreated,false);
+ const defaulted=buildLocalTriageReview(input(),"","");
+ assert.equal(defaulted.contactPreference,"none");
+ const ui=readFileSync(fileURLToPath(new URL("../src/app/triyaj/page.tsx",import.meta.url)),"utf8");
+ assert.ok(ui.includes("[t.contact,contactOptions[review.contactPreference"));
+});
