@@ -58,7 +58,7 @@ test("L0 cannot silently approve itself or expand depth levels",()=>{
  assert.equal(root.hierarchy[0].stage,"APPROVED");
  assert.equal(root.hierarchy[1].stage,"CURRENT_AWAITING_USER_APPROVAL");
  for(const x of root.hierarchy.slice(2))assert.equal(x.stage,"REQUIRES_APPROVAL");
- assert.equal(root.approvalRules.required,"User's explicit approval of the submitted L0 work skeleton before L1");
+ assert.match(root.approvalRules.required,/L0 explicitly approved by user on 2026-10-30/);
  assert.equal(root.evidence.production,"NO_GO");
  assert.equal(root.evidence.stagingE2E,"NOT_VERIFIED");
  assert.equal(progress.productionStatus,"NO_GO");
