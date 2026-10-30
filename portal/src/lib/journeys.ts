@@ -120,7 +120,7 @@ export const journeys:Journey[]=[
  fields:[
   {key:"profession",label:l("Hangi uzmanlık?","Welk beroep?","Professional expertise"),options:[opt("lawyer","Avukat","Advocaat","Lawyer"),opt("notary","Noter","Notaris","Civil-law notary"),opt("translator","Yeminli tercüman","Beëdigd vertaler","Sworn translator"),opt("tax","Vergi uzmanı","Belastingadviseur","Tax professional"),opt("other","Diğer yetkili uzman","Andere specialist","Other specialist")]},
   {key:"country",label:l("Hangi ülke?","Welk land?","Country"),options:origins}
- ]}
+ ]},
  {id:"rent-repairs",service:"housing",
  title:l("Kiradaki konutta bakım veya onarım sorunu","Onderhoud of gebreken in uw huurwoning","Repairs or defects in a rented home"),
  audience:l("Hollanda'da kiracı olarak onarım sorunu yaşayan veya sorumluluk paylaşımını öğrenmek isteyenler.",
