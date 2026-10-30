@@ -251,3 +251,41 @@ test("L4 R-352/R-353/R-359: static public UI exposes privacy before controls and
  assert.doesNotMatch(page,/<input[^>]+type="file"/);
  assert.doesNotMatch(page,/<form[^>]*action=/);
 });
+
+test("L4 R-396: reported danger or imminent date escalates at the relevant question and never calculates the deadline",()=>{
+ const cases=[
+  {immediateHarm:true},
+  {topic:"detention_or_removal"},
+  {timeBand:"less_than_48h"},
+  {timeBand:"within_7d"},
+  {noticeCategory:"notice_received"}
+ ];
+ const basis={
+  country:"nl",residenceCountry:"nl",preferredLanguage:"tr",
+  topic:"document",personRole:"self",counterpartyType:"person",
+  requestType:"general_information",noticeCategory:"no_notice",
+  timeBand:"later",immediateHarm:false,professionalNeeded:false
+ };
+ for(const c of cases){
+  const r=evaluatePublicTriage({...basis,...c});
+  assert.ok(["URGENT_SPECIALIST","SPECIALIST_REVIEW"].includes(r.disposition));
+  assert.equal(r.deadlineCalculated,false);
+  assert.equal(r.maySubmitOfficialAction,false);
+  assert.equal(r.mayCreateClientRecord,false);
+ }
+});
+test("L4 R-396: risk-specific inline warning appears inside time/notice fieldset, not only in result section",async()=>{
+ const {readFileSync}=await import("node:fs");
+ const {fileURLToPath}=await import("node:url");
+ const page=readFileSync(fileURLToPath(new URL("../src/app/triyaj/page.tsx",import.meta.url)),"utf8");
+ const fieldset=page.indexOf('<fieldset className="mt-5 rounded-xl border border-[#dfbf59]/50 p-4">');
+ const inline=page.indexOf('role="alert"',fieldset);
+ const close=page.indexOf('</fieldset>',fieldset);
+ assert.ok(fieldset>=0&&inline>fieldset&&inline<close);
+ assert.match(page,/input\.timeBand==="within_7d"/);
+ assert.match(page,/input\.noticeCategory==="notice_received"/);
+ assert.match(page,/result\.disposition==="URGENT_SPECIALIST"/);
+ assert.match(page,/aria-live="assertive"/);
+ assert.match(page,/t\.earlyNote/);
+ assert.doesNotMatch(page,/<button[^>]*type="submit"/);
+});
