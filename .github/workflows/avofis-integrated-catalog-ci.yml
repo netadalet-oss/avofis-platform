@@ -318,6 +318,10 @@ jobs:
         run: node --experimental-strip-types --test scripts/document-preparation.test.mjs
       - name: Preserve historical 17 services 14 audiences 12 sourced problem routes
         run: node --experimental-strip-types --test scripts/avofis-scope-invariants.test.mjs
+      - name: L4 source-scoped code evidence, 973 denominator, 18 open decisions and L5 lock
+        run: |
+          node --test scripts/l4-evidence-audit.test.mjs
+          node scripts/l4-evidence-audit.mjs
       - name: L3 source-linked 973 atomic contracts, 63 logical modules, 154 flows and L4 approval lock
         run: node --test scripts/master-atomic-contracts-l3.test.mjs
       - name: L2 approved 63 modules and 154 flows map 973 unchanged tasks, keep L4 locked
