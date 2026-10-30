@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "level": "L4",
+  "createdOn": "2026-10-30",
+  "userApprovalEvidence": "2026-10-30 user explicitly approved Seviye 3 and authorized Seviye 4, prohibited Seviye 5 without further approval; all 18 decisions remain open",
+  "status": "IMPLEMENTATION_IN_PROGRESS_NOT_INDEPENDENTLY_ACCEPTED",
+  "approvals": {
+    "L0": true,
+    "L1": true,
+    "L2": true,
+    "L3": true,
+    "L4": "WORK_AUTHORIZED_NOT_APPROVED",
+    "L5": "LOCKED"
+  },
+  "denominator": {
+    "tracked": 973,
+    "requirements": 594,
+    "staff": 192,
+    "auxiliary": 113,
+    "content": 74
+  },
+  "implementationEvidence": [
+    {
+      "id": "R-347",
+      "status": "CODE_CHANGED_PENDING_CI",
+      "kind": "PUBLIC_TRIAGE_EARLY_WARNING",
+      "codePaths": [
+        "portal/src/lib/public-triage.ts",
+        "portal/src/app/triyaj/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/public-triage.test.mjs"
+      ],
+      "claim": "User-reported near-term notice/time risk gets visible separate warning stage and human-review escalation; legal deadline is not calculated",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": null
+    },
+    {
+      "id": "R-348",
+      "status": "CODE_CHANGED_PENDING_CI",
+      "kind": "PUBLIC_TRIAGE_HARM_ESCALATION",
+      "codePaths": [
+        "portal/src/lib/public-triage.ts",
+        "portal/src/app/triyaj/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/public-triage.test.mjs"
+      ],
+      "claim": "Severe self-reported harm and detention/removal routes stay urgent human review, not automated filing, payment, or client creation",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": null
+    }
+  ],
+  "unprovenImplementationCount": 971,
+  "openDecisions": [
+    "L3-DEC-01",
+    "L3-DEC-02",
+    "L3-DEC-03",
+    "L3-DEC-04",
+    "L3-DEC-05",
+    "L3-DEC-06",
+    "L3-DEC-07",
+    "L3-DEC-08",
+    "L3-DEC-09",
+    "L3-DEC-10",
+    "L3-DEC-11",
+    "L3-DEC-12",
+    "L3-DEC-13",
+    "L3-DEC-14",
+    "L3-DEC-15",
+    "L3-DEC-16",
+    "L3-DEC-17",
+    "L3-DEC-18"
+  ],
+  "constraints": {
+    "allL3DecisionsStayOpen": true,
+    "notStagingE2E": true,
+    "notPaymentOrOfficialFiling": true,
+    "productionNoGo": true,
+    "prDraft": true,
+    "noLiveSQL": true,
+    "noMainMerge": true,
+    "noL5": false
+  },
+  "sources": [
+    "ops/avofis-l3-module-contracts.json",
+    "ops/l3/avofis-l3-atomic-L0-01.json",
+    "ops/avofis-work-progress.json"
+  ]
+}
