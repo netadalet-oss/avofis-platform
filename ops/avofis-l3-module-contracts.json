@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "level": "L3",
   "date": "2026-10-30",
-  "approvalStatus": "AWAITING_USER_APPROVAL",
+  "approvalStatus": "APPROVED_BY_USER",
   "previousApprovals": [
     "L0",
     "L1",
     "L2"
   ],
-  "nextLevelL4": "LOCKED_UNTIL_EXPLICIT_L3_APPROVAL",
+  "nextLevelL4": "OPEN_FOR_IMPLEMENTATION_AWAITING_INDEPENDENT_ACCEPTANCE",
   "sourceOfCanonicalText": "AVOfis_v18_SEVIYE3_973_Tekil_Teknik_Sozlesme_63_Modul_154_Akis_Onay_Bekliyor_2026-10-30.xlsx sheet 47; its 594 R texts are from canonical original workbook",
   "totals": {
     "modules": 63,
@@ -65,7 +65,7 @@
       "reviewGates": "B05,B07",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -84,7 +84,7 @@
       "reviewGates": "B09,B10",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -103,7 +103,7 @@
       "reviewGates": "B09,B14",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -122,7 +122,7 @@
       "reviewGates": "B09,B14",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -141,7 +141,7 @@
       "reviewGates": "B05,B06,B08",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -160,7 +160,7 @@
       "reviewGates": "B05,B15",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -179,7 +179,7 @@
       "reviewGates": "B05,B09,B10",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -198,7 +198,7 @@
       "reviewGates": "B07,B09",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -217,7 +217,7 @@
       "reviewGates": "B07,B09",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -236,7 +236,7 @@
       "reviewGates": "B06,B07",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -255,7 +255,7 @@
       "reviewGates": "B07,B09",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -274,7 +274,7 @@
       "reviewGates": "B07,B08",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -293,7 +293,7 @@
       "reviewGates": "B05,B07",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -312,7 +312,7 @@
       "reviewGates": "B07,B09",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -331,7 +331,7 @@
       "reviewGates": "B07,B15",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -350,7 +350,7 @@
       "reviewGates": "B04,B06",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -369,7 +369,7 @@
       "reviewGates": "B09,B16",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -388,7 +388,7 @@
       "reviewGates": "B02,B16",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -407,7 +407,7 @@
       "reviewGates": "B04,B17",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -426,7 +426,7 @@
       "reviewGates": "B04,B06",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -445,7 +445,7 @@
       "reviewGates": "B04,B17",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -464,7 +464,7 @@
       "reviewGates": "B07,B17",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -483,7 +483,7 @@
       "reviewGates": "B01,B02,B04",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -502,7 +502,7 @@
       "reviewGates": "B04,B06",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -521,7 +521,7 @@
       "reviewGates": "B04,B13",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -540,7 +540,7 @@
       "reviewGates": "B08,B18",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -559,7 +559,7 @@
       "reviewGates": "B05,B15",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -578,7 +578,7 @@
       "reviewGates": "B09,B14",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -597,7 +597,7 @@
       "reviewGates": "B06,B13",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -616,7 +616,7 @@
       "reviewGates": "B01,B02,B03,B04,B13",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -635,7 +635,7 @@
       "reviewGates": "B04,B13,B18",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -654,7 +654,7 @@
       "reviewGates": "B14",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -673,7 +673,7 @@
       "reviewGates": "B01–B18",
       "sourceBoundary": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -692,7 +692,7 @@
       "reviewGates": "B04,B13,B18",
       "sourceBoundary": "26 Personel 16x12 Kabul",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -711,7 +711,7 @@
       "reviewGates": "B04,B13,B18",
       "sourceBoundary": "26 Personel 16x12 Kabul",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -730,7 +730,7 @@
       "reviewGates": "B04,B13,B18",
       "sourceBoundary": "26 Personel 16x12 Kabul",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -749,7 +749,7 @@
       "reviewGates": "B04,B13,B18",
       "sourceBoundary": "26 Personel 16x12 Kabul",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -768,7 +768,7 @@
       "reviewGates": "B04,B13,B18",
       "sourceBoundary": "26 Personel 16x12 Kabul",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -787,7 +787,7 @@
       "reviewGates": "B04,B13,B18",
       "sourceBoundary": "26 Personel 16x12 Kabul",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -806,7 +806,7 @@
       "reviewGates": "B04,B13,B18",
       "sourceBoundary": "26 Personel 16x12 Kabul",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -825,7 +825,7 @@
       "reviewGates": "B04,B13,B18",
       "sourceBoundary": "26 Personel 16x12 Kabul",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -844,7 +844,7 @@
       "reviewGates": "B04,B13,B18",
       "sourceBoundary": "26 Personel 16x12 Kabul",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -863,7 +863,7 @@
       "reviewGates": "B04,B13,B18",
       "sourceBoundary": "26 Personel 16x12 Kabul",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -882,7 +882,7 @@
       "reviewGates": "B04,B13,B18",
       "sourceBoundary": "26 Personel 16x12 Kabul",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -901,7 +901,7 @@
       "reviewGates": "B04,B13,B18",
       "sourceBoundary": "26 Personel 16x12 Kabul",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -920,7 +920,7 @@
       "reviewGates": "B04,B13,B18",
       "sourceBoundary": "26 Personel 16x12 Kabul",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -939,7 +939,7 @@
       "reviewGates": "B04,B13,B18",
       "sourceBoundary": "26 Personel 16x12 Kabul",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -958,7 +958,7 @@
       "reviewGates": "B04,B13,B18",
       "sourceBoundary": "26 Personel 16x12 Kabul",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -977,7 +977,7 @@
       "reviewGates": "B04,B13,B18",
       "sourceBoundary": "26 Personel 16x12 Kabul",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -996,7 +996,7 @@
       "reviewGates": "18/18 B kapısı; Auth/Storage/RLS, DSAR, retention, restore, AAL2",
       "sourceBoundary": "27 Tum Ek Paketler 113",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -1015,7 +1015,7 @@
       "reviewGates": "J01–J16 gerçek kurum yetkisi; tüm R kabul kanıtı, yayın/release GO, DR ve gözlemleme",
       "sourceBoundary": "27 Tum Ek Paketler 113",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -1034,7 +1034,7 @@
       "reviewGates": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "sourceBoundary": "27 Tum Ek Paketler 113",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -1053,7 +1053,7 @@
       "reviewGates": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
       "sourceBoundary": "27 Tum Ek Paketler 113",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -1072,7 +1072,7 @@
       "reviewGates": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
       "sourceBoundary": "27 Tum Ek Paketler 113",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -1091,7 +1091,7 @@
       "reviewGates": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
       "sourceBoundary": "27 Tum Ek Paketler 113",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -1110,7 +1110,7 @@
       "reviewGates": "B05/B07/B15; gerçek kimlik, iş/meslek yetkisi ve sözleşmeler",
       "sourceBoundary": "27 Tum Ek Paketler 113",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -1129,7 +1129,7 @@
       "reviewGates": "J01–J16 gerçek kurum yetkisi; tüm R kabul kanıtı, yayın/release GO, DR ve gözlemleme",
       "sourceBoundary": "27 Tum Ek Paketler 113",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -1148,7 +1148,7 @@
       "reviewGates": "B09,B14,B16",
       "sourceBoundary": "28 Kamu Icerigi 74",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -1167,7 +1167,7 @@
       "reviewGates": "B09,B14,B16",
       "sourceBoundary": "28 Kamu Icerigi 74",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -1186,7 +1186,7 @@
       "reviewGates": "B09,B14,B16",
       "sourceBoundary": "28 Kamu Icerigi 74",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -1205,7 +1205,7 @@
       "reviewGates": "B09,B14,B16",
       "sourceBoundary": "28 Kamu Icerigi 74",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -1224,7 +1224,7 @@
       "reviewGates": "B09,B14,B16",
       "sourceBoundary": "28 Kamu Icerigi 74",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     },
     {
@@ -1243,8 +1243,10 @@
       "reviewGates": "B09,B14,B16",
       "sourceBoundary": "28 Kamu Icerigi 74",
       "decision": "PROPOSAL_REQUIRES_USER_APPROVAL",
-      "l4Implementation": "LOCKED",
+      "l4Implementation": "AUTHORIZED_NOT_IMPLEMENTED",
       "independentAcceptance": 0
     }
-  ]
+  ],
+  "nextLevelL5": "LOCKED_UNTIL_EXPLICIT_L4_APPROVAL",
+  "userApprovalEvidence": "2026-10-30 user explicitly approved L3 973 atomic/63 module/154 workflow contracts and authorized L4 only; 18 open L3 decisions must remain open"
 }
