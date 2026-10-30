@@ -80,6 +80,11 @@
           "id": "B02",
           "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41035448807",
           "scope": "Profile/CMS policy spoof, restrictive publication holds, ACL owner synthetic test only"
+        },
+        {
+          "id": "B03",
+          "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41037114311",
+          "scope": "Separate staging project URL/production reference boundary synthetic configuration unit tests only; no live staging was provisioned"
         }
       ]
     },
