@@ -1,25 +1,24 @@
-# AVOfis — Seviye geçişinde zorunlu ön onay ve kilitsiz ilerleme
-**Son düzeltme:** 31 Ekim 2026 — kullanıcının “Yine de geçiş öncesi onay istenmeliydi” talimatı.
-**Önceki izinsiz geçiş beyanı:** geri çekildi.
-**Mevcut operasyonel seviye: 4. Seviye 5: ONAY BEKLİYOR.**
+# AVOfis — Seviye 5 açık kullanıcı onayıyla başlatıldı
 
-## Kuralların birlikte uygulanması
-1. **Her seviye geçişinden önce kullanıcıya açıkça sorulacak ve olumlu onay alınacak.** Kullanıcının “devam et” talimatı veya kilit kaldırma ifadesi, tek başına belirli seviye geçişinin onayı sayılmaz. Kullanıcı açıkça “Seviye 5'e geç” derse, bu o geçiş için açık onay kabul edilir.
-2. **%80 eşiği bir kilit değildir.** Ölçülebilen ilerleme yüzdesi raporlanır; yüzde bilinmiyor veya %80'in altındaysa da geçiş **teklif edilebilir**. Ancak kullanıcı kabul etmeden geçiş **uygulanmaz**.
-3. Aynı iş için **bir seviyede en fazla iki gerçek icra denemesi** yapılır. Yeni tur açılması sayacı sıfırlamaz. Kanıtlı blokaj varsa sıfır veya bir denemeden sonra ilgili işin sonraki seviyeye **devri teklif edilebilir**.
-4. Devredilecek açık işler silinmez, başarılmış sayılmaz; deneme ve kanıt geçmişi korunur. Ön onay alınınca sonraki seviyede tekrar gündeme alınır. Her sonraki seviye geçişinde yeniden **ön onay** gerekir.
-5. Kodu hazırlamak, taslak dalı veya taslak PR açmak; onay alındığı, canlıya alındığı veya özgün 973 işin tamamlandığı anlamına gelmez. Üretime dağıtım, DB migration, PR birleştirme gibi yan etkiler ayrıca değerlendirilir.
-6. Hollanda/AB (Business.gov.nl) kapsam kontrolleri ilgili olduğu ölçüde tüm aşamalarda sürer; hukuki uyum varsayılmaz.
-7. 63 alt program, 63 modül, 973 iş, 973 teknik sözleşme, 154 akış ve 18 açık karar; özgün tarihsel Seviye 4 iş listesi ve tamamlama yüzdesinin bilinmediği gerçeği korunur.
+**Güncel onay (31 Ekim 2026):**
+> AVOfis projesinde Seviye 4'ten Seviye 5'e geçişi açıkça onaylıyorum. Açık ve başarısız işleri koruyarak Seviye 5 çalışmalarını başlat. Her sonraki seviye geçişinden önce yeniden onayımı iste.
 
-## Geri alma/kanonik kayıt
-- Önceki metindeki “Seviye 5 operasyonel çalışmaya açıktır” ifadesi **yanlıştı ve yürürlükte değildir**.
-- Kullanıcının talimatı netleştirdiği tarihte Seviye 5'e **ön onay verilmemiştir**; geçiş yapılmış sayılmaz.
-- Yedi RLS bulgusu **Seviye 4'te açık** tutulur; Seviye 5'e devri yalnızca adaydır. Yeni GDPR ve DSA incelemeleri de geçişe hazırlık/taslak kabul edilir.
-- Taslak Seviye 5 dalı ve PR, yapılan çalışmaları kaybetmemek için tutulabilir; **onay alınana kadar uygulanmış Seviye 5 teslimi değildir**.
+## Operasyonel durum
+- **Seviye 4 → 5 geçişi: ONAYLANDI ve yürürlüğe alındı.**
+- **Seviye 5: OPERASYONEL AKTİF**; Seviye 4 tarihsel olarak tamamlandı denmez. Seviye 4'ün gerçek yüzdesi bilinmiyor.
+- **Seviye 6: YETKİ VERİLMEDİ.** 5→6 dahil **HER** sonraki seviye geçişinden önce ayrıca yeni ve açık kullanıcı onayı alınması zorunludur. “Devam et” tek başına geçiş izni değildir.
+- %80 hesabı geçişi **kilitlemez**, fakat geçiş kullanıcı onayı gerektirir. İlerleme yüzdesi ancak özgün iş/kabul kanıtlarıyla hesaplanabilir.
+- Her tekil iş için **bir seviyede en fazla iki gerçek icra denemesi** yapılır; tur artışı bu limiti sıfırlamaz. Başarısızlık veya kanıtlanmış blokaj halinde bir sonraki seviyeye geçiş için iş **aday olarak** korunur; gerçek geçiş ancak açık onayla yapılır.
+- Yedi RLS güvenlik bulgusu Seviye 5'e **AÇIK** devredildi; gerçek düzeltme **0/7**, eski seviyede kanıtlı gerçek deneme **0**. Devri, üretim güvenlik sorununun çözüldüğü veya gerçekten iki kez denendiği anlamına gelmez.
+- GDPR ve DSA kapsam incelemeleri Seviye 5'in doğrulanabilir **hazırlık/analiz** işleridir. Hukukî uygunluk, kullanıcı verisi işleme sözleşmesi veya denetim kabulü otomatik sağlanmış sayılmaz.
+- 63 alt program, 63 modül, 973 iş, 973 teknik sözleşme, 154 akış ve 18 çözülmemiş karar korunur. Eski Seviye 4/5 özgün görev kimliklerine eşleştirme yapılmadı.
+- Business.gov.nl'den türetilmiş 24 koşullu Hollanda/AB kontrolü ilgili olan bütün çalışmalarda sürer.
+- Ana dala birleşim, canlı RLS/DDL, üretime dağıtım, iş sözleşmesi, hukukî tescil veya mali işlem için ayrı yetki ve doğrulama kapıları vardır.
 
-## Geçiş teklifi için kullanıcıya sunulacak özet
-**Hedef:** Seviye 4 → Seviye 5.
-**Durum:** Seviye 4 tarihsel tamamlanma oranı belirlenemedi; 7 canlı RLS bulgusu açık; 18 tarihsel karar açık.
-**Teklif:** Açık işleri devrederek Seviye 5'te sürdürmek, hiçbirini tamamlandı saymamak.
-**Soru:** “Seviye 5'e geçişi onaylıyor musunuz?” — olumlu yanıt beklenir.
+## Tarihsel düzeltme izi
+- İlk Seviye 5 “aktif” beyanı kullanıcı ön onayı alınmadan yapılmış ve geri çekilmişti.
+- **Bu kez açık kullanıcı onayı alındı; işlem bu yeni kanıta dayanılarak yürütüldü.** Önceki izinsiz beyan geriye dönük onaya dönüştürülmedi.
+- GitHub PR #7 bir **taslak değişiklik inceleme kaydı** olarak açık kalır; operasyonel Seviye 5'in onayı PR birleştirme onayı değildir.
+
+## Sonraki seviye için zorunlu onay sorusu
+Seviye 5'teki işler ve açık/devreden konular özetlenecek; **“Seviye 6'ya geçişi onaylıyor musunuz?”** sorusuna açık olumlu yanıt gelmeden Seviye 6 açılmayacak.
