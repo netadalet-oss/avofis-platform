@@ -518,6 +518,350 @@
       "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41087341496"
     },
     {
+      "id": "R-377",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "kind": "LOCAL_CROSS_FORM_CONSERVATIVE_REVIEW",
+      "codePaths": [
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/sector-intake-preview.test.mjs",
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "All 31 locally prepared forms have optional source-specific fields and an unknown response for every field, avoiding fabricated dates and false legal certainty; full authenticated intake remains unimplemented.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
+      "id": "R-378",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "kind": "LOCAL_CROSS_FORM_CONSERVATIVE_REVIEW",
+      "codePaths": [
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/sector-intake-preview.test.mjs",
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "High-risk local previews yield priority human-review marker rather than automatic legal outcome; no legal clock, filing, payment or customer acceptance. Only 31 form-preparation scopes tested.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
+      "id": "R-379",
+      "kind": "LOCAL_SOURCE_SPECIFIC_INTERNATIONAL_PREPARATION",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "This is a TR-only, anonymous, no-submit local preparation excerpt for migration type, IND reference presence only (number not collected), reported decision date. It does not create verified legal intake, real IND references, child identity, authenticated storage, translations or official filings.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
+      "id": "R-380",
+      "kind": "LOCAL_SOURCE_SPECIFIC_INTERNATIONAL_PREPARATION",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "This is a TR-only, anonymous, no-submit local preparation excerpt for self-reported residence permit expiry date without storing permit identity. It does not create verified legal intake, real IND references, child identity, authenticated storage, translations or official filings.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
+      "id": "R-381",
+      "kind": "LOCAL_SOURCE_SPECIFIC_INTERNATIONAL_PREPARATION",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "This is a TR-only, anonymous, no-submit local preparation excerpt for visa refusal authority category, decision date and applicant location country. It does not create verified legal intake, real IND references, child identity, authenticated storage, translations or official filings.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
+      "id": "R-382",
+      "kind": "LOCAL_SOURCE_SPECIFIC_INTERNATIONAL_PREPARATION",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "This is a TR-only, anonymous, no-submit local preparation excerpt for sponsor versus applicant role categories only; no personal identifiers. It does not create verified legal intake, real IND references, child identity, authenticated storage, translations or official filings.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
+      "id": "R-383",
+      "kind": "LOCAL_SOURCE_SPECIFIC_INTERNATIONAL_PREPARATION",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "This is a TR-only, anonymous, no-submit local preparation excerpt for citizenship general information versus decision review selector. It does not create verified legal intake, real IND references, child identity, authenticated storage, translations or official filings.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
+      "id": "R-384",
+      "kind": "LOCAL_SOURCE_SPECIFIC_INTERNATIONAL_PREPARATION",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "This is a TR-only, anonymous, no-submit local preparation excerpt for distinct marriage, current-residence and action-country choices. It does not create verified legal intake, real IND references, child identity, authenticated storage, translations or official filings.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
+      "id": "R-385",
+      "kind": "LOCAL_SOURCE_SPECIFIC_INTERNATIONAL_PREPARATION",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "This is a TR-only, anonymous, no-submit local preparation excerpt for existing case/decision indicator and the two parties’ country categories only. It does not create verified legal intake, real IND references, child identity, authenticated storage, translations or official filings.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
+      "id": "R-386",
+      "kind": "LOCAL_SOURCE_SPECIFIC_INTERNATIONAL_PREPARATION",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "This is a TR-only, anonymous, no-submit local preparation excerpt for child topic category with all detailed child personal data withheld. It does not create verified legal intake, real IND references, child identity, authenticated storage, translations or official filings.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
+      "id": "R-387",
+      "kind": "LOCAL_SOURCE_SPECIFIC_INTERNATIONAL_PREPARATION",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "This is a TR-only, anonymous, no-submit local preparation excerpt for minimal reported death date, related countries and document category. It does not create verified legal intake, real IND references, child identity, authenticated storage, translations or official filings.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
+      "id": "R-388",
+      "kind": "LOCAL_SOURCE_SPECIFIC_INTERNATIONAL_PREPARATION",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "This is a TR-only, anonymous, no-submit local preparation excerpt for institution category (name withheld), decision category, dispatch and awareness dates. It does not create verified legal intake, real IND references, child identity, authenticated storage, translations or official filings.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
+      "id": "R-389",
+      "kind": "LOCAL_SOURCE_SPECIFIC_INTERNATIONAL_PREPARATION",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "This is a TR-only, anonymous, no-submit local preparation excerpt for minimal benefit-topic category without benefit/health/income particulars. It does not create verified legal intake, real IND references, child identity, authenticated storage, translations or official filings.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
+      "id": "R-390",
+      "kind": "LOCAL_SOURCE_SPECIFIC_INTERNATIONAL_PREPARATION",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "This is a TR-only, anonymous, no-submit local preparation excerpt for document issue country separated from country of intended use. It does not create verified legal intake, real IND references, child identity, authenticated storage, translations or official filings.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
+      "id": "R-391",
+      "kind": "LOCAL_SOURCE_SPECIFIC_INTERNATIONAL_PREPARATION",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "This is a TR-only, anonymous, no-submit local preparation excerpt for judgment type and finality-information availability without official recognition. It does not create verified legal intake, real IND references, child identity, authenticated storage, translations or official filings.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
+      "id": "R-392",
+      "kind": "LOCAL_SOURCE_SPECIFIC_INTERNATIONAL_PREPARATION",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "This is a TR-only, anonymous, no-submit local preparation excerpt for document type, source language, receiving authority category. It does not create verified legal intake, real IND references, child identity, authenticated storage, translations or official filings.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
+      "id": "R-393",
+      "kind": "LOCAL_SOURCE_SPECIFIC_INTERNATIONAL_PREPARATION",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "This is a TR-only, anonymous, no-submit local preparation excerpt for two company countries, contract-language category and dispute category. It does not create verified legal intake, real IND references, child identity, authenticated storage, translations or official filings.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
+      "id": "R-394",
+      "kind": "LOCAL_SOURCE_SPECIFIC_INTERNATIONAL_PREPARATION",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "This is a TR-only, anonymous, no-submit local preparation excerpt for parallel family proceedings presence and separate country categories. It does not create verified legal intake, real IND references, child identity, authenticated storage, translations or official filings.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
+      "id": "R-395",
+      "kind": "LOCAL_SOURCE_SPECIFIC_INTERNATIONAL_PREPARATION",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/international-form-preview.ts",
+        "portal/src/lib/sector-intake-preview.ts",
+        "portal/src/app/form-hazirlik/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/international-form-preview.test.mjs"
+      ],
+      "claim": "This is a TR-only, anonymous, no-submit local preparation excerpt for a maximum 160-character optional local written description and no voice collection. It does not create verified legal intake, real IND references, child identity, authenticated storage, translations or official filings.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41094574025"
+    },
+    {
       "id": "R-396",
       "status": "CI_SYNTHETIC_VERIFIED",
       "kind": "INLINE_RISK_ALERT_AT_RELEVANT_QUESTION",
@@ -535,7 +879,7 @@
       "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41086492838"
     }
   ],
-  "unprovenImplementationCount": 943,
+  "unprovenImplementationCount": 924,
   "openDecisions": [
     "L3-DEC-01",
     "L3-DEC-02",
@@ -572,6 +916,6 @@
     "ops/avofis-work-progress.json"
   ],
   "verifiedTechnicalEvidenceAt": "2026-10-30",
-  "verificationScope": "30 source-ID scoped code slices including 14 local-only employment/housing/consumer preparations R-361..R-374 tested in successful 6/6 CI #41093157446; 0 independently accepted, no real staging E2E, no live intake or private document channel",
-  "scopeClarification": "Every L4 evidence record proves only the specific coded public-triage sub-scope; no full R-ID acceptance, six-language publication, privacy-controller legal signoff, executed engagement or authenticated document channel. R-344 free text and R-346 date are memory-only screen state and not a verified legal assessment, actual intake or transfer. R-361..R-374 previews are not production forms: all answers local and optional with unknown; sensitive allegations and creditor identities deliberately not collected. PII/server-side controls require independent work."
+  "verificationScope": "49 source-ID scoped no-submit technical code slices (31 local topic forms R361–374 and R379–395, plus R377/378 cross-form unknown/priority) with green 6/6 CI 41094574025; 0 independently accepted, 18 open decisions, no real client Auth/Storage E2E",
+  "scopeClarification": "Every L4 evidence record proves only the specific coded public-triage sub-scope; no full R-ID acceptance, six-language publication, privacy-controller legal signoff, executed engagement or authenticated document channel. R-344 free text and R-346 date are memory-only screen state and not a verified legal assessment, actual intake or transfer. R-361..R-374 previews are not production forms: all answers local and optional with unknown; sensitive allegations and creditor identities deliberately not collected. PII/server-side controls require independent work. R-379..395 sensitive form content, IND numbers, child identity, institutional names and actual submissions are intentionally NOT collected or implemented. R-377/378 already partial in prior ledger and must not double-count."
 }
