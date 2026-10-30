@@ -22,7 +22,7 @@
   "implementationEvidence": [
     {
       "id": "R-347",
-      "status": "CODE_CHANGED_PENDING_CI",
+      "status": "CI_SYNTHETIC_VERIFIED",
       "kind": "PUBLIC_TRIAGE_EARLY_WARNING",
       "codePaths": [
         "portal/src/lib/public-triage.ts",
@@ -35,11 +35,11 @@
       "realAuthStorageE2E": false,
       "legalReview": false,
       "independentAcceptance": false,
-      "ciRun": null
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41078423203"
     },
     {
       "id": "R-348",
-      "status": "CODE_CHANGED_PENDING_CI",
+      "status": "CI_SYNTHETIC_VERIFIED",
       "kind": "PUBLIC_TRIAGE_HARM_ESCALATION",
       "codePaths": [
         "portal/src/lib/public-triage.ts",
@@ -52,7 +52,7 @@
       "realAuthStorageE2E": false,
       "legalReview": false,
       "independentAcceptance": false,
-      "ciRun": null
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41078423203"
     }
   ],
   "unprovenImplementationCount": 971,
@@ -90,5 +90,7 @@
     "ops/avofis-l3-module-contracts.json",
     "ops/l3/avofis-l3-atomic-L0-01.json",
     "ops/avofis-work-progress.json"
-  ]
+  ],
+  "verifiedTechnicalEvidenceAt": "2026-10-30",
+  "verificationScope": "Only synthetic CI/TypeScript/public-triage tests for R-347/R-348; no staging E2E, human legal review or independent acceptance"
 }
