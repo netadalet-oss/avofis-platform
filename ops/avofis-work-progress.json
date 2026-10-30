@@ -23,11 +23,16 @@
         "R-154",
         "R-167",
         "R-246",
+        "R-343",
         "R-345",
         "R-347",
         "R-348",
         "R-349",
         "R-350",
+        "R-352",
+        "R-353",
+        "R-358",
+        "R-359",
         "R-375",
         "R-377",
         "R-378",
@@ -110,5 +115,5 @@
   "liveSecurityAdvisory": "7 public tables RLS OFF and 1 Auth leaked-password WARN (read-only security advisor 2026-10-30)",
   "e2eStagingVerified": false,
   "liveDatabaseChangedByThisLedger": false,
-  "l4TechnicalEvidence": "R-345/R-349/R-350 public-triage scoped synthetic CI https://github.com/netadalet-oss/avofis-platform/actions/runs/41080322793 ; plus R-347/R-348 prior CI; only 46/594 R have partial evidence, 0 independent acceptance, 18 decisions open, no staging E2E"
+  "l4TechnicalEvidence": "R-345/R-349/R-350 public-triage scoped synthetic CI https://github.com/netadalet-oss/avofis-platform/actions/runs/41080322793 ; plus R-347/R-348 prior CI; only 46/594 R have partial evidence, 0 independent acceptance, 18 decisions open, no staging E2E | R-343/R-352/R-353/R-358/R-359 public-triage source/test synthetic CI https://github.com/netadalet-oss/avofis-platform/actions/runs/41082197906; 0 independent acceptance"
 }
