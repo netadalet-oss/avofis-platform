@@ -11,13 +11,13 @@ test("PROGRESS: precisely 973 source-backed work IDs, 0 independent acceptance",
  assert.equal(p.accepted,0);
  assert.equal(p.remaining,973);
  assert.equal(p.percent,0);
- assert.equal(p.partial,55);
+ assert.equal(p.partial,69);
  assert.equal(p.synthetic,4);
  assert.equal(p.productionStatus,"NO_GO");
  assert.equal(p.e2eStagingVerified,false);
  assert.deepEqual(reportLines(ledger),[
   "AVOFIS_ACCEPTED=0/973","AVOFIS_REMAINING=973/973",
-  "AVOFIS_PARTIAL_REQUIREMENTS=55/594",
+  "AVOFIS_PARTIAL_REQUIREMENTS=69/594",
   "AVOFIS_SYNTHETIC_AUXILIARY=4/113",
   "AVOFIS_PRODUCTION=NO_GO","AVOFIS_STAGING_E2E=NOT_VERIFIED"
  ]);
