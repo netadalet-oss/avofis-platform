@@ -2,7 +2,7 @@
 import {useEffect,useState} from "react";
 import Link from "next/link";
 import {supabase} from "@/lib/supabase";
-import type {PreparationDraft,DraftLocale} from "@/lib/document-preparation";
+import {isPreparationReadyForReview,type PreparationDraft,type DraftLocale} from "@/lib/document-preparation";
 type Item={id:string;case_id:string|null;service_slug:string;locale:string;revision:number;status:string;updated_at:string};
 type Matter={id:string;title:string};
 type Revision={revision:number;status:string;recorded_at:string;content:PreparationDraft};
@@ -63,6 +63,15 @@ export function AccountDraftControls({draft,onLoad}:{draft:PreparationDraft;onLo
  }
  async function save(review=false){
   if(busy||current?.status==="review_requested")return;
+  if(review&&!isPreparationReadyForReview(draft)){
+   setNotice(({tr:"İncelemeye göndermek için ülke, işlem amacı, olay açıklaması ve istediğiniz sonucu doldurun.",
+    nl:"Vul eerst het land, het doel, de feiten en het gewenste resultaat in.",
+    de:"Bitte zuerst Land, Zweck, Sachverhalt und gewünschtes Ergebnis ausfüllen.",
+    en:"Enter country, purpose, chronology and requested outcome before review.",
+    ar:"أدخل البلد والغرض والوقائع والنتيجة المطلوبة قبل طلب المراجعة.",
+    ru:"Перед проверкой заполните страну, цель, обстоятельства и желаемый результат."})[draft.locale]);
+   return;
+  }
   if(review&&(!current?.case_id||!window.confirm(reviewText[draft.locale])))return;
   setBusy(true);setNotice("");
   try{
