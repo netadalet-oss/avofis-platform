@@ -11,9 +11,12 @@ cmsRouter.get("/menus/main", (_req, res) => {
   res.json(homepageContent.menu);
 });
 
-cmsRouter.post("/pages/home", (req, res) => {
-  res.json({
-    message: "Homepage content update endpoint scaffold hazır.",
-    received: req.body
+cmsRouter.post("/pages/home", (_req, res) => {
+  // The current scaffold has no persistence or authorization implementation.
+  // Do not report success or echo potentially sensitive request bodies.
+  res.status(501).json({
+    code: "CMS_WRITE_NOT_IMPLEMENTED",
+    message: "CMS sayfa güncelleme işlevi henüz uygulanmadı.",
+    persisted: false,
   });
 });
