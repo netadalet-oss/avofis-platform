@@ -1,14 +1,15 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {countries,topics,personRoles,noticeCategories,timeBands,evaluatePublicTriage}
+import {countries,topics,personRoles,counterpartyTypes,requestTypes,noticeCategories,timeBands,evaluatePublicTriage}
  from "../src/lib/public-triage.ts";
 const valid=()=>({
  country:"nl",topic:"document",personRole:"self",
+ counterpartyType:"person",requestType:"general_information",
  noticeCategory:"no_notice",timeBand:"later",
  immediateHarm:false,professionalNeeded:false
 });
 test("T09: all non-identifying select options are bounded and distinct",()=>{
- for(const values of [countries,topics,personRoles,noticeCategories,timeBands]){
+ for(const values of [countries,topics,personRoles,counterpartyTypes,requestTypes,noticeCategories,timeBands]){
   assert.ok(values.length>=3);
   assert.equal(values.length,new Set(values).size);
  }
@@ -124,4 +125,65 @@ test("L4 R-347/R-348: escalation is monotone and cannot turn risk into an automa
    assert.equal(result[field],false,field);
   }
  }
+});
+
+test("L4 R-345: counterpart classification bounded to 5 categories plus unsure; no names",()=>{
+ assert.deepEqual([...counterpartyTypes],["person","employer","authority","company","other","unknown"]);
+ for(const counterpartyType of counterpartyTypes){
+  const r=evaluatePublicTriage({...valid(),counterpartyType});
+  assert.equal(r.mayCollectPersonalData,false,counterpartyType);
+  assert.equal(r.mayCreateClientRecord,false,counterpartyType);
+  if(["other","unknown"].includes(counterpartyType)){
+    assert.equal(r.disposition,"SPECIALIST_REVIEW",counterpartyType);
+    assert.ok(r.issues.includes("COUNTERPARTY_CATEGORY_REQUIRES_REVIEW"));
+  }
+ }
+});
+test("L4 R-349: four request types exist; personalised types require human contract review",()=>{
+ assert.deepEqual([...requestTypes],[
+  "general_information","brief_consultation","document_review","detailed_case_analysis","unknown"]);
+ assert.equal(evaluatePublicTriage(valid()).disposition,"OFFICIAL_INFORMATION");
+ for(const requestType of ["brief_consultation","document_review","detailed_case_analysis"]){
+  const r=evaluatePublicTriage({...valid(),requestType});
+  assert.equal(r.disposition,"SPECIALIST_REVIEW",requestType);
+  assert.ok(r.issues.includes("PAID_OR_PERSONALISED_SERVICE_REQUIRES_SEPARATE_HUMAN_CONTRACT_REVIEW"));
+  assert.equal(r.mayAcceptPayment,false);
+  assert.equal(r.maySubmitOfficialAction,false);
+  assert.equal(r.mayCreateClientRecord,false);
+ }
+ const uncertain=evaluatePublicTriage({...valid(),requestType:"unknown"});
+ assert.equal(uncertain.disposition,"SPECIALIST_REVIEW");
+ assert.ok(uncertain.issues.includes("REQUEST_TYPE_REQUIRES_REVIEW"));
+});
+test("L4 R-350: reject unexpected PII/body fields and unknown enum values, without echoing them",()=>{
+ const forbidden=["name","fullName","email","phone","caseNumber",
+  "document","noticeDate","opposingPartyName","file","personalId","freeText"];
+ for(const key of forbidden){
+  const injected={...valid(),[key]:"PRIVATE_TEST_SENTINEL_NO_REAL_DATA"};
+  const r=evaluatePublicTriage(injected);
+  assert.deepEqual(r.issues,["INVALID_OR_UNKNOWN_INPUT"],key);
+  assert.equal(r.disposition,"SPECIALIST_REVIEW",key);
+  assert.equal(r.onlyGenericInformation,true,key);
+  assert.equal(r.mayCollectPersonalData,false,key);
+  assert.ok(!JSON.stringify(r).includes("PRIVATE_TEST_SENTINEL_NO_REAL_DATA"),key);
+ }
+ for(const value of ["unlicensed","",null,3]){
+  const r=evaluatePublicTriage({...valid(),requestType:value});
+  assert.equal(r.disposition,"SPECIALIST_REVIEW");
+  assert.deepEqual(r.issues,["INVALID_OR_UNKNOWN_INPUT"]);
+ }
+});
+test("L4 R-345/R-349/R-350: visible UI only offers category selections and disclaims contract",()=>{
+ const {readFileSync}=await import("node:fs");
+ const {fileURLToPath}=await import("node:url");
+ const ui=readFileSync(fileURLToPath(new URL("../src/app/triyaj/page.tsx",import.meta.url)),"utf8");
+ assert.match(ui,/select\("counterpartyType",t\.counterparty,counterpartyTypes,counterpartyOptions\)/);
+ assert.match(ui,/select\("requestType",t\.request,requestTypes,requestTypeOptions\)/);
+ assert.match(ui,/Genel bilgi/);
+ assert.match(ui,/Kısa görüşme/);
+ assert.match(ui,/Belge inceleme/);
+ assert.match(ui,/Ayrıntılı dosya analizi/);
+ assert.match(ui,/isim yazmayın/);
+ assert.match(ui,/hizmet sözleşmesi veya dosya açılışı değildir/);
+ assert.doesNotMatch(ui,/<input[^>]*name=["'](email|full_name|phone)["']/);
 });
