@@ -9,7 +9,7 @@ import {countries,topics,personRoles,noticeCategories,timeBands,
 const wording={
  tr:{eyebrow:"T09 · GÜVENLİ ÖN YÖNLENDİRME",title:"Hangi bilgi yolu uygun?",
  intro:"Bu ekran yalnızca genel bilgi ve gerektiğinde yetkili uzmana yönlendirme gösterir. Ad, e-posta, telefon, kimlik, dosya numarası, özel tarih veya belge istemez; seçimler cihazınızda kaydedilmez.",
- country:"İlgili hukuk ülkesi",topic:"Konu",role:"Kim adına bilgi aranıyor?",notice:"Resmî karar/tebliğ var mı?",time:"Kendi bildirdiğiniz olası süre yakınlığı (hesaplanmaz)",harm:"Özgürlük, sınır dışı, barınma veya başka geri döndürülemez risk bildirimi",professional:"Bağımsız yetkili uzmana ihtiyaç olabileceğini düşünüyorum",result:"Güvenli bilgi yönü",
+ country:"İlgili hukuk ülkesi",topic:"Konu",role:"Kim adına bilgi aranıyor?",notice:"Resmî karar/tebliğ var mı?",time:"Kendi bildirdiğiniz olası süre yakınlığı (hesaplanmaz)",harm:"Özgürlük, sınır dışı, barınma veya başka geri döndürülemez risk bildirimi",early:"Erken uyarı — süre ve hak kaybı riski",earlyNote:"Yakın süreyi yalnız siz tahmin edebilirsiniz. Bu ekran hukuki süre hesaplamaz, başvuru yapmaz veya bir süreyi durdurmaz.",professional:"Bağımsız yetkili uzmana ihtiyaç olabileceğini düşünüyorum",result:"Güvenli bilgi yönü",
  urgent:"Acil insan/uzman değerlendirmesi gerekli olabilir. AVOfis üzerinden yanıt beklemeyin; ilgili yetkili kurum, acil yardım veya ehil profesyonele kendi güvenilir kanallarından başvurun.",
  specialist:"İşlem, süre, temsil yetkisi ve ilgili ülke insan tarafından doğrulanmalıdır. Bu siteden dosya açılamaz; gerekirse bağımsız yetkili uzmana doğrudan başvurun.",
  official:"Genel resmî kaynak bilgisi gösterilebilir. İşleme özgü şartları yetkili makamdan teyit edin.",
@@ -17,7 +17,7 @@ const wording={
  source:"Resmî genel başlangıç kaynağı",closed:"Başvuru, dosya ve ödeme kanalları kapalıdır. Bu yönlendirme hiçbir süreyi durdurmaz ve hukukî tavsiye/temsil oluşturmaz.",back:"17 hizmet alanı"},
  nl:{eyebrow:"T09 · VEILIGE ORIËNTATIE",title:"Welke informatieroute past?",
  intro:"Alleen algemene informatie en zo nodig een verwijzing naar een bevoegde deskundige. Geen namen, contactgegevens, dossiernummers, documenten of exacte datums. Keuzes worden niet opgeslagen.",
- country:"Land van de procedure",topic:"Onderwerp",role:"Voor wie zoekt u informatie?",notice:"Is er een besluit of betekening?",time:"Zelf ingeschatte spoed (geen termijnberekening)",harm:"Mogelijk onomkeerbaar nadeel, bewaring of uitzetting",professional:"Mogelijk onafhankelijke bevoegde deskundige nodig",result:"Veilige oriëntatie",
+ country:"Land van de procedure",topic:"Onderwerp",role:"Voor wie zoekt u informatie?",notice:"Is er een besluit of betekening?",time:"Zelf ingeschatte spoed (geen termijnberekening)",harm:"Mogelijk onomkeerbaar nadeel, bewaring of uitzetting",early:"Vroege waarschuwing — termijn en onomkeerbaar nadeel",earlyNote:"Geef uitsluitend uw eigen inschatting aan. Dit scherm berekent geen juridische termijnen, dient niets in en stuit geen termijnen.",professional:"Mogelijk onafhankelijke bevoegde deskundige nodig",result:"Veilige oriëntatie",
  urgent:"Mogelijk dringend menselijk deskundig advies nodig. Wacht niet op AVOfis; neem zelf contact op met de bevoegde instantie of een bevoegde deskundige.",
  specialist:"Procedure, termijn, bevoegdheden en rechtsgebied vereisen menselijke controle. Hier kunt u geen dossier starten.",
  official:"Alleen algemene officiële informatie. Verifieer de actuele procedure rechtstreeks.",
@@ -25,7 +25,7 @@ const wording={
  source:"Algemene officiële startbron",closed:"Aanvragen, dossiers en betalingen zijn gesloten. Dit stopt geen wettelijke termijn en is geen individueel advies.",back:"17 dienstgebieden"},
  en:{eyebrow:"T09 · SAFE ORIENTATION",title:"Which information route fits?",
  intro:"This page gives general orientation and possible referral to a qualified professional. It collects no names, contact details, exact dates, case numbers or documents, and does not save your choices.",
- country:"Relevant country",topic:"Topic",role:"Whose matter?",notice:"Has a decision/notice been received?",time:"Your own urgency estimate (not a deadline calculation)",harm:"Possible irreparable harm, detention or removal",professional:"An independently authorised specialist may be needed",result:"Safe information outcome",
+ country:"Relevant country",topic:"Topic",role:"Whose matter?",notice:"Has a decision/notice been received?",time:"Your own urgency estimate (not a deadline calculation)",harm:"Possible irreparable harm, detention or removal",early:"Early warning — time limits and serious harm",earlyNote:"Select only your own estimate of urgency. This screen does not calculate deadlines, submit a case or stop a legal time limit.",professional:"An independently authorised specialist may be needed",result:"Safe information outcome",
  urgent:"You may need urgent human expert help. Do not wait for an AVOfis response; use an official channel or contact an authorised professional directly.",
  specialist:"Procedure, time limits, jurisdiction and representation require human verification. No client matter can be opened here.",
  official:"Only general official starting information is available. Confirm the exact requirements with the competent authority.",
@@ -61,13 +61,17 @@ export default function SafeTriagePage(){
     {select("topic",t.topic,topics,topicOptions)}
     {select("personRole",t.role,personRoles,roleOptions)}
     {select("noticeCategory",t.notice,noticeCategories,noticeOptions)}
-    {select("timeBand",t.time,timeBands,timeOptions)}
    </div>
-   <div className="mt-5 grid gap-3">
-    <label className="flex items-start gap-3 text-sm leading-6">
+   <fieldset className="mt-5 rounded-xl border border-[#dfbf59]/50 p-4">
+    <legend className="px-2 text-sm font-semibold text-[#dfbf59]">{t.early}</legend>
+    <p className="mb-4 text-xs leading-6 text-[#b9c5df]">{t.earlyNote}</p>
+    {select("timeBand",t.time,timeBands,timeOptions)}
+    <label className="mt-4 flex items-start gap-3 text-sm leading-6">
      <input type="checkbox" className="mt-1" checked={input.immediateHarm} onChange={e=>setInput(p=>({...p,immediateHarm:e.target.checked}))}/>
      <span>{t.harm}</span>
     </label>
+   </fieldset>
+   <div className="mt-5 grid gap-3">
     <label className="flex items-start gap-3 text-sm leading-6">
      <input type="checkbox" className="mt-1" checked={input.professionalNeeded} onChange={e=>setInput(p=>({...p,professionalNeeded:e.target.checked}))}/>
      <span>{t.professional}</span>
