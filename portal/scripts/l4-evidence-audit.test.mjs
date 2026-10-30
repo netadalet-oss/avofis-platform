@@ -2,9 +2,9 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {inspectL4Evidence,readL4Sources} from "./l4-evidence-audit.mjs";
 const fresh=()=>structuredClone(readL4Sources());
-test("L4: 973 source items, 2 changed code scopes, 971 unproven, 18 decisions OPEN; L5 hard locked",()=>{
+test("L4: 973 source items, 5 synthetic code scopes, 968 unproven, 18 decisions OPEN; L5 hard locked",()=>{
  const r=inspectL4Evidence(fresh());
- assert.deepEqual(r,{tracked:973,codeChanged:2,unproven:971,
+ assert.deepEqual(r,{tracked:973,codeChanged:5,unproven:968,
   accepted:0,openDecisions:18,l5Locked:true,ciSynthetic:
    readL4Sources().plan.implementationEvidence.filter(x=>x.status==="CI_SYNTHETIC_VERIFIED").length});
 });
