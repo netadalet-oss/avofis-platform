@@ -22,7 +22,7 @@
   "implementationEvidence": [
     {
       "id": "R-343",
-      "status": "CODE_CHANGED_PENDING_CI",
+      "status": "CI_SYNTHETIC_VERIFIED",
       "kind": "LOCAL_ONLY_LANGUAGE_RESIDENCE_VS_MATTER_COUNTRY",
       "codePaths": [
         "portal/src/lib/public-triage.ts",
@@ -35,7 +35,7 @@
       "realAuthStorageE2E": false,
       "legalReview": false,
       "independentAcceptance": false,
-      "ciRun": null
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41082197906"
     },
     {
       "id": "R-345",
@@ -124,7 +124,7 @@
     },
     {
       "id": "R-352",
-      "status": "CODE_CHANGED_PENDING_CI",
+      "status": "CI_SYNTHETIC_VERIFIED",
       "kind": "UPFRONT_PRIVACY_NAVIGATION",
       "codePaths": [
         "portal/src/lib/public-triage.ts",
@@ -137,11 +137,11 @@
       "realAuthStorageE2E": false,
       "legalReview": false,
       "independentAcceptance": false,
-      "ciRun": null
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41082197906"
     },
     {
       "id": "R-353",
-      "status": "CODE_CHANGED_PENDING_CI",
+      "status": "CI_SYNTHETIC_VERIFIED",
       "kind": "NO_AUTOMATIC_CONTRACT_REPRESENTATION",
       "codePaths": [
         "portal/src/lib/public-triage.ts",
@@ -154,11 +154,11 @@
       "realAuthStorageE2E": false,
       "legalReview": false,
       "independentAcceptance": false,
-      "ciRun": null
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41082197906"
     },
     {
       "id": "R-358",
-      "status": "CODE_CHANGED_PENDING_CI",
+      "status": "CI_SYNTHETIC_VERIFIED",
       "kind": "UNSURE_HUMAN_REVIEW_ROUTE",
       "codePaths": [
         "portal/src/lib/public-triage.ts",
@@ -171,11 +171,11 @@
       "realAuthStorageE2E": false,
       "legalReview": false,
       "independentAcceptance": false,
-      "ciRun": null
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41082197906"
     },
     {
       "id": "R-359",
-      "status": "CODE_CHANGED_PENDING_CI",
+      "status": "CI_SYNTHETIC_VERIFIED",
       "kind": "ANONYMOUS_TRIAGE_DOCUMENT_UPLOAD_BOUNDARY",
       "codePaths": [
         "portal/src/lib/public-triage.ts",
@@ -188,7 +188,7 @@
       "realAuthStorageE2E": false,
       "legalReview": false,
       "independentAcceptance": false,
-      "ciRun": null
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41082197906"
     }
   ],
   "unprovenImplementationCount": 963,
@@ -228,6 +228,6 @@
     "ops/avofis-work-progress.json"
   ],
   "verifiedTechnicalEvidenceAt": "2026-10-30",
-  "verificationScope": "Only synthetic CI/TypeScript/public-triage tests for R-345, R-347, R-348, R-349, R-350; no staging E2E, human legal review or independent acceptance",
+  "verificationScope": "10 source-ID scoped public-triage technical changes with passing synthetic CI; none independently accepted or real staging E2E; latest R-343/352/353/358/359 verified in CI 41082197906",
   "scopeClarification": "Every L4 evidence record proves only the specific coded public-triage sub-scope; no full R-ID acceptance, six-language publication, privacy-controller legal signoff, executed engagement or authenticated document channel."
 }
