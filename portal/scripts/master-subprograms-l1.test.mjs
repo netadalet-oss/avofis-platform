@@ -24,7 +24,7 @@ test("L1: full 63 programs and 973 immutable work-ID mappings",()=>{
  assert.equal(sums(l1.programs,"count"),973);
  assert.equal(sums(l1.programs,"independentAccepted"),0);
  assert.equal(l1.trackingTotals.accepted,0);
- assert.equal(l1.trackingTotals.partialRequirements,51);
+ assert.equal(l1.trackingTotals.partialRequirements,54);
  assert.equal(l1.trackingTotals.syntheticAuxiliary,4);
  assert.equal(prog.groups.reduce((n,x)=>n+x.accepted.length,0),0);
 });
