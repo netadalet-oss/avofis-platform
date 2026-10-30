@@ -240,9 +240,26 @@
       "legalReview": false,
       "independentAcceptance": false,
       "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41082197906"
+    },
+    {
+      "id": "R-396",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "kind": "INLINE_RISK_ALERT_AT_RELEVANT_QUESTION",
+      "codePaths": [
+        "portal/src/lib/public-triage.ts",
+        "portal/src/app/triyaj/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/public-triage.test.mjs"
+      ],
+      "claim": "On self-reported 48-hour, one-week, formal notice, detention/removal or irreversible-harm signals, the anonymous triage places a live role=alert warning within the relevant question fieldset, never calculating deadlines or submitting filings.",
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41086492838"
     }
   ],
-  "unprovenImplementationCount": 960,
+  "unprovenImplementationCount": 959,
   "openDecisions": [
     "L3-DEC-01",
     "L3-DEC-02",
@@ -279,6 +296,6 @@
     "ops/avofis-work-progress.json"
   ],
   "verifiedTechnicalEvidenceAt": "2026-10-30",
-  "verificationScope": "13 source-ID scoped anonymous triage technical changes with passing synthetic CI; R-344/346/355 passed in GitHub Actions #41085787119; not professional legal review, staging Auth/Storage E2E or independent acceptance",
+  "verificationScope": "14 source-ID scoped anonymous triage technical changes with passing synthetic CI (R-396 tested in #41086492838); no real Auth/Storage E2E, legal review or independent acceptance",
   "scopeClarification": "Every L4 evidence record proves only the specific coded public-triage sub-scope; no full R-ID acceptance, six-language publication, privacy-controller legal signoff, executed engagement or authenticated document channel. R-344 free text and R-346 date are memory-only screen state and not a verified legal assessment, actual intake or transfer."
 }
