@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {countries,preferredLanguages,topics,personRoles,counterpartyTypes,requestTypes,evidenceKinds,noticeCategories,timeBands,evaluatePublicTriage}
+import {countries,preferredLanguages,contactPreferences,topics,personRoles,counterpartyTypes,requestTypes,evidenceKinds,noticeCategories,timeBands,evaluatePublicTriage}
  from "../src/lib/public-triage.ts";
 const valid=()=>({
  country:"nl",residenceCountry:"nl",preferredLanguage:"tr",topic:"document",personRole:"self",
@@ -9,7 +9,7 @@ const valid=()=>({
  immediateHarm:false,professionalNeeded:false
 });
 test("T09: all non-identifying select options are bounded and distinct",()=>{
- for(const values of [countries,preferredLanguages,topics,personRoles,counterpartyTypes,requestTypes,evidenceKinds,noticeCategories,timeBands]){
+ for(const values of [countries,preferredLanguages,contactPreferences,topics,personRoles,counterpartyTypes,requestTypes,evidenceKinds,noticeCategories,timeBands]){
   assert.ok(values.length>=3);
   assert.equal(values.length,new Set(values).size);
  }
@@ -321,4 +321,33 @@ test("L4 R-375/R-376: evidence and independent local accuracy confirmation never
  assert.match(ui,/hukukî beyan veya gönderim değildir/);
  assert.doesNotMatch(ui,/<input[^>]*type="file"/);
  assert.doesNotMatch(ui,/<button[^>]*type="submit"/);
+});
+
+test("L4 R-351: optional phone, email and written communication preferences cannot collect identity",()=>{
+ assert.deepEqual([...contactPreferences],["none","phone","email","written","unknown"]);
+ const without=evaluatePublicTriage(valid());
+ assert.equal(without.mayCollectPersonalData,false);
+ for(const contactPreference of contactPreferences){
+  const res=evaluatePublicTriage({...valid(),contactPreference});
+  assert.equal(res.mayCollectPersonalData,false,contactPreference);
+  assert.equal(res.mayCreateClientRecord,false,contactPreference);
+  assert.equal(res.maySubmitOfficialAction,false,contactPreference);
+  assert.equal(res.mayShareWithExpert,false,contactPreference);
+  assert.equal(res.disposition,"OFFICIAL_INFORMATION",contactPreference);
+ }
+ const unexpected=evaluatePublicTriage({...valid(),contactPreference:"actual.name@example.org"});
+ assert.deepEqual(unexpected.issues,["INVALID_OR_UNKNOWN_INPUT"]);
+ assert.equal(unexpected.disposition,"SPECIALIST_REVIEW");
+});
+test("L4 R-351: contact mode form is local and contains no contact detail text fields",async()=>{
+ const {readFileSync}=await import("node:fs");
+ const {fileURLToPath}=await import("node:url");
+ const page=readFileSync(fileURLToPath(new URL("../src/app/triyaj/page.tsx",import.meta.url)),"utf8");
+ assert.match(page,/select\("contactPreference",t\.contact,contactPreferences,contactOptions\)/);
+ assert.match(page,/t\.contactNote/);
+ assert.match(page,/contactOptions\[review\.contactPreference/);
+ assert.match(page,/Telefon \/ Phone/);
+ assert.match(page,/Yazılı \/ Written/);
+ assert.doesNotMatch(page,/<input[^>]+(type="email"|type="tel")/);
+ assert.doesNotMatch(page,/<button[^>]*type="submit"/);
 });
