@@ -8,8 +8,8 @@
     "basis": "User explicitly approved Seviye 0 in this conversation on 2026-10-30",
     "l0Snapshot": "ops/avofis-master-skeleton-l0.json"
   },
-  "approvalStatus": "AWAITING_USER_APPROVAL",
-  "depthL2": "LOCKED_UNTIL_L1_APPROVAL",
+  "approvalStatus": "APPROVED_BY_USER",
+  "depthL2": "OPEN_TO_STRUCTURE_AWAITING_USER_APPROVAL",
   "sources": [
     "01 Gereksinim 594",
     "25 Uygulama 594 Tekil",
@@ -45,7 +45,7 @@
       "leadRole": "Kurucu + bağımsız hukuk/uyum uzmanı",
       "acceptanceBoundary": "B05/B07/B15; gerçek kimlik, iş/meslek yetkisi ve sözleşmeler",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 0
@@ -65,7 +65,7 @@
       "leadRole": "Ürün + editör + hukukî reviewer",
       "acceptanceBoundary": "B09/B14/B16; altı dilin hukukî ve ana dil onayı, erişilebilirlik",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 0
@@ -85,7 +85,7 @@
       "leadRole": "Ürün + editör + hukukî reviewer",
       "acceptanceBoundary": "B09/B14/B16; altı dilin hukukî ve ana dil onayı, erişilebilirlik",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 18
@@ -105,7 +105,7 @@
       "leadRole": "Ürün + editör + hukukî reviewer",
       "acceptanceBoundary": "B09/B14/B16; altı dilin hukukî ve ana dil onayı, erişilebilirlik",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 0
@@ -125,7 +125,7 @@
       "leadRole": "Ürün + editör + hukukî reviewer",
       "acceptanceBoundary": "B09/B14/B16; altı dilin hukukî ve ana dil onayı, erişilebilirlik",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 0
@@ -145,7 +145,7 @@
       "leadRole": "Kurucu + bağımsız hukuk/uyum uzmanı",
       "acceptanceBoundary": "B05/B07/B15; gerçek kimlik, iş/meslek yetkisi ve sözleşmeler",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 0
@@ -165,7 +165,7 @@
       "leadRole": "Ürün + editör + hukukî reviewer",
       "acceptanceBoundary": "B09/B14/B16; altı dilin hukukî ve ana dil onayı, erişilebilirlik",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 0
@@ -185,7 +185,7 @@
       "leadRole": "Ülke/usul hukukçuları + IND sorumlusu",
       "acceptanceBoundary": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 18
@@ -205,7 +205,7 @@
       "leadRole": "Ülke/usul hukukçuları + IND sorumlusu",
       "acceptanceBoundary": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 18
@@ -225,7 +225,7 @@
       "leadRole": "Ülke/usul hukukçuları + IND sorumlusu",
       "acceptanceBoundary": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 18
@@ -245,7 +245,7 @@
       "leadRole": "Ülke/usul hukukçuları + IND sorumlusu",
       "acceptanceBoundary": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 18
@@ -265,7 +265,7 @@
       "leadRole": "Ülke/usul hukukçuları + IND sorumlusu",
       "acceptanceBoundary": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 18
@@ -285,7 +285,7 @@
       "leadRole": "Ülke/usul hukukçuları + IND sorumlusu",
       "acceptanceBoundary": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 18
@@ -305,7 +305,7 @@
       "leadRole": "Ülke/usul hukukçuları + IND sorumlusu",
       "acceptanceBoundary": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 18
@@ -325,7 +325,7 @@
       "leadRole": "Ülke/usul hukukçuları + IND sorumlusu",
       "acceptanceBoundary": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 0
@@ -345,7 +345,7 @@
       "leadRole": "Ülke/usul hukukçuları + IND sorumlusu",
       "acceptanceBoundary": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 18
@@ -365,7 +365,7 @@
       "leadRole": "Ürün + editör + hukukî reviewer",
       "acceptanceBoundary": "B09/B14/B16; altı dilin hukukî ve ana dil onayı, erişilebilirlik",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 0
@@ -385,7 +385,7 @@
       "leadRole": "Ürün + editör + hukukî reviewer",
       "acceptanceBoundary": "B09/B14/B16; altı dilin hukukî ve ana dil onayı, erişilebilirlik",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 18
@@ -405,7 +405,7 @@
       "leadRole": "Portal/backend + güvenlik + hukuk",
       "acceptanceBoundary": "B01–B04/B17; RLS, Auth/Storage, müşteri onayı, gerçek staging E2E",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 18
@@ -425,7 +425,7 @@
       "leadRole": "Portal/backend + güvenlik + hukuk",
       "acceptanceBoundary": "B01–B04/B17; RLS, Auth/Storage, müşteri onayı, gerçek staging E2E",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 0
@@ -445,7 +445,7 @@
       "leadRole": "Portal/backend + güvenlik + hukuk",
       "acceptanceBoundary": "B01–B04/B17; RLS, Auth/Storage, müşteri onayı, gerçek staging E2E",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 0
@@ -465,7 +465,7 @@
       "leadRole": "Portal/backend + güvenlik + hukuk",
       "acceptanceBoundary": "B01–B04/B17; RLS, Auth/Storage, müşteri onayı, gerçek staging E2E",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 0
@@ -485,7 +485,7 @@
       "leadRole": "Portal/backend + güvenlik + hukuk",
       "acceptanceBoundary": "B01–B04/B17; RLS, Auth/Storage, müşteri onayı, gerçek staging E2E",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 0
@@ -505,7 +505,7 @@
       "leadRole": "Müşteri deneyimi + finans + hukuk",
       "acceptanceBoundary": "B04/B06/B08/B18; gerçek ödeme/PSP ve tüketici metinleri",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 18
@@ -525,7 +525,7 @@
       "leadRole": "Müşteri deneyimi + finans + hukuk",
       "acceptanceBoundary": "B04/B06/B08/B18; gerçek ödeme/PSP ve tüketici metinleri",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 18
@@ -545,7 +545,7 @@
       "leadRole": "Müşteri deneyimi + finans + hukuk",
       "acceptanceBoundary": "B04/B06/B08/B18; gerçek ödeme/PSP ve tüketici metinleri",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 0
@@ -565,7 +565,7 @@
       "leadRole": "Kurucu + bağımsız hukuk/uyum uzmanı",
       "acceptanceBoundary": "B05/B07/B15; gerçek kimlik, iş/meslek yetkisi ve sözleşmeler",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 18
@@ -585,7 +585,7 @@
       "leadRole": "DPO + güvenlik sorumlusu + bağımsız QA",
       "acceptanceBoundary": "18/18 B kapısı; Auth/Storage/RLS, DSAR, retention, restore, AAL2",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 0
@@ -605,7 +605,7 @@
       "leadRole": "DPO + güvenlik sorumlusu + bağımsız QA",
       "acceptanceBoundary": "18/18 B kapısı; Auth/Storage/RLS, DSAR, retention, restore, AAL2",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 0
@@ -625,7 +625,7 @@
       "leadRole": "DPO + güvenlik sorumlusu + bağımsız QA",
       "acceptanceBoundary": "18/18 B kapısı; Auth/Storage/RLS, DSAR, retention, restore, AAL2",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 0
@@ -645,7 +645,7 @@
       "leadRole": "Operasyon + personel güvenliği + finans",
       "acceptanceBoundary": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 18
@@ -665,7 +665,7 @@
       "leadRole": "Ürün + editör + hukukî reviewer",
       "acceptanceBoundary": "B09/B14/B16; altı dilin hukukî ve ana dil onayı, erişilebilirlik",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 0
@@ -685,7 +685,7 @@
       "leadRole": "Platform + QA + yargı entegrasyon sorumlusu",
       "acceptanceBoundary": "J01–J16 gerçek kurum yetkisi; tüm R kabul kanıtı, yayın/release GO, DR ve gözlemleme",
       "source": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false,
       "p1": 0
@@ -715,7 +715,7 @@
       "leadRole": "Operasyon + personel güvenliği + finans",
       "acceptanceBoundary": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "source": "26 Personel 16x12 Kabul",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -744,7 +744,7 @@
       "leadRole": "Operasyon + personel güvenliği + finans",
       "acceptanceBoundary": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "source": "26 Personel 16x12 Kabul",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -773,7 +773,7 @@
       "leadRole": "Operasyon + personel güvenliği + finans",
       "acceptanceBoundary": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "source": "26 Personel 16x12 Kabul",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -802,7 +802,7 @@
       "leadRole": "Operasyon + personel güvenliği + finans",
       "acceptanceBoundary": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "source": "26 Personel 16x12 Kabul",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -831,7 +831,7 @@
       "leadRole": "Operasyon + personel güvenliği + finans",
       "acceptanceBoundary": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "source": "26 Personel 16x12 Kabul",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -860,7 +860,7 @@
       "leadRole": "Operasyon + personel güvenliği + finans",
       "acceptanceBoundary": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "source": "26 Personel 16x12 Kabul",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -889,7 +889,7 @@
       "leadRole": "Operasyon + personel güvenliği + finans",
       "acceptanceBoundary": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "source": "26 Personel 16x12 Kabul",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -918,7 +918,7 @@
       "leadRole": "Operasyon + personel güvenliği + finans",
       "acceptanceBoundary": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "source": "26 Personel 16x12 Kabul",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -947,7 +947,7 @@
       "leadRole": "Operasyon + personel güvenliği + finans",
       "acceptanceBoundary": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "source": "26 Personel 16x12 Kabul",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -976,7 +976,7 @@
       "leadRole": "Operasyon + personel güvenliği + finans",
       "acceptanceBoundary": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "source": "26 Personel 16x12 Kabul",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1005,7 +1005,7 @@
       "leadRole": "Operasyon + personel güvenliği + finans",
       "acceptanceBoundary": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "source": "26 Personel 16x12 Kabul",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1034,7 +1034,7 @@
       "leadRole": "Operasyon + personel güvenliği + finans",
       "acceptanceBoundary": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "source": "26 Personel 16x12 Kabul",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1063,7 +1063,7 @@
       "leadRole": "Operasyon + personel güvenliği + finans",
       "acceptanceBoundary": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "source": "26 Personel 16x12 Kabul",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1092,7 +1092,7 @@
       "leadRole": "Operasyon + personel güvenliği + finans",
       "acceptanceBoundary": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "source": "26 Personel 16x12 Kabul",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1121,7 +1121,7 @@
       "leadRole": "Operasyon + personel güvenliği + finans",
       "acceptanceBoundary": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "source": "26 Personel 16x12 Kabul",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1150,7 +1150,7 @@
       "leadRole": "Operasyon + personel güvenliği + finans",
       "acceptanceBoundary": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "source": "26 Personel 16x12 Kabul",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1165,7 +1165,7 @@
       "leadRole": "DPO + güvenlik sorumlusu + bağımsız QA",
       "acceptanceBoundary": "18/18 B kapısı; Auth/Storage/RLS, DSAR, retention, restore, AAL2",
       "source": "27 Tum Ek Paketler 113",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1180,7 +1180,7 @@
       "leadRole": "Platform + QA + yargı entegrasyon sorumlusu",
       "acceptanceBoundary": "J01–J16 gerçek kurum yetkisi; tüm R kabul kanıtı, yayın/release GO, DR ve gözlemleme",
       "source": "27 Tum Ek Paketler 113",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1195,7 +1195,7 @@
       "leadRole": "Operasyon + personel güvenliği + finans",
       "acceptanceBoundary": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
       "source": "27 Tum Ek Paketler 113",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1210,7 +1210,7 @@
       "leadRole": "Ülke/usul hukukçuları + IND sorumlusu",
       "acceptanceBoundary": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
       "source": "27 Tum Ek Paketler 113",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1225,7 +1225,7 @@
       "leadRole": "Ülke/usul hukukçuları + IND sorumlusu",
       "acceptanceBoundary": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
       "source": "27 Tum Ek Paketler 113",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1240,7 +1240,7 @@
       "leadRole": "Ülke/usul hukukçuları + IND sorumlusu",
       "acceptanceBoundary": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
       "source": "27 Tum Ek Paketler 113",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1255,7 +1255,7 @@
       "leadRole": "Kurucu + bağımsız hukuk/uyum uzmanı",
       "acceptanceBoundary": "B05/B07/B15; gerçek kimlik, iş/meslek yetkisi ve sözleşmeler",
       "source": "27 Tum Ek Paketler 113",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1270,7 +1270,7 @@
       "leadRole": "Platform + QA + yargı entegrasyon sorumlusu",
       "acceptanceBoundary": "J01–J16 gerçek kurum yetkisi; tüm R kabul kanıtı, yayın/release GO, DR ve gözlemleme",
       "source": "27 Tum Ek Paketler 113",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1287,7 +1287,7 @@
       "acceptanceBoundary": "B09/B14/B16; altı dilin hukukî ve ana dil onayı, erişilebilirlik",
       "source": "28 Kamu Icerigi 74",
       "sourceCaveat": null,
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1304,7 +1304,7 @@
       "acceptanceBoundary": "B09/B14/B16; altı dilin hukukî ve ana dil onayı, erişilebilirlik",
       "source": "28 Kamu Icerigi 74",
       "sourceCaveat": null,
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1321,7 +1321,7 @@
       "acceptanceBoundary": "B09/B14/B16; altı dilin hukukî ve ana dil onayı, erişilebilirlik",
       "source": "28 Kamu Icerigi 74",
       "sourceCaveat": null,
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1338,7 +1338,7 @@
       "acceptanceBoundary": "B09/B14/B16; altı dilin hukukî ve ana dil onayı, erişilebilirlik",
       "source": "28 Kamu Icerigi 74",
       "sourceCaveat": null,
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1355,7 +1355,7 @@
       "acceptanceBoundary": "B09/B14/B16; altı dilin hukukî ve ana dil onayı, erişilebilirlik",
       "source": "28 Kamu Icerigi 74",
       "sourceCaveat": null,
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     },
@@ -1372,9 +1372,11 @@
       "acceptanceBoundary": "B09/B14/B16; altı dilin hukukî ve ana dil onayı, erişilebilirlik",
       "source": "28 Kamu Icerigi 74",
       "sourceCaveat": "Do NOT invent original 8 checklist names or slugs; v7 archive source unresolved",
-      "status": "L1_DRAFT_AWAITING_USER_APPROVAL",
+      "status": "L1_APPROVED_BY_USER",
       "independentAccepted": 0,
       "technicalEvidenceIsCompletion": false
     }
-  ]
+  ],
+  "approvalEvidence": "2026-10-30 user message: Seviye 1'in 63 alt programlık iskeletini onaylıyorum. Seviye 2'ye geç ve 973 işin tamamının modül ve iş akışı iskeletini oluştur; Seviye 3'e onayım olmadan geçme.",
+  "depthL3": "LOCKED_UNTIL_EXPLICIT_L2_APPROVAL"
 }
