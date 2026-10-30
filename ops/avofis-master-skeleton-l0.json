@@ -51,12 +51,12 @@
     },
     {
       "level": "L1",
-      "stage": "CURRENT_AWAITING_USER_APPROVAL",
+      "stage": "APPROVED",
       "description": "Her ana kolun alt programları; 33 bölüm ve B/J/P/IND/T içerik kümelerinin iş paketleri"
     },
     {
       "level": "L2",
-      "stage": "REQUIRES_APPROVAL",
+      "stage": "CURRENT_AWAITING_USER_APPROVAL",
       "description": "Her alt programın modülleri, akışları ve bağımlılık haritası"
     },
     {
@@ -77,7 +77,7 @@
   ],
   "approvalRules": {
     "granularity": "A whole depth level is submitted together for user approval; no deeper layer before explicit approval",
-    "required": "L0 explicitly approved by user on 2026-10-30; L1 is now open for structuring, not yet approved; L2 remains locked",
+    "required": "L0 and L1 explicitly approved by user on 2026-10-30; L2 skeleton completed and awaiting user approval; L3 locked",
     "changeControl": "Any addition/removal/scope reassignment requires a noted delta; original 594 unchanged",
     "independence": "No synthetic/CI result alone changes independent accepted / 973",
     "liveActions": "Production SQL, deployment, real money/IND filing and merging to main require separate operation-specific authorization"
@@ -332,5 +332,6 @@
       ]
     }
   ],
-  "approvalEvidence": "2026-10-30 user message: 'Seviye 0 ana iskeletini onaylıyorum. Seviye 1'e geç ve 973 işin tamamının alt program iskeletini oluştur.'"
+  "approvalEvidence": "2026-10-30 user message: 'Seviye 0 ana iskeletini onaylıyorum. Seviye 1'e geç ve 973 işin tamamının alt program iskeletini oluştur.'",
+  "l1ApprovalEvidence": "2026-10-30 user message: Seviye 1'in 63 alt programlık iskeletini onaylıyorum. Seviye 2'ye geç ve 973 işin tamamının modül ve iş akışı iskeletini oluştur; Seviye 3'e onayım olmadan geçme."
 }
