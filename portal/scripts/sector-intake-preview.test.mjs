@@ -91,7 +91,7 @@ test("L4: risk flags require humans, never automatic outcome",()=>{
 test("L4: only visible local UI; no account, payment, uploads or backend sends",()=>{
  const page=readFileSync(fileURLToPath(new URL("../src/app/form-hazirlik/page.tsx",import.meta.url)),"utf8");
  const model=readFileSync(fileURLToPath(new URL("../src/lib/sector-intake-preview.ts",import.meta.url)),"utf8");
- assert.ok(page.includes('sectorPreviews.map'));
+ assert.ok(page.includes('catalogue.map'));
  assert.ok(page.includes('result.fields.map'));
  assert.ok(page.includes('checked={valid&&confirmed===signature}'));
  assert.ok(page.includes('setAnswers({})'));
