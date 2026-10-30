@@ -41,3 +41,13 @@ test("L4: unverified CI cannot be asserted successful",()=>{
  a.plan.implementationEvidence[0].ciRun=null;
  assert.throws(()=>inspectL4Evidence(a),/actions\/runs/);
 });
+
+test("L4: cross-ledger proof consistency refuses code claims missing from original R partial set",()=>{
+ const a=fresh();
+ const claimed=a.plan.implementationEvidence.find(x=>x.id.startsWith("R-")).id;
+ a.ledger.groups[0].partial=a.ledger.groups[0].partial.filter(id=>id!==claimed);
+ assert.throws(()=>inspectL4Evidence(a),/L4 R code evidence absent from partial progress ledger/);
+ const b=fresh();
+ b.ledger.groups[0].partial.push(b.ledger.groups[0].partial[0]);
+ assert.throws(()=>inspectL4Evidence(b),/duplicate partial source IDs/);
+});
