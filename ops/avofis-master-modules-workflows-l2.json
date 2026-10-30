@@ -1,0 +1,4475 @@
+{
+  "schemaVersion": 1,
+  "program": "AVOfis v18",
+  "level": "L2",
+  "date": "2026-10-30",
+  "proposalStatus": "AWAITING_USER_APPROVAL",
+  "approvals": {
+    "L0": "USER_APPROVED_2026-10-30",
+    "L1": "USER_APPROVED_2026-10-30",
+    "L2": "PENDING_USER_APPROVAL",
+    "L3": "LOCKED"
+  },
+  "scope": {
+    "trackedWork": 973,
+    "l1Programs": 63,
+    "domainModules": 63,
+    "programWorkflows": 142,
+    "crossModuleJourneys": 12,
+    "originalR": 594,
+    "staffChecks": 192,
+    "auxiliary": 113,
+    "content": 74,
+    "independentAccepted": 0,
+    "partialR": 41,
+    "syntheticAuxiliary": 4
+  },
+  "principle": "L2 is a proposed module-and-workflow architecture derived from the original instructions, not implemented flows or final L3 UI/API/SQL specifications. L3 requires new explicit user approval.",
+  "modules": [
+    {
+      "id": "L2-M-R01",
+      "parentL1": "L1-R01",
+      "parentL0": "L0-01",
+      "sourceKind": "requirements",
+      "title": "İş modeli, hizmet kapsamı ve meslekî sınırlar",
+      "scopeCount": 18,
+      "ownerRole": "Kurucu + bağımsız hukuk/uyum uzmanı",
+      "entryCondition": "Kuruluşun hizmet ve meslekî kapsamı tanımlanır",
+      "desiredOutput": "Doğrulanmış yetki sınırındaki kurumsal tanım",
+      "upstreamGate": "B05,B07",
+      "downstreamModules": [
+        "L2-M-R06",
+        "L2-M-R27"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R02",
+      "parentL1": "L1-R02",
+      "parentL0": "L0-02",
+      "sourceKind": "requirements",
+      "title": "Hedef kitle ve kullanıcı senaryoları",
+      "scopeCount": 18,
+      "ownerRole": "Ürün + editör + hukukî reviewer",
+      "entryCondition": "Hedef kitle bir hizmet ihtiyacını tanımlar",
+      "desiredOutput": "Yanıltıcı olmayan kitle–hizmet yönlendirmesi",
+      "upstreamGate": "B09,B10",
+      "downstreamModules": [
+        "L2-M-R07",
+        "L2-M-R20"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R03",
+      "parentL1": "L1-R03",
+      "parentL0": "L0-02",
+      "sourceKind": "requirements",
+      "title": "Marka, adlandırma ve görsel kimlik",
+      "scopeCount": 18,
+      "ownerRole": "Ürün + editör + hukukî reviewer",
+      "entryCondition": "Kimlik veya görsel sunum güncellenir",
+      "desiredOutput": "Onaylı ve erişilebilir marka uygulaması",
+      "upstreamGate": "B09,B14",
+      "downstreamModules": [
+        "L2-M-R04",
+        "L2-M-R32"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R04",
+      "parentL1": "L1-R04",
+      "parentL0": "L0-02",
+      "sourceKind": "requirements",
+      "title": "Üst menü, bilgi mimarisi ve site haritası",
+      "scopeCount": 18,
+      "ownerRole": "Ürün + editör + hukukî reviewer",
+      "entryCondition": "Portal navigasyonu tasarlanır",
+      "desiredOutput": "Bağlantı tutarlı site haritası",
+      "upstreamGate": "B09,B14",
+      "downstreamModules": [
+        "L2-M-R05",
+        "L2-M-R07"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R05",
+      "parentL1": "L1-R05",
+      "parentL0": "L0-02",
+      "sourceKind": "requirements",
+      "title": "Ana sayfa ve dönüşüm akışı",
+      "scopeCount": 18,
+      "ownerRole": "Ürün + editör + hukukî reviewer",
+      "entryCondition": "Ana sayfadan hizmet veya rehber seçilir",
+      "desiredOutput": "Takip edilebilir, baskısız yönlendirme",
+      "upstreamGate": "B05,B06,B08",
+      "downstreamModules": [
+        "L2-M-R07",
+        "L2-M-R20"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R06",
+      "parentL1": "L1-R06",
+      "parentL0": "L0-01",
+      "sourceKind": "requirements",
+      "title": "Hakkımızda, uzman profilleri ve güven",
+      "scopeCount": 18,
+      "ownerRole": "Kurucu + bağımsız hukuk/uyum uzmanı",
+      "entryCondition": "Kurumsal veya uzman profili hazırlanır",
+      "desiredOutput": "Kaynaklı ve iddia sınırları net güven sayfası",
+      "upstreamGate": "B05,B15",
+      "downstreamModules": [
+        "L2-M-R01",
+        "L2-M-R27"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R07",
+      "parentL1": "L1-R07",
+      "parentL0": "L0-02",
+      "sourceKind": "requirements",
+      "title": "Hizmet kataloğu ve paket tanımları",
+      "scopeCount": 18,
+      "ownerRole": "Ürün + editör + hukukî reviewer",
+      "entryCondition": "Hizmet ve kapsam kaydı seçilir",
+      "desiredOutput": "Onaylı hizmet kataloğu",
+      "upstreamGate": "B05,B09,B10",
+      "downstreamModules": [
+        "L2-M-R20",
+        "L2-M-SRV"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R08",
+      "parentL1": "L1-R08",
+      "parentL0": "L0-03",
+      "sourceKind": "requirements",
+      "title": "İş hukuku ve çalışma yaşamı",
+      "scopeCount": 18,
+      "ownerRole": "Ülke/usul hukukçuları + IND sorumlusu",
+      "entryCondition": "Çalışma yaşamı sorunu bildirilir",
+      "desiredOutput": "Kaynaklı iş hukuku değerlendirme dosyası",
+      "upstreamGate": "B07,B09",
+      "downstreamModules": [
+        "L2-M-R20",
+        "L2-M-R21"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R09",
+      "parentL1": "L1-R09",
+      "parentL0": "L0-03",
+      "sourceKind": "requirements",
+      "title": "Göç, oturum ve vatandaşlık",
+      "scopeCount": 18,
+      "ownerRole": "Ülke/usul hukukçuları + IND sorumlusu",
+      "entryCondition": "Oturum, vize veya vatandaşlık işlemi seçilir",
+      "desiredOutput": "Onaylı IND dosya ve usul yönlendirmesi",
+      "upstreamGate": "B07,B09",
+      "downstreamModules": [
+        "L2-M-IND",
+        "L2-M-INDG",
+        "L2-M-INDT"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R10",
+      "parentL1": "L1-R10",
+      "parentL0": "L0-03",
+      "sourceKind": "requirements",
+      "title": "Aile, çocuk ve kişi hukuku",
+      "scopeCount": 18,
+      "ownerRole": "Ülke/usul hukukçuları + IND sorumlusu",
+      "entryCondition": "Aile, çocuk veya kişi hukuku sorunu gelir",
+      "desiredOutput": "Yetki ve gizlilik kapılı değerlendirme",
+      "upstreamGate": "B06,B07",
+      "downstreamModules": [
+        "L2-M-R20",
+        "L2-M-R22"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R11",
+      "parentL1": "L1-R11",
+      "parentL0": "L0-03",
+      "sourceKind": "requirements",
+      "title": "Kira, konut ve taşınmaz",
+      "scopeCount": 18,
+      "ownerRole": "Ülke/usul hukukçuları + IND sorumlusu",
+      "entryCondition": "Kira veya taşınmaz uyuşmazlığı bildirilir",
+      "desiredOutput": "Kaynaklı kira/konut dosya rotası",
+      "upstreamGate": "B07,B09",
+      "downstreamModules": [
+        "L2-M-R20",
+        "L2-M-R21"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R12",
+      "parentL1": "L1-R12",
+      "parentL0": "L0-03",
+      "sourceKind": "requirements",
+      "title": "Tüketici, sözleşme ve borç uyuşmazlıkları",
+      "scopeCount": 18,
+      "ownerRole": "Ülke/usul hukukçuları + IND sorumlusu",
+      "entryCondition": "Tüketici veya sözleşme uyuşmazlığı gelir",
+      "desiredOutput": "İncelenebilir uyuşmazlık dosyası",
+      "upstreamGate": "B07,B08",
+      "downstreamModules": [
+        "L2-M-R21",
+        "L2-M-R26"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R13",
+      "parentL1": "L1-R13",
+      "parentL0": "L0-03",
+      "sourceKind": "requirements",
+      "title": "Şirketler, girişimcilik ve ticaret",
+      "scopeCount": 18,
+      "ownerRole": "Ülke/usul hukukçuları + IND sorumlusu",
+      "entryCondition": "Kuruluş ya da ticari uyuşmazlık gelir",
+      "desiredOutput": "Gerçek yetki alanına uygun ticaret rotası",
+      "upstreamGate": "B05,B07",
+      "downstreamModules": [
+        "L2-M-R20",
+        "L2-M-R27"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R14",
+      "parentL1": "L1-R14",
+      "parentL0": "L0-03",
+      "sourceKind": "requirements",
+      "title": "İdarî işlemler, sosyal haklar ve kamu kurumları",
+      "scopeCount": 18,
+      "ownerRole": "Ülke/usul hukukçuları + IND sorumlusu",
+      "entryCondition": "İdarî karar ve sosyal hak talebi gelir",
+      "desiredOutput": "Kaynak ve takvim denetimli idarî dosya",
+      "upstreamGate": "B07,B09",
+      "downstreamModules": [
+        "L2-M-R20",
+        "L2-M-R22"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R15",
+      "parentL1": "L1-R15",
+      "parentL0": "L0-03",
+      "sourceKind": "requirements",
+      "title": "Türkiye–Hollanda sınır aşan hukukî işlemler",
+      "scopeCount": 18,
+      "ownerRole": "Ülke/usul hukukçuları + IND sorumlusu",
+      "entryCondition": "TR-NL veya çok ülke olayı bildirilir",
+      "desiredOutput": "Kaynaklı sınır aşan işlem planı",
+      "upstreamGate": "B07,B15",
+      "downstreamModules": [
+        "L2-M-R27",
+        "L2-M-R28"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R16",
+      "parentL1": "L1-R16",
+      "parentL0": "L0-03",
+      "sourceKind": "requirements",
+      "title": "Dosya inceleme, delil ve uyuşmazlık analizi",
+      "scopeCount": 18,
+      "ownerRole": "Ülke/usul hukukçuları + IND sorumlusu",
+      "entryCondition": "Dosya ve delil paylaşımı talebi gelir",
+      "desiredOutput": "Denetlenebilir dosya ve delil değerlendirme izi",
+      "upstreamGate": "B04,B06",
+      "downstreamModules": [
+        "L2-M-R23",
+        "L2-M-ST-matters"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R17",
+      "parentL1": "L1-R17",
+      "parentL0": "L0-02",
+      "sourceKind": "requirements",
+      "title": "Bilgi bankası, rehberler ve hukuk sözlüğü",
+      "scopeCount": 18,
+      "ownerRole": "Ürün + editör + hukukî reviewer",
+      "entryCondition": "Rehber ya da sözlük maddesi önerilir",
+      "desiredOutput": "Kaynaklı ve sürümlü rehber/sözlük",
+      "upstreamGate": "B09,B16",
+      "downstreamModules": [
+        "L2-M-GUIDE",
+        "L2-M-R28"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R18",
+      "parentL1": "L1-R18",
+      "parentL0": "L0-02",
+      "sourceKind": "requirements",
+      "title": "Haber, yorum, analiz ve bültenler",
+      "scopeCount": 18,
+      "ownerRole": "Ürün + editör + hukukî reviewer",
+      "entryCondition": "Haber veya yorum taslağı sunulur",
+      "desiredOutput": "Kaynaklı hukuk gündemi yayını",
+      "upstreamGate": "B02,B16",
+      "downstreamModules": [
+        "L2-M-R17",
+        "L2-M-R28"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R19",
+      "parentL1": "L1-R19",
+      "parentL0": "L0-04",
+      "sourceKind": "requirements",
+      "title": "Belge kütüphanesi, şablonlar ve üretim",
+      "scopeCount": 18,
+      "ownerRole": "Portal/backend + güvenlik + hukuk",
+      "entryCondition": "Onaylı şablon veya belge talebi gelir",
+      "desiredOutput": "Versiyonlu, resmî başvuru sayılmayan belge taslağı",
+      "upstreamGate": "B04,B17",
+      "downstreamModules": [
+        "L2-M-R23",
+        "L2-M-ST-pleadings"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R20",
+      "parentL1": "L1-R20",
+      "parentL0": "L0-04",
+      "sourceKind": "requirements",
+      "title": "Başvuru sihirbazı ve ilk triyaj",
+      "scopeCount": 18,
+      "ownerRole": "Portal/backend + güvenlik + hukuk",
+      "entryCondition": "Yeni ilk başvuru başlar",
+      "desiredOutput": "Sınıflandırılmış ve yetki kapılı başvuru",
+      "upstreamGate": "B04,B06",
+      "downstreamModules": [
+        "L2-M-R21",
+        "L2-M-R22",
+        "L2-M-ST-triage"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R21",
+      "parentL1": "L1-R21",
+      "parentL0": "L0-04",
+      "sourceKind": "requirements",
+      "title": "İş, kira ve tüketici başvuru formları",
+      "scopeCount": 18,
+      "ownerRole": "Portal/backend + güvenlik + hukuk",
+      "entryCondition": "Belirli hizmetin başvuru formu seçilir",
+      "desiredOutput": "Sürümlü özel konu başvuru taslağı",
+      "upstreamGate": "B04,B17",
+      "downstreamModules": [
+        "L2-M-R19",
+        "L2-M-R23"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R22",
+      "parentL1": "L1-R22",
+      "parentL0": "L0-04",
+      "sourceKind": "requirements",
+      "title": "Göç, aile, idarî ve uluslararası başvuru formları",
+      "scopeCount": 18,
+      "ownerRole": "Portal/backend + güvenlik + hukuk",
+      "entryCondition": "Göç veya resmî karar başvurusu başlar",
+      "desiredOutput": "Yanıltıcı resmî gönderim iddiası taşımayan taslak",
+      "upstreamGate": "B07,B17",
+      "downstreamModules": [
+        "L2-M-R09",
+        "L2-M-IND",
+        "L2-M-R23"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R23",
+      "parentL1": "L1-R23",
+      "parentL0": "L0-04",
+      "sourceKind": "requirements",
+      "title": "Güvenli belge yükleme ve dijital dosya",
+      "scopeCount": 18,
+      "ownerRole": "Portal/backend + güvenlik + hukuk",
+      "entryCondition": "Özel belge yükleme ya da erişim talebi gelir",
+      "desiredOutput": "Müşteri bazında yalıtılmış özel belge",
+      "upstreamGate": "B01,B02,B04",
+      "downstreamModules": [
+        "L2-M-R24",
+        "L2-M-ST-documents"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R24",
+      "parentL1": "L1-R24",
+      "parentL0": "L0-05",
+      "sourceKind": "requirements",
+      "title": "Müşteri hesabı, panel ve dosya durumu",
+      "scopeCount": 18,
+      "ownerRole": "Müşteri deneyimi + finans + hukuk",
+      "entryCondition": "Hesap veya dosya durumu sorgulanır",
+      "desiredOutput": "Gerçek durum ve kimlik sınırındaki müşteri paneli",
+      "upstreamGate": "B04,B06",
+      "downstreamModules": [
+        "L2-M-R25",
+        "L2-M-R23"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R25",
+      "parentL1": "L1-R25",
+      "parentL0": "L0-05",
+      "sourceKind": "requirements",
+      "title": "Görüşme, randevu, mesajlaşma ve bildirim",
+      "scopeCount": 18,
+      "ownerRole": "Müşteri deneyimi + finans + hukuk",
+      "entryCondition": "Görüşme, mesaj veya bildirim ihtiyacı gelir",
+      "desiredOutput": "Yetkilendirilmiş iletişim ve randevu izi",
+      "upstreamGate": "B04,B13",
+      "downstreamModules": [
+        "L2-M-ST-messages",
+        "L2-M-ST-calendar"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R26",
+      "parentL1": "L1-R26",
+      "parentL0": "L0-05",
+      "sourceKind": "requirements",
+      "title": "Ücretler, sözleşme, ödeme ve tüketici hakları",
+      "scopeCount": 18,
+      "ownerRole": "Müşteri deneyimi + finans + hukuk",
+      "entryCondition": "Ücret veya sözleşme adımı başlar",
+      "desiredOutput": "Doğrulanmış ücret ve tüketici hakları akışı",
+      "upstreamGate": "B08,B18",
+      "downstreamModules": [
+        "L2-M-ST-billing",
+        "L2-M-ST-payables"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R27",
+      "parentL1": "L1-R27",
+      "parentL0": "L0-01",
+      "sourceKind": "requirements",
+      "title": "Uzman ağı, iş ortakları ve yönlendirme",
+      "scopeCount": 18,
+      "ownerRole": "Kurucu + bağımsız hukuk/uyum uzmanı",
+      "entryCondition": "Uzman daveti ya da yönlendirme talebi gelir",
+      "desiredOutput": "Yetkisi ve veri erişimi sınırlandırılmış uzman rotası",
+      "upstreamGate": "B05,B15",
+      "downstreamModules": [
+        "L2-M-R01",
+        "L2-M-R16"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R28",
+      "parentL1": "L1-R28",
+      "parentL0": "L0-06",
+      "sourceKind": "requirements",
+      "title": "Çok dillilik, hukukî çeviri ve yerelleştirme",
+      "scopeCount": 18,
+      "ownerRole": "DPO + güvenlik sorumlusu + bağımsız QA",
+      "entryCondition": "Metin dil veya RTL desteği ister",
+      "desiredOutput": "Altı dilde gözden geçirilmiş sürümlü içerik",
+      "upstreamGate": "B09,B14",
+      "downstreamModules": [
+        "L2-M-R17",
+        "L2-M-R32"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R29",
+      "parentL1": "L1-R29",
+      "parentL0": "L0-06",
+      "sourceKind": "requirements",
+      "title": "AVG/GDPR, gizlilik ve veri yönetimi",
+      "scopeCount": 18,
+      "ownerRole": "DPO + güvenlik sorumlusu + bağımsız QA",
+      "entryCondition": "Veri işleme veya DSAR talebi oluşur",
+      "desiredOutput": "Denetlenebilir GDPR kayıtları",
+      "upstreamGate": "B06,B13",
+      "downstreamModules": [
+        "L2-M-B",
+        "L2-M-R23",
+        "L2-M-ST-audit"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R30",
+      "parentL1": "L1-R30",
+      "parentL0": "L0-06",
+      "sourceKind": "requirements",
+      "title": "Siber güvenlik, kimlik ve operasyonel dayanıklılık",
+      "scopeCount": 18,
+      "ownerRole": "DPO + güvenlik sorumlusu + bağımsız QA",
+      "entryCondition": "Kimlik/güvenlik olayı veya yayın kontrolü gerekir",
+      "desiredOutput": "Canlıya ayrı onaylı güvenlik geçidi",
+      "upstreamGate": "B01,B02,B03,B04,B13",
+      "downstreamModules": [
+        "L2-M-B",
+        "L2-M-R33"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R31",
+      "parentL1": "L1-R31",
+      "parentL0": "L0-07",
+      "sourceKind": "requirements",
+      "title": "İç yönetim paneli, CRM ve otomasyon",
+      "scopeCount": 18,
+      "ownerRole": "Operasyon + personel güvenliği + finans",
+      "entryCondition": "İç dosya görevi veya denetim açılır",
+      "desiredOutput": "Rol ayrımlı gerçek personel çalışma alanı",
+      "upstreamGate": "B04,B13,B18",
+      "downstreamModules": [
+        "L2-M-P",
+        "L2-M-ST-matters",
+        "L2-M-ST-audit"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R32",
+      "parentL1": "L1-R32",
+      "parentL0": "L0-02",
+      "sourceKind": "requirements",
+      "title": "Erişilebilirlik, arama, SEO ve kullanıcı deneyimi",
+      "scopeCount": 18,
+      "ownerRole": "Ürün + editör + hukukî reviewer",
+      "entryCondition": "Yeni ekran, dil veya içerik yayımlanacaktır",
+      "desiredOutput": "Erişilebilir ve bulunabilir portal sürümü",
+      "upstreamGate": "B14",
+      "downstreamModules": [
+        "L2-M-R04",
+        "L2-M-R28"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-R33",
+      "parentL1": "L1-R33",
+      "parentL0": "L0-08",
+      "sourceKind": "requirements",
+      "title": "Teknik mimari, kalite güvencesi ve yayına geçiş",
+      "scopeCount": 18,
+      "ownerRole": "Platform + QA + yargı entegrasyon sorumlusu",
+      "entryCondition": "Sürüm veya altyapı değişikliği önerilir",
+      "desiredOutput": "İzlenebilir GO/NO-GO sürüm kararı",
+      "upstreamGate": "B01–B18",
+      "downstreamModules": [
+        "L2-M-T",
+        "L2-M-B",
+        "L2-M-J"
+      ],
+      "originalReference": "01 Gereksinim 594 / 25 Uygulama 594 Tekil",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-ST-inbox",
+      "parentL1": "L1-ST-inbox",
+      "parentL0": "L0-07",
+      "sourceKind": "staff",
+      "title": "Başvuru masası (inbox)",
+      "scopeCount": 12,
+      "ownerRole": "Operasyon + personel güvenliği + finans",
+      "entryCondition": "Başvuru kaydı",
+      "desiredOutput": "Triyaj işine sevk",
+      "upstreamGate": "B04,B13,B18",
+      "downstreamModules": [
+        "L2-M-P",
+        "L2-M-R31",
+        "L2-M-ST-audit"
+      ],
+      "originalReference": "26 Personel 16x12 Kabul",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-ST-triage",
+      "parentL1": "L1-ST-triage",
+      "parentL0": "L0-07",
+      "sourceKind": "staff",
+      "title": "Ön inceleme (triage)",
+      "scopeCount": 12,
+      "ownerRole": "Operasyon + personel güvenliği + finans",
+      "entryCondition": "Ön inceleme bekleyen talep",
+      "desiredOutput": "Dosya veya hukukçu incelemesine devret",
+      "upstreamGate": "B04,B13,B18",
+      "downstreamModules": [
+        "L2-M-P",
+        "L2-M-R31",
+        "L2-M-ST-audit"
+      ],
+      "originalReference": "26 Personel 16x12 Kabul",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-ST-matters",
+      "parentL1": "L1-ST-matters",
+      "parentL0": "L0-07",
+      "sourceKind": "staff",
+      "title": "Dosyalar (matters)",
+      "scopeCount": 12,
+      "ownerRole": "Operasyon + personel güvenliği + finans",
+      "entryCondition": "Açık dosya",
+      "desiredOutput": "İnceleme veya müşteri panelini güncelle",
+      "upstreamGate": "B04,B13,B18",
+      "downstreamModules": [
+        "L2-M-P",
+        "L2-M-R31",
+        "L2-M-ST-audit"
+      ],
+      "originalReference": "26 Personel 16x12 Kabul",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-ST-calendar",
+      "parentL1": "L1-ST-calendar",
+      "parentL0": "L0-07",
+      "sourceKind": "staff",
+      "title": "Takvim/görev (calendar)",
+      "scopeCount": 12,
+      "ownerRole": "Operasyon + personel güvenliği + finans",
+      "entryCondition": "Görüşme veya süre olayı",
+      "desiredOutput": "Yetkili kişilere bildirim kaydet",
+      "upstreamGate": "B04,B13,B18",
+      "downstreamModules": [
+        "L2-M-P",
+        "L2-M-R31",
+        "L2-M-ST-audit"
+      ],
+      "originalReference": "26 Personel 16x12 Kabul",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-ST-documents",
+      "parentL1": "L1-ST-documents",
+      "parentL0": "L0-07",
+      "sourceKind": "staff",
+      "title": "Belgeler (documents)",
+      "scopeCount": 12,
+      "ownerRole": "Operasyon + personel güvenliği + finans",
+      "entryCondition": "Belge talebi / müşteri onayı",
+      "desiredOutput": "İnceleme, revokasyon veya saklamaya aktar",
+      "upstreamGate": "B04,B13,B18",
+      "downstreamModules": [
+        "L2-M-P",
+        "L2-M-R31",
+        "L2-M-ST-audit"
+      ],
+      "originalReference": "26 Personel 16x12 Kabul",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-ST-pleadings",
+      "parentL1": "L1-ST-pleadings",
+      "parentL0": "L0-07",
+      "sourceKind": "staff",
+      "title": "Dilekçe ve taslak (pleadings)",
+      "scopeCount": 12,
+      "ownerRole": "Operasyon + personel güvenliği + finans",
+      "entryCondition": "Hukukî taslak isteği",
+      "desiredOutput": "Bağımsız hukukî incelemeye aktar",
+      "upstreamGate": "B04,B13,B18",
+      "downstreamModules": [
+        "L2-M-P",
+        "L2-M-R31",
+        "L2-M-ST-audit"
+      ],
+      "originalReference": "26 Personel 16x12 Kabul",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-ST-research",
+      "parentL1": "L1-ST-research",
+      "parentL0": "L0-07",
+      "sourceKind": "staff",
+      "title": "Mevzuat/içtihat (research)",
+      "scopeCount": 12,
+      "ownerRole": "Operasyon + personel güvenliği + finans",
+      "entryCondition": "Resmî kaynak inceleme ihtiyacı",
+      "desiredOutput": "Onaylı inceleme notuna bağla",
+      "upstreamGate": "B04,B13,B18",
+      "downstreamModules": [
+        "L2-M-P",
+        "L2-M-R31",
+        "L2-M-ST-audit"
+      ],
+      "originalReference": "26 Personel 16x12 Kabul",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-ST-judicial",
+      "parentL1": "L1-ST-judicial",
+      "parentL0": "L0-07",
+      "sourceKind": "staff",
+      "title": "Mahkeme bağlantıları (judicial)",
+      "scopeCount": 12,
+      "ownerRole": "Operasyon + personel güvenliği + finans",
+      "entryCondition": "Mahkeme metaveri isteği",
+      "desiredOutput": "Gerçek makbuz yoksa gönderilmedi kaydet",
+      "upstreamGate": "B04,B13,B18",
+      "downstreamModules": [
+        "L2-M-P",
+        "L2-M-R31",
+        "L2-M-ST-audit"
+      ],
+      "originalReference": "26 Personel 16x12 Kabul",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-ST-ind",
+      "parentL1": "L1-ST-ind",
+      "parentL0": "L0-07",
+      "sourceKind": "staff",
+      "title": "IND işlemleri (ind)",
+      "scopeCount": 12,
+      "ownerRole": "Operasyon + personel güvenliği + finans",
+      "entryCondition": "IND işlem taslağı",
+      "desiredOutput": "Gerçek işlem kanıtı olmadan dosya aşaması yükseltme",
+      "upstreamGate": "B04,B13,B18",
+      "downstreamModules": [
+        "L2-M-P",
+        "L2-M-R31",
+        "L2-M-ST-audit"
+      ],
+      "originalReference": "26 Personel 16x12 Kabul",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-ST-messages",
+      "parentL1": "L1-ST-messages",
+      "parentL0": "L0-07",
+      "sourceKind": "staff",
+      "title": "Yazışmalar (messages)",
+      "scopeCount": 12,
+      "ownerRole": "Operasyon + personel güvenliği + finans",
+      "entryCondition": "Müşteri iletişim ihtiyacı",
+      "desiredOutput": "Müşteriye açık yanıt ve audit kaydet",
+      "upstreamGate": "B04,B13,B18",
+      "downstreamModules": [
+        "L2-M-P",
+        "L2-M-R31",
+        "L2-M-ST-audit"
+      ],
+      "originalReference": "26 Personel 16x12 Kabul",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-ST-billing",
+      "parentL1": "L1-ST-billing",
+      "parentL0": "L0-07",
+      "sourceKind": "staff",
+      "title": "Gelir/fatura (billing)",
+      "scopeCount": 12,
+      "ownerRole": "Operasyon + personel güvenliği + finans",
+      "entryCondition": "Teklif/fatura/ödemeye bağlı olay",
+      "desiredOutput": "Mutabakat ve müşteri bildirimine devret",
+      "upstreamGate": "B04,B13,B18",
+      "downstreamModules": [
+        "L2-M-P",
+        "L2-M-R31",
+        "L2-M-ST-audit"
+      ],
+      "originalReference": "26 Personel 16x12 Kabul",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-ST-payables",
+      "parentL1": "L1-ST-payables",
+      "parentL0": "L0-07",
+      "sourceKind": "staff",
+      "title": "Gider/para çıkışı (payables)",
+      "scopeCount": 12,
+      "ownerRole": "Operasyon + personel güvenliği + finans",
+      "entryCondition": "Masraf/para çıkışı isteği",
+      "desiredOutput": "Onay ve gerçek banka mutabakatı öncesi ödeme iddia etme",
+      "upstreamGate": "B04,B13,B18",
+      "downstreamModules": [
+        "L2-M-P",
+        "L2-M-R31",
+        "L2-M-ST-audit"
+      ],
+      "originalReference": "26 Personel 16x12 Kabul",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-ST-reporting",
+      "parentL1": "L1-ST-reporting",
+      "parentL0": "L0-07",
+      "sourceKind": "staff",
+      "title": "Raporlama (reporting)",
+      "scopeCount": 12,
+      "ownerRole": "Operasyon + personel güvenliği + finans",
+      "entryCondition": "Dönem veya dosya raporu",
+      "desiredOutput": "Bağımsız kontrol ve saklama durumuna geçir",
+      "upstreamGate": "B04,B13,B18",
+      "downstreamModules": [
+        "L2-M-P",
+        "L2-M-R31",
+        "L2-M-ST-audit"
+      ],
+      "originalReference": "26 Personel 16x12 Kabul",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-ST-audit",
+      "parentL1": "L1-ST-audit",
+      "parentL0": "L0-07",
+      "sourceKind": "staff",
+      "title": "Denetim (audit)",
+      "scopeCount": 12,
+      "ownerRole": "Operasyon + personel güvenliği + finans",
+      "entryCondition": "Yetki veya güvenlik olayı",
+      "desiredOutput": "Bağımsız inceleme kaydına devret",
+      "upstreamGate": "B04,B13,B18",
+      "downstreamModules": [
+        "L2-M-P",
+        "L2-M-R31",
+        "L2-M-ST-audit"
+      ],
+      "originalReference": "26 Personel 16x12 Kabul",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-ST-people",
+      "parentL1": "L1-ST-people",
+      "parentL0": "L0-07",
+      "sourceKind": "staff",
+      "title": "Personel (people)",
+      "scopeCount": 12,
+      "ownerRole": "Operasyon + personel güvenliği + finans",
+      "entryCondition": "Personel giriş/rol değişikliği",
+      "desiredOutput": "Atama ve erişim izlerini yenile",
+      "upstreamGate": "B04,B13,B18",
+      "downstreamModules": [
+        "L2-M-P",
+        "L2-M-R31",
+        "L2-M-ST-audit"
+      ],
+      "originalReference": "26 Personel 16x12 Kabul",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-ST-settings",
+      "parentL1": "L1-ST-settings",
+      "parentL0": "L0-07",
+      "sourceKind": "staff",
+      "title": "Ayarlar/yayın (settings)",
+      "scopeCount": 12,
+      "ownerRole": "Operasyon + personel güvenliği + finans",
+      "entryCondition": "Ayar/yayın değişikliği",
+      "desiredOutput": "Yetkili onay olmadan prod yayını yapma",
+      "upstreamGate": "B04,B13,B18",
+      "downstreamModules": [
+        "L2-M-P",
+        "L2-M-R31",
+        "L2-M-ST-audit"
+      ],
+      "originalReference": "26 Personel 16x12 Kabul",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-B",
+      "parentL1": "L1-B",
+      "parentL0": "L0-06",
+      "sourceKind": "auxiliary",
+      "title": "B01–B18 üretim güvenlik/uyum engelleri",
+      "scopeCount": 18,
+      "ownerRole": "DPO + güvenlik sorumlusu + bağımsız QA",
+      "entryCondition": "Üretim engeli tespit edilir",
+      "desiredOutput": "Kapatılmamış/kanıtlı B gate kaydı",
+      "upstreamGate": "18/18 B kapısı; Auth/Storage/RLS, DSAR, retention, restore, AAL2",
+      "downstreamModules": [
+        "L2-M-R33",
+        "L2-M-B"
+      ],
+      "originalReference": "27 Tum Ek Paketler 113",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-J",
+      "parentL1": "L1-J",
+      "parentL0": "L0-08",
+      "sourceKind": "auxiliary",
+      "title": "J01–J16 Hollanda yargı entegrasyonları",
+      "scopeCount": 16,
+      "ownerRole": "Platform + QA + yargı entegrasyon sorumlusu",
+      "entryCondition": "Hollanda yargı hizmeti kaydı gelir",
+      "desiredOutput": "Yetkili yargı yoluna kayıtlı sevk",
+      "upstreamGate": "J01–J16 gerçek kurum yetkisi; tüm R kabul kanıtı, yayın/release GO, DR ve gözlemleme",
+      "downstreamModules": [
+        "L2-M-R33",
+        "L2-M-B"
+      ],
+      "originalReference": "27 Tum Ek Paketler 113",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-P",
+      "parentL1": "L1-P",
+      "parentL0": "L0-07",
+      "sourceKind": "auxiliary",
+      "title": "P01–P10 personel operasyon ve güvenlik işleri",
+      "scopeCount": 10,
+      "ownerRole": "Operasyon + personel güvenliği + finans",
+      "entryCondition": "İç modül hakkı/iş isteği gelir",
+      "desiredOutput": "Kontrol edilen personel faaliyeti",
+      "upstreamGate": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
+      "downstreamModules": [
+        "L2-M-R33",
+        "L2-M-B"
+      ],
+      "originalReference": "27 Tum Ek Paketler 113",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-IND",
+      "parentL1": "L1-IND",
+      "parentL0": "L0-03",
+      "sourceKind": "auxiliary",
+      "title": "IND-01–08 usul/süreç bölümleri",
+      "scopeCount": 8,
+      "ownerRole": "Ülke/usul hukukçuları + IND sorumlusu",
+      "entryCondition": "IND işlem türü seçilir",
+      "desiredOutput": "Usulü ayrılmış IND dosyası",
+      "upstreamGate": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
+      "downstreamModules": [
+        "L2-M-R33",
+        "L2-M-B"
+      ],
+      "originalReference": "27 Tum Ek Paketler 113",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-INDG",
+      "parentL1": "L1-INDG",
+      "parentL0": "L0-03",
+      "sourceKind": "auxiliary",
+      "title": "IND-G1–G4 insan yetki ve onay kapıları",
+      "scopeCount": 4,
+      "ownerRole": "Ülke/usul hukukçuları + IND sorumlusu",
+      "entryCondition": "G1–G4 yetki kapısı gündeme gelir",
+      "desiredOutput": "Dört kapının doğrulanmış durumu",
+      "upstreamGate": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
+      "downstreamModules": [
+        "L2-M-R33",
+        "L2-M-B"
+      ],
+      "originalReference": "27 Tum Ek Paketler 113",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-INDT",
+      "parentL1": "L1-INDT",
+      "parentL0": "L0-03",
+      "sourceKind": "auxiliary",
+      "title": "IND-T01–15 ayrı usul/itiraz senaryoları",
+      "scopeCount": 15,
+      "ownerRole": "Ülke/usul hukukçuları + IND sorumlusu",
+      "entryCondition": "IND örnek senaryosu devreye girer",
+      "desiredOutput": "Sentetik senaryo kanıtı, gerçek filing değil",
+      "upstreamGate": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
+      "downstreamModules": [
+        "L2-M-R33",
+        "L2-M-B"
+      ],
+      "originalReference": "27 Tum Ek Paketler 113",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-G",
+      "parentL1": "L1-G",
+      "parentL0": "L0-01",
+      "sourceKind": "auxiliary",
+      "title": "Kuruluş G-01–24 ve yatay Y-01–05",
+      "scopeCount": 29,
+      "ownerRole": "Kurucu + bağımsız hukuk/uyum uzmanı",
+      "entryCondition": "Kuruluş veya yatay iş gündeme gelir",
+      "desiredOutput": "Doğrulanmış kuruluş hazırlığı",
+      "upstreamGate": "B05/B07/B15; gerçek kimlik, iş/meslek yetkisi ve sözleşmeler",
+      "downstreamModules": [
+        "L2-M-R33",
+        "L2-M-B"
+      ],
+      "originalReference": "27 Tum Ek Paketler 113",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-T",
+      "parentL1": "L1-T",
+      "parentL0": "L0-08",
+      "sourceKind": "auxiliary",
+      "title": "T01–T13 teknik işletim/test kayıtları",
+      "scopeCount": 13,
+      "ownerRole": "Platform + QA + yargı entegrasyon sorumlusu",
+      "entryCondition": "Teknik test ya da yayın kapısı gelir",
+      "desiredOutput": "Kaynaklı QA ve güvenli yayın kararı",
+      "upstreamGate": "J01–J16 gerçek kurum yetkisi; tüm R kabul kanıtı, yayın/release GO, DR ve gözlemleme",
+      "downstreamModules": [
+        "L2-M-R33",
+        "L2-M-B"
+      ],
+      "originalReference": "27 Tum Ek Paketler 113",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-SRV",
+      "parentL1": "L1-SRV",
+      "parentL0": "L0-02",
+      "sourceKind": "content",
+      "title": "Hizmet sayfaları",
+      "scopeCount": 17,
+      "ownerRole": "Ürün + editör + hukukî reviewer",
+      "entryCondition": "17 hizmetin doğru hukukî kapsamı ve ücret/sınırı işaretlenir",
+      "desiredOutput": "Onaylı hizmet sayfası ve doğru intake rotası",
+      "upstreamGate": "B09,B14,B16",
+      "downstreamModules": [
+        "L2-M-R17",
+        "L2-M-R28",
+        "L2-M-R32"
+      ],
+      "originalReference": "28 Kamu Icerigi 74",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-AUD",
+      "parentL1": "L1-AUD",
+      "parentL0": "L0-02",
+      "sourceKind": "content",
+      "title": "Hedef kitle sayfaları",
+      "scopeCount": 14,
+      "ownerRole": "Ürün + editör + hukukî reviewer",
+      "entryCondition": "14 hedef kitle ve uygun hizmet yolu ayrılır",
+      "desiredOutput": "Yanıltıcı olmayan hedef kitle yönlendirmesi",
+      "upstreamGate": "B09,B14,B16",
+      "downstreamModules": [
+        "L2-M-R17",
+        "L2-M-R28",
+        "L2-M-R32"
+      ],
+      "originalReference": "28 Kamu Icerigi 74",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-SOR",
+      "parentL1": "L1-SOR",
+      "parentL0": "L0-02",
+      "sourceKind": "content",
+      "title": "Sorun bazlı kullanıcı rotaları",
+      "scopeCount": 12,
+      "ownerRole": "Ürün + editör + hukukî reviewer",
+      "entryCondition": "12 sorun rotası ve aciliyet sınıflanır",
+      "desiredOutput": "Güvenli triyaja bağlı yolculuk",
+      "upstreamGate": "B09,B14,B16",
+      "downstreamModules": [
+        "L2-M-R17",
+        "L2-M-R28",
+        "L2-M-R32"
+      ],
+      "originalReference": "28 Kamu Icerigi 74",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-GUIDE",
+      "parentL1": "L1-GUIDE",
+      "parentL0": "L0-02",
+      "sourceKind": "content",
+      "title": "Kaynaklı hukuk rehberleri",
+      "scopeCount": 16,
+      "ownerRole": "Ürün + editör + hukukî reviewer",
+      "entryCondition": "16 NL rehberin kaynak ve tarihliliği incelenir",
+      "desiredOutput": "Sürümlü ve kaynaklı rehber",
+      "upstreamGate": "B09,B14,B16",
+      "downstreamModules": [
+        "L2-M-R17",
+        "L2-M-R28",
+        "L2-M-R32"
+      ],
+      "originalReference": "28 Kamu Icerigi 74",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-CORP",
+      "parentL1": "L1-CORP",
+      "parentL0": "L0-02",
+      "sourceKind": "content",
+      "title": "Kurumsal bilgi sayfaları",
+      "scopeCount": 7,
+      "ownerRole": "Ürün + editör + hukukî reviewer",
+      "entryCondition": "7 kurumsal sayfa ve gerçek kimlik/rol kanıtı denetlenir",
+      "desiredOutput": "Doğru kurumsal sayfa",
+      "upstreamGate": "B09,B14,B16",
+      "downstreamModules": [
+        "L2-M-R17",
+        "L2-M-R28",
+        "L2-M-R32"
+      ],
+      "originalReference": "28 Kamu Icerigi 74",
+      "sourceCaveat": null,
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    },
+    {
+      "id": "L2-M-CHK",
+      "parentL1": "L1-CHK",
+      "parentL0": "L0-02",
+      "sourceKind": "content",
+      "title": "Belge kontrol listeleri (özgün başlık/slug teyidi bekliyor)",
+      "scopeCount": 8,
+      "ownerRole": "Ürün + editör + hukukî reviewer",
+      "entryCondition": "8 kontrol listesinin özgün kaynağı doğrulanır",
+      "desiredOutput": "Kaynaklı kontrol listesi; şu anda ad/slug doğrulanmadı",
+      "upstreamGate": "B09,B14,B16",
+      "downstreamModules": [
+        "L2-M-R17",
+        "L2-M-R28",
+        "L2-M-R32"
+      ],
+      "originalReference": "28 Kamu Icerigi 74",
+      "sourceCaveat": "Do NOT invent original 8 checklist names or slugs; v7 archive source unresolved",
+      "status": "L2_SKELETON_AWAITING_USER_APPROVAL",
+      "detailedUIApiSql": "LOCKED_TO_L3",
+      "humanAcceptance": 0
+    }
+  ],
+  "programWorkflows": [
+    {
+      "id": "L2-F-R01-OPS",
+      "moduleId": "L2-M-R01",
+      "parentL1": "L1-R01",
+      "kind": "CORE",
+      "name": "İş modeli, hizmet kapsamı ve meslekî sınırlar — esas modül iş akışı",
+      "actor": "Kurucu / hukuk-uyum",
+      "trigger": "Kuruluşun hizmet ve meslekî kapsamı tanımlanır",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Hukukî hizmet sınırı ve ülke belirlenir",
+        "Şirket / temsilci / meslekî kanıt doğrulanır",
+        "İzin verilen kamu anlatımı işaretlenir",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Doğrulanmış yetki sınırındaki kurumsal tanım",
+      "gate": "B05,B07",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R01-GATE",
+      "moduleId": "L2-M-R01",
+      "parentL1": "L1-R01",
+      "kind": "ACCEPTANCE",
+      "name": "İş modeli, hizmet kapsamı ve meslekî sınırlar — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B05,B07",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R02-OPS",
+      "moduleId": "L2-M-R02",
+      "parentL1": "L1-R02",
+      "kind": "CORE",
+      "name": "Hedef kitle ve kullanıcı senaryoları — esas modül iş akışı",
+      "actor": "Kamu ziyaretçisi / ürün editörü",
+      "trigger": "Hedef kitle bir hizmet ihtiyacını tanımlar",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Kitle ve ihtiyacın ayrımı yapılır",
+        "Ülke, dil ve hukuki risk göstergesi eklenir",
+        "Uygun hizmet veya kaynak rotasına yönlendirilir",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Yanıltıcı olmayan kitle–hizmet yönlendirmesi",
+      "gate": "B09,B10",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R02-GATE",
+      "moduleId": "L2-M-R02",
+      "parentL1": "L1-R02",
+      "kind": "ACCEPTANCE",
+      "name": "Hedef kitle ve kullanıcı senaryoları — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B09,B10",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R03-OPS",
+      "moduleId": "L2-M-R03",
+      "parentL1": "L1-R03",
+      "kind": "CORE",
+      "name": "Marka, adlandırma ve görsel kimlik — esas modül iş akışı",
+      "actor": "Marka ve kurumsal editör",
+      "trigger": "Kimlik veya görsel sunum güncellenir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Kimlik unsuru kaynakla eşleştirilir",
+        "Erişilebilirlik, dil ve meslekî unvan kontrol edilir",
+        "Onaylı tasarım öğesi portala aktarılır",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Onaylı ve erişilebilir marka uygulaması",
+      "gate": "B09,B14",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R03-GATE",
+      "moduleId": "L2-M-R03",
+      "parentL1": "L1-R03",
+      "kind": "ACCEPTANCE",
+      "name": "Marka, adlandırma ve görsel kimlik — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B09,B14",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R04-OPS",
+      "moduleId": "L2-M-R04",
+      "parentL1": "L1-R04",
+      "kind": "CORE",
+      "name": "Üst menü, bilgi mimarisi ve site haritası — esas modül iş akışı",
+      "actor": "Ürün editörü / ziyaretçi",
+      "trigger": "Portal navigasyonu tasarlanır",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Sayfalar hedef kitle/hizmet altında sınıflanır",
+        "Yol, dil ve arama bağlantısı denetlenir",
+        "Menü/harita sunumuna iletilir",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Bağlantı tutarlı site haritası",
+      "gate": "B09,B14",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R04-GATE",
+      "moduleId": "L2-M-R04",
+      "parentL1": "L1-R04",
+      "kind": "ACCEPTANCE",
+      "name": "Üst menü, bilgi mimarisi ve site haritası — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B09,B14",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R05-OPS",
+      "moduleId": "L2-M-R05",
+      "parentL1": "L1-R05",
+      "kind": "CORE",
+      "name": "Ana sayfa ve dönüşüm akışı — esas modül iş akışı",
+      "actor": "Ziyaretçi",
+      "trigger": "Ana sayfadan hizmet veya rehber seçilir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Ürün iddiası ve yetki sınırı görüntülenir",
+        "Hizmet/kitlenin doğru yolu seçilir",
+        "Başvuru veya kaynak sayfasına geçilir",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Takip edilebilir, baskısız yönlendirme",
+      "gate": "B05,B06,B08",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R05-GATE",
+      "moduleId": "L2-M-R05",
+      "parentL1": "L1-R05",
+      "kind": "ACCEPTANCE",
+      "name": "Ana sayfa ve dönüşüm akışı — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B05,B06,B08",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R06-OPS",
+      "moduleId": "L2-M-R06",
+      "parentL1": "L1-R06",
+      "kind": "CORE",
+      "name": "Hakkımızda, uzman profilleri ve güven — esas modül iş akışı",
+      "actor": "Kurucu / profil editörü",
+      "trigger": "Kurumsal veya uzman profili hazırlanır",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Kimlik, görev ve gerçek yetki kanıtı derlenir",
+        "Unvan ve iletişim beyanı bağımsız incelenir",
+        "Onaylı profil erişime açılır",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Kaynaklı ve iddia sınırları net güven sayfası",
+      "gate": "B05,B15",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R06-GATE",
+      "moduleId": "L2-M-R06",
+      "parentL1": "L1-R06",
+      "kind": "ACCEPTANCE",
+      "name": "Hakkımızda, uzman profilleri ve güven — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B05,B15",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R07-OPS",
+      "moduleId": "L2-M-R07",
+      "parentL1": "L1-R07",
+      "kind": "CORE",
+      "name": "Hizmet kataloğu ve paket tanımları — esas modül iş akışı",
+      "actor": "Hizmet editörü / ziyaretçi",
+      "trigger": "Hizmet ve kapsam kaydı seçilir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Hizmet kapsamı ve dışlama noktaları tanımlanır",
+        "Ücret, yetki ve ülke koşulları gözden geçirilir",
+        "Kullanıcı başvuru akışına yönlenir",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Onaylı hizmet kataloğu",
+      "gate": "B05,B09,B10",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R07-GATE",
+      "moduleId": "L2-M-R07",
+      "parentL1": "L1-R07",
+      "kind": "ACCEPTANCE",
+      "name": "Hizmet kataloğu ve paket tanımları — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B05,B09,B10",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R08-OPS",
+      "moduleId": "L2-M-R08",
+      "parentL1": "L1-R08",
+      "kind": "CORE",
+      "name": "İş hukuku ve çalışma yaşamı — esas modül iş akışı",
+      "actor": "İş hukuku inceleyeni / başvuran",
+      "trigger": "Çalışma yaşamı sorunu bildirilir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "İş ilişkisi ve hukukî ülke ayrılır",
+        "Belge, süre riski ve kanıt sorgulanır",
+        "Yetkili hukukçu/kurum rotası belirlenir",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Kaynaklı iş hukuku değerlendirme dosyası",
+      "gate": "B07,B09",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R08-GATE",
+      "moduleId": "L2-M-R08",
+      "parentL1": "L1-R08",
+      "kind": "ACCEPTANCE",
+      "name": "İş hukuku ve çalışma yaşamı — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B07,B09",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R09-OPS",
+      "moduleId": "L2-M-R09",
+      "parentL1": "L1-R09",
+      "kind": "CORE",
+      "name": "Göç, oturum ve vatandaşlık — esas modül iş akışı",
+      "actor": "Göç/IND inceleyeni / başvuran",
+      "trigger": "Oturum, vize veya vatandaşlık işlemi seçilir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "IND süreç ailesi ve yargı yolu ayrılır",
+        "G1–G4 yetki, tebligat ve süre kapıları uygulanır",
+        "Yazışma taslağı ve gerçek makbuz durumu ayrılır",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Onaylı IND dosya ve usul yönlendirmesi",
+      "gate": "B07,B09",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R09-GATE",
+      "moduleId": "L2-M-R09",
+      "parentL1": "L1-R09",
+      "kind": "ACCEPTANCE",
+      "name": "Göç, oturum ve vatandaşlık — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B07,B09",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R10-OPS",
+      "moduleId": "L2-M-R10",
+      "parentL1": "L1-R10",
+      "kind": "CORE",
+      "name": "Aile, çocuk ve kişi hukuku — esas modül iş akışı",
+      "actor": "Aile hukuku inceleyeni / başvuran",
+      "trigger": "Aile, çocuk veya kişi hukuku sorunu gelir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Çocuk ve özel veri riski işaretlenir",
+        "Yetki, ülke, delil ve acil risk ayrılır",
+        "Hukukî uzman değerlendirmesine aktarılır",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Yetki ve gizlilik kapılı değerlendirme",
+      "gate": "B06,B07",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R10-GATE",
+      "moduleId": "L2-M-R10",
+      "parentL1": "L1-R10",
+      "kind": "ACCEPTANCE",
+      "name": "Aile, çocuk ve kişi hukuku — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B06,B07",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R11-OPS",
+      "moduleId": "L2-M-R11",
+      "parentL1": "L1-R11",
+      "kind": "CORE",
+      "name": "Kira, konut ve taşınmaz — esas modül iş akışı",
+      "actor": "Kira/konut inceleyeni / başvuran",
+      "trigger": "Kira veya taşınmaz uyuşmazlığı bildirilir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Mülk/kontrat/taraf ayrılır",
+        "Belge ve süre/kurum türü kontrol edilir",
+        "Uygun triyaj veya belge hazırlama rotası seçilir",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Kaynaklı kira/konut dosya rotası",
+      "gate": "B07,B09",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R11-GATE",
+      "moduleId": "L2-M-R11",
+      "parentL1": "L1-R11",
+      "kind": "ACCEPTANCE",
+      "name": "Kira, konut ve taşınmaz — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B07,B09",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R12-OPS",
+      "moduleId": "L2-M-R12",
+      "parentL1": "L1-R12",
+      "kind": "CORE",
+      "name": "Tüketici, sözleşme ve borç uyuşmazlıkları — esas modül iş akışı",
+      "actor": "Tüketici ve borç hukuku inceleyeni",
+      "trigger": "Tüketici veya sözleşme uyuşmazlığı gelir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Taraflar ve belge türü ayrılır",
+        "Ödeme/itiraz/delil riskleri gözden geçirilir",
+        "Yetkili kurum ve insan incelemesine sevk edilir",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "İncelenebilir uyuşmazlık dosyası",
+      "gate": "B07,B08",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R12-GATE",
+      "moduleId": "L2-M-R12",
+      "parentL1": "L1-R12",
+      "kind": "ACCEPTANCE",
+      "name": "Tüketici, sözleşme ve borç uyuşmazlıkları — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B07,B08",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R13-OPS",
+      "moduleId": "L2-M-R13",
+      "parentL1": "L1-R13",
+      "kind": "CORE",
+      "name": "Şirketler, girişimcilik ve ticaret — esas modül iş akışı",
+      "actor": "Şirket ve ticaret inceleyeni",
+      "trigger": "Kuruluş ya da ticari uyuşmazlık gelir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Şirket statüsü ve ülke belirlenir",
+        "KVK/noter/vergi yetki sınırı kontrol edilir",
+        "Hukukçu ve kurum güzergâhına aktarılır",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Gerçek yetki alanına uygun ticaret rotası",
+      "gate": "B05,B07",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R13-GATE",
+      "moduleId": "L2-M-R13",
+      "parentL1": "L1-R13",
+      "kind": "ACCEPTANCE",
+      "name": "Şirketler, girişimcilik ve ticaret — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B05,B07",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R14-OPS",
+      "moduleId": "L2-M-R14",
+      "parentL1": "L1-R14",
+      "kind": "CORE",
+      "name": "İdarî işlemler, sosyal haklar ve kamu kurumları — esas modül iş akışı",
+      "actor": "İdarî/sosyal hak hukukçusu",
+      "trigger": "İdarî karar ve sosyal hak talebi gelir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Karar verici kurum ve bildirim tarihi ayrılır",
+        "Bezwaar/beroep ve diğer usuller karıştırılmaz",
+        "İnsan denetimli süre/kurum rotası çıkarılır",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Kaynak ve takvim denetimli idarî dosya",
+      "gate": "B07,B09",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R14-GATE",
+      "moduleId": "L2-M-R14",
+      "parentL1": "L1-R14",
+      "kind": "ACCEPTANCE",
+      "name": "İdarî işlemler, sosyal haklar ve kamu kurumları — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B07,B09",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R15-OPS",
+      "moduleId": "L2-M-R15",
+      "parentL1": "L1-R15",
+      "kind": "CORE",
+      "name": "Türkiye–Hollanda sınır aşan hukukî işlemler — esas modül iş akışı",
+      "actor": "Sınır aşan hukuk koordinatörü",
+      "trigger": "TR-NL veya çok ülke olayı bildirilir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Ülke/yargı ve tercüme gerekliliği belirlenir",
+        "Apostil/tebligat/uzman erişimi ayrılır",
+        "Yetkili ülkedeki hukukçuya yönlendirilir",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Kaynaklı sınır aşan işlem planı",
+      "gate": "B07,B15",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R15-GATE",
+      "moduleId": "L2-M-R15",
+      "parentL1": "L1-R15",
+      "kind": "ACCEPTANCE",
+      "name": "Türkiye–Hollanda sınır aşan hukukî işlemler — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B07,B15",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R16-OPS",
+      "moduleId": "L2-M-R16",
+      "parentL1": "L1-R16",
+      "kind": "CORE",
+      "name": "Dosya inceleme, delil ve uyuşmazlık analizi — esas modül iş akışı",
+      "actor": "Dosya inceleyeni / hukukçu",
+      "trigger": "Dosya ve delil paylaşımı talebi gelir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Dosya yetki ve rıza kapısı kontrol edilir",
+        "Kaynak, olay ve delil sıralanır",
+        "Hukukçu incelemesi ve kayıtlı değerlendirmeye aktarılır",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Denetlenebilir dosya ve delil değerlendirme izi",
+      "gate": "B04,B06",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R16-GATE",
+      "moduleId": "L2-M-R16",
+      "parentL1": "L1-R16",
+      "kind": "ACCEPTANCE",
+      "name": "Dosya inceleme, delil ve uyuşmazlık analizi — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B06",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R17-OPS",
+      "moduleId": "L2-M-R17",
+      "parentL1": "L1-R17",
+      "kind": "CORE",
+      "name": "Bilgi bankası, rehberler ve hukuk sözlüğü — esas modül iş akışı",
+      "actor": "Hukuk editörü",
+      "trigger": "Rehber ya da sözlük maddesi önerilir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Hukukî kaynak/ülke ayrımı yapılır",
+        "Ana dil ve hukukî redaksiyon uygulanır",
+        "Onaylı bilgi bankası sürümü yayımlanır",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Kaynaklı ve sürümlü rehber/sözlük",
+      "gate": "B09,B16",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R17-GATE",
+      "moduleId": "L2-M-R17",
+      "parentL1": "L1-R17",
+      "kind": "ACCEPTANCE",
+      "name": "Bilgi bankası, rehberler ve hukuk sözlüğü — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B09,B16",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R18-OPS",
+      "moduleId": "L2-M-R18",
+      "parentL1": "L1-R18",
+      "kind": "CORE",
+      "name": "Haber, yorum, analiz ve bültenler — esas modül iş akışı",
+      "actor": "Haber/analiz editörü",
+      "trigger": "Haber veya yorum taslağı sunulur",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Konu/ülke/tarih kaynağı doğrulanır",
+        "Haber görüş ayrımı ve hukukî kontrol yapılır",
+        "Onaylı yayın ve düzeltme takibi yapılır",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Kaynaklı hukuk gündemi yayını",
+      "gate": "B02,B16",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R18-GATE",
+      "moduleId": "L2-M-R18",
+      "parentL1": "L1-R18",
+      "kind": "ACCEPTANCE",
+      "name": "Haber, yorum, analiz ve bültenler — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B02,B16",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R19-OPS",
+      "moduleId": "L2-M-R19",
+      "parentL1": "L1-R19",
+      "kind": "CORE",
+      "name": "Belge kütüphanesi, şablonlar ve üretim — esas modül iş akışı",
+      "actor": "Belge taslak hazırlayıcısı",
+      "trigger": "Onaylı şablon veya belge talebi gelir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Şablon/hizmet/ülke uygunluğu seçilir",
+        "Sürüm ve kullanıcı verisi kontrollü birleştirilir",
+        "Belge taslağı hukukî onaya/dosyaya aktarılır",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Versiyonlu, resmî başvuru sayılmayan belge taslağı",
+      "gate": "B04,B17",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R19-GATE",
+      "moduleId": "L2-M-R19",
+      "parentL1": "L1-R19",
+      "kind": "ACCEPTANCE",
+      "name": "Belge kütüphanesi, şablonlar ve üretim — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B17",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R20-OPS",
+      "moduleId": "L2-M-R20",
+      "parentL1": "L1-R20",
+      "kind": "CORE",
+      "name": "Başvuru sihirbazı ve ilk triyaj — esas modül iş akışı",
+      "actor": "Müşteri / triyaj görevlisi",
+      "trigger": "Yeni ilk başvuru başlar",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Konu, ülke, dil ve acil süre riski alınır",
+        "Gizlilik ve görev dağılımı kapısı uygulanır",
+        "Doğru hizmet/form/dosya rotası açılır",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Sınıflandırılmış ve yetki kapılı başvuru",
+      "gate": "B04,B06",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R20-GATE",
+      "moduleId": "L2-M-R20",
+      "parentL1": "L1-R20",
+      "kind": "ACCEPTANCE",
+      "name": "Başvuru sihirbazı ve ilk triyaj — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B06",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R21-OPS",
+      "moduleId": "L2-M-R21",
+      "parentL1": "L1-R21",
+      "kind": "CORE",
+      "name": "İş, kira ve tüketici başvuru formları — esas modül iş akışı",
+      "actor": "Başvuran / iş-kira-tüketici formu",
+      "trigger": "Belirli hizmetin başvuru formu seçilir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Bağlamsal form taslağı oluşturulur",
+        "Müşteri kontrolü ve veri minimizasyonu yapılır",
+        "İnceleme veya belge hazırlamaya devredilir",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Sürümlü özel konu başvuru taslağı",
+      "gate": "B04,B17",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R21-GATE",
+      "moduleId": "L2-M-R21",
+      "parentL1": "L1-R21",
+      "kind": "ACCEPTANCE",
+      "name": "İş, kira ve tüketici başvuru formları — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B17",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R22-OPS",
+      "moduleId": "L2-M-R22",
+      "parentL1": "L1-R22",
+      "kind": "CORE",
+      "name": "Göç, aile, idarî ve uluslararası başvuru formları — esas modül iş akışı",
+      "actor": "Başvuran / göç-aile-idarî formu",
+      "trigger": "Göç veya resmî karar başvurusu başlar",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "İşlem/ülke/yetki ayrılır",
+        "Tarih ve özel veri kontrolleri uygulanır",
+        "Hukuk/IND inceleme durumuna aktarılır",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Yanıltıcı resmî gönderim iddiası taşımayan taslak",
+      "gate": "B07,B17",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R22-GATE",
+      "moduleId": "L2-M-R22",
+      "parentL1": "L1-R22",
+      "kind": "ACCEPTANCE",
+      "name": "Göç, aile, idarî ve uluslararası başvuru formları — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B07,B17",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R23-OPS",
+      "moduleId": "L2-M-R23",
+      "parentL1": "L1-R23",
+      "kind": "CORE",
+      "name": "Güvenli belge yükleme ve dijital dosya — esas modül iş akışı",
+      "actor": "Dosya sahibi / belge sorumlusu",
+      "trigger": "Özel belge yükleme ya da erişim talebi gelir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Gerçek Auth, dosya sahipliği, açık rıza ve izin kontrol edilir",
+        "Güvenli nesne saklama ve sürüm kaydı yapılır",
+        "Erişim iptali/saklama/denetim yoluna devredilir",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Müşteri bazında yalıtılmış özel belge",
+      "gate": "B01,B02,B04",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R23-GATE",
+      "moduleId": "L2-M-R23",
+      "parentL1": "L1-R23",
+      "kind": "ACCEPTANCE",
+      "name": "Güvenli belge yükleme ve dijital dosya — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B01,B02,B04",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R24-OPS",
+      "moduleId": "L2-M-R24",
+      "parentL1": "L1-R24",
+      "kind": "CORE",
+      "name": "Müşteri hesabı, panel ve dosya durumu — esas modül iş akışı",
+      "actor": "Müşteri / atanmış personel",
+      "trigger": "Hesap veya dosya durumu sorgulanır",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Kimlik ve dosya rolü kontrol edilir",
+        "Durum, belge ve yazışma yalnız yetkiye göre gösterilir",
+        "İzinli işlem/mesaja geçilir",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Gerçek durum ve kimlik sınırındaki müşteri paneli",
+      "gate": "B04,B06",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R24-GATE",
+      "moduleId": "L2-M-R24",
+      "parentL1": "L1-R24",
+      "kind": "ACCEPTANCE",
+      "name": "Müşteri hesabı, panel ve dosya durumu — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B06",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R25-OPS",
+      "moduleId": "L2-M-R25",
+      "parentL1": "L1-R25",
+      "kind": "CORE",
+      "name": "Görüşme, randevu, mesajlaşma ve bildirim — esas modül iş akışı",
+      "actor": "Müşteri / personel",
+      "trigger": "Görüşme, mesaj veya bildirim ihtiyacı gelir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Dosya katılım ve rıza kontrol edilir",
+        "Takvim veya yazışma oluşturulur",
+        "Bildirim sonucu ve kayıt saklanır",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Yetkilendirilmiş iletişim ve randevu izi",
+      "gate": "B04,B13",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R25-GATE",
+      "moduleId": "L2-M-R25",
+      "parentL1": "L1-R25",
+      "kind": "ACCEPTANCE",
+      "name": "Görüşme, randevu, mesajlaşma ve bildirim — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B13",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R26-OPS",
+      "moduleId": "L2-M-R26",
+      "parentL1": "L1-R26",
+      "kind": "CORE",
+      "name": "Ücretler, sözleşme, ödeme ve tüketici hakları — esas modül iş akışı",
+      "actor": "Müşteri / finans sorumlusu",
+      "trigger": "Ücret veya sözleşme adımı başlar",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Teklif, KDV, tüketici hakkı ve imza ayrılır",
+        "Ödeme sağlayıcı doğrulanmış statüsü kontrol edilir",
+        "İptal/iade veya dosya durumuna geçilir",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Doğrulanmış ücret ve tüketici hakları akışı",
+      "gate": "B08,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R26-GATE",
+      "moduleId": "L2-M-R26",
+      "parentL1": "L1-R26",
+      "kind": "ACCEPTANCE",
+      "name": "Ücretler, sözleşme, ödeme ve tüketici hakları — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B08,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R27-OPS",
+      "moduleId": "L2-M-R27",
+      "parentL1": "L1-R27",
+      "kind": "CORE",
+      "name": "Uzman ağı, iş ortakları ve yönlendirme — esas modül iş akışı",
+      "actor": "Kurucu / uzman koordinatörü",
+      "trigger": "Uzman daveti ya da yönlendirme talebi gelir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Gerçek kişi, mesleki kayıt ve yetki denetlenir",
+        "İş ortaklığı/çıkar çatışması ve rıza incelenir",
+        "Sınırlı rol/ülke kapsamıyla dosya devredilir",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Yetkisi ve veri erişimi sınırlandırılmış uzman rotası",
+      "gate": "B05,B15",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R27-GATE",
+      "moduleId": "L2-M-R27",
+      "parentL1": "L1-R27",
+      "kind": "ACCEPTANCE",
+      "name": "Uzman ağı, iş ortakları ve yönlendirme — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B05,B15",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R28-OPS",
+      "moduleId": "L2-M-R28",
+      "parentL1": "L1-R28",
+      "kind": "CORE",
+      "name": "Çok dillilik, hukukî çeviri ve yerelleştirme — esas modül iş akışı",
+      "actor": "Çeviri / yerelleştirme inceleyeni",
+      "trigger": "Metin dil veya RTL desteği ister",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Kaynak metin ve ülke terimi eşleştirilir",
+        "Ana dil, hukukî içerik ve AR RTL test edilir",
+        "Onaylı dil sürümü yayına devredilir",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Altı dilde gözden geçirilmiş sürümlü içerik",
+      "gate": "B09,B14",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R28-GATE",
+      "moduleId": "L2-M-R28",
+      "parentL1": "L1-R28",
+      "kind": "ACCEPTANCE",
+      "name": "Çok dillilik, hukukî çeviri ve yerelleştirme — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B09,B14",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R29-OPS",
+      "moduleId": "L2-M-R29",
+      "parentL1": "L1-R29",
+      "kind": "CORE",
+      "name": "AVG/GDPR, gizlilik ve veri yönetimi — esas modül iş akışı",
+      "actor": "DPO / veri öznesi",
+      "trigger": "Veri işleme veya DSAR talebi oluşur",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Hukukî dayanak, envanter, saklama ve erişim belirlenir",
+        "DSAR/ihlal/aktarımı yetkili kişi inceler",
+        "Günlük ve veri sahibi bilgilendirmesi yapılır",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Denetlenebilir GDPR kayıtları",
+      "gate": "B06,B13",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R29-GATE",
+      "moduleId": "L2-M-R29",
+      "parentL1": "L1-R29",
+      "kind": "ACCEPTANCE",
+      "name": "AVG/GDPR, gizlilik ve veri yönetimi — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B06,B13",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R30-OPS",
+      "moduleId": "L2-M-R30",
+      "parentL1": "L1-R30",
+      "kind": "CORE",
+      "name": "Siber güvenlik, kimlik ve operasyonel dayanıklılık — esas modül iş akışı",
+      "actor": "Güvenlik ve platform sorumlusu",
+      "trigger": "Kimlik/güvenlik olayı veya yayın kontrolü gerekir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Tehdit/RLS/MFA/Storage durumu taranır",
+        "İzolasyon, yedek, kayıp ve geri alma senaryosu sınanır",
+        "Açık engeller kapanmadan GO verilmez",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Canlıya ayrı onaylı güvenlik geçidi",
+      "gate": "B01,B02,B03,B04,B13",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R30-GATE",
+      "moduleId": "L2-M-R30",
+      "parentL1": "L1-R30",
+      "kind": "ACCEPTANCE",
+      "name": "Siber güvenlik, kimlik ve operasyonel dayanıklılık — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B01,B02,B03,B04,B13",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R31-OPS",
+      "moduleId": "L2-M-R31",
+      "parentL1": "L1-R31",
+      "kind": "CORE",
+      "name": "İç yönetim paneli, CRM ve otomasyon — esas modül iş akışı",
+      "actor": "Personel / operasyon yöneticisi",
+      "trigger": "İç dosya görevi veya denetim açılır",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Bireysel atama ve modül yetkisi doğrulanır",
+        "İç iş/durum/reviewer kaydı yönetilir",
+        "Denetim izi ve kapanışa devredilir",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Rol ayrımlı gerçek personel çalışma alanı",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R31-GATE",
+      "moduleId": "L2-M-R31",
+      "parentL1": "L1-R31",
+      "kind": "ACCEPTANCE",
+      "name": "İç yönetim paneli, CRM ve otomasyon — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R32-OPS",
+      "moduleId": "L2-M-R32",
+      "parentL1": "L1-R32",
+      "kind": "CORE",
+      "name": "Erişilebilirlik, arama, SEO ve kullanıcı deneyimi — esas modül iş akışı",
+      "actor": "Erişilebilirlik / SEO inceleyeni",
+      "trigger": "Yeni ekran, dil veya içerik yayımlanacaktır",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "WCAG, RTL ve cihaz testi yapılır",
+        "Arama/metadata ve gezinme denetlenir",
+        "İyileştirme ve yayın izlemeye alınır",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Erişilebilir ve bulunabilir portal sürümü",
+      "gate": "B14",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R32-GATE",
+      "moduleId": "L2-M-R32",
+      "parentL1": "L1-R32",
+      "kind": "ACCEPTANCE",
+      "name": "Erişilebilirlik, arama, SEO ve kullanıcı deneyimi — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B14",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-R33-OPS",
+      "moduleId": "L2-M-R33",
+      "parentL1": "L1-R33",
+      "kind": "CORE",
+      "name": "Teknik mimari, kalite güvencesi ve yayına geçiş — esas modül iş akışı",
+      "actor": "Platform / yayın sorumlusu",
+      "trigger": "Sürüm veya altyapı değişikliği önerilir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Kod/şema ve CI kanıtları ilişkilendirilir",
+        "Staging, güvenlik ve bağımsız QA geçitleri çalışır",
+        "Ayrı canlı izin ve geri alma kararı kayıtlanır",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "İzlenebilir GO/NO-GO sürüm kararı",
+      "gate": "B01–B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-R33-GATE",
+      "moduleId": "L2-M-R33",
+      "parentL1": "L1-R33",
+      "kind": "ACCEPTANCE",
+      "name": "Teknik mimari, kalite güvencesi ve yayına geçiş — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B01–B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-ST-inbox-OPS",
+      "moduleId": "L2-M-ST-inbox",
+      "parentL1": "L1-ST-inbox",
+      "kind": "CORE",
+      "name": "Başvuru masası (inbox) — esas modül iş akışı",
+      "actor": "Operatör / başvuru masası",
+      "trigger": "Başvuru kaydı",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Talep listesini dosya ve role göre incele",
+        "Bireysel modül yetkisi ve dosya atamasıyla ilerle",
+        "Triyaj işine sevk",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Triyaj işine sevk",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-ST-inbox-AUTH",
+      "moduleId": "L2-M-ST-inbox",
+      "parentL1": "L1-ST-inbox",
+      "kind": "AUTHORIZATION",
+      "name": "Başvuru masası (inbox) — bireysel yetki, görev ve geri çekme",
+      "actor": "Admin / bağımsız yetkili",
+      "trigger": "Modül bazlı kullanıcı rol ve dosya talebi",
+      "steps": [
+        "AAL2/Auth ve bireysel grant durumunu kontrol et",
+        "Dosya ataması, meslekî kapsam ve asgarî erişimi doğrula",
+        "İzinleri geri çekme ve iki göz onayını denetim kaydına bağla"
+      ],
+      "expectedOutcome": "Yetki/iptal kanıtı ve sınırlanmış işlem erişimi",
+      "gate": "B04/B13/B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "ROLE_BOUNDARY_NOT_IMPL"
+    },
+    {
+      "id": "L2-F-ST-inbox-GATE",
+      "moduleId": "L2-M-ST-inbox",
+      "parentL1": "L1-ST-inbox",
+      "kind": "ACCEPTANCE",
+      "name": "Başvuru masası (inbox) — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-ST-triage-OPS",
+      "moduleId": "L2-M-ST-triage",
+      "parentL1": "L1-ST-triage",
+      "kind": "CORE",
+      "name": "Ön inceleme (triage) — esas modül iş akışı",
+      "actor": "Yetkili triyaj personeli",
+      "trigger": "Ön inceleme bekleyen talep",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Ülke/usul ve acil süre riskini ayır",
+        "Bireysel modül yetkisi ve dosya atamasıyla ilerle",
+        "Dosya veya hukukçu incelemesine devret",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Dosya veya hukukçu incelemesine devret",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-ST-triage-AUTH",
+      "moduleId": "L2-M-ST-triage",
+      "parentL1": "L1-ST-triage",
+      "kind": "AUTHORIZATION",
+      "name": "Ön inceleme (triage) — bireysel yetki, görev ve geri çekme",
+      "actor": "Admin / bağımsız yetkili",
+      "trigger": "Modül bazlı kullanıcı rol ve dosya talebi",
+      "steps": [
+        "AAL2/Auth ve bireysel grant durumunu kontrol et",
+        "Dosya ataması, meslekî kapsam ve asgarî erişimi doğrula",
+        "İzinleri geri çekme ve iki göz onayını denetim kaydına bağla"
+      ],
+      "expectedOutcome": "Yetki/iptal kanıtı ve sınırlanmış işlem erişimi",
+      "gate": "B04/B13/B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "ROLE_BOUNDARY_NOT_IMPL"
+    },
+    {
+      "id": "L2-F-ST-triage-GATE",
+      "moduleId": "L2-M-ST-triage",
+      "parentL1": "L1-ST-triage",
+      "kind": "ACCEPTANCE",
+      "name": "Ön inceleme (triage) — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-ST-matters-OPS",
+      "moduleId": "L2-M-ST-matters",
+      "parentL1": "L1-ST-matters",
+      "kind": "CORE",
+      "name": "Dosyalar (matters) — esas modül iş akışı",
+      "actor": "Atanmış dosya personeli",
+      "trigger": "Açık dosya",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Dosya durum ve görevlerini yönet",
+        "Bireysel modül yetkisi ve dosya atamasıyla ilerle",
+        "İnceleme veya müşteri panelini güncelle",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "İnceleme veya müşteri panelini güncelle",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-ST-matters-AUTH",
+      "moduleId": "L2-M-ST-matters",
+      "parentL1": "L1-ST-matters",
+      "kind": "AUTHORIZATION",
+      "name": "Dosyalar (matters) — bireysel yetki, görev ve geri çekme",
+      "actor": "Admin / bağımsız yetkili",
+      "trigger": "Modül bazlı kullanıcı rol ve dosya talebi",
+      "steps": [
+        "AAL2/Auth ve bireysel grant durumunu kontrol et",
+        "Dosya ataması, meslekî kapsam ve asgarî erişimi doğrula",
+        "İzinleri geri çekme ve iki göz onayını denetim kaydına bağla"
+      ],
+      "expectedOutcome": "Yetki/iptal kanıtı ve sınırlanmış işlem erişimi",
+      "gate": "B04/B13/B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "ROLE_BOUNDARY_NOT_IMPL"
+    },
+    {
+      "id": "L2-F-ST-matters-GATE",
+      "moduleId": "L2-M-ST-matters",
+      "parentL1": "L1-ST-matters",
+      "kind": "ACCEPTANCE",
+      "name": "Dosyalar (matters) — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-ST-calendar-OPS",
+      "moduleId": "L2-M-ST-calendar",
+      "parentL1": "L1-ST-calendar",
+      "kind": "CORE",
+      "name": "Takvim/görev (calendar) — esas modül iş akışı",
+      "actor": "Atanmış personel",
+      "trigger": "Görüşme veya süre olayı",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Görev ve randevu takvimini kontrol et",
+        "Bireysel modül yetkisi ve dosya atamasıyla ilerle",
+        "Yetkili kişilere bildirim kaydet",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Yetkili kişilere bildirim kaydet",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-ST-calendar-AUTH",
+      "moduleId": "L2-M-ST-calendar",
+      "parentL1": "L1-ST-calendar",
+      "kind": "AUTHORIZATION",
+      "name": "Takvim/görev (calendar) — bireysel yetki, görev ve geri çekme",
+      "actor": "Admin / bağımsız yetkili",
+      "trigger": "Modül bazlı kullanıcı rol ve dosya talebi",
+      "steps": [
+        "AAL2/Auth ve bireysel grant durumunu kontrol et",
+        "Dosya ataması, meslekî kapsam ve asgarî erişimi doğrula",
+        "İzinleri geri çekme ve iki göz onayını denetim kaydına bağla"
+      ],
+      "expectedOutcome": "Yetki/iptal kanıtı ve sınırlanmış işlem erişimi",
+      "gate": "B04/B13/B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "ROLE_BOUNDARY_NOT_IMPL"
+    },
+    {
+      "id": "L2-F-ST-calendar-GATE",
+      "moduleId": "L2-M-ST-calendar",
+      "parentL1": "L1-ST-calendar",
+      "kind": "ACCEPTANCE",
+      "name": "Takvim/görev (calendar) — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-ST-documents-OPS",
+      "moduleId": "L2-M-ST-documents",
+      "parentL1": "L1-ST-documents",
+      "kind": "CORE",
+      "name": "Belgeler (documents) — esas modül iş akışı",
+      "actor": "Dosya belge görevlisi",
+      "trigger": "Belge talebi / müşteri onayı",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Belgenin izinli sürüm ve erişimini yönet",
+        "Bireysel modül yetkisi ve dosya atamasıyla ilerle",
+        "İnceleme, revokasyon veya saklamaya aktar",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "İnceleme, revokasyon veya saklamaya aktar",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-ST-documents-AUTH",
+      "moduleId": "L2-M-ST-documents",
+      "parentL1": "L1-ST-documents",
+      "kind": "AUTHORIZATION",
+      "name": "Belgeler (documents) — bireysel yetki, görev ve geri çekme",
+      "actor": "Admin / bağımsız yetkili",
+      "trigger": "Modül bazlı kullanıcı rol ve dosya talebi",
+      "steps": [
+        "AAL2/Auth ve bireysel grant durumunu kontrol et",
+        "Dosya ataması, meslekî kapsam ve asgarî erişimi doğrula",
+        "İzinleri geri çekme ve iki göz onayını denetim kaydına bağla"
+      ],
+      "expectedOutcome": "Yetki/iptal kanıtı ve sınırlanmış işlem erişimi",
+      "gate": "B04/B13/B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "ROLE_BOUNDARY_NOT_IMPL"
+    },
+    {
+      "id": "L2-F-ST-documents-GATE",
+      "moduleId": "L2-M-ST-documents",
+      "parentL1": "L1-ST-documents",
+      "kind": "ACCEPTANCE",
+      "name": "Belgeler (documents) — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-ST-pleadings-OPS",
+      "moduleId": "L2-M-ST-pleadings",
+      "parentL1": "L1-ST-pleadings",
+      "kind": "CORE",
+      "name": "Dilekçe ve taslak (pleadings) — esas modül iş akışı",
+      "actor": "Belge hazırlama personeli",
+      "trigger": "Hukukî taslak isteği",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Kaynaklı sürümlü taslak hazırla",
+        "Bireysel modül yetkisi ve dosya atamasıyla ilerle",
+        "Bağımsız hukukî incelemeye aktar",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Bağımsız hukukî incelemeye aktar",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-ST-pleadings-AUTH",
+      "moduleId": "L2-M-ST-pleadings",
+      "parentL1": "L1-ST-pleadings",
+      "kind": "AUTHORIZATION",
+      "name": "Dilekçe ve taslak (pleadings) — bireysel yetki, görev ve geri çekme",
+      "actor": "Admin / bağımsız yetkili",
+      "trigger": "Modül bazlı kullanıcı rol ve dosya talebi",
+      "steps": [
+        "AAL2/Auth ve bireysel grant durumunu kontrol et",
+        "Dosya ataması, meslekî kapsam ve asgarî erişimi doğrula",
+        "İzinleri geri çekme ve iki göz onayını denetim kaydına bağla"
+      ],
+      "expectedOutcome": "Yetki/iptal kanıtı ve sınırlanmış işlem erişimi",
+      "gate": "B04/B13/B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "ROLE_BOUNDARY_NOT_IMPL"
+    },
+    {
+      "id": "L2-F-ST-pleadings-GATE",
+      "moduleId": "L2-M-ST-pleadings",
+      "parentL1": "L1-ST-pleadings",
+      "kind": "ACCEPTANCE",
+      "name": "Dilekçe ve taslak (pleadings) — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-ST-research-OPS",
+      "moduleId": "L2-M-ST-research",
+      "parentL1": "L1-ST-research",
+      "kind": "CORE",
+      "name": "Mevzuat/içtihat (research) — esas modül iş akışı",
+      "actor": "Hukukî araştırma personeli",
+      "trigger": "Resmî kaynak inceleme ihtiyacı",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Mevzuat/içtihat kaynağı ve tarihi kaydet",
+        "Bireysel modül yetkisi ve dosya atamasıyla ilerle",
+        "Onaylı inceleme notuna bağla",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Onaylı inceleme notuna bağla",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-ST-research-AUTH",
+      "moduleId": "L2-M-ST-research",
+      "parentL1": "L1-ST-research",
+      "kind": "AUTHORIZATION",
+      "name": "Mevzuat/içtihat (research) — bireysel yetki, görev ve geri çekme",
+      "actor": "Admin / bağımsız yetkili",
+      "trigger": "Modül bazlı kullanıcı rol ve dosya talebi",
+      "steps": [
+        "AAL2/Auth ve bireysel grant durumunu kontrol et",
+        "Dosya ataması, meslekî kapsam ve asgarî erişimi doğrula",
+        "İzinleri geri çekme ve iki göz onayını denetim kaydına bağla"
+      ],
+      "expectedOutcome": "Yetki/iptal kanıtı ve sınırlanmış işlem erişimi",
+      "gate": "B04/B13/B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "ROLE_BOUNDARY_NOT_IMPL"
+    },
+    {
+      "id": "L2-F-ST-research-GATE",
+      "moduleId": "L2-M-ST-research",
+      "parentL1": "L1-ST-research",
+      "kind": "ACCEPTANCE",
+      "name": "Mevzuat/içtihat (research) — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-ST-judicial-OPS",
+      "moduleId": "L2-M-ST-judicial",
+      "parentL1": "L1-ST-judicial",
+      "kind": "CORE",
+      "name": "Mahkeme bağlantıları (judicial) — esas modül iş akışı",
+      "actor": "Yargı usulü yetkilisi",
+      "trigger": "Mahkeme metaveri isteği",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Resmî süreç ve kurum sınırını ayır",
+        "Bireysel modül yetkisi ve dosya atamasıyla ilerle",
+        "Gerçek makbuz yoksa gönderilmedi kaydet",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Gerçek makbuz yoksa gönderilmedi kaydet",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-ST-judicial-AUTH",
+      "moduleId": "L2-M-ST-judicial",
+      "parentL1": "L1-ST-judicial",
+      "kind": "AUTHORIZATION",
+      "name": "Mahkeme bağlantıları (judicial) — bireysel yetki, görev ve geri çekme",
+      "actor": "Admin / bağımsız yetkili",
+      "trigger": "Modül bazlı kullanıcı rol ve dosya talebi",
+      "steps": [
+        "AAL2/Auth ve bireysel grant durumunu kontrol et",
+        "Dosya ataması, meslekî kapsam ve asgarî erişimi doğrula",
+        "İzinleri geri çekme ve iki göz onayını denetim kaydına bağla"
+      ],
+      "expectedOutcome": "Yetki/iptal kanıtı ve sınırlanmış işlem erişimi",
+      "gate": "B04/B13/B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "ROLE_BOUNDARY_NOT_IMPL"
+    },
+    {
+      "id": "L2-F-ST-judicial-GATE",
+      "moduleId": "L2-M-ST-judicial",
+      "parentL1": "L1-ST-judicial",
+      "kind": "ACCEPTANCE",
+      "name": "Mahkeme bağlantıları (judicial) — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-ST-ind-OPS",
+      "moduleId": "L2-M-ST-ind",
+      "parentL1": "L1-ST-ind",
+      "kind": "CORE",
+      "name": "IND işlemleri (ind) — esas modül iş akışı",
+      "actor": "IND yetkili hukukçu",
+      "trigger": "IND işlem taslağı",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Usul/G1–G4 kritik kapılarını işlet",
+        "Bireysel modül yetkisi ve dosya atamasıyla ilerle",
+        "Gerçek işlem kanıtı olmadan dosya aşaması yükseltme",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Gerçek işlem kanıtı olmadan dosya aşaması yükseltme",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-ST-ind-AUTH",
+      "moduleId": "L2-M-ST-ind",
+      "parentL1": "L1-ST-ind",
+      "kind": "AUTHORIZATION",
+      "name": "IND işlemleri (ind) — bireysel yetki, görev ve geri çekme",
+      "actor": "Admin / bağımsız yetkili",
+      "trigger": "Modül bazlı kullanıcı rol ve dosya talebi",
+      "steps": [
+        "AAL2/Auth ve bireysel grant durumunu kontrol et",
+        "Dosya ataması, meslekî kapsam ve asgarî erişimi doğrula",
+        "İzinleri geri çekme ve iki göz onayını denetim kaydına bağla"
+      ],
+      "expectedOutcome": "Yetki/iptal kanıtı ve sınırlanmış işlem erişimi",
+      "gate": "B04/B13/B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "ROLE_BOUNDARY_NOT_IMPL"
+    },
+    {
+      "id": "L2-F-ST-ind-GATE",
+      "moduleId": "L2-M-ST-ind",
+      "parentL1": "L1-ST-ind",
+      "kind": "ACCEPTANCE",
+      "name": "IND işlemleri (ind) — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-ST-messages-OPS",
+      "moduleId": "L2-M-ST-messages",
+      "parentL1": "L1-ST-messages",
+      "kind": "CORE",
+      "name": "Yazışmalar (messages) — esas modül iş akışı",
+      "actor": "Atanmış personel",
+      "trigger": "Müşteri iletişim ihtiyacı",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Dosya yetkisi ve rıza ile mesajı hazırla",
+        "Bireysel modül yetkisi ve dosya atamasıyla ilerle",
+        "Müşteriye açık yanıt ve audit kaydet",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Müşteriye açık yanıt ve audit kaydet",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-ST-messages-AUTH",
+      "moduleId": "L2-M-ST-messages",
+      "parentL1": "L1-ST-messages",
+      "kind": "AUTHORIZATION",
+      "name": "Yazışmalar (messages) — bireysel yetki, görev ve geri çekme",
+      "actor": "Admin / bağımsız yetkili",
+      "trigger": "Modül bazlı kullanıcı rol ve dosya talebi",
+      "steps": [
+        "AAL2/Auth ve bireysel grant durumunu kontrol et",
+        "Dosya ataması, meslekî kapsam ve asgarî erişimi doğrula",
+        "İzinleri geri çekme ve iki göz onayını denetim kaydına bağla"
+      ],
+      "expectedOutcome": "Yetki/iptal kanıtı ve sınırlanmış işlem erişimi",
+      "gate": "B04/B13/B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "ROLE_BOUNDARY_NOT_IMPL"
+    },
+    {
+      "id": "L2-F-ST-messages-GATE",
+      "moduleId": "L2-M-ST-messages",
+      "parentL1": "L1-ST-messages",
+      "kind": "ACCEPTANCE",
+      "name": "Yazışmalar (messages) — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-ST-billing-OPS",
+      "moduleId": "L2-M-ST-billing",
+      "parentL1": "L1-ST-billing",
+      "kind": "CORE",
+      "name": "Gelir/fatura (billing) — esas modül iş akışı",
+      "actor": "Finans yetkilisi",
+      "trigger": "Teklif/fatura/ödemeye bağlı olay",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "İlgili dosya ve doğrulanmış ödeme durumunu ayır",
+        "Bireysel modül yetkisi ve dosya atamasıyla ilerle",
+        "Mutabakat ve müşteri bildirimine devret",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Mutabakat ve müşteri bildirimine devret",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-ST-billing-AUTH",
+      "moduleId": "L2-M-ST-billing",
+      "parentL1": "L1-ST-billing",
+      "kind": "AUTHORIZATION",
+      "name": "Gelir/fatura (billing) — bireysel yetki, görev ve geri çekme",
+      "actor": "Admin / bağımsız yetkili",
+      "trigger": "Modül bazlı kullanıcı rol ve dosya talebi",
+      "steps": [
+        "AAL2/Auth ve bireysel grant durumunu kontrol et",
+        "Dosya ataması, meslekî kapsam ve asgarî erişimi doğrula",
+        "İzinleri geri çekme ve iki göz onayını denetim kaydına bağla"
+      ],
+      "expectedOutcome": "Yetki/iptal kanıtı ve sınırlanmış işlem erişimi",
+      "gate": "B04/B13/B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "ROLE_BOUNDARY_NOT_IMPL"
+    },
+    {
+      "id": "L2-F-ST-billing-GATE",
+      "moduleId": "L2-M-ST-billing",
+      "parentL1": "L1-ST-billing",
+      "kind": "ACCEPTANCE",
+      "name": "Gelir/fatura (billing) — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-ST-payables-OPS",
+      "moduleId": "L2-M-ST-payables",
+      "parentL1": "L1-ST-payables",
+      "kind": "CORE",
+      "name": "Gider/para çıkışı (payables) — esas modül iş akışı",
+      "actor": "Yetkili gider görevlisi",
+      "trigger": "Masraf/para çıkışı isteği",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Tutar ve yetki ayrımı ile iki göz onayına gönder",
+        "Bireysel modül yetkisi ve dosya atamasıyla ilerle",
+        "Onay ve gerçek banka mutabakatı öncesi ödeme iddia etme",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Onay ve gerçek banka mutabakatı öncesi ödeme iddia etme",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-ST-payables-AUTH",
+      "moduleId": "L2-M-ST-payables",
+      "parentL1": "L1-ST-payables",
+      "kind": "AUTHORIZATION",
+      "name": "Gider/para çıkışı (payables) — bireysel yetki, görev ve geri çekme",
+      "actor": "Admin / bağımsız yetkili",
+      "trigger": "Modül bazlı kullanıcı rol ve dosya talebi",
+      "steps": [
+        "AAL2/Auth ve bireysel grant durumunu kontrol et",
+        "Dosya ataması, meslekî kapsam ve asgarî erişimi doğrula",
+        "İzinleri geri çekme ve iki göz onayını denetim kaydına bağla"
+      ],
+      "expectedOutcome": "Yetki/iptal kanıtı ve sınırlanmış işlem erişimi",
+      "gate": "B04/B13/B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "ROLE_BOUNDARY_NOT_IMPL"
+    },
+    {
+      "id": "L2-F-ST-payables-GATE",
+      "moduleId": "L2-M-ST-payables",
+      "parentL1": "L1-ST-payables",
+      "kind": "ACCEPTANCE",
+      "name": "Gider/para çıkışı (payables) — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-ST-reporting-OPS",
+      "moduleId": "L2-M-ST-reporting",
+      "parentL1": "L1-ST-reporting",
+      "kind": "CORE",
+      "name": "Raporlama (reporting) — esas modül iş akışı",
+      "actor": "Raporlama sorumlusu",
+      "trigger": "Dönem veya dosya raporu",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Yetkili veri ile anonimleştirilmiş rapor üret",
+        "Bireysel modül yetkisi ve dosya atamasıyla ilerle",
+        "Bağımsız kontrol ve saklama durumuna geçir",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Bağımsız kontrol ve saklama durumuna geçir",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-ST-reporting-AUTH",
+      "moduleId": "L2-M-ST-reporting",
+      "parentL1": "L1-ST-reporting",
+      "kind": "AUTHORIZATION",
+      "name": "Raporlama (reporting) — bireysel yetki, görev ve geri çekme",
+      "actor": "Admin / bağımsız yetkili",
+      "trigger": "Modül bazlı kullanıcı rol ve dosya talebi",
+      "steps": [
+        "AAL2/Auth ve bireysel grant durumunu kontrol et",
+        "Dosya ataması, meslekî kapsam ve asgarî erişimi doğrula",
+        "İzinleri geri çekme ve iki göz onayını denetim kaydına bağla"
+      ],
+      "expectedOutcome": "Yetki/iptal kanıtı ve sınırlanmış işlem erişimi",
+      "gate": "B04/B13/B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "ROLE_BOUNDARY_NOT_IMPL"
+    },
+    {
+      "id": "L2-F-ST-reporting-GATE",
+      "moduleId": "L2-M-ST-reporting",
+      "parentL1": "L1-ST-reporting",
+      "kind": "ACCEPTANCE",
+      "name": "Raporlama (reporting) — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-ST-audit-OPS",
+      "moduleId": "L2-M-ST-audit",
+      "parentL1": "L1-ST-audit",
+      "kind": "CORE",
+      "name": "Denetim (audit) — esas modül iş akışı",
+      "actor": "Bağımsız denetçi",
+      "trigger": "Yetki veya güvenlik olayı",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Olayın zaman, aktör, nesne ve kaynak izini izle",
+        "Bireysel modül yetkisi ve dosya atamasıyla ilerle",
+        "Bağımsız inceleme kaydına devret",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Bağımsız inceleme kaydına devret",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-ST-audit-AUTH",
+      "moduleId": "L2-M-ST-audit",
+      "parentL1": "L1-ST-audit",
+      "kind": "AUTHORIZATION",
+      "name": "Denetim (audit) — bireysel yetki, görev ve geri çekme",
+      "actor": "Admin / bağımsız yetkili",
+      "trigger": "Modül bazlı kullanıcı rol ve dosya talebi",
+      "steps": [
+        "AAL2/Auth ve bireysel grant durumunu kontrol et",
+        "Dosya ataması, meslekî kapsam ve asgarî erişimi doğrula",
+        "İzinleri geri çekme ve iki göz onayını denetim kaydına bağla"
+      ],
+      "expectedOutcome": "Yetki/iptal kanıtı ve sınırlanmış işlem erişimi",
+      "gate": "B04/B13/B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "ROLE_BOUNDARY_NOT_IMPL"
+    },
+    {
+      "id": "L2-F-ST-audit-GATE",
+      "moduleId": "L2-M-ST-audit",
+      "parentL1": "L1-ST-audit",
+      "kind": "ACCEPTANCE",
+      "name": "Denetim (audit) — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-ST-people-OPS",
+      "moduleId": "L2-M-ST-people",
+      "parentL1": "L1-ST-people",
+      "kind": "CORE",
+      "name": "Personel (people) — esas modül iş akışı",
+      "actor": "Yetkili personel yöneticisi",
+      "trigger": "Personel giriş/rol değişikliği",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Kimlik, MFA, kişisel grant ve iptal işlemini ayır",
+        "Bireysel modül yetkisi ve dosya atamasıyla ilerle",
+        "Atama ve erişim izlerini yenile",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Atama ve erişim izlerini yenile",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-ST-people-AUTH",
+      "moduleId": "L2-M-ST-people",
+      "parentL1": "L1-ST-people",
+      "kind": "AUTHORIZATION",
+      "name": "Personel (people) — bireysel yetki, görev ve geri çekme",
+      "actor": "Admin / bağımsız yetkili",
+      "trigger": "Modül bazlı kullanıcı rol ve dosya talebi",
+      "steps": [
+        "AAL2/Auth ve bireysel grant durumunu kontrol et",
+        "Dosya ataması, meslekî kapsam ve asgarî erişimi doğrula",
+        "İzinleri geri çekme ve iki göz onayını denetim kaydına bağla"
+      ],
+      "expectedOutcome": "Yetki/iptal kanıtı ve sınırlanmış işlem erişimi",
+      "gate": "B04/B13/B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "ROLE_BOUNDARY_NOT_IMPL"
+    },
+    {
+      "id": "L2-F-ST-people-GATE",
+      "moduleId": "L2-M-ST-people",
+      "parentL1": "L1-ST-people",
+      "kind": "ACCEPTANCE",
+      "name": "Personel (people) — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-ST-settings-OPS",
+      "moduleId": "L2-M-ST-settings",
+      "parentL1": "L1-ST-settings",
+      "kind": "CORE",
+      "name": "Ayarlar/yayın (settings) — esas modül iş akışı",
+      "actor": "Yetkili CMS yöneticisi",
+      "trigger": "Ayar/yayın değişikliği",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Değişikliği taslak–hukukî inceleme–yayın kilidiyle ilerlet",
+        "Bireysel modül yetkisi ve dosya atamasıyla ilerle",
+        "Yetkili onay olmadan prod yayını yapma",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Yetkili onay olmadan prod yayını yapma",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-ST-settings-AUTH",
+      "moduleId": "L2-M-ST-settings",
+      "parentL1": "L1-ST-settings",
+      "kind": "AUTHORIZATION",
+      "name": "Ayarlar/yayın (settings) — bireysel yetki, görev ve geri çekme",
+      "actor": "Admin / bağımsız yetkili",
+      "trigger": "Modül bazlı kullanıcı rol ve dosya talebi",
+      "steps": [
+        "AAL2/Auth ve bireysel grant durumunu kontrol et",
+        "Dosya ataması, meslekî kapsam ve asgarî erişimi doğrula",
+        "İzinleri geri çekme ve iki göz onayını denetim kaydına bağla"
+      ],
+      "expectedOutcome": "Yetki/iptal kanıtı ve sınırlanmış işlem erişimi",
+      "gate": "B04/B13/B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "ROLE_BOUNDARY_NOT_IMPL"
+    },
+    {
+      "id": "L2-F-ST-settings-GATE",
+      "moduleId": "L2-M-ST-settings",
+      "parentL1": "L1-ST-settings",
+      "kind": "ACCEPTANCE",
+      "name": "Ayarlar/yayın (settings) — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B04,B13,B18",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-B-OPS",
+      "moduleId": "L2-M-B",
+      "parentL1": "L1-B",
+      "kind": "CORE",
+      "name": "B01–B18 üretim güvenlik/uyum engelleri — esas modül iş akışı",
+      "actor": "Güvenlik/yayın sorumlusu",
+      "trigger": "Üretim engeli tespit edilir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Engel ve etkilenen canlı kaynağı kaydet",
+        "Staging test/restore ve bağımsız kabul delilini topla",
+        "Engel çözülmeden GO önerme",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Kapatılmamış/kanıtlı B gate kaydı",
+      "gate": "18/18 B kapısı; Auth/Storage/RLS, DSAR, retention, restore, AAL2",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-B-GATE",
+      "moduleId": "L2-M-B",
+      "parentL1": "L1-B",
+      "kind": "ACCEPTANCE",
+      "name": "B01–B18 üretim güvenlik/uyum engelleri — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "18/18 B kapısı; Auth/Storage/RLS, DSAR, retention, restore, AAL2",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-J-OPS",
+      "moduleId": "L2-M-J",
+      "parentL1": "L1-J",
+      "kind": "CORE",
+      "name": "J01–J16 Hollanda yargı entegrasyonları — esas modül iş akışı",
+      "actor": "Yargı entegrasyon ve hukuk ekibi",
+      "trigger": "Hollanda yargı hizmeti kaydı gelir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Kurum ve hukukî yetkiyi sınıflandır",
+        "Kaynaklı metaveri ve süre riskini kaydet",
+        "Gerçek resmî makbuz yoksa gönderildi durumunu kapat",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Yetkili yargı yoluna kayıtlı sevk",
+      "gate": "J01–J16 gerçek kurum yetkisi; tüm R kabul kanıtı, yayın/release GO, DR ve gözlemleme",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-J-GATE",
+      "moduleId": "L2-M-J",
+      "parentL1": "L1-J",
+      "kind": "ACCEPTANCE",
+      "name": "J01–J16 Hollanda yargı entegrasyonları — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "J01–J16 gerçek kurum yetkisi; tüm R kabul kanıtı, yayın/release GO, DR ve gözlemleme",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-P-OPS",
+      "moduleId": "L2-M-P",
+      "parentL1": "L1-P",
+      "kind": "CORE",
+      "name": "P01–P10 personel operasyon ve güvenlik işleri — esas modül iş akışı",
+      "actor": "Personel güvenlik ve operasyon ekibi",
+      "trigger": "İç modül hakkı/iş isteği gelir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Kişisel grant ve atanmış dosyayı eşleştir",
+        "AAL2 ve iki göz onayını uygula",
+        "İşlem/iptal/audit kanıtını sakla",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Kontrol edilen personel faaliyeti",
+      "gate": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-P-GATE",
+      "moduleId": "L2-M-P",
+      "parentL1": "L1-P",
+      "kind": "ACCEPTANCE",
+      "name": "P01–P10 personel operasyon ve güvenlik işleri — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "192/192 modül kabul testi, gerçek personel MFA, iki göz, audit ve finans ayrımı",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-IND-OPS",
+      "moduleId": "L2-M-IND",
+      "parentL1": "L1-IND",
+      "kind": "CORE",
+      "name": "IND-01–08 usul/süreç bölümleri — esas modül iş akışı",
+      "actor": "IND hukukçusu",
+      "trigger": "IND işlem türü seçilir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Prosedür ve yetkili kurum seçimini ayır",
+        "Bildirim tarihi/süre ve belge delilini kontrol et",
+        "Yetki-onaylı hukuki rotaya devret",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Usulü ayrılmış IND dosyası",
+      "gate": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-IND-GATE",
+      "moduleId": "L2-M-IND",
+      "parentL1": "L1-IND",
+      "kind": "ACCEPTANCE",
+      "name": "IND-01–08 usul/süreç bölümleri — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-INDG-OPS",
+      "moduleId": "L2-M-INDG",
+      "parentL1": "L1-INDG",
+      "kind": "CORE",
+      "name": "IND-G1–G4 insan yetki ve onay kapıları — esas modül iş akışı",
+      "actor": "Bağımsız hukukçu",
+      "trigger": "G1–G4 yetki kapısı gündeme gelir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Çalışma ve meslekî yetkiyi teyit et",
+        "Usul/tarih/süreyi ayrı imzalı gözden geçir",
+        "Gizlilik ve veri işleme iznini doğrula",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Dört kapının doğrulanmış durumu",
+      "gate": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-INDG-GATE",
+      "moduleId": "L2-M-INDG",
+      "parentL1": "L1-INDG",
+      "kind": "ACCEPTANCE",
+      "name": "IND-G1–G4 insan yetki ve onay kapıları — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-INDT-OPS",
+      "moduleId": "L2-M-INDT",
+      "parentL1": "L1-INDT",
+      "kind": "CORE",
+      "name": "IND-T01–15 ayrı usul/itiraz senaryoları — esas modül iş akışı",
+      "actor": "Usul testçisi / hukukçu",
+      "trigger": "IND örnek senaryosu devreye girer",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Prosedür ailesi ve ayrım riskini belirle",
+        "Olumlu/olumsuz yol ve makamı kontrol et",
+        "Test kanıtını gerçek işlemlerden ayrı kaydet",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Sentetik senaryo kanıtı, gerçek filing değil",
+      "gate": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-INDT-GATE",
+      "moduleId": "L2-M-INDT",
+      "parentL1": "L1-INDT",
+      "kind": "ACCEPTANCE",
+      "name": "IND-T01–15 ayrı usul/itiraz senaryoları — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B07/B15/B18; G1–G4, yetki, resmî kaynak, gerekirse gerçek makbuz",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-G-OPS",
+      "moduleId": "L2-M-G",
+      "parentL1": "L1-G",
+      "kind": "CORE",
+      "name": "Kuruluş G-01–24 ve yatay Y-01–05 — esas modül iş akışı",
+      "actor": "Kurucu / uyum sorumlusu",
+      "trigger": "Kuruluş veya yatay iş gündeme gelir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Kuruluş belge/sahiplik ve hizmet sınırı belirle",
+        "Yetki/finans/gizlilik için bağımsız kontrol uygula",
+        "Onaylı operasyon/güven sayfasına bağla",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Doğrulanmış kuruluş hazırlığı",
+      "gate": "B05/B07/B15; gerçek kimlik, iş/meslek yetkisi ve sözleşmeler",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-G-GATE",
+      "moduleId": "L2-M-G",
+      "parentL1": "L1-G",
+      "kind": "ACCEPTANCE",
+      "name": "Kuruluş G-01–24 ve yatay Y-01–05 — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B05/B07/B15; gerçek kimlik, iş/meslek yetkisi ve sözleşmeler",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-T-OPS",
+      "moduleId": "L2-M-T",
+      "parentL1": "L1-T",
+      "kind": "CORE",
+      "name": "T01–T13 teknik işletim/test kayıtları — esas modül iş akışı",
+      "actor": "Teknik QA / yayın sorumlusu",
+      "trigger": "Teknik test ya da yayın kapısı gelir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Repo/migration/CI ve ortam farkını incele",
+        "Gerçek staging/DR/kullanıcı akışını doğrula",
+        "Kanıt ve GO/NO-GO kaydını tut",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Kaynaklı QA ve güvenli yayın kararı",
+      "gate": "J01–J16 gerçek kurum yetkisi; tüm R kabul kanıtı, yayın/release GO, DR ve gözlemleme",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-T-GATE",
+      "moduleId": "L2-M-T",
+      "parentL1": "L1-T",
+      "kind": "ACCEPTANCE",
+      "name": "T01–T13 teknik işletim/test kayıtları — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "J01–J16 gerçek kurum yetkisi; tüm R kabul kanıtı, yayın/release GO, DR ve gözlemleme",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-SRV-OPS",
+      "moduleId": "L2-M-SRV",
+      "parentL1": "L1-SRV",
+      "kind": "CORE",
+      "name": "Hizmet sayfaları — esas modül iş akışı",
+      "actor": "Hizmet editörü",
+      "trigger": "17 hizmetin doğru hukukî kapsamı ve ücret/sınırı işaretlenir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Kaynağı ve sürüm tarihini göster",
+        "Kaynak/hizmet formu ve hukuki onay",
+        "Yayın öncesi redaksiyon ve erişilebilirlik kontrolü",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Onaylı hizmet sayfası ve doğru intake rotası",
+      "gate": "B09,B14,B16",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-SRV-GATE",
+      "moduleId": "L2-M-SRV",
+      "parentL1": "L1-SRV",
+      "kind": "ACCEPTANCE",
+      "name": "Hizmet sayfaları — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B09,B14,B16",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-AUD-OPS",
+      "moduleId": "L2-M-AUD",
+      "parentL1": "L1-AUD",
+      "kind": "CORE",
+      "name": "Hedef kitle sayfaları — esas modül iş akışı",
+      "actor": "Kitle editörü",
+      "trigger": "14 hedef kitle ve uygun hizmet yolu ayrılır",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Kaynağı ve sürüm tarihini göster",
+        "Ülke/dil/uzman incelemesi",
+        "Yayın öncesi redaksiyon ve erişilebilirlik kontrolü",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Yanıltıcı olmayan hedef kitle yönlendirmesi",
+      "gate": "B09,B14,B16",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-AUD-GATE",
+      "moduleId": "L2-M-AUD",
+      "parentL1": "L1-AUD",
+      "kind": "ACCEPTANCE",
+      "name": "Hedef kitle sayfaları — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B09,B14,B16",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-SOR-OPS",
+      "moduleId": "L2-M-SOR",
+      "parentL1": "L1-SOR",
+      "kind": "CORE",
+      "name": "Sorun bazlı kullanıcı rotaları — esas modül iş akışı",
+      "actor": "Ürün/hukuk editörü",
+      "trigger": "12 sorun rotası ve aciliyet sınıflanır",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Kaynağı ve sürüm tarihini göster",
+        "Yetki/usul/ilk form kontrolü",
+        "Yayın öncesi redaksiyon ve erişilebilirlik kontrolü",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Güvenli triyaja bağlı yolculuk",
+      "gate": "B09,B14,B16",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-SOR-GATE",
+      "moduleId": "L2-M-SOR",
+      "parentL1": "L1-SOR",
+      "kind": "ACCEPTANCE",
+      "name": "Sorun bazlı kullanıcı rotaları — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B09,B14,B16",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-GUIDE-OPS",
+      "moduleId": "L2-M-GUIDE",
+      "parentL1": "L1-GUIDE",
+      "kind": "CORE",
+      "name": "Kaynaklı hukuk rehberleri — esas modül iş akışı",
+      "actor": "Hukukî editör",
+      "trigger": "16 NL rehberin kaynak ve tarihliliği incelenir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Kaynağı ve sürüm tarihini göster",
+        "Hukukî + yerel dil + ülke kapsam onayı",
+        "Yayın öncesi redaksiyon ve erişilebilirlik kontrolü",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Sürümlü ve kaynaklı rehber",
+      "gate": "B09,B14,B16",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-GUIDE-GATE",
+      "moduleId": "L2-M-GUIDE",
+      "parentL1": "L1-GUIDE",
+      "kind": "ACCEPTANCE",
+      "name": "Kaynaklı hukuk rehberleri — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B09,B14,B16",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-CORP-OPS",
+      "moduleId": "L2-M-CORP",
+      "parentL1": "L1-CORP",
+      "kind": "CORE",
+      "name": "Kurumsal bilgi sayfaları — esas modül iş akışı",
+      "actor": "Kurumsal editör",
+      "trigger": "7 kurumsal sayfa ve gerçek kimlik/rol kanıtı denetlenir",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Kaynağı ve sürüm tarihini göster",
+        "Kurucu + meslek unvan + dil onayı",
+        "Yayın öncesi redaksiyon ve erişilebilirlik kontrolü",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Doğru kurumsal sayfa",
+      "gate": "B09,B14,B16",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-CORP-GATE",
+      "moduleId": "L2-M-CORP",
+      "parentL1": "L1-CORP",
+      "kind": "ACCEPTANCE",
+      "name": "Kurumsal bilgi sayfaları — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B09,B14,B16",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    },
+    {
+      "id": "L2-F-CHK-OPS",
+      "moduleId": "L2-M-CHK",
+      "parentL1": "L1-CHK",
+      "kind": "CORE",
+      "name": "Belge kontrol listeleri (özgün başlık/slug teyidi bekliyor) — esas modül iş akışı",
+      "actor": "Belge editörü",
+      "trigger": "8 kontrol listesinin özgün kaynağı doğrulanır",
+      "steps": [
+        "Yetkili talebi/kaynağı al",
+        "Kaynağı ve sürüm tarihini göster",
+        "Özgün ad/slug ve hukukî kaynak bulunmadan yayın kapalı",
+        "Yayın öncesi redaksiyon ve erişilebilirlik kontrolü",
+        "Durum ve kayıtlı çıktıyı uygun alana devret"
+      ],
+      "expectedOutcome": "Kaynaklı kontrol listesi; şu anda ad/slug doğrulanmadı",
+      "gate": "B09,B14,B16",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "PROCESS_NOT_IMPLEMENTATION"
+    },
+    {
+      "id": "L2-F-CHK-GATE",
+      "moduleId": "L2-M-CHK",
+      "parentL1": "L1-CHK",
+      "kind": "ACCEPTANCE",
+      "name": "Belge kontrol listeleri (özgün başlık/slug teyidi bekliyor) — hukuk/güvenlik/kaynak kabul kapısı",
+      "actor": "Bağımsız reviewer / hukukçu / DPO / QA (ilgili kol)",
+      "trigger": "Esas iş akışı için kontrol veya yayın/erişim kararı gerekir",
+      "steps": [
+        "Özgün talimat ve kaynak/ülke/rol sınırını doğrula",
+        "B01–B18, P/J/IND/G ilgili kapısını ve olumlu/olumsuz teknik kanıtı incele",
+        "Gerçek staging + insan onayı olmadan tamamlandı/published/filing durumu üretme"
+      ],
+      "expectedOutcome": "İzlenebilir kabul/red ve açık engeller listesi",
+      "gate": "B09,B14,B16",
+      "status": "L2_DRAFT",
+      "notOfficialFiling": true,
+      "stage": "GATE_ONLY_NOT_APPROVAL"
+    }
+  ],
+  "crossModuleJourneys": [
+    {
+      "id": "L2-CJ01",
+      "title": "Kamu ziyaretçisi → hedef kitle → hizmet",
+      "modulePath": [
+        "L2-M-R02",
+        "L2-M-R04",
+        "L2-M-R05",
+        "L2-M-R07",
+        "L2-M-AUD",
+        "L2-M-SRV",
+        "L2-M-R20"
+      ],
+      "gates": "B05/B09/B10",
+      "criticalDecision": "Kaynaklı yönlendirme; meslek/ülke iddialarının sınırlanması",
+      "workflowStages": [
+        "Kullanıcı veya iç aktör girişini doğrula",
+        "İlgili modül görev sırasını işlet",
+        "Gizlilik, yetki, meslekî usul ve canlı kanıt kapılarını değerlendir",
+        "İzinli çıktıyı kaydet ve izle"
+      ],
+      "state": "DESIGN_NOT_VALIDATED",
+      "actualExternalSubmission": false
+    },
+    {
+      "id": "L2-CJ02",
+      "title": "İlk başvuru → triyaj → müşteri dosyası",
+      "modulePath": [
+        "L2-M-R20",
+        "L2-M-R21",
+        "L2-M-R22",
+        "L2-M-ST-inbox",
+        "L2-M-ST-triage",
+        "L2-M-R23",
+        "L2-M-R24",
+        "L2-M-ST-matters"
+      ],
+      "gates": "B01/B04/B06",
+      "criticalDecision": "A/B müşteri ayrımı, rıza ve yetkili atama",
+      "workflowStages": [
+        "Kullanıcı veya iç aktör girişini doğrula",
+        "İlgili modül görev sırasını işlet",
+        "Gizlilik, yetki, meslekî usul ve canlı kanıt kapılarını değerlendir",
+        "İzinli çıktıyı kaydet ve izle"
+      ],
+      "state": "DESIGN_NOT_VALIDATED",
+      "actualExternalSubmission": false
+    },
+    {
+      "id": "L2-CJ03",
+      "title": "Belge hazırlama → inceleme → saklama",
+      "modulePath": [
+        "L2-M-R19",
+        "L2-M-R21",
+        "L2-M-R22",
+        "L2-M-R23",
+        "L2-M-ST-documents",
+        "L2-M-ST-pleadings",
+        "L2-M-ST-audit"
+      ],
+      "gates": "B04/B07/B17",
+      "criticalDecision": "Belgeler resmî gönderim değil; açık onay, sürüm ve RLS",
+      "workflowStages": [
+        "Kullanıcı veya iç aktör girişini doğrula",
+        "İlgili modül görev sırasını işlet",
+        "Gizlilik, yetki, meslekî usul ve canlı kanıt kapılarını değerlendir",
+        "İzinli çıktıyı kaydet ve izle"
+      ],
+      "state": "DESIGN_NOT_VALIDATED",
+      "actualExternalSubmission": false
+    },
+    {
+      "id": "L2-CJ04",
+      "title": "IND usul ayrımı → G1–G4 → hukukî inceleme",
+      "modulePath": [
+        "L2-M-R09",
+        "L2-M-IND",
+        "L2-M-INDG",
+        "L2-M-INDT",
+        "L2-M-ST-ind",
+        "L2-M-R16",
+        "L2-M-J"
+      ],
+      "gates": "B07/B15",
+      "criticalDecision": "Usul/tarih/meslek yetkisi; makbuz olmadan filing yok",
+      "workflowStages": [
+        "Kullanıcı veya iç aktör girişini doğrula",
+        "İlgili modül görev sırasını işlet",
+        "Gizlilik, yetki, meslekî usul ve canlı kanıt kapılarını değerlendir",
+        "İzinli çıktıyı kaydet ve izle"
+      ],
+      "state": "DESIGN_NOT_VALIDATED",
+      "actualExternalSubmission": false
+    },
+    {
+      "id": "L2-CJ05",
+      "title": "Hollanda yargı bilgisi → yargı uzmanı → resmi kanal",
+      "modulePath": [
+        "L2-M-J",
+        "L2-M-R16",
+        "L2-M-ST-judicial",
+        "L2-M-R25",
+        "L2-M-R33"
+      ],
+      "gates": "B07/B18",
+      "criticalDecision": "ECLI/kurum doğrulaması; Mijn Rechtspraak kimlik taklidi yok",
+      "workflowStages": [
+        "Kullanıcı veya iç aktör girişini doğrula",
+        "İlgili modül görev sırasını işlet",
+        "Gizlilik, yetki, meslekî usul ve canlı kanıt kapılarını değerlendir",
+        "İzinli çıktıyı kaydet ve izle"
+      ],
+      "state": "DESIGN_NOT_VALIDATED",
+      "actualExternalSubmission": false
+    },
+    {
+      "id": "L2-CJ06",
+      "title": "Teklif/sözleşme → ödeme doğrulama → mutabakat",
+      "modulePath": [
+        "L2-M-R26",
+        "L2-M-ST-billing",
+        "L2-M-ST-payables",
+        "L2-M-ST-audit",
+        "L2-M-R24"
+      ],
+      "gates": "B08/B18",
+      "criticalDecision": "Gerçek PSP ödeme kanıtı, iki göz ve tüketici hakları",
+      "workflowStages": [
+        "Kullanıcı veya iç aktör girişini doğrula",
+        "İlgili modül görev sırasını işlet",
+        "Gizlilik, yetki, meslekî usul ve canlı kanıt kapılarını değerlendir",
+        "İzinli çıktıyı kaydet ve izle"
+      ],
+      "state": "DESIGN_NOT_VALIDATED",
+      "actualExternalSubmission": false
+    },
+    {
+      "id": "L2-CJ07",
+      "title": "GDPR/DSAR → belge izni → denetim",
+      "modulePath": [
+        "L2-M-R29",
+        "L2-M-B",
+        "L2-M-R23",
+        "L2-M-ST-documents",
+        "L2-M-ST-audit",
+        "L2-M-R33"
+      ],
+      "gates": "B06/B13",
+      "criticalDecision": "Madde 13/DPA/saklama/erişim iptali, olay bildirimi",
+      "workflowStages": [
+        "Kullanıcı veya iç aktör girişini doğrula",
+        "İlgili modül görev sırasını işlet",
+        "Gizlilik, yetki, meslekî usul ve canlı kanıt kapılarını değerlendir",
+        "İzinli çıktıyı kaydet ve izle"
+      ],
+      "state": "DESIGN_NOT_VALIDATED",
+      "actualExternalSubmission": false
+    },
+    {
+      "id": "L2-CJ08",
+      "title": "Hukukî içerik → dil QA → erişilebilir yayın",
+      "modulePath": [
+        "L2-M-R17",
+        "L2-M-R18",
+        "L2-M-GUIDE",
+        "L2-M-SRV",
+        "L2-M-CORP",
+        "L2-M-R28",
+        "L2-M-R32"
+      ],
+      "gates": "B09/B14/B16",
+      "criticalDecision": "TR/NL/DE/EN/AR RTL/RU ve gerçek kaynak kontrolü",
+      "workflowStages": [
+        "Kullanıcı veya iç aktör girişini doğrula",
+        "İlgili modül görev sırasını işlet",
+        "Gizlilik, yetki, meslekî usul ve canlı kanıt kapılarını değerlendir",
+        "İzinli çıktıyı kaydet ve izle"
+      ],
+      "state": "DESIGN_NOT_VALIDATED",
+      "actualExternalSubmission": false
+    },
+    {
+      "id": "L2-CJ09",
+      "title": "Kuruluş/yetki → uzman ağı → kamu profil beyanı",
+      "modulePath": [
+        "L2-M-G",
+        "L2-M-R01",
+        "L2-M-R06",
+        "L2-M-R27",
+        "L2-M-R05"
+      ],
+      "gates": "B05/B07/B15",
+      "criticalDecision": "Gerçek KVK/meslek kaydı; yetki sahteciliği yok",
+      "workflowStages": [
+        "Kullanıcı veya iç aktör girişini doğrula",
+        "İlgili modül görev sırasını işlet",
+        "Gizlilik, yetki, meslekî usul ve canlı kanıt kapılarını değerlendir",
+        "İzinli çıktıyı kaydet ve izle"
+      ],
+      "state": "DESIGN_NOT_VALIDATED",
+      "actualExternalSubmission": false
+    },
+    {
+      "id": "L2-CJ10",
+      "title": "Güvenlik RLS → staging/restore → yayın kararı",
+      "modulePath": [
+        "L2-M-B",
+        "L2-M-R23",
+        "L2-M-R29",
+        "L2-M-R30",
+        "L2-M-R33",
+        "L2-M-T"
+      ],
+      "gates": "B01/B02/B03/B04/B18",
+      "criticalDecision": "Ayrı staging E2E ve ayrı canlı izin olmadan yayın yok",
+      "workflowStages": [
+        "Kullanıcı veya iç aktör girişini doğrula",
+        "İlgili modül görev sırasını işlet",
+        "Gizlilik, yetki, meslekî usul ve canlı kanıt kapılarını değerlendir",
+        "İzinli çıktıyı kaydet ve izle"
+      ],
+      "state": "DESIGN_NOT_VALIDATED",
+      "actualExternalSubmission": false
+    },
+    {
+      "id": "L2-CJ11",
+      "title": "Müşteri paneli → görüşme/mesaj → kayıt",
+      "modulePath": [
+        "L2-M-R24",
+        "L2-M-R25",
+        "L2-M-ST-messages",
+        "L2-M-ST-calendar",
+        "L2-M-ST-matters"
+      ],
+      "gates": "B04/B13",
+      "criticalDecision": "Gerçek müşteri ve atanmış personel izolasyonu",
+      "workflowStages": [
+        "Kullanıcı veya iç aktör girişini doğrula",
+        "İlgili modül görev sırasını işlet",
+        "Gizlilik, yetki, meslekî usul ve canlı kanıt kapılarını değerlendir",
+        "İzinli çıktıyı kaydet ve izle"
+      ],
+      "state": "DESIGN_NOT_VALIDATED",
+      "actualExternalSubmission": false
+    },
+    {
+      "id": "L2-CJ12",
+      "title": "Personel yetki → modül çalışması → bağımsız audit",
+      "modulePath": [
+        "L2-M-R31",
+        "L2-M-ST-people",
+        "L2-M-P",
+        "L2-M-ST-audit",
+        "L2-M-ST-settings",
+        "L2-M-R30"
+      ],
+      "gates": "B04/B13/B18",
+      "criticalDecision": "AAL2, kişisel grant, iki göz, anlık revoke",
+      "workflowStages": [
+        "Kullanıcı veya iç aktör girişini doğrula",
+        "İlgili modül görev sırasını işlet",
+        "Gizlilik, yetki, meslekî usul ve canlı kanıt kapılarını değerlendir",
+        "İzinli çıktıyı kaydet ve izle"
+      ],
+      "state": "DESIGN_NOT_VALIDATED",
+      "actualExternalSubmission": false
+    }
+  ]
+}
