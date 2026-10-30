@@ -68,7 +68,7 @@ test('unrecognised privileges rejected', () => {
 });
 test('preflight SQL must remain read-only', () => {
   const query = fs.readFileSync(path.resolve(__dirname,'../../docs/security/rls-readonly-preflight.sql'),'utf8');
-  const uncommented = query.replace(/--[^\n]*/g,'').trim();
+  const uncommented = query.replace(/--[^\n]*/g,'').replace(/\'(?:[^\']|\'\')*\'/g, "\'\'").trim();
   assert.doesNotMatch(uncommented, /\b(?:ALTER|CREATE|DROP|DELETE|INSERT|UPDATE|TRUNCATE|REVOKE|GRANT|EXECUTE|DO|COPY)\b/i);
   assert.match(uncommented, /FROM pg_class/);
   assert.match(uncommented, /FROM pg_policies/);
