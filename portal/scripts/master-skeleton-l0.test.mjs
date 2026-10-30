@@ -46,7 +46,7 @@ test("L0 complete: all 973 tracked records and cross-checked 113+192+74 package 
  }))assert.equal(list.get(key),count,key);
  assert.deepEqual(progress.groups.map(g=>g.total),[594,192,113,74]);
  assert.equal(progress.groups.reduce((n,g)=>n+g.accepted.length,0),0);
- assert.equal(progress.groups[0].partial.length,51);
+ assert.equal(progress.groups[0].partial.length,54);
  assert.equal(progress.groups[2].syntheticTechnical.length,4);
  assert.equal(root.evidence.independentAccepted,0);
  assert.equal(root.evidence.syntheticExtraPackages,4);
