@@ -318,6 +318,8 @@ jobs:
         run: node --experimental-strip-types --test scripts/document-preparation.test.mjs
       - name: Preserve historical 17 services 14 audiences 12 sourced problem routes
         run: node --experimental-strip-types --test scripts/avofis-scope-invariants.test.mjs
+      - name: L2 63 modules and 154 flows map 973 unchanged tasks, keep L3 locked
+        run: node --test scripts/master-modules-workflows-l2.test.mjs
       - name: L1 63 source-aligned subprograms map exact 973 IDs and keep L2 gated
         run: node --test scripts/master-subprograms-l1.test.mjs
       - name: L0 user-approved hierarchy remains exact 8 pillars and 973 tracked work records
