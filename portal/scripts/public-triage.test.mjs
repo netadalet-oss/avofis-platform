@@ -95,3 +95,33 @@ test("T09: no risk triage input can share records or expert files",()=>{
      assert.equal(res.mayAcceptPayment,false);
     }
 });
+
+test("L4 R-347: user's possible one-week proximity triggers human review even without a formal notice",()=>{
+ for(const country of countries){
+  const res=evaluatePublicTriage({...valid(),country,topic:"document",
+   noticeCategory:"no_notice",timeBand:"within_7d"});
+  assert.equal(res.disposition,"SPECIALIST_REVIEW",country);
+  assert.ok(res.issues.includes("SELF_REPORTED_NEAR_TERM_REQUIRES_HUMAN_REVIEW"),country);
+  assert.equal(res.deadlineCalculated,false);
+  assert.equal(res.mayCreateClientRecord,false);
+  assert.equal(res.maySubmitOfficialAction,false);
+ }
+});
+test("L4 R-347/R-348: escalation is monotone and cannot turn risk into an automated filing",()=>{
+ const signals=[
+  {...valid(),timeBand:"within_7d"},
+  {...valid(),timeBand:"less_than_48h"},
+  {...valid(),immediateHarm:true},
+  {...valid(),topic:"detention_or_removal",timeBand:"later"}
+ ];
+ assert.deepEqual(signals.map(x=>evaluatePublicTriage(x).disposition),[
+  "SPECIALIST_REVIEW","URGENT_SPECIALIST","URGENT_SPECIALIST","URGENT_SPECIALIST"]);
+ for(const x of signals){
+  const result=evaluatePublicTriage(x);
+  for(const field of ["mayCreateClientRecord","maySubmitOfficialAction",
+   "mayAcceptPayment","mayUploadDocuments","mayShareWithExpert",
+   "mayCollectPersonalData","deadlineCalculated"]){
+   assert.equal(result[field],false,field);
+  }
+ }
+});
