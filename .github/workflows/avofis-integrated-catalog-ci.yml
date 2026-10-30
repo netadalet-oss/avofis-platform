@@ -73,6 +73,7 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f database/tests/identity_cms_profile_acl_hardening.sql
           psql -v ON_ERROR_STOP=1 -f database/tests/future_public_default_acl_owner_synthetic.sql
           psql -v ON_ERROR_STOP=1 -f database/ops/identity_cms_future_acl_readonly_postflight.sql
+          psql -v ON_ERROR_STOP=1 -f database/ops/b02_policy_readonly_postflight.sql
       - name: Prove B01/B02 migration rejects unexpected RLS policies (disposable only)
         env:
           PGPASSWORD: synthetic-test-password
@@ -137,6 +138,35 @@ jobs:
               exit 1
             fi
             echo "PASS B02 $scenario: unexpected command/role/hold rejected"
+          done
+      - name: Read-only postflight must detect B02 policy tampering after migration
+        env:
+          PGPASSWORD: synthetic-test-password
+          PGHOST: 127.0.0.1
+          PGPORT: "5432"
+          PGUSER: postgres
+          PGDATABASE: avofis_legacy_ci
+        run: |
+          set -euo pipefail
+          for scenario in broad_read hold; do
+            createdb "avofis_b02_post_${scenario}"
+            if [ "$scenario" = broad_read ]; then
+              fixture=database/tests/b02_postflight_broad_read_expected_failure.sql
+              expected='B02-POST canonical SELECT policy drift:'
+            else
+              fixture=database/tests/b02_postflight_hold_expected_failure.sql
+              expected='B02-POST CMS publication hold drift:'
+            fi
+            set +e
+            PGDATABASE="avofis_b02_post_${scenario}" psql -v ON_ERROR_STOP=1 -f "$fixture" > "$RUNNER_TEMP/b02_post_${scenario}.log" 2>&1
+            status=$?
+            set -e
+            if [ "$status" -eq 0 ] || ! grep -Fq "$expected" "$RUNNER_TEMP/b02_post_${scenario}.log"; then
+              cat "$RUNNER_TEMP/b02_post_${scenario}.log"
+              echo "ERROR: B02 read-only postflight failed to identify $scenario attack"
+              exit 1
+            fi
+            echo "PASS: B02 read-only postflight rejected $scenario"
           done
   tenant-isolation-synthetic:
     runs-on: ubuntu-latest
