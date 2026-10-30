@@ -4,7 +4,7 @@ import {readFileSync} from "node:fs";
 import {fileURLToPath} from "node:url";
 import {documentCategories,preUploadWarning,evaluateDocumentPreparation}
  from "../src/lib/document-preparation-gate.ts";
-import {POST} from "../src/app/api/document-upload/route.ts";
+import {POST,GET,PUT,PATCH,DELETE} from "../src/app/api/document-upload/route.ts";
 const valid=()=>({category:"contract",redactionWarningRead:true,privateChannelRequested:false});
 test("L4 R-397: public first-contact document upload is always denied",async()=>{
  for(const env of [undefined,"true","false"]){
@@ -24,6 +24,14 @@ test("L4 R-397: public first-contact document upload is always denied",async()=>
    if(before===undefined)delete process.env.NEXT_PUBLIC_AVOFIS_INTAKE_ENABLED;
    else process.env.NEXT_PUBLIC_AVOFIS_INTAKE_ENABLED=before;
   }
+ }
+});
+test("L4 R-397/R-406: no public document route verb can expose or accept private objects",async()=>{
+ for(const [method,handler] of [["GET",GET],["POST",POST],["PUT",PUT],["PATCH",PATCH],["DELETE",DELETE]]){
+  const result=handler();
+  assert.equal(result.status,403,method);
+  assert.equal((await result.json()).accepted,false,method);
+  assert.equal(result.headers.get("cache-control"),"no-store, max-age=0");
  }
 });
 test("L4 R-399: pre-upload warning explicitly names sensitive ID and health-data reduction",()=>{
