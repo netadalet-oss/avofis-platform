@@ -27,6 +27,7 @@ test("CONTENT01 editorial-only route fails closed in production and absent envir
  assert.equal(guideEditorialPreviewAllowed(allowed),true);
  for(const patch of [
   {VERCEL_ENV:"production"},
+  {VERCEL_ENV:""},
   {AVOFIS_EDITORIAL_GUIDE_PREVIEW:"false"},
   {AVOFIS_EDITORIAL_REVIEW_MODE:"approved"},
   {AVOFIS_LEGAL_READY:"true"}
