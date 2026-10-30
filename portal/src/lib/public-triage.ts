@@ -9,6 +9,7 @@
 export const countries=["nl","de","tr","other","unknown"] as const;
 // This identifies the user's preferred *contact language*, not a claim that legal translations exist.
 export const preferredLanguages=["tr","nl","de","en","ar","ru","unknown"] as const;
+export const contactPreferences=["none","phone","email","written","unknown"] as const;
 export const topics=[
  "document","administrative_objection","court_procedure","asylum",
  "detention_or_removal","residence","family","work","housing",
@@ -24,7 +25,7 @@ export const noticeCategories=["no_notice","notice_received","not_sure"] as cons
 export const timeBands=["less_than_48h","within_7d","later","unknown"] as const;
 export type TriageInput={
  country:string;residenceCountry:string;preferredLanguage:string;
- topic:string;personRole:string;
+ topic:string;personRole:string;contactPreference?:string;
  counterpartyType:string;requestType:string;evidenceKind:string;
  noticeCategory:string;timeBand:string;
  immediateHarm:boolean; professionalNeeded:boolean;
@@ -44,7 +45,7 @@ export type TriageResult={
 };
 const inSet=(item:string,allowed:readonly string[])=>allowed.includes(item);
 const allowedInputKeys=new Set([
- "country","residenceCountry","preferredLanguage","topic","personRole","counterpartyType","requestType",
+ "country","residenceCountry","preferredLanguage","topic","personRole","contactPreference","counterpartyType","requestType",
  "noticeCategory","timeBand","immediateHarm","professionalNeeded","evidenceKind"
 ]);
 const sources:Record<string,string>={
@@ -61,6 +62,7 @@ export function evaluatePublicTriage(input:TriageInput):TriageResult{
     !inSet(input.preferredLanguage,preferredLanguages)||
     !inSet(input.topic,topics)||
     !inSet(input.personRole,personRoles)||
+    (input.contactPreference!==undefined&&!inSet(input.contactPreference,contactPreferences))||
     !inSet(input.counterpartyType,counterpartyTypes)||
     !inSet(input.requestType,requestTypes)||
     !inSet(input.evidenceKind,evidenceKinds)||
