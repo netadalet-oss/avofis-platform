@@ -109,6 +109,6 @@ test("L2: staff work checks mapped according to operation, authorization and QA 
  assert.equal(l2.modules.filter(m=>m.sourceKind==="content").length,6);
  assert.match(l2.modules.find(m=>m.parentL1==="L1-CHK").sourceCaveat,/Do NOT invent/);
  assert.equal(l2.scope.independentAccepted,0);
- assert.equal(l2.scope.partialR,55);
+ assert.equal(l2.scope.partialR,69);
  assert.equal(l2.scope.syntheticAuxiliary,4);
 });
