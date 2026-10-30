@@ -111,6 +111,33 @@ jobs:
             exit 1
           fi
           echo "PASS: Owner-only default ACL guard refused postgres"
+      - name: Reject B02 same-name policy command drift and permissive publication-hold tampering
+        env:
+          PGPASSWORD: synthetic-test-password
+          PGHOST: 127.0.0.1
+          PGPORT: "5432"
+          PGUSER: postgres
+          PGDATABASE: avofis_legacy_ci
+        run: |
+          set -euo pipefail
+          for scenario in command hold; do
+            createdb "avofis_b02_${scenario}_ci"
+            if [ "$scenario" = command ]; then
+              proof=database/tests/b02_named_policy_command_drift_expected_failure.sql
+            else
+              proof=database/tests/b02_publication_hold_drift_expected_failure.sql
+            fi
+            set +e
+            PGDATABASE="avofis_b02_${scenario}_ci" psql -v ON_ERROR_STOP=1 -f "$proof" > "$RUNNER_TEMP/b02_${scenario}.log" 2>&1
+            code=$?
+            set -e
+            if [ "$code" -eq 0 ] || ! grep -Fq "B02 identity/CMS policy signature drift:" "$RUNNER_TEMP/b02_${scenario}.log"; then
+              cat "$RUNNER_TEMP/b02_${scenario}.log"
+              echo "ERROR: B02 migration did not fail for expected security drift ($scenario)"
+              exit 1
+            fi
+            echo "PASS B02 $scenario: unexpected command/role/hold rejected"
+          done
   tenant-isolation-synthetic:
     runs-on: ubuntu-latest
     timeout-minutes: 15
