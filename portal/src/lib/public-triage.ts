@@ -61,6 +61,9 @@ export function evaluatePublicTriage(input:TriageInput):TriageResult{
   issues.push("NOTICE_AND_SERVICE_DATE_REQUIRES_HUMAN_REVIEW");
  if(input.noticeCategory!=="no_notice"&&input.timeBand==="unknown")
   issues.push("DEADLINE_UNVERIFIED");
+ // A week is the user\'s estimate, not a computed legal deadline.
+ // Even without a notice, do not offer a generic-only path when time is close.
+ if(input.timeBand==="within_7d")issues.push("SELF_REPORTED_NEAR_TERM_REQUIRES_HUMAN_REVIEW");
  if(input.topic==="asylum")issues.push("ASYLUM_TRANSITION_AND_PERSONAL_FILING_REVIEW");
  if(input.topic==="court_procedure")issues.push("COURT_PROFESSIONAL_SCOPE_REVIEW");
  if(input.topic==="detention_or_removal")issues.push("URGENT_DETENTION_REMOVAL_ROUTE");
@@ -68,7 +71,8 @@ export function evaluatePublicTriage(input:TriageInput):TriageResult{
  // A 48-hour selection is a person's own statement, never a calculated deadline.
  const urgent=input.immediateHarm||input.topic==="detention_or_removal"||
               input.timeBand==="less_than_48h";
- const specialist=urgent||["asylum","court_procedure","administrative_objection","residence"].includes(input.topic)||
+ const specialist=urgent||input.timeBand==="within_7d"||
+      ["asylum","court_procedure","administrative_objection","residence"].includes(input.topic)||
       input.professionalNeeded||issues.some(x=>["JURISDICTION_UNVERIFIED","ROLE_OR_MANDATE_REQUIRES_REVIEW",
        "PROCEDURE_UNVERIFIED","NOTICE_AND_SERVICE_DATE_REQUIRES_HUMAN_REVIEW",
        "DEADLINE_UNVERIFIED"].includes(x));
