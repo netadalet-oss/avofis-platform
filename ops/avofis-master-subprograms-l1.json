@@ -25,7 +25,7 @@
     "auxiliary": 113,
     "content": 74,
     "accepted": 0,
-    "partialRequirements": 54,
+    "partialRequirements": 55,
     "syntheticAuxiliary": 4
   },
   "independentAcceptanceRule": "CI or code does not count as independent acceptance. Real staging + reviewer + legal/dil/authority where applicable.",
