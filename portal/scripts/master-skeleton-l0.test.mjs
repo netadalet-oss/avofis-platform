@@ -53,10 +53,11 @@ test("L0 complete: all 973 tracked records and cross-checked 113+192+74 package 
 });
 test("L0 cannot silently approve itself or expand depth levels",()=>{
  assert.equal(root.currentExpansionLevel,"L0");
- assert.equal(root.approvalStatus,"AWAITING_USER_APPROVAL");
+ assert.equal(root.approvalStatus,"APPROVED_BY_USER");
  assert.deepEqual(root.hierarchy.map(x=>x.level),["L0","L1","L2","L3","L4","L5"]);
- assert.equal(root.hierarchy[0].stage,"NOW");
- for(const x of root.hierarchy.slice(1))assert.equal(x.stage,"REQUIRES_APPROVAL");
+ assert.equal(root.hierarchy[0].stage,"APPROVED");
+ assert.equal(root.hierarchy[1].stage,"CURRENT_AWAITING_USER_APPROVAL");
+ for(const x of root.hierarchy.slice(2))assert.equal(x.stage,"REQUIRES_APPROVAL");
  assert.equal(root.approvalRules.required,"User's explicit approval of the submitted L0 work skeleton before L1");
  assert.equal(root.evidence.production,"NO_GO");
  assert.equal(root.evidence.stagingE2E,"NOT_VERIFIED");
