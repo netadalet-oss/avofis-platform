@@ -38,6 +38,23 @@
       "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41082197906"
     },
     {
+      "id": "R-344",
+      "kind": "LOCAL_ANONYMOUS_TOPIC_NOTE_AND_ROUTE_CONFIRMATION",
+      "claim": "Optional maximum 160-character local-only issue note supplements a selected legal topic; route remains categorically selected and reviewed via local checkbox. No automated case analysis, storage, client intake or professional approval.",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/public-triage-review.ts",
+        "portal/src/app/triyaj/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/public-triage-review.test.mjs"
+      ],
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41085787119"
+    },
+    {
       "id": "R-345",
       "kind": "PUBLIC_TRIAGE_COUNTERPARTY_CATEGORY",
       "claim": "Public intake-orientation offers bounded person/employer/authority/company/other/unsure counterpart categories without asking for an opposing party name; unsure and other conservatively route to human review.",
@@ -53,6 +70,23 @@
       "legalReview": false,
       "independentAcceptance": false,
       "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41080322793"
+    },
+    {
+      "id": "R-346",
+      "kind": "LOCAL_SELF_REPORTED_NOTICE_DATE_NOT_LEGAL_DEADLINE",
+      "claim": "Anonymous notice selection may show optional local-only receipt date validated as a calendar date; date is not transmitted, legally verified or used to calculate a filing deadline.",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/public-triage-review.ts",
+        "portal/src/app/triyaj/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/public-triage-review.test.mjs"
+      ],
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41085787119"
     },
     {
       "id": "R-347",
@@ -157,6 +191,23 @@
       "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41082197906"
     },
     {
+      "id": "R-355",
+      "kind": "NON_SUBMITTING_LOCAL_PRE_REVIEW_SUMMARY",
+      "claim": "Public triage shows selected topic and optional local note/date before an acknowledgement checkbox; confirmation is purely local and cannot create case, filing, payment or reference.",
+      "status": "CI_SYNTHETIC_VERIFIED",
+      "codePaths": [
+        "portal/src/lib/public-triage-review.ts",
+        "portal/src/app/triyaj/page.tsx"
+      ],
+      "testPaths": [
+        "portal/scripts/public-triage-review.test.mjs"
+      ],
+      "realAuthStorageE2E": false,
+      "legalReview": false,
+      "independentAcceptance": false,
+      "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41085787119"
+    },
+    {
       "id": "R-358",
       "status": "CI_SYNTHETIC_VERIFIED",
       "kind": "UNSURE_HUMAN_REVIEW_ROUTE",
@@ -191,7 +242,7 @@
       "ciRun": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41082197906"
     }
   ],
-  "unprovenImplementationCount": 963,
+  "unprovenImplementationCount": 960,
   "openDecisions": [
     "L3-DEC-01",
     "L3-DEC-02",
@@ -228,6 +279,6 @@
     "ops/avofis-work-progress.json"
   ],
   "verifiedTechnicalEvidenceAt": "2026-10-30",
-  "verificationScope": "10 source-ID scoped public-triage technical changes with passing synthetic CI; none independently accepted or real staging E2E; latest R-343/352/353/358/359 verified in CI 41082197906",
-  "scopeClarification": "Every L4 evidence record proves only the specific coded public-triage sub-scope; no full R-ID acceptance, six-language publication, privacy-controller legal signoff, executed engagement or authenticated document channel."
+  "verificationScope": "13 source-ID scoped anonymous triage technical changes with passing synthetic CI; R-344/346/355 passed in GitHub Actions #41085787119; not professional legal review, staging Auth/Storage E2E or independent acceptance",
+  "scopeClarification": "Every L4 evidence record proves only the specific coded public-triage sub-scope; no full R-ID acceptance, six-language publication, privacy-controller legal signoff, executed engagement or authenticated document channel. R-344 free text and R-346 date are memory-only screen state and not a verified legal assessment, actual intake or transfer."
 }
