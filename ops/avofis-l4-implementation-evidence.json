@@ -84,7 +84,7 @@
     "prDraft": true,
     "noLiveSQL": true,
     "noMainMerge": true,
-    "noL5": false
+    "noL5": true
   },
   "sources": [
     "ops/avofis-l3-module-contracts.json",
