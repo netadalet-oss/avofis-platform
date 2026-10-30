@@ -173,7 +173,7 @@ test("L4 R-350: reject unexpected PII/body fields and unknown enum values, witho
   assert.deepEqual(r.issues,["INVALID_OR_UNKNOWN_INPUT"]);
  }
 });
-test("L4 R-345/R-349/R-350: visible UI only offers category selections and disclaims contract",()=>{
+test("L4 R-345/R-349/R-350: visible UI only offers category selections and disclaims contract",async()=>{
  const {readFileSync}=await import("node:fs");
  const {fileURLToPath}=await import("node:url");
  const ui=readFileSync(fileURLToPath(new URL("../src/app/triyaj/page.tsx",import.meta.url)),"utf8");
