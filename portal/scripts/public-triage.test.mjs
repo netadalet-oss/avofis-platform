@@ -1,15 +1,15 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {countries,topics,personRoles,counterpartyTypes,requestTypes,noticeCategories,timeBands,evaluatePublicTriage}
+import {countries,preferredLanguages,topics,personRoles,counterpartyTypes,requestTypes,noticeCategories,timeBands,evaluatePublicTriage}
  from "../src/lib/public-triage.ts";
 const valid=()=>({
- country:"nl",topic:"document",personRole:"self",
+ country:"nl",residenceCountry:"nl",preferredLanguage:"tr",topic:"document",personRole:"self",
  counterpartyType:"person",requestType:"general_information",
  noticeCategory:"no_notice",timeBand:"later",
  immediateHarm:false,professionalNeeded:false
 });
 test("T09: all non-identifying select options are bounded and distinct",()=>{
- for(const values of [countries,topics,personRoles,counterpartyTypes,requestTypes,noticeCategories,timeBands]){
+ for(const values of [countries,preferredLanguages,topics,personRoles,counterpartyTypes,requestTypes,noticeCategories,timeBands]){
   assert.ok(values.length>=3);
   assert.equal(values.length,new Set(values).size);
  }
@@ -186,4 +186,68 @@ test("L4 R-345/R-349/R-350: visible UI only offers category selections and discl
  assert.match(ui,/isim yazmayın/);
  assert.match(ui,/hizmet sözleşmesi veya dosya açılışı değildir/);
  assert.doesNotMatch(ui,/<input[^>]*name=["'](email|full_name|phone)["']/);
+});
+
+test("L4 R-343: preferred language, actual location country and matter country remain separate enums",()=>{
+ assert.deepEqual([...preferredLanguages],["tr","nl","de","en","ar","ru","unknown"]);
+ const validRoute=evaluatePublicTriage(valid());
+ assert.equal(validRoute.disposition,"OFFICIAL_INFORMATION");
+ for(const preferredLanguage of preferredLanguages){
+  const out=evaluatePublicTriage({...valid(),preferredLanguage});
+  assert.equal(out.mayCollectPersonalData,false,preferredLanguage);
+  assert.equal(out.mayCreateClientRecord,false,preferredLanguage);
+  assert.equal(out.deadlineCalculated,false,preferredLanguage);
+  if(preferredLanguage==="unknown"){
+   assert.equal(out.disposition,"SPECIALIST_REVIEW");
+   assert.ok(out.issues.includes("PREFERRED_LANGUAGE_REQUIRES_HUMAN_REVIEW"));
+  }
+ }
+ const crossing=evaluatePublicTriage({...valid(),residenceCountry:"de",country:"nl"});
+ assert.equal(crossing.disposition,"SPECIALIST_REVIEW");
+ assert.ok(crossing.issues.includes("CROSS_BORDER_JURISDICTION_REVIEW"));
+ assert.equal(crossing.officialSource,"https://www.rechtspraak.nl/");
+ const noLocation=evaluatePublicTriage({...valid(),residenceCountry:"unknown"});
+ assert.ok(noLocation.issues.includes("RESIDENCE_COUNTRY_REQUIRES_HUMAN_REVIEW"));
+ assert.equal(noLocation.disposition,"SPECIALIST_REVIEW");
+});
+test("L4 R-358: 'not sure' topic never yields a generic automatic procedure/filing",()=>{
+ for(const country of countries){
+  const r=evaluatePublicTriage({...valid(),country,topic:"unknown"});
+  assert.equal(r.disposition,"SPECIALIST_REVIEW",country);
+  assert.ok(r.issues.includes("UNSURE_HUMAN_REVIEW_REQUIRED"),country);
+  assert.equal(r.maySubmitOfficialAction,false);
+  assert.equal(r.mayCreateClientRecord,false);
+ }
+});
+test("L4 R-343/R-350: invalid extended language/location or surprise personal fields fail closed",()=>{
+ for(const payload of [
+ {...valid(),preferredLanguage:"xx"},
+ {...valid(),residenceCountry:"Belgium"},
+ {...valid(),caseFacts:"SECRET_SENTINEL"},
+ {...valid(),preferredLanguage:9},
+ {...valid(),locationStreet:"PRIVATE_STREET"}
+ ]){
+  const r=evaluatePublicTriage(payload);
+  assert.deepEqual(r.issues,["INVALID_OR_UNKNOWN_INPUT"]);
+  assert.equal(r.disposition,"SPECIALIST_REVIEW");
+  assert.equal(r.officialSource,null);
+  assert.equal(r.mayCollectPersonalData,false);
+  assert.equal(r.mayUploadDocuments,false);
+  assert.ok(!JSON.stringify(r).includes("SECRET_SENTINEL"));
+ }
+});
+test("L4 R-352/R-353/R-359: static public UI exposes privacy before controls and closes contract and private file upload",async()=>{
+ const {readFileSync}=await import("node:fs");
+ const {fileURLToPath}=await import("node:url");
+ const page=readFileSync(fileURLToPath(new URL("../src/app/triyaj/page.tsx",import.meta.url)),"utf8");
+ assert.match(page,/href=\{"\/gizlilik\?lang="\+lang\}/);
+ assert.match(page,/select\("preferredLanguage",t\.preferred,preferredLanguages,languageOptions\)/);
+ assert.match(page,/select\("residenceCountry",t\.residence,countries,countryOptions\)/);
+ assert.match(page,/select\("country",t\.country,countries,countryOptions\)/);
+ assert.match(page,/privacy\.contract/);
+ assert.match(page,/privacy\.upload/);
+ assert.ok(page.indexOf('aria-label="Privacy before orientation"')<page.indexOf('aria-label="Non-identifying, local-only selections"'));
+ assert.match(page,/does not guarantee legal translation or representation/);
+ assert.doesNotMatch(page,/<input[^>]+type="file"/);
+ assert.doesNotMatch(page,/<form[^>]*action=/);
 });
