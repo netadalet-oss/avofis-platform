@@ -1,4 +1,4 @@
-import {validatePreparation,type PreparationDraft} from "./document-preparation.ts";
+import {validatePreparation,isPreparationReadyForReview,type PreparationDraft} from "./document-preparation.ts";
 export type CreateDraft={draft:PreparationDraft;case_id:string|null};
 export type PatchDraft={id:string;revision:number;draft:PreparationDraft;status:"draft"|"review_requested"|"withdrawn";consent_to_staff:boolean};
 const object=(v:unknown):v is Record<string,unknown>=>v!==null&&typeof v==="object"&&!Array.isArray(v);
@@ -14,7 +14,8 @@ export function parsePatchDraft(v:unknown):PatchDraft|null{
  const draft=validatePreparation(v.draft);
  if(!draft||!isUUID(v.id)||!Number.isSafeInteger(v.revision)||Number(v.revision)<1||Number(v.revision)>1000000||
   !["draft","review_requested","withdrawn"].includes(String(v.status))||typeof v.consent_to_staff!=="boolean"||
-  (v.status==="review_requested"&&!v.consent_to_staff)||(v.status==="withdrawn"&&v.consent_to_staff))return null;
+  (v.status==="review_requested"&&!v.consent_to_staff)||(v.status==="withdrawn"&&v.consent_to_staff)||
+  (v.status==="review_requested"&&!isPreparationReadyForReview(draft)))return null;
  return {id:v.id,revision:v.revision as number,draft,status:v.status as PatchDraft["status"],consent_to_staff:v.consent_to_staff};
 }
 /** Enable real account storage only in its explicitly matched deployment/project.
