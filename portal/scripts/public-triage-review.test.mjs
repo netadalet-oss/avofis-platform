@@ -6,7 +6,7 @@ import {buildLocalTriageReview,isValidCalendarDate} from "../src/lib/public-tria
 import {evaluatePublicTriage} from "../src/lib/public-triage.ts";
 const input=()=>({
  country:"nl",residenceCountry:"nl",preferredLanguage:"tr",topic:"work",
- personRole:"self",counterpartyType:"employer",requestType:"general_information",
+ personRole:"self",counterpartyType:"employer",requestType:"general_information",evidenceKind:"none",
  noticeCategory:"notice_received",timeBand:"unknown",immediateHarm:false,
  professionalNeeded:false
 });
@@ -104,11 +104,25 @@ test("L4 R-344: selected route and short note must be reviewed, not filed",()=>{
 test("L4 R-355: local pre-review includes every selected route/role/urgency statement",()=>{
  const ui=readFileSync(fileURLToPath(new URL("../src/app/triyaj/page.tsx",import.meta.url)),"utf8");
  for(const field of ["t.preferred","t.residence","t.country","t.topic","t.role",
-  "t.counterparty","t.request","t.notice","t.time","t.harm","t.professional"]){
+  "t.counterparty","t.request","t.evidence","t.notice","t.time","t.harm","t.professional"]){
    assert.ok(ui.includes("["+field+","),"Missing review field "+field);
  }
  assert.match(ui,/reviewFields\.map\(\(\[label,value\],index\)/);
  assert.match(ui,/reviewSignature=JSON\.stringify\(input\)\+"\|"\+noticeDate\+"\|"\+topicNote/);
  assert.match(ui,/checked=\{isReviewed\}/);
  assert.match(ui,/no submission/);
+});
+
+test("L4 R-376: evidence category and truth-check are in same local review signature as choices",()=>{
+ const selected=input();
+ const r=buildLocalTriageReview({...selected,evidenceKind:"contract"},"","");
+ assert.equal(r.evidenceKind,"contract");
+ assert.equal(r.clientRecordCreated,false);
+ assert.equal(r.officialActionSubmitted,false);
+ const ui=readFileSync(fileURLToPath(new URL("../src/app/triyaj/page.tsx",import.meta.url)),"utf8");
+ assert.match(ui,/\[t\.evidence,evidenceOptions\[review\.evidenceKind/);
+ assert.match(ui,/checked=\{isTruthReviewed\}/);
+ assert.match(ui,/setTruthKey\(e\.target\.checked\?reviewSignature:null\)/);
+ assert.match(ui,/reviewSignature=JSON\.stringify\(input\)\+"\|"\+noticeDate\+"\|"\+topicNote/);
+ assert.doesNotMatch(ui,/<form[^>]*action=/);
 });
