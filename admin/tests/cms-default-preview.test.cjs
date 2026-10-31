@@ -16,7 +16,7 @@ const handler = fn[0];
 const body = handler && src.slice(handler.body.pos, handler.body.end);
 function callNames(node, out=[]) {
   if(ts.isCallExpression(node))out.push(node.expression.getText(file));
-  ts.forEachChild(node, n=>callNames(n,out));
+  ts.forEachChild(node, n=>{ callNames(n,out); });
   return out;
 }
 test('exactly one explicit previewDefaults handler exists',()=>{
