@@ -14,7 +14,7 @@
 ## CI / test ayrımı
 
 - Güncel commit'e ait [API-admin-portal güvenlik doğrulama run 41250366944](https://github.com/netadalet-oss/avofis-platform/actions/runs/41250366944): **SUCCESS**.
-- Aynı commit'e ait [portal build, kaynak güvenliği, document gate ve HTTP sayfa koşusu 41250366887](https://github.com/netadalet-oss/avofis-platform/actions/runs/41250366887): **Sonuç koşu tamamlandığında ayrıca kontrol edilecek**; bu kayıtta başarısı varsayılmaz.
+- Aynı commit'e ait [portal build, kaynak güvenliği, document gate ve HTTP sayfa koşusu 41250366887](https://github.com/netadalet-oss/avofis-platform/actions/runs/41250366887): **SUCCESS**. Next.js build, sentetik güvenlik/document gate testleri ve gerçek yerel HTTP `/ilerleme` kontrolleri başarılı; yalnız bu kod HEAD ve CI test kapsamı için geçerlidir.
 - `node --test portal/scripts/document-draft-contract.test.mjs` ve `npm run test --workspace portal` sentetik birim/HTTP kapılarını kontrol eder. Gerçek customer staging kabulü değildir.
 
 ## Haricî koşullar ve seviye statüsü
