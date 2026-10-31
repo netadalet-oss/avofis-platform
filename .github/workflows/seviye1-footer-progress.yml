@@ -13,6 +13,9 @@ on:
       - "portal/src/app/auth/login/page.tsx"
       - "portal/src/components/auth/ProtectedRoute.tsx"
       - "portal/tests/login-redirect-safety.test.cjs"
+      - "portal/src/app/api/intake/route.ts"
+      - "portal/src/lib/limited-json-request.ts"
+      - "portal/tests/limited-json-request.test.cjs"
       - ".github/workflows/seviye1-footer-progress.yml"
   push:
     branches:
@@ -29,6 +32,9 @@ on:
       - "portal/src/app/auth/login/page.tsx"
       - "portal/src/components/auth/ProtectedRoute.tsx"
       - "portal/tests/login-redirect-safety.test.cjs"
+      - "portal/src/app/api/intake/route.ts"
+      - "portal/src/lib/limited-json-request.ts"
+      - "portal/tests/limited-json-request.test.cjs"
       - ".github/workflows/seviye1-footer-progress.yml"
 permissions:
   contents: read
