@@ -27,3 +27,13 @@ Referans: `docs/process/seviye7-portal-60-kullanici-senaryosu-ilerleme.json`.
 
 ## Sonraki çalışmalar
 Seviye 7'de kalan kullanıcı senaryolarının gerçek tarayıcı kabulü için staging ortamı/izinleri, hesap–veri kalıcılığı ve 7 açık RLS sorunu ayrıca değerlendirilmelidir. Birden çok bağımsız modül aynı turda geliştirilebilir; sahte teslim/yüzde kabulü veya onaysız Seviye 8 geçişi yapılamaz.
+
+## Seviye 7 güncel kaynak/test ölçümü — 31 Ekim 2026 ikinci aşama
+
+- İlk ölçüm **13/60** idi; ilave Belge Hazırlama akışlarıyla **17/60 = %28,33** kod/test düzeyine yükseldi. Son kabul oranı değil, referans senaryo kod-kapsama ölçüsüdür.
+- Yeni dört işlev: kullanıcının kendi metniyle belge taslağı oluşturması, düzenlemesi, TXT olarak dışa aktarması ve açık sekmede sürümlerini saklaması. **Mevzuat/içtihat kaynağı doğrulaması yapılmaz**.
+- Yeni Kariyer ve Forum yerel taslak ekranları **ayrıca geliştirildi**, fakat kapsamın `careers:search-real-vacancies`, `careers:submit-application`, `forum:create-topic` ve `forum:reply-to-topic` gibi canlı platform yetenekleri **gerçekleşti** sayılmadı. 60 senaryo ölçümüne bu geçici işlevlerden puan eklenmedi.
+- Ana sayfadaki doğrulanmamış kullanıcı, karar ve forum sayıları gösterimden çıkarıldı. Bunların gizlenmesi gerçek kullanıcıya sağlanan yeni işlev sayılarına **eklenmedi**.
+- İlk genişletme CI denemesi **FAILED**: [#41177814816](https://github.com/netadalet-oss/avofis-platform/actions/runs/41177814816); bir Forum gizlilik açıklaması testi kaynakla eşleşmiyordu. İkinci/son genişletme denemesi **PASS**: [#41177872703](https://github.com/netadalet-oss/avofis-platform/actions/runs/41177872703), **307/307** test.
+- Son kayıt ve ölçüm CI: [#41178021872](https://github.com/netadalet-oss/avofis-platform/actions/runs/41178021872), **314/314** test; bu, genişletme işine **üçüncü uygulama denemesi** değildir. `docs/process/seviye7-portal-60-kullanici-senaryosu-ilerleme.json` ve `tools/process/portal-progress-gate.cjs` bunun sahte canlı kabul veya tarihsel yüzde olmadığını doğrular.
+- **Staging/tarayıcı kabulü: 0/60; özgün 973 iş bazında gerçek tamamlanma oranı: bilinmiyor; Seviye 8: onaysız.**
