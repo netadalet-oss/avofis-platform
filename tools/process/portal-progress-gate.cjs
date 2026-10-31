@@ -30,13 +30,21 @@ function validate(p){
     ||p.real_browser_journeys_accepted!==0
     ||p.real_browser_acceptance_pct_points!==0)
    throw Error('Code progress was exaggerated as real browser acceptance');
+ // Manually tracked opportunities and private forum drafts are not equivalent
+ // to live vacancy search, real application or public discussion workflows.
+ for(const id of ['careers:search-real-vacancies','careers:submit-application',
+                  'forum:create-topic','forum:reply-to-topic','documents:validate-citations']){
+   const item=p.items.find(x=>x.id===id);
+   if(!item || item.status!=='UNKNOWN_OR_NOT_VERIFIED')
+     throw Error('Provisional local demo falsely counted as live platform capability');
+ }
  const groupsWithNew=[...new Set(code.map(i=>i.id.split(':')[0]))].sort();
- if(groupsWithNew.join(',')!=='cases,statutes,workspace'
-   ||code.length!==13)throw Error('Scope coverage changed without dedicated evidence review');
+ if(groupsWithNew.join(',')!=='cases,documents,statutes,workspace'
+   ||code.length!==17)throw Error('Scope coverage changed without dedicated evidence review');
  return {
    operational_level:7,next_level_approved:false,
-   fixed_portal_proxy_denominator:60,new_code_test_scenarios:13,
-   provisional_code_delta_pct_points:21.67,
+   fixed_portal_proxy_denominator:60,new_code_test_scenarios:17,
+   provisional_code_delta_pct_points:28.33,
    staging_browser_accepted:0,original_portal_completion_percent:null,
    original_project_10_percent_gain_proven:false
  };
