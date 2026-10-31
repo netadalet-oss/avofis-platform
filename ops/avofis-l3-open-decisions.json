@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "level": "L3",
+  "total": 18,
+  "workLedgerIncrement": 0,
+  "status": "OPEN_DECISIONS_NOT_APPROVED",
+  "note": "These 18 L3 design issues are not the same as 18 B01-B18 production blockers. Original R-398 DOCX requirement retained.",
+  "items": [
+    {
+      "id": "L3-DEC-01",
+      "scope": "R-398; B04",
+      "sourceBackedGap": "Original R-398 requires DOCX uploads; current synthetic B04 private bucket allows PDF/PNG/JPEG/WebP only",
+      "openDecision": "Open: decide safe DOCX storage, MIME+AV scan and real staging tests",
+      "state": "OPEN",
+      "l4": "LOCKED",
+      "liveChanged": false
+    },
+    {
+      "id": "L3-DEC-02",
+      "scope": "CHK-01..CHK-08",
+      "sourceBackedGap": "Eight source checklist titles and slugs not independently verified",
+      "openDecision": "Open: retrieve historical original, do not fabricate titles",
+      "state": "OPEN",
+      "l4": "LOCKED",
+      "liveChanged": false
+    },
+    {
+      "id": "L3-DEC-03",
+      "scope": "B03",
+      "sourceBackedGap": "No separately verified real staging Supabase project or authenticated E2E",
+      "openDecision": "Open: real separate staging and restore",
+      "state": "OPEN",
+      "l4": "LOCKED",
+      "liveChanged": false
+    },
+    {
+      "id": "L3-DEC-04",
+      "scope": "B01/B02",
+      "sourceBackedGap": "Seven live public tables RLS OFF and one Auth leaked password WARN",
+      "openDecision": "Open: owner-approved staged hardening, no live SQL now",
+      "state": "OPEN",
+      "l4": "LOCKED",
+      "liveChanged": false
+    },
+    {
+      "id": "L3-DEC-05",
+      "scope": "B04",
+      "sourceBackedGap": "Object-level staff disclosure requires separate customer consent and audit",
+      "openDecision": "Open: explicit per-object grant/expiry/revoke design",
+      "state": "OPEN",
+      "l4": "LOCKED",
+      "liveChanged": false
+    },
+    {
+      "id": "L3-DEC-06",
+      "scope": "B04",
+      "sourceBackedGap": "Previously issued signed URLs not automatically revoked by JWT/session revocation",
+      "openDecision": "Open: TTL/revocation incident policy and real Storage E2E",
+      "state": "OPEN",
+      "l4": "LOCKED",
+      "liveChanged": false
+    },
+    {
+      "id": "L3-DEC-07",
+      "scope": "IND/J",
+      "sourceBackedGap": "Official judicial/IND authority and real submission receipts absent",
+      "openDecision": "Open: competent professionals + provider proofs",
+      "state": "OPEN",
+      "l4": "LOCKED",
+      "liveChanged": false
+    },
+    {
+      "id": "L3-DEC-08",
+      "scope": "B05/B07",
+      "sourceBackedGap": "Actual professional licensing and company status not verified",
+      "openDecision": "Open: independent KVK/role documents",
+      "state": "OPEN",
+      "l4": "LOCKED",
+      "liveChanged": false
+    },
+    {
+      "id": "L3-DEC-09",
+      "scope": "B06",
+      "sourceBackedGap": "Controller identity, GDPR Article 13, DSAR and retention approval missing",
+      "openDecision": "Open: actual legal/operational approvals",
+      "state": "OPEN",
+      "l4": "LOCKED",
+      "liveChanged": false
+    },
+    {
+      "id": "L3-DEC-10",
+      "scope": "B08",
+      "sourceBackedGap": "Real PSP, fee/VAT/consumer terms and refund verification absent",
+      "openDecision": "Open: independent financial and legal acceptance",
+      "state": "OPEN",
+      "l4": "LOCKED",
+      "liveChanged": false
+    },
+    {
+      "id": "L3-DEC-11",
+      "scope": "P/B04",
+      "sourceBackedGap": "Actual user AAL2 and personal staff case grants/revocation E2E missing",
+      "openDecision": "Open: real Auth/Storage test users",
+      "state": "OPEN",
+      "l4": "LOCKED",
+      "liveChanged": false
+    },
+    {
+      "id": "L3-DEC-12",
+      "scope": "B09",
+      "sourceBackedGap": "Six language legal/native review missing; Arabic RTL needs verification",
+      "openDecision": "Open: independent reviewers per country/language",
+      "state": "OPEN",
+      "l4": "LOCKED",
+      "liveChanged": false
+    },
+    {
+      "id": "L3-DEC-13",
+      "scope": "B14",
+      "sourceBackedGap": "Actual WCAG 2.2 AA, mobile, keyboard and screen-reader E2E missing",
+      "openDecision": "Open: independent accessibility QA",
+      "state": "OPEN",
+      "l4": "LOCKED",
+      "liveChanged": false
+    },
+    {
+      "id": "L3-DEC-14",
+      "scope": "B13",
+      "sourceBackedGap": "Synthetic JWT AAL2 does not prove real MFA or stale-session revocation",
+      "openDecision": "Open: live-like independent staging tests",
+      "state": "OPEN",
+      "l4": "LOCKED",
+      "liveChanged": false
+    },
+    {
+      "id": "L3-DEC-15",
+      "scope": "B18",
+      "sourceBackedGap": "CI green is not independent legal/business acceptance",
+      "openDecision": "Open: attributable human review, test provenance and tamper-evident evidence",
+      "state": "OPEN",
+      "l4": "LOCKED",
+      "liveChanged": false
+    },
+    {
+      "id": "L3-DEC-16",
+      "scope": "L3/L4",
+      "sourceBackedGap": "L3 user approval pending and L4 cannot be performed on current authority",
+      "openDecision": "Open: explicit L3 approval before L4 coding, separate prod permission",
+      "state": "OPEN",
+      "l4": "LOCKED",
+      "liveChanged": false
+    },
+    {
+      "id": "L3-DEC-17",
+      "scope": "API/SQL",
+      "sourceBackedGap": "Logical L3 data entity and service boundary are not proof of existing physical API/schema",
+      "openDecision": "Open: L4 exact endpoint/schema design and implementation after permission",
+      "state": "OPEN",
+      "l4": "LOCKED",
+      "liveChanged": false
+    },
+    {
+      "id": "L3-DEC-18",
+      "scope": "973 ledger",
+      "sourceBackedGap": "973 tracking records include related requirements/checks; independent acceptance must not double-count",
+      "openDecision": "Open: source-ID scoped evidence, reviewer, strict denominator",
+      "state": "OPEN",
+      "l4": "LOCKED",
+      "liveChanged": false
+    }
+  ]
+}

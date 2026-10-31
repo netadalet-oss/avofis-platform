@@ -10,7 +10,7 @@ import {
   type NavigationItem,
 } from "@/lib/site";
 import { supabase } from "@/lib/supabase";
-import { PUBLIC_CMS_EDITING_ENABLED } from "@/lib/launch-gates";
+import { PUBLIC_CMS_EDITING_ENABLED, PUBLIC_CMS_CONTENT_READER_ENABLED } from "@/lib/launch-gates";
 
 type NavigationSettingRow = {
   value?: NavigationItem[];
@@ -34,6 +34,11 @@ export function SiteHeader() {
     let mounted = true;
 
     async function loadNavigation() {
+      if (!PUBLIC_CMS_CONTENT_READER_ENABLED) {
+        setMenuItems(defaultNavigation);
+        setMenuDraft(defaultNavigation);
+        return;
+      }
       const { data, error } = await supabase
         .from("site_settings")
         .select("value")
@@ -118,39 +123,7 @@ export function SiteHeader() {
       setMessage("İçerik düzenleme yetkisi henüz açılmamıştır.");
       return;
     }
-    try {
-      setSaving(true);
-      setMessage("");
-
-      const normalizedItems = menuDraft
-        .map((item) => ({
-          label: typeof item.label === "string" ? item.label.trim() : "",
-          href: typeof item.href === "string" ? item.href.trim() : "",
-        }))
-        .filter((item) => item.label && item.href);
-
-      if (normalizedItems.length === 0) {
-        setMessage("En az bir geçerli menü öğesi gerekli.");
-        return;
-      }
-
-      const { error } = await supabase.from("site_settings").upsert({
-        key: "navigation",
-        value: normalizedItems,
-      });
-
-      if (error) {
-        setMessage(`Menü kaydedilemedi: ${error.message}`);
-        return;
-      }
-
-      setMenuItems(normalizedItems);
-      setMenuDraft(normalizedItems);
-      setMessage("Menü başarıyla kaydedildi.");
-      setEditMode(false);
-    } finally {
-      setSaving(false);
-    }
+    setMessage("Kamu portalından menü yayımlanamaz; yetkili personel onayı gereklidir.");
   }
 
   return (

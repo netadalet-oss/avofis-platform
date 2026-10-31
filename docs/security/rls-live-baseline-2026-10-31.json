@@ -1,0 +1,236 @@
+{
+  "schema_version": "1.0",
+  "project": "avofis",
+  "project_ref": "akigckpsktdxudumiwvm",
+  "observed_on": "2026-10-31",
+  "observation_source": "Supabase MCP: security advisor, pg_catalog/information_schema metadata, aggregate count(*) queries (read-only)",
+  "status": "OPEN_RISK_NOT_REMEDIATED",
+  "scope": "public",
+  "production_modified": false,
+  "historical_level4_mapping": "UNKNOWN",
+  "approved_open_decisions": 18,
+  "tables": [
+    {
+      "name": "applications",
+      "columns": [
+        "id",
+        "job_id",
+        "user_id",
+        "cv_url",
+        "created_at"
+      ],
+      "foreign_keys": {
+        "job_id": "jobs.id",
+        "user_id": "profiles.id"
+      },
+      "candidate_owner_column": "user_id",
+      "owner_nullable": true,
+      "rows_total": 0,
+      "rows_with_missing_link": 0,
+      "rls_enabled": false,
+      "anon_grants": [
+        "SELECT",
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "authenticated_grants": [
+        "SELECT",
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "policies": []
+    },
+    {
+      "name": "jobs",
+      "columns": [
+        "id",
+        "office_id",
+        "title",
+        "description",
+        "created_at"
+      ],
+      "foreign_keys": {
+        "office_id": "offices.id"
+      },
+      "candidate_owner_column": null,
+      "owner_nullable": null,
+      "rows_total": 0,
+      "rows_with_missing_link": 0,
+      "rls_enabled": false,
+      "anon_grants": [
+        "SELECT",
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "authenticated_grants": [
+        "SELECT",
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "policies": []
+    },
+    {
+      "name": "media_assets",
+      "columns": [
+        "id",
+        "url",
+        "name",
+        "type",
+        "created_at"
+      ],
+      "foreign_keys": {},
+      "candidate_owner_column": null,
+      "owner_nullable": null,
+      "rows_total": 0,
+      "rows_with_missing_link": null,
+      "rls_enabled": false,
+      "anon_grants": [
+        "SELECT",
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "authenticated_grants": [
+        "SELECT",
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "policies": []
+    },
+    {
+      "name": "office_members",
+      "columns": [
+        "id",
+        "office_id",
+        "user_id",
+        "position",
+        "created_at"
+      ],
+      "foreign_keys": {
+        "office_id": "offices.id",
+        "user_id": "profiles.id"
+      },
+      "candidate_owner_column": "user_id",
+      "owner_nullable": true,
+      "rows_total": 0,
+      "rows_with_missing_link": 0,
+      "rls_enabled": false,
+      "anon_grants": [
+        "SELECT",
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "authenticated_grants": [
+        "SELECT",
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "policies": []
+    },
+    {
+      "name": "offices",
+      "columns": [
+        "id",
+        "name",
+        "city",
+        "description",
+        "website",
+        "created_at"
+      ],
+      "foreign_keys": {},
+      "candidate_owner_column": null,
+      "owner_nullable": null,
+      "rows_total": 0,
+      "rows_with_missing_link": null,
+      "rls_enabled": false,
+      "anon_grants": [
+        "SELECT",
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "authenticated_grants": [
+        "SELECT",
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "policies": []
+    },
+    {
+      "name": "posts",
+      "columns": [
+        "id",
+        "topic_id",
+        "author_id",
+        "content",
+        "created_at"
+      ],
+      "foreign_keys": {
+        "topic_id": "topics.id",
+        "author_id": "profiles.id"
+      },
+      "candidate_owner_column": "author_id",
+      "owner_nullable": true,
+      "rows_total": 0,
+      "rows_with_missing_link": 0,
+      "rls_enabled": false,
+      "anon_grants": [
+        "SELECT",
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "authenticated_grants": [
+        "SELECT",
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "policies": []
+    },
+    {
+      "name": "topics",
+      "columns": [
+        "id",
+        "title",
+        "created_by",
+        "created_at"
+      ],
+      "foreign_keys": {
+        "created_by": "profiles.id"
+      },
+      "candidate_owner_column": "created_by",
+      "owner_nullable": true,
+      "rows_total": 0,
+      "rows_with_missing_link": 0,
+      "rls_enabled": false,
+      "anon_grants": [
+        "SELECT",
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "authenticated_grants": [
+        "SELECT",
+        "INSERT",
+        "UPDATE",
+        "DELETE"
+      ],
+      "policies": []
+    }
+  ],
+  "cautions": [
+    "Zero rows is a point-in-time aggregate, not proof of future emptiness.",
+    "candidate_owner_column marks a structurally present column; it is NOT an approved permission rule.",
+    "No production DDL/DML executed.",
+    "RLS exposure assumes Data API exposure; grants alone do not prove external requests succeeded."
+  ]
+}

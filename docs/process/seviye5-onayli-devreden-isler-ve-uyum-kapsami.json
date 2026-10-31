@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "stage": 5,
+  "approval": "EXPLICIT_APPROVAL_RECORDED",
+  "approval_text": "AVOfis projesinde Seviye 4'ten Seviye 5'e geçişi açıkça onaylıyorum. Açık ve başarısız işleri koruyarak Seviye 5 çalışmalarını başlat. Her sonraki seviye geçişinden önce yeniden onayımı iste.",
+  "next_stage_approved": false,
+  "attempt_limit_per_item_per_level": 2,
+  "historical_completion_ratio": null,
+  "open_decisions": 18,
+  "carried_rls": [
+    {
+      "id": "RLS:public.applications",
+      "from_level": 4,
+      "to_level": 5,
+      "attempts_recorded_level_4": 0,
+      "attempts_recorded_level_5": 0,
+      "status": "OPEN_UNREMEDIATED",
+      "live_db_modified": false,
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json"
+    },
+    {
+      "id": "RLS:public.jobs",
+      "from_level": 4,
+      "to_level": 5,
+      "attempts_recorded_level_4": 0,
+      "attempts_recorded_level_5": 0,
+      "status": "OPEN_UNREMEDIATED",
+      "live_db_modified": false,
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json"
+    },
+    {
+      "id": "RLS:public.media_assets",
+      "from_level": 4,
+      "to_level": 5,
+      "attempts_recorded_level_4": 0,
+      "attempts_recorded_level_5": 0,
+      "status": "OPEN_UNREMEDIATED",
+      "live_db_modified": false,
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json"
+    },
+    {
+      "id": "RLS:public.office_members",
+      "from_level": 4,
+      "to_level": 5,
+      "attempts_recorded_level_4": 0,
+      "attempts_recorded_level_5": 0,
+      "status": "OPEN_UNREMEDIATED",
+      "live_db_modified": false,
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json"
+    },
+    {
+      "id": "RLS:public.offices",
+      "from_level": 4,
+      "to_level": 5,
+      "attempts_recorded_level_4": 0,
+      "attempts_recorded_level_5": 0,
+      "status": "OPEN_UNREMEDIATED",
+      "live_db_modified": false,
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json"
+    },
+    {
+      "id": "RLS:public.posts",
+      "from_level": 4,
+      "to_level": 5,
+      "attempts_recorded_level_4": 0,
+      "attempts_recorded_level_5": 0,
+      "status": "OPEN_UNREMEDIATED",
+      "live_db_modified": false,
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json"
+    },
+    {
+      "id": "RLS:public.topics",
+      "from_level": 4,
+      "to_level": 5,
+      "attempts_recorded_level_4": 0,
+      "attempts_recorded_level_5": 0,
+      "status": "OPEN_UNREMEDIATED",
+      "live_db_modified": false,
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json"
+    }
+  ],
+  "scope_reviews": [
+    {
+      "id": "UYUM:NL-11",
+      "subject": "AVG/GDPR",
+      "status": "SOURCE_INVENTORY_REVIEWED_LEGAL_SCOPE_OPEN",
+      "technical_sources": [
+        "admin/src/lib/supabase.ts",
+        "portal/src/lib/supabase.ts",
+        "admin/src/app/cms/page.tsx",
+        "docs/security/rls-live-baseline-2026-10-31.json"
+      ],
+      "observations": [
+        "Supabase Auth client usage is present",
+        "Existing public.profiles has identity/role fields",
+        "applications has optional user_id and cv_url; zero rows observed on 2026-10-31",
+        "7 live RLS exposures remain unremediated"
+      ],
+      "outstanding": [
+        "Controller/processor identity and processing locations",
+        "Data category and legal basis inventory",
+        "Retention/deletion and subject rights workflows",
+        "Cross-border transfer/DPA assessment",
+        "DPIA triggering and security enforcement"
+      ],
+      "legal_conclusion": "NOT_ESTABLISHED",
+      "attempts_recorded_level_5": 0
+    },
+    {
+      "id": "UYUM:NL-14",
+      "subject": "EU DSA applicability",
+      "status": "SOURCE_INVENTORY_REVIEWED_LEGAL_SCOPE_OPEN",
+      "technical_sources": [
+        "api/src/modules/forum/forum.router.ts",
+        "api/src/modules/careers/careers.router.ts",
+        "api/src/modules/messaging/messaging.router.ts"
+      ],
+      "observations": [
+        "Forum, careers and messaging routers currently expose GET / action metadata only in available source",
+        "Listed actions are not evidence that user content hosting or platform operations actually run"
+      ],
+      "outstanding": [
+        "EU user availability and intermediary-service categorisation",
+        "Whether user generated content is stored or disseminated publicly",
+        "Notice/action/moderation and complaints processes if applicable",
+        "Conditions of service and relevant contact points"
+      ],
+      "legal_conclusion": "NOT_ESTABLISHED",
+      "attempts_recorded_level_5": 0
+    }
+  ],
+  "business_gov_checklist_relevant_only": true,
+  "source_links": [
+    "https://business.gov.nl/regulations/protection-personal-data/",
+    "https://business.gov.nl/regulations/digital-services-act/"
+  ],
+  "notes": "Initial Seviye 5 technical source intake completed; core legal compliance not accepted, no live change or user-data read. No attempt invented.",
+  "operational_security_fixes": [
+    {
+      "id": "SEC:S5-PORTAL-CMS-ROLE",
+      "level": 5,
+      "origin": "portal/src/app/page.tsx",
+      "issue": "User-editable Supabase user_metadata.role was used to expose CMS admin UI that includes page upsert handlers.",
+      "classification": "FRONTEND_AUTHORIZATION_GUARD_ONLY",
+      "attempt_count_level5": 1,
+      "attempts": [
+        {
+          "index": 1,
+          "result": "CODE_AND_CI_VERIFIED",
+          "git_commit": "3102165be4811bcab0785188b570039f32113fd5",
+          "pr": "https://github.com/netadalet-oss/avofis-platform/pull/7",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41149103604",
+          "ci_job_id": 124381094571,
+          "portal_tests_passed": 28,
+          "portal_typescript": "PASS"
+        }
+      ],
+      "current_status": "DRAFT_CODE_CI_PASS_NOT_MERGED",
+      "production_deployed": false,
+      "production_fix_claimed": false,
+      "historical_work_id": null,
+      "accepted_as_historical_deliverable": false,
+      "backend_rls_validated": false,
+      "remediation_summary": "Portal CMS UI now requires a database-backed profiles.role read scoped to the logged-in user, with session-change invalidation and guarded mutation handlers.",
+      "caveat": "Only an additional UI guard; backend permissions remain governed by live RLS, and 7 unrelated exposed tables remain unremediated."
+    }
+  ]
+}

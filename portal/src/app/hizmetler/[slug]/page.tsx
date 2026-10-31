@@ -66,6 +66,12 @@ export default function HizmetBilgiPage({ params }: { params: { slug: string } }
           <Link href="/baslangic" className="mt-5 inline-block rounded-xl bg-sky-200 px-5 py-3 text-sm font-semibold text-slate-950 hover:bg-white focus:outline-none focus:ring-2 focus:ring-white">
             Sorununuza göre başlayın
           </Link>
+          <Link href="/belge-hazirla" className="mt-3 ml-0 sm:ml-3 inline-block rounded-xl border border-sky-200/40 px-5 py-3 text-sm font-semibold text-sky-100 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white">
+            Belge hazırlama taslağı
+          </Link>
+          <p className="mt-3 text-xs leading-6 text-slate-300">
+            Taslağınızı cihazınızda oluşturup indirebilirsiniz; resmî başvuru ya da AVOfis tarafından kabul edilmiş bir dosya değildir.
+          </p>
         </section>
       </article>
       <SiteFooter />

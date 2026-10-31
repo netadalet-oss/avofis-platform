@@ -1,0 +1,508 @@
+{
+  "version": "1.0.0",
+  "as_of": "2026-10-31",
+  "scope": "60 explicitly defined portal-facing acceptance journeys, 12 groups x 5, including CMS that controls portal",
+  "measurement_type": "PROJECT_SCOPE_PROXY_NOT_HISTORICAL_COMPLETION",
+  "original_approved_jobs": 973,
+  "original_accepted_item_ids_available": false,
+  "original_project_completion_percent": null,
+  "stage": 7,
+  "stage8_approved": false,
+  "minimum_incremental_target_pct_points": 10,
+  "baseline_from_original_approved_register": null,
+  "denominator_fixed": 60,
+  "new_source_level_journeys": 17,
+  "new_source_level_pct_points": 28.33,
+  "real_browser_journeys_accepted": 0,
+  "real_browser_acceptance_pct_points": 0,
+  "full_project_target_proven": false,
+  "next_stage_requires_separate_explicit_user_approval": true,
+  "counts_do_not_include": [
+    "test totals",
+    "module display pages",
+    "historical 973 job acceptance",
+    "site admin security guard as public functional journey"
+  ],
+  "items": [
+    {
+      "id": "home:home-view",
+      "area": "Ana sayfa ve gezinme",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "home:navigation",
+      "area": "Ana sayfa ve gezinme",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "home:search-entry",
+      "area": "Ana sayfa ve gezinme",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "home:responsive",
+      "area": "Ana sayfa ve gezinme",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "home:accessible",
+      "area": "Ana sayfa ve gezinme",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "identity:register",
+      "area": "Üyelik ve hesap",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "identity:login",
+      "area": "Üyelik ve hesap",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "identity:reset-password",
+      "area": "Üyelik ve hesap",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "identity:profile-view",
+      "area": "Üyelik ve hesap",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "identity:logout",
+      "area": "Üyelik ve hesap",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "cases:add-own-decision",
+      "area": "İçtihat araştırması",
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/app/cases/page.tsx",
+        "portal/src/components/research/local-research-workbench.tsx",
+        "portal/src/lib/local-research.ts",
+        "portal/tests/local-portal-workflows.test.cjs"
+      ]
+    },
+    {
+      "id": "cases:search-own-decisions",
+      "area": "İçtihat araştırması",
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/app/cases/page.tsx",
+        "portal/src/components/research/local-research-workbench.tsx",
+        "portal/src/lib/local-research.ts",
+        "portal/tests/local-portal-workflows.test.cjs"
+      ]
+    },
+    {
+      "id": "cases:inspect-full-decision",
+      "area": "İçtihat araştırması",
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/app/cases/page.tsx",
+        "portal/src/components/research/local-research-workbench.tsx",
+        "portal/src/lib/local-research.ts",
+        "portal/tests/local-portal-workflows.test.cjs"
+      ]
+    },
+    {
+      "id": "cases:remove-own-decision",
+      "area": "İçtihat araştırması",
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/app/cases/page.tsx",
+        "portal/src/components/research/local-research-workbench.tsx",
+        "portal/src/lib/local-research.ts",
+        "portal/tests/local-portal-workflows.test.cjs"
+      ]
+    },
+    {
+      "id": "cases:verified-live-caselaw",
+      "area": "İçtihat araştırması",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "statutes:add-own-statute",
+      "area": "Mevzuat araştırması",
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/app/statutes/page.tsx",
+        "portal/src/components/research/local-research-workbench.tsx",
+        "portal/src/lib/local-research.ts",
+        "portal/tests/local-portal-workflows.test.cjs"
+      ]
+    },
+    {
+      "id": "statutes:search-own-statutes",
+      "area": "Mevzuat araştırması",
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/app/statutes/page.tsx",
+        "portal/src/components/research/local-research-workbench.tsx",
+        "portal/src/lib/local-research.ts",
+        "portal/tests/local-portal-workflows.test.cjs"
+      ]
+    },
+    {
+      "id": "statutes:inspect-full-statute",
+      "area": "Mevzuat araştırması",
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/app/statutes/page.tsx",
+        "portal/src/components/research/local-research-workbench.tsx",
+        "portal/src/lib/local-research.ts",
+        "portal/tests/local-portal-workflows.test.cjs"
+      ]
+    },
+    {
+      "id": "statutes:remove-own-statute",
+      "area": "Mevzuat araştırması",
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/app/statutes/page.tsx",
+        "portal/src/components/research/local-research-workbench.tsx",
+        "portal/src/lib/local-research.ts",
+        "portal/tests/local-portal-workflows.test.cjs"
+      ]
+    },
+    {
+      "id": "statutes:verified-live-statutes",
+      "area": "Mevzuat araştırması",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "workspace:add-task",
+      "area": "Çalışma alanı",
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/app/workspace/page.tsx",
+        "portal/src/lib/local-workspace.ts",
+        "portal/tests/local-portal-workflows.test.cjs"
+      ]
+    },
+    {
+      "id": "workspace:toggle-task-completed",
+      "area": "Çalışma alanı",
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/app/workspace/page.tsx",
+        "portal/src/lib/local-workspace.ts",
+        "portal/tests/local-portal-workflows.test.cjs"
+      ]
+    },
+    {
+      "id": "workspace:filter-tasks",
+      "area": "Çalışma alanı",
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/app/workspace/page.tsx",
+        "portal/src/lib/local-workspace.ts",
+        "portal/tests/local-portal-workflows.test.cjs"
+      ]
+    },
+    {
+      "id": "workspace:delete-task",
+      "area": "Çalışma alanı",
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/app/workspace/page.tsx",
+        "portal/src/lib/local-workspace.ts",
+        "portal/tests/local-portal-workflows.test.cjs"
+      ]
+    },
+    {
+      "id": "workspace:add-note",
+      "area": "Çalışma alanı",
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/app/workspace/page.tsx",
+        "portal/src/lib/local-workspace.ts",
+        "portal/tests/local-portal-workflows.test.cjs"
+      ]
+    },
+    {
+      "id": "careers:search-real-vacancies",
+      "area": "Staj ve kariyer",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "careers:open-vacancy",
+      "area": "Staj ve kariyer",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "careers:submit-application",
+      "area": "Staj ve kariyer",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "careers:track-application",
+      "area": "Staj ve kariyer",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "careers:review-applicants",
+      "area": "Staj ve kariyer",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "forum:view-real-topics",
+      "area": "Forum ve topluluk",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "forum:create-topic",
+      "area": "Forum ve topluluk",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "forum:reply-to-topic",
+      "area": "Forum ve topluluk",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "forum:report-post",
+      "area": "Forum ve topluluk",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "forum:moderation",
+      "area": "Forum ve topluluk",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "offices:list-real-offices",
+      "area": "Ofis profilleri",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "offices:search-real-offices",
+      "area": "Ofis profilleri",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "offices:view-verified-office",
+      "area": "Ofis profilleri",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "offices:contact-office",
+      "area": "Ofis profilleri",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "offices:manage-office",
+      "area": "Ofis profilleri",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "documents:create-legal-draft",
+      "area": "Belge ve taslaklar",
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/lib/draft-builder.ts",
+        "portal/src/app/documents/page.tsx",
+        "portal/tests/local-expanded-modules.test.cjs"
+      ]
+    },
+    {
+      "id": "documents:edit-draft",
+      "area": "Belge ve taslaklar",
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/lib/draft-builder.ts",
+        "portal/src/app/documents/page.tsx",
+        "portal/tests/local-expanded-modules.test.cjs"
+      ]
+    },
+    {
+      "id": "documents:export-draft",
+      "area": "Belge ve taslaklar",
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/lib/draft-builder.ts",
+        "portal/src/app/documents/page.tsx",
+        "portal/tests/local-expanded-modules.test.cjs"
+      ]
+    },
+    {
+      "id": "documents:version-draft",
+      "area": "Belge ve taslaklar",
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/lib/draft-builder.ts",
+        "portal/src/app/documents/page.tsx",
+        "portal/tests/local-expanded-modules.test.cjs"
+      ]
+    },
+    {
+      "id": "documents:validate-citations",
+      "area": "Belge ve taslaklar",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "messages:open-thread",
+      "area": "Mesajlaşma",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "messages:send-message",
+      "area": "Mesajlaşma",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "messages:receive-message",
+      "area": "Mesajlaşma",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "messages:attachments",
+      "area": "Mesajlaşma",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "messages:mark-read",
+      "area": "Mesajlaşma",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "notifications:list-notifications",
+      "area": "Bildirimler",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "notifications:filter-notifications",
+      "area": "Bildirimler",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "notifications:mark-read",
+      "area": "Bildirimler",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "notifications:preferences",
+      "area": "Bildirimler",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "notifications:delivery-confirmation",
+      "area": "Bildirimler",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "cms:read-home-content",
+      "area": "Portal içerik yönetimi",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "cms:edit-hero",
+      "area": "Portal içerik yönetimi",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "cms:edit-navigation",
+      "area": "Portal içerik yönetimi",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "cms:edit-module-cards",
+      "area": "Portal içerik yönetimi",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    },
+    {
+      "id": "cms:edit-footer",
+      "area": "Portal içerik yönetimi",
+      "status": "UNKNOWN_OR_NOT_VERIFIED",
+      "source": []
+    }
+  ],
+  "functional_code_last_ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41177872703",
+  "new_prototype_workflows_not_scored_as_live_capabilities": [
+    {
+      "area": "careers",
+      "achieved": [
+        "manually track own vacancy",
+        "filter manually entered opportunities",
+        "update personal application status",
+        "remove local item"
+      ],
+      "excluded": [
+        "search-real-vacancies",
+        "submit-application",
+        "review-applicants"
+      ],
+      "source": [
+        "portal/src/lib/local-careers.ts",
+        "portal/src/app/careers/page.tsx",
+        "portal/tests/local-expanded-modules.test.cjs"
+      ]
+    },
+    {
+      "area": "forum",
+      "achieved": [
+        "create a private topic draft",
+        "add personal reply drafts",
+        "search local drafts",
+        "delete draft or reply"
+      ],
+      "excluded": [
+        "view-real-topics",
+        "create-topic",
+        "reply-to-topic",
+        "report-post",
+        "moderation"
+      ],
+      "source": [
+        "portal/src/lib/local-forum.ts",
+        "portal/src/app/forum/page.tsx",
+        "portal/tests/local-expanded-modules.test.cjs"
+      ]
+    }
+  ],
+  "notes_v20": "17/60 is 28.33pp code-and-test proxy. It is not an independently proven 10pp increase in the whole AVOfis portal; 0 staging/browser accepted and original 973 work acceptance denominator still unknown."
+}

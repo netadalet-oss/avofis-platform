@@ -1,17 +1,9 @@
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
+import { LocalResearchWorkbench } from "@/components/research/local-research-workbench";
 
 export default function Page() {
-  return (
-    <main>
-      <SiteHeader />
-      <section className="container-shell py-24">
-        <div className="rounded-[28px] border border-white/10 bg-white/5 p-8">
-          <h1 className="text-3xl font-semibold text-white">Mevzuat</h1>
-          <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300">Kanun ve yönetmelik metinleri, madde bazlı arama ve değişiklik geçmişi görünümü.</p>
-        </div>
-      </section>
-      <SiteFooter />
-    </main>
-  );
+  return <LocalResearchWorkbench
+    heading="Mevzuat Çalışma Masası"
+    summary="Sahip olduğunuz kanun veya yönetmelik maddelerini geçici listeye ekleyerek metin içinde arayın ve sonuçları inceleyin."
+    example="Örn. Kanun adı ve madde numarası"
+  />;
 }

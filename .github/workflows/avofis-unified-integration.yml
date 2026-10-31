@@ -1,0 +1,43 @@
+name: AVOfis unified integration - offline build and regression
+on:
+  push:
+    branches:
+      - integration/avofis-birlesik-seviyeler-20261031
+  pull_request:
+    branches:
+      - seviye1-yeniden-baslangic-20261031
+permissions:
+  contents: read
+jobs:
+  integration-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout exact integration commit
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Install monorepo dependencies (no live secrets)
+        run: npm install --no-audit --no-fund --package-lock=false
+      - name: Level 1 public safety / catalogue / RLS tests
+        run: node --test portal/tests/intake-preparation.test.mjs portal/tests/public-account-safety.test.mjs portal/tests/public-cms-reader-gate.test.mjs portal/tests/public-trust.test.mjs portal/tests/service-catalog.test.mjs tools/security/rls-preflight.test.mjs api/tests/cms-write-gate.test.mjs api/tests/admin-cms-safe-page.test.mjs
+      - name: Historical local workflow regression
+        run: node --test portal/tests/local-expanded-modules.test.cjs portal/tests/local-portal-workflows.test.cjs portal/tests/navigation-access.test.cjs tools/security/rls-readiness.test.cjs
+      - name: Build customer portal
+        if: always()
+        # Non-sensitive CI-only placeholders: the client cannot accept live cases.
+        # No production or staging Supabase instance is contacted by this job.
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://offline-placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: offline-ci-not-an-authenticated-credential
+        run: npm run build:portal
+      - name: Build staff portal
+        if: always()
+        run: npm run build:admin
+      - name: Build API
+        if: always()
+        run: npm run build:api

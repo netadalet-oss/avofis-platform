@@ -9,6 +9,7 @@ on:
       - 'portal/src/components/site-header.tsx'
       - 'portal/src/lib/launch-gates.ts'
       - 'portal/tests/public-account-safety.test.mjs'
+      - 'portal/tests/public-cms-reader-gate.test.mjs'
       - '.github/workflows/seviye1-public-account-safety.yml'
   pull_request:
     paths:
@@ -17,6 +18,7 @@ on:
       - 'portal/src/components/site-header.tsx'
       - 'portal/src/lib/launch-gates.ts'
       - 'portal/tests/public-account-safety.test.mjs'
+      - 'portal/tests/public-cms-reader-gate.test.mjs'
       - '.github/workflows/seviye1-public-account-safety.yml'
 permissions:
   contents: read
@@ -36,7 +38,7 @@ jobs:
         with:
           node-version: '22'
       - name: Verify registration and CMS gates
-        run: node --experimental-strip-types --test portal/tests/public-account-safety.test.mjs
+        run: node --experimental-strip-types --test portal/tests/public-account-safety.test.mjs portal/tests/public-cms-reader-gate.test.mjs
       - name: Install workspaces without lifecycle scripts
         run: npm install --ignore-scripts --no-audit --no-fund
       - name: Build portal with placeholder credentials
