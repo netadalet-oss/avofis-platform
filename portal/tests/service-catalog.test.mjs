@@ -36,7 +36,7 @@ test("no active customer acquisition, guaranteed case results or fabricated fees
   assert.doesNotMatch(text, /başvurunuz gönderildi|müşteriniz kabul edildi|ödemeniz alındı|garanti kazan|\b120K\b/i);
   for (const x of SERVICES) {
     assert.ok(x.checks.some(line => /kuruluş öncesi/.test(line)), x.slug);
-    assert.ok(x.checks.some(line => /kişisel bilgi/.test(line)), x.slug);
+    assert.ok(x.checks.some(line => /kişisel bilgi/i.test(line)), x.slug);
   }
 });
 
