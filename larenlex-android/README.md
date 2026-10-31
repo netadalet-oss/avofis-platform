@@ -58,3 +58,19 @@ python3 -O -m unittest discover -s larenlex-android/tests -v
 ```
 
 Yukarıdaki iz matrisi, A2↔R↔API bağlantısını delilsiz otomatik doldurmaz. SHA ve temel sayım doğrulaması geçse bile, sonuç **Android APK testi veya bağımsız kabul değildir**. Birleşik kaynak ZIP'i ve özel talimat ZIP'i GitHub'a yüklenmez. GitHub Actions sadece bağımsız unit kontrolüdür; özel dosya sağlanmadıkça ZIP entegrasyonu atlanır.
+
+
+## 2026-11-01 — L0 kapanış kapısı ve durum prototipi
+
+Yeni geliştirme dosyaları:
+
+- tools/run_l0_gate.py: kaynak ZIP kontrollerinden sonra gerçek Android bundle ve bağımsız kabul eksikse L0 kapanışını BLOCKED_NOT_COMPLETE olarak reddeder (beklenen çıkış kodu 2).
+- tools/check_android_identity.py: Gradle, Kotlin, Java, kaynak yapılandırmaları, ürünler arası sabit uç noktalar, sembolik bağlantılar ve imza parolası için salt-okunur statik kontrol; gerçek backend bağımsızlığını tek başına kanıtlamaz.
+- preview/status.html: telefon uyumlu, yalnız Türkçe Gelişim/Durum prototipi. Gerçek Android uygulaması veya kamuya yayımlanmış ekran değildir.
+- tests/test_run_l0_gate.py ve tests/test_status_preview.py: yanlış tamamlanma ve yanlış kamu izlenimini engelleyen regresyonlar.
+
+Örnek komut (exit 2 L0'ın açık olduğu anlamına gelir):
+
+    python3 larenlex-android/tools/run_l0_gate.py --source /secure/LARENLEX_ANDROID_AYRI_TALIMATNAME_TESLIM.zip --reference /secure/TUM_DOSYALAR_AVOFIS_PORTAL_LARENLEX_ANDROID_TAM_TESLIM.zip --output /tmp/larenlex-l0/L0_GATE.json
+
+ZIP dosyaları ve gerçek müşteri/üretim gizli bilgileri kamuya açık Git dalına aktarılmaz. GitHub Actions tanımı başarılı CI run-id, gerçek Android HEAD, Gradle/cihaz testi veya bağımsız kabul yerine geçmez. Bu L0 çalışması genel düzey kapanışı veya sonraki seviyeye geçiş izni değildir.
