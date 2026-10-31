@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>LarenLex Android — Gelişim / Durum (Prototip)</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, -apple-system, Segoe UI, Arial, sans-serif; line-height: 1.55; }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: Canvas; color: CanvasText; }
+    main { width: min(100% - 2rem, 720px); margin: 0 auto; padding: 2rem 0 3rem; }
+    h1 { font-size: clamp(1.5rem, 6vw, 2.2rem); line-height: 1.2; margin: 0 0 .65rem; }
+    h2 { font-size: 1.1rem; margin: 0 0 .5rem; }
+    p { margin: 0; }
+    .meta { margin-bottom: 1.5rem; font-size: .95rem; }
+    .notice { font-weight: 650; margin: 0 0 1rem; padding-left: .75rem; border-left: .25rem solid currentColor; }
+    .grid { display: grid; grid-template-columns: 1fr; gap: .9rem; }
+    section { border: 1px solid currentColor; border-radius: .7rem; padding: 1.1rem; }
+    .footnote { margin-top: 1.5rem; font-size: .9rem; }
+    @media (min-width: 660px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>LarenLex Android — Gelişim / Durum</h1>
+      <p class="notice" role="status">Tasarım prototipi; gerçek Android ekranı veya kamuya açık hizmet değildir.</p>
+      <p class="meta">Durum: L0 kaynak doğrulaması sürüyor. Bilgi tarihi: 1 Kasım 2026.</p>
+    </header>
+    <div class="grid">
+      <section aria-labelledby="changed"><h2 id="changed">Bu dönem ne değişti?</h2><p>Kaynak bütünlüğünü ve işlev kimliklerini inceleyen denetim araçları geliştirildi. Başka projeye ait bağlantıları ve güvenli olmayan dosya yollarını reddeden kontroller eklendi. Çalışmalar yalnız geliştirme araçlarıyla ilgilidir.</p></section>
+      <section aria-labelledby="current"><h2 id="current">Şimdi neredeyiz?</h2><p>L0 kaynak ve devir doğrulaması devam ediyor. Bağımsız Android Git kaynağı henüz erişilebilir değil. Yerel testlerin başarılı olması, uygulamanın cihazda çalıştığını veya kabul edildiğini göstermez.</p></section>
+      <section aria-labelledby="next"><h2 id="next">Sırada ne var?</h2><p>Gerçek uygulama kaynaklarının bütünlüğü doğrulanacak. Ardından Android derleme, cihaz, ayrı backend, yetkilendirme ve güvenlik testleri somut kanıtlarla yürütülecek.</p></section>
+      <section aria-labelledby="limit"><h2 id="limit">Önemli sınır</h2><p>Bağımsız teknik ve hukukî kabul, gerçek kullanıcı verisi işleme, resmî başvuru, ödeme ve mağaza dağıtımı gerçekleşmiş değildir. Bunlar ayrıca doğrulama ve yetki gerektirir.</p></section>
+    </div>
+    <p class="footnote">Önizleme yalnız Türkçedir. Hukukî ve dil incelemesinden sonra diğer diller ayrı değerlendirilir; bu dosya üretim yayını değildir.</p>
+  </main>
+</body>
+</html>
