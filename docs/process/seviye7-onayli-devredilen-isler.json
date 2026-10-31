@@ -352,6 +352,140 @@
         "PR merge/production deployment requires separate approval",
         "Possible in-flight page content read effects on auth changes should be tested with browser integration"
       ]
+    },
+    {
+      "id": "UX:S7-CASES-LOCAL-RESEARCH",
+      "description": "İçtihat sayfasında kullanıcının verdiği metinleri ekleme, arama, açma ve çıkarma",
+      "status": "DRAFT_CODE_CI_PASS_NOT_MERGED",
+      "attempts_recorded_level7": 1,
+      "attempts": [
+        {
+          "index": 1,
+          "result": "CODE_AND_CI_VERIFIED",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41177128375",
+          "ci_job_id": 124466884770,
+          "ci_head_commit": "66e865381a5c258ac5ad4a3b47865e1aad358610",
+          "total_tests_passed": 261,
+          "total_tests_failed": 0,
+          "portal_tests_passed": 75,
+          "build_and_typecheck": "PASS"
+        }
+      ],
+      "source_paths": [
+        "portal/src/lib/local-research.ts",
+        "portal/src/components/research/local-research-workbench.tsx",
+        "portal/src/app/cases/page.tsx"
+      ],
+      "test_sources": [
+        "portal/tests/local-portal-workflows.test.cjs"
+      ],
+      "production_deployed": false,
+      "live_db_modified": false,
+      "historical_work_id": null,
+      "accepted_as_historical_deliverable": false,
+      "staging_browser_tested": false,
+      "data_scope": "Only local in-memory UI, except navigation write protected by database RLS",
+      "acceptance_note": "Code and unit-test ready only; no live production or integrated authenticated browser acceptance."
+    },
+    {
+      "id": "UX:S7-STATUTES-LOCAL-RESEARCH",
+      "description": "Mevzuat sayfasında kullanıcının verdiği metinleri ekleme, arama, açma ve çıkarma",
+      "status": "DRAFT_CODE_CI_PASS_NOT_MERGED",
+      "attempts_recorded_level7": 1,
+      "attempts": [
+        {
+          "index": 1,
+          "result": "CODE_AND_CI_VERIFIED",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41177128375",
+          "ci_job_id": 124466884770,
+          "ci_head_commit": "66e865381a5c258ac5ad4a3b47865e1aad358610",
+          "total_tests_passed": 261,
+          "total_tests_failed": 0,
+          "portal_tests_passed": 75,
+          "build_and_typecheck": "PASS"
+        }
+      ],
+      "source_paths": [
+        "portal/src/lib/local-research.ts",
+        "portal/src/components/research/local-research-workbench.tsx",
+        "portal/src/app/statutes/page.tsx"
+      ],
+      "test_sources": [
+        "portal/tests/local-portal-workflows.test.cjs"
+      ],
+      "production_deployed": false,
+      "live_db_modified": false,
+      "historical_work_id": null,
+      "accepted_as_historical_deliverable": false,
+      "staging_browser_tested": false,
+      "data_scope": "Only local in-memory UI, except navigation write protected by database RLS",
+      "acceptance_note": "Code and unit-test ready only; no live production or integrated authenticated browser acceptance."
+    },
+    {
+      "id": "UX:S7-WORKSPACE-LOCAL-TASKS",
+      "description": "Çalışma alanında geçici görevler, tamamlama, filtreleme ve notlar",
+      "status": "DRAFT_CODE_CI_PASS_NOT_MERGED",
+      "attempts_recorded_level7": 1,
+      "attempts": [
+        {
+          "index": 1,
+          "result": "CODE_AND_CI_VERIFIED",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41177128375",
+          "ci_job_id": 124466884770,
+          "ci_head_commit": "66e865381a5c258ac5ad4a3b47865e1aad358610",
+          "total_tests_passed": 261,
+          "total_tests_failed": 0,
+          "portal_tests_passed": 75,
+          "build_and_typecheck": "PASS"
+        }
+      ],
+      "source_paths": [
+        "portal/src/lib/local-workspace.ts",
+        "portal/src/app/workspace/page.tsx"
+      ],
+      "test_sources": [
+        "portal/tests/local-portal-workflows.test.cjs"
+      ],
+      "production_deployed": false,
+      "live_db_modified": false,
+      "historical_work_id": null,
+      "accepted_as_historical_deliverable": false,
+      "staging_browser_tested": false,
+      "data_scope": "Only local in-memory UI, except navigation write protected by database RLS",
+      "acceptance_note": "Code and unit-test ready only; no live production or integrated authenticated browser acceptance."
+    },
+    {
+      "id": "SEC:S7-HEADER-NAV-ADMIN-ROLE",
+      "description": "Paylaşılan üst menü yönetici rolü ve kayıt yetkisinin gerçek profil üzerinden doğrulanması",
+      "status": "DRAFT_CODE_CI_PASS_NOT_MERGED",
+      "attempts_recorded_level7": 1,
+      "attempts": [
+        {
+          "index": 1,
+          "result": "CODE_AND_CI_VERIFIED",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41177128375",
+          "ci_job_id": 124466884770,
+          "ci_head_commit": "66e865381a5c258ac5ad4a3b47865e1aad358610",
+          "total_tests_passed": 261,
+          "total_tests_failed": 0,
+          "portal_tests_passed": 75,
+          "build_and_typecheck": "PASS"
+        }
+      ],
+      "source_paths": [
+        "portal/src/components/site-header.tsx",
+        "portal/src/lib/navigation-access.ts"
+      ],
+      "test_sources": [
+        "portal/tests/navigation-access.test.cjs"
+      ],
+      "production_deployed": false,
+      "live_db_modified": false,
+      "historical_work_id": null,
+      "accepted_as_historical_deliverable": false,
+      "staging_browser_tested": false,
+      "data_scope": "Only local in-memory UI, except navigation write protected by database RLS",
+      "acceptance_note": "Code and unit-test ready only; no live production or integrated authenticated browser acceptance."
     }
   ],
   "production_modified": false,
