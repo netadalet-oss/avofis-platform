@@ -48,3 +48,44 @@ class IdentityTests(unittest.TestCase):
 
 
 if __name__=='__main__': unittest.main()
+
+
+class SourceBoundaryRegression(unittest.TestCase):
+    def test_foreign_endpoint_in_kotlin_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            fixture(d)
+            (Path(d) / 'app/src/main/ApiClient.kt').write_text('val url = "https://avofis-platform.example.invalid/api"')
+            self.assertIn('OTHER_PRODUCT_REFERENCE_IN_APP_SOURCE', checks.verify(d)['reasons'])
+
+    def test_foreign_endpoint_in_java_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            fixture(d)
+            (Path(d) / 'app/src/main/Client.java').write_text('String url = "https://lexlingo.example.invalid";')
+            self.assertIn('OTHER_PRODUCT_REFERENCE_IN_APP_SOURCE', checks.verify(d)['reasons'])
+
+    def test_symlink_file_rejected_without_reading(self):
+        with tempfile.TemporaryDirectory() as d:
+            fixture(d)
+            external = Path(d).parent / 'outside-target-file-identity-test'
+            (Path(d) / 'app/src/main/Local.kt').symlink_to(external)
+            self.assertIn('LINKED_SOURCE_PATH_REVIEW_REQUIRED', checks.verify(d)['reasons'])
+
+    def test_symlink_directory_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            fixture(d)
+            (Path(d) / 'linked').symlink_to('/etc', target_is_directory=True)
+            self.assertIn('LINKED_SOURCE_PATH_REVIEW_REQUIRED', checks.verify(d)['reasons'])
+
+    def test_unreadable_or_large_source_not_ignored(self):
+        with tempfile.TemporaryDirectory() as d:
+            fixture(d)
+            (Path(d) / 'app/src/main/Huge.kt').write_bytes(b'x' * (checks.MAX_FILE_BYTES + 1))
+            self.assertIn('SOURCE_FILE_TOO_LARGE_TO_VERIFY', checks.verify(d)['reasons'])
+
+    def test_dot_env_rejected_without_leaking_values(self):
+        with tempfile.TemporaryDirectory() as d:
+            fixture(d)
+            (Path(d) / '.env').write_text('API_KEY=FAKE_SECRET_DO_NOT_PRINT')
+            result = checks.verify(d)
+            self.assertIn('LOCAL_ENV_FILE_MUST_NOT_ENTER_SOURCE_SCAN', result['reasons'])
+            self.assertNotIn('FAKE_SECRET_DO_NOT_PRINT', str(result))
