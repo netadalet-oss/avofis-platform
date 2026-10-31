@@ -60,6 +60,7 @@ export default function PublicProgressPage() {
           aciliyet varsa ilgili resmî kurum ve gerektiğinde yetkili hukuk profesyoneliyle görüşün.
         </p>
         <div className="mt-7 flex flex-wrap gap-5 text-sm">
+          <Link href="/seviye-1-onizleme" className="text-sky-200 underline">Bütün ürün Seviye 1 önizlemesi</Link>
           <Link href="/hizmetler" className="text-sky-200 underline">Hizmet alanları</Link>
           <Link href="/baslangic" className="text-sky-200 underline">Kişisel verisiz hazırlık</Link>
           <Link href="/uyum" className="text-sky-200 underline">Yayın öncesi uyum sınırları</Link>
