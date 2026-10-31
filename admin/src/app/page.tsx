@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const sections = [
   "Dashboard",
   "Kullanıcı Yönetimi",
@@ -21,6 +23,9 @@ export default function AdminHome() {
       <div className="container-shell py-16">
         <div className="rounded-[28px] border border-white/10 bg-white/5 p-8">
           <h1 className="text-3xl font-semibold">AvOfis Admin</h1>
+          <Link href="/seviye-1-onizleme" className="mt-5 inline-flex rounded-xl border border-sky-300/40 px-4 py-3 text-sm font-semibold text-sky-200 underline underline-offset-4">
+            Seviye 1 — bütün yönetim ve API önizlemesini aç
+          </Link>
           <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300">
             Bu panel; dosya yüklemeden, GitHub kullanmadan, doğrudan web arayüzü üzerinden menü, başlık, blok, içerik ve görsel düzenleme mantığına göre tasarlanmıştır. Kalıcı kullanım için API ve veritabanı bağlantısı gereklidir.
           </p>
