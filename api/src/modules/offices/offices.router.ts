@@ -1,7 +1,9 @@
 import { Router } from "express";
+import { unavailableModuleMetadata } from "../../security/module-availability";
 
 export const officesRouter = Router();
 
 officesRouter.get("/", (_req, res) => {
-  res.json({ module: "offices", actions: ["profiles", "members", "listings", "verification"] });
+  res.setHeader("Cache-Control", "no-store");
+  res.json(unavailableModuleMetadata("offices", ["profiles", "members", "listings", "verification"]));
 });
