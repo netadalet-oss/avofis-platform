@@ -16,6 +16,9 @@ on:
       - "portal/src/app/api/intake/route.ts"
       - "portal/src/lib/limited-json-request.ts"
       - "portal/tests/limited-json-request.test.cjs"
+      - "portal/src/lib/whole-product-levels.ts"
+      - "portal/src/app/seviye-1-onizleme/**"
+      - "portal/tests/whole-product-levels.test.cjs"
       - ".github/workflows/seviye1-footer-progress.yml"
   push:
     branches:
@@ -35,6 +38,9 @@ on:
       - "portal/src/app/api/intake/route.ts"
       - "portal/src/lib/limited-json-request.ts"
       - "portal/tests/limited-json-request.test.cjs"
+      - "portal/src/lib/whole-product-levels.ts"
+      - "portal/src/app/seviye-1-onizleme/**"
+      - "portal/tests/whole-product-levels.test.cjs"
       - ".github/workflows/seviye1-footer-progress.yml"
 permissions:
   contents: read
@@ -91,3 +97,14 @@ jobs:
             exit 1
           fi
           echo 'Public auth unavailable HTTP: PASS'
+          # Breadth-first whole-product preview is a real Next page, not a drawing.
+          curl -fsS http://127.0.0.1:3000/seviye-1-onizleme > /tmp/avofis-s1-whole-preview.html
+          test -s /tmp/avofis-s1-whole-preview.html
+          grep -q 'bütün ürün kapsamı önizlemesi' /tmp/avofis-s1-whole-preview.html
+          grep -q '17 hizmet alanı' /tmp/avofis-s1-whole-preview.html
+          grep -q '14 hedef kitle' /tmp/avofis-s1-whole-preview.html
+          grep -q '12 işlem rotası' /tmp/avofis-s1-whole-preview.html
+          grep -q '16 personel modülü' /tmp/avofis-s1-whole-preview.html
+          grep -q '33 gereksinim bölümü' /tmp/avofis-s1-whole-preview.html
+          grep -q '0/594' /tmp/avofis-s1-whole-preview.html
+          echo 'Whole-product S1 preview HTTP: PASS'
