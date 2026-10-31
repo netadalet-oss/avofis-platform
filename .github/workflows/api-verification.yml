@@ -1,0 +1,77 @@
+name: AVOfis API and admin security verification
+on:
+  pull_request:
+    paths:
+      - 'api/**'
+      - 'admin/**'
+      - 'portal/**'
+      - 'docs/security/**'
+      - 'tools/security/**'
+      - 'docs/process/**'
+      - 'tools/process/**'
+      - '.github/workflows/api-verification.yml'
+  push:
+    branches:
+      - seviye4-security-cms-cors-20261030
+      - seviye5-kademeli-devam-20261031
+      - seviye6-kontrollu-devam-20261031
+      - seviye7-kontrollu-devam-20261031
+    paths:
+      - 'api/**'
+      - 'admin/**'
+      - 'portal/**'
+      - 'docs/security/**'
+      - 'tools/security/**'
+      - 'docs/process/**'
+      - 'tools/process/**'
+      - '.github/workflows/api-verification.yml'
+permissions:
+  contents: read
+jobs:
+  api-check:
+    name: TypeScript build and HTTP regressions
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout reviewed source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Install Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Install dependencies (without package scripts)
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: TypeScript API build
+        run: npm run build --workspace api
+      - name: Unit and real Express HTTP integration tests
+        run: npm run test --workspace api
+      - name: Admin authorization regression tests
+        run: npm run test --workspace admin
+      - name: Admin TypeScript verification
+        run: npm run typecheck --workspace admin
+      - name: Portal TypeScript verification
+        run: npm run typecheck --workspace portal
+      - name: Portal CMS role regression tests
+        run: npm run test --workspace portal
+      - name: RLS baseline integrity tests (no live DB connection)
+        run: node --test tools/security/rls-readiness.test.cjs
+      - name: RLS snapshot advisory (risk remains open)
+        run: node tools/security/rls-readiness.cjs
+      - name: Stage 5 approval and carryover invariants
+        run: node --test tools/process/approval-gate.test.cjs
+      - name: Stage 5 source-backed approval summary
+        run: node tools/process/approval-gate.cjs
+      - name: Stage 6 consent and carryover tests
+        run: node --test tools/process/stage6-gate.test.cjs
+      - name: Stage 6 carryover audit (read only)
+        run: node tools/process/stage6-gate.cjs
+      - name: Stage 7 explicit approval and historical carryover tests
+        run: node --test tools/process/stage7-gate.test.cjs
+      - name: Stage 7 source-backed carryover summary (read only)
+        run: node tools/process/stage7-gate.cjs
+      - name: Portal 10 point functional-growth truthfulness tests
+        run: node --test tools/process/portal-progress-gate.test.cjs
+      - name: Portal functional-growth scorecard
+        run: node tools/process/portal-progress-gate.cjs
