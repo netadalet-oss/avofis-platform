@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Fail-closed, offline L0 release gate for LarenLex; never touches production.
 
-A successful source audit or unit test alone cannot close L0. Missing independent
-Android Git and code always block the level transition.
+A source audit alone cannot establish independent L0 technical acceptance.
+Missing Android sources block technical acceptance, NOT the user's permission to
+continue to a deeper all-module development level with outstanding debts.
 """
 import argparse
 from datetime import datetime, timezone
@@ -35,6 +36,8 @@ def run(source, reference, bundle, a514, checkout, output, tools_dir=None):
     result = {'product': 'LarenLex Android', 'level': 'L0',
               'updated_utc': datetime.now(timezone.utc).isoformat(),
               'decision': 'BLOCKED_NOT_COMPLETE', 'L1_transition_authorized': False,
+              'development_progression': 'MAY_CONTINUE_WITH_DEBT_ON_USER_APPROVAL',
+              'technical_acceptance_separate_from_level_progress': True,
               'source_only_is_not_android_acceptance': True, 'gates': {}}
     gates = result['gates']
     for name, path in [('larenlex_zip', source), ('reference_zip', reference),
