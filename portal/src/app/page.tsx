@@ -482,13 +482,6 @@ export default function HomePage() {
               Kullanım istatistikleri doğrulanmış kaynağıyla birlikte yayımlanacaktır.
             </p>
           </div>
-                  <div className="mt-1 text-xs leading-5 text-slate-400">
-                    {item.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
 
           <div className="relative">
             <div className="absolute -left-10 top-10 h-28 w-28 rounded-full bg-sky-400/20 blur-3xl" />
