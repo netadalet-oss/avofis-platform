@@ -12,7 +12,7 @@ const modules = [
   "reporting","audit","people","settings"
 ];
 test("the 16 canonical staff modules have exactly one safe first-level card",()=>{
-  const start=page.indexOf("export const staffModules = [");
+  const start=page.indexOf("const staffModules = [");
   const end=page.indexOf("] as const;",start);
   assert.ok(start>=0 && end>start);
   const block=page.slice(start,end);
@@ -24,7 +24,7 @@ test("the 16 canonical staff modules have exactly one safe first-level card",()=
 test("all current 14 API modules and seven A workstreams appear without fake CRUD",()=>{
   const expected=["admin","analytics","auth","careers","cases","cms","connect",
     "forum","messaging","notifications","offices","statutes","support","workspace"];
-  const start=page.indexOf("export const backendModules = [");
+  const start=page.indexOf("const backendModules = [");
   const end=page.indexOf("] as const;",start);
   assert.ok(start>=0 && end>start);
   const names=[...page.slice(start,end).matchAll(/"([a-z]+)"/g)].map(x=>x[1]);
