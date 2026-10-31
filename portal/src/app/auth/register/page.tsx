@@ -12,7 +12,7 @@ export default function Page() {
   const router = useRouter();
   const { isAuthenticated, loading: authLoading } = useUser();
 
-  const [role, setRole] = useState("user");
+  const [requestedRole, setRequestedRole] = useState("user");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,13 +30,13 @@ export default function Page() {
     setLoading(true);
     setMessage("");
 
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: {
           full_name: fullName,
-          role,
+          requested_role: requestedRole,
         },
       },
     });
@@ -47,24 +47,7 @@ export default function Page() {
       return;
     }
 
-    const userId = data.user?.id;
-
-    if (userId) {
-      const { error: profileError } = await supabase.from("profiles").upsert({
-        id: userId,
-        full_name: fullName,
-        role,
-        email,
-      });
-
-      if (profileError) {
-        setMessage(profileError.message);
-        setLoading(false);
-        return;
-      }
-    }
-
-    setMessage("Kayıt başarılı. E-posta doğrulaması açıksa kutunuzu kontrol edin, ardından giriş yapın.");
+    setMessage("Hesap talebiniz alındı. E-posta doğrulaması gerekiyorsa kutunuzu kontrol edin. Meslekî veya ofis yetkisi verilmedi; ayrıca belge ve görev doğrulaması gerekir.");
     setLoading(false);
   }
 
@@ -86,13 +69,13 @@ export default function Page() {
           <h1 className="text-3xl font-semibold text-white">Hesap Oluştur</h1>
 
           <p className="mt-4 text-sm leading-7 text-slate-300">
-            Avukat, stajyer ve ofis hesabı için rol seçimi destekli kayıt ekranı.
+            Hesap türü talebi oluşturun; meslekî yetki ayrıca doğrulanır.
           </p>
 
           <form onSubmit={handleRegister} className="mt-8 space-y-4">
             <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
+              value={requestedRole}
+              onChange={(e) => setRequestedRole(e.target.value)}
               className="w-full rounded-lg border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none"
             >
               <option value="user">Genel Kullanıcı</option>
@@ -100,6 +83,7 @@ export default function Page() {
               <option value="intern">Stajyer</option>
               <option value="office">Ofis</option>
             </select>
+            <p className="text-xs leading-5 text-amber-200">Bu seçim meslekî yetki vermez. Avukatlık, stajyerlik ve ofis yetkileri belgeyle ayrıca doğrulanmalıdır.</p>
 
             <input
               type="text"

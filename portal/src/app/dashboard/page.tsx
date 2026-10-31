@@ -30,8 +30,8 @@ export default function Page() {
                     <span className="text-slate-400">E-posta:</span> {user?.email || "-"}
                   </p>
                   <p>
-                    <span className="text-slate-400">Rol:</span>{" "}
-                    {user?.user_metadata?.role || "user"}
+                    <span className="text-slate-400">Meslekî yetki:</span>{" "}
+                    Doğrulanmadı
                   </p>
                 </div>
               </div>
