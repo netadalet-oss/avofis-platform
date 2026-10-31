@@ -40,6 +40,7 @@ import { useUser } from "@/hooks/useUser";
 import { stats } from "@/lib/site";
 import { supabase } from "@/lib/supabase";
 import { hasPortalCmsAdminAccess } from "@/lib/cms-access";
+import { updateExistingHomeContent } from "@/lib/cms-write";
 
 const featurePills = [
   "İçtihat araştırma",
@@ -285,10 +286,7 @@ export default function HomePage() {
       const currentContent: HomeCmsContent = cmsContent || {};
       const nextContent = setDeepValue(currentContent, path, value);
 
-      const { error } = await supabase.from("pages").upsert({
-        slug: "home",
-        content: nextContent
-      });
+      const { error } = await updateExistingHomeContent(supabase, nextContent);
 
       if (error) {
         setHeroMessage(`İçerik kaydedilemedi: ${error.message}`);
@@ -332,10 +330,7 @@ export default function HomePage() {
       setHeroSaving(true);
       setHeroMessage("");
 
-      const { error } = await supabase.from("pages").upsert({
-        slug: "home",
-        content: nextContent
-      });
+      const { error } = await updateExistingHomeContent(supabase, nextContent);
 
       if (error) {
         setHeroMessage(`Hero kaydedilemedi: ${error.message}`);

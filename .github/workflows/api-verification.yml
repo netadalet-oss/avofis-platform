@@ -14,6 +14,7 @@ on:
     branches:
       - seviye4-security-cms-cors-20261030
       - seviye5-kademeli-devam-20261031
+      - seviye6-kontrollu-devam-20261031
     paths:
       - 'api/**'
       - 'admin/**'
@@ -47,6 +48,8 @@ jobs:
         run: npm run test --workspace api
       - name: Admin authorization regression tests
         run: npm run test --workspace admin
+      - name: Admin TypeScript verification
+        run: npm run typecheck --workspace admin
       - name: Portal TypeScript verification
         run: npm run typecheck --workspace portal
       - name: Portal CMS role regression tests
@@ -59,3 +62,7 @@ jobs:
         run: node --test tools/process/approval-gate.test.cjs
       - name: Stage 5 source-backed approval summary
         run: node tools/process/approval-gate.cjs
+      - name: Stage 6 consent and carryover tests
+        run: node --test tools/process/stage6-gate.test.cjs
+      - name: Stage 6 carryover audit (read only)
+        run: node tools/process/stage6-gate.cjs
