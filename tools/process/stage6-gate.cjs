@@ -62,6 +62,17 @@ function check(d) {
       || concurrency.staging_integration_verified!==false)
       throw Error('Historical concurrency attempt record tampered with');
   }
+  const defaults = d.new_work.find(w=>w.id==='SEC:S6-CMS-DEFAULTS-PARTIAL-RESET');
+  if(defaults){
+    if(defaults.attempts_recorded_level6!==2
+      || defaults.attempts[0]?.result!=='FAILED_TEST_ASSERTION'
+      || defaults.attempts[1]?.result!=='CODE_AND_CI_VERIFIED'
+      || defaults.production_deployed!==false
+      || defaults.live_db_modified!==false
+      || defaults.staging_integration_verified!==false
+      || defaults.accepted_as_historical_deliverable!==false)
+      throw Error('Stage 6 defaults preview attempt history or delivery boundary was falsified');
+  }
   return {operational_stage:6,stage7_authorized:false,carried_items:10,open_live_rls:7,
           production_modified:false,stage5_historical_complete:false,
           new_stage6_work:d.new_work.length};
