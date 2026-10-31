@@ -37,7 +37,9 @@ test("public progress route names its evidence limits and never asks for persona
   ]) {
     assert.ok(progress.includes(title), title);
   }
-  assert.match(progress, /31 Ekim 2026/);
+  assert.match(progress, /1 Kasım 2026/);
+  assert.match(progress, /856ea77d/);
+  assert.match(progress, /güvenli iç sayfalara sınırlandırıldı/);
   assert.match(progress, /bağımsız ürün kabulü veya üretim yayını beyanı değildir/);
   assert.match(progress, /kişisel belge gönderimi/);
   assert.match(progress, /robots:\s*\{\s*index:\s*false/);
