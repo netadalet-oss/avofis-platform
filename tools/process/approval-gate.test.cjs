@@ -5,7 +5,7 @@ const {validate,load}=require('./approval-gate.cjs');
 const [base,reg]=load();const copy=o=>structuredClone(o);
 test('explicit approved 4-to-5 is active, 5-to-6 not authorized',()=>assert.deepEqual(validate(base,reg),{
  active_stage:5,next_stage_authorized:false,open_rls:7,security_fixes_confirmed:0,
- scope_inventories:2,legal_compliance_accepted:0,historical_stage4_completed:false,attempts_invented:0
+ code_fixes_ci_verified:1,scope_inventories:2,legal_compliance_accepted:0,historical_stage4_completed:false,attempts_invented:0
 }));
 test('revoke approval is rejected',()=>{const s=copy(base);s.stage5_transition_authorized=false;assert.throws(()=>validate(s,reg));});
 test('implicit or mistaken approval status is rejected',()=>{const s=copy(base);s.stage5_transition_status='PENDING_EXPLICIT_USER_APPROVAL';assert.throws(()=>validate(s,reg));});
@@ -24,3 +24,26 @@ test('per-item level attempt cap fixed at 2',()=>{const r=copy(reg);r.attempt_li
 test('both GDPR and DSA source reviews retained',()=>{const r=copy(reg);r.scope_reviews.pop();assert.throws(()=>validate(base,r));});
 test('source inventory cannot imply legal compliance',()=>{const r=copy(reg);r.scope_reviews[0].legal_conclusion='COMPLIANT';assert.throws(()=>validate(base,r));});
 test('compliance source evidence is required',()=>{const r=copy(reg);r.scope_reviews[1].technical_sources=[];assert.throws(()=>validate(base,r));});
+
+test('one real verified Level 5 code attempt is recorded, separate from production',()=>{
+  const fix=reg.operational_security_fixes[0];
+  assert.equal(fix.attempt_count_level5,1);
+  assert.equal(fix.production_deployed,false);
+  assert.equal(fix.current_status,'DRAFT_CODE_CI_PASS_NOT_MERGED');
+});
+test('third attempt is prohibited within the same level',()=>{
+  const r=copy(reg);r.operational_security_fixes[0].attempt_count_level5=3;
+  assert.throws(()=>validate(base,r),/attempt\/approval boundary/);
+});
+test('CI success claims require a specific recorded workflow',()=>{
+  const r=copy(reg);delete r.operational_security_fixes[0].attempts[0].ci_run;
+  assert.throws(()=>validate(base,r),/CI evidence/);
+});
+test('code readiness may not be misreported as historical acceptance',()=>{
+  const r=copy(reg);r.operational_security_fixes[0].accepted_as_historical_deliverable=true;
+  assert.throws(()=>validate(base,r),/attempt\/approval boundary/);
+});
+test('code deployment may not be invented',()=>{
+  const r=copy(reg);r.operational_security_fixes[0].production_deployed=true;
+  assert.throws(()=>validate(base,r),/attempt\/approval boundary/);
+});
