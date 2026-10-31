@@ -1,0 +1,58 @@
+{
+  "program": "AVOfis",
+  "decision_date": "2026-10-31",
+  "decision_type": "LATER_USER_AUTHORIZATION_SUPERSEDES_STAGE_ADVANCEMENT_LOCK_ONLY",
+  "user_instruction": "Sonraki aşamalara geçiş serbest fakat eksikleri tamamlama çalışmaları da birlikte yapılacak",
+  "source_of_truth": "docs/program/GUNCEL_COK_SEVIYELI_PARALEL_CALISMA_KARARI_2026-10-31.md",
+  "historical_reset_record": "docs/program/seviye1-yeniden-baslangic-2026-10-31.json",
+  "stage_policy": {
+    "advance_to_later_stages_without_additional_stage_permission": true,
+    "stage_2_work_authorized": true,
+    "later_stages_work_authorized": true,
+    "stage_1_incomplete_items_remain_in_parallel_backlog": true,
+    "advancing_stage_automatically_accepts_requirements": false,
+    "stage_completion_requires_evidence": true,
+    "levels_actually_started_need_separate_status_records": true
+  },
+  "parallel_workstreams": [
+    {
+      "id": "OPEN_BACKLOG",
+      "goal": "Fix open prior-stage functionality, P0 security and acceptance deficits",
+      "carryover": [
+        "S1-02",
+        "S1-03",
+        "S1-04",
+        "S1-05",
+        "S1-06",
+        "B01-B18"
+      ]
+    },
+    {
+      "id": "FORWARD_DEVELOPMENT",
+      "goal": "Build later-stage capabilities against immutable R-001..R-594, reusing reviewed code"
+    }
+  ],
+  "acceptance_snapshot_at_decision": {
+    "requirements": 594,
+    "P0": 324,
+    "P1": 270,
+    "independently_accepted": 0,
+    "production_accepted": 0,
+    "historical_partial_technical": 41,
+    "historical_unproven": 553,
+    "history_only": true
+  },
+  "excluded_permissions": {
+    "merge_to_main": false,
+    "vercel_production_deployment": false,
+    "production_protection_change": false,
+    "live_supabase_writes_or_schema_changes": false,
+    "live_personal_data_processing": false,
+    "official_court_or_ind_submission": false,
+    "bank_or_payment_movement": false,
+    "real_professional_representation_authorization": false
+  },
+  "current_working_branch": "seviye1-yeniden-baslangic-20261031",
+  "current_pr": 10,
+  "do_not_modify_historical_reset": true
+}

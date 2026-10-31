@@ -1,0 +1,58 @@
+name: AVOfis Seviye 1 - Public account and CMS activation gates
+on:
+  push:
+    branches:
+      - seviye1-yeniden-baslangic-20261031
+    paths:
+      - 'portal/src/app/auth/register/**'
+      - 'portal/src/app/page.tsx'
+      - 'portal/src/components/site-header.tsx'
+      - 'portal/src/lib/launch-gates.ts'
+      - 'portal/tests/public-account-safety.test.mjs'
+      - '.github/workflows/seviye1-public-account-safety.yml'
+  pull_request:
+    paths:
+      - 'portal/src/app/auth/register/**'
+      - 'portal/src/app/page.tsx'
+      - 'portal/src/components/site-header.tsx'
+      - 'portal/src/lib/launch-gates.ts'
+      - 'portal/tests/public-account-safety.test.mjs'
+      - '.github/workflows/seviye1-public-account-safety.yml'
+permissions:
+  contents: read
+jobs:
+  public-activation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      NEXT_PUBLIC_SUPABASE_URL: 'https://example.invalid'
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: 'build-check-only-not-a-real-token'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Verify registration and CMS gates
+        run: node --experimental-strip-types --test portal/tests/public-account-safety.test.mjs
+      - name: Install workspaces without lifecycle scripts
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Build portal with placeholder credentials
+        run: npm run build:portal
+      - name: Verify blocked signup page over HTTP
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm --workspace portal run start > /tmp/avofis-s1-account.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for i in $(seq 1 50); do
+            if curl -fsS http://127.0.0.1:3000/auth/register > /tmp/avofis-s1-account.html; then break; fi
+            sleep 1
+          done
+          test -s /tmp/avofis-s1-account.html
+          grep -q 'Hesap açılışı şu anda kapalı' /tmp/avofis-s1-account.html
+          grep -q 'Yeni kullanıcı kaydı etkin değildir' /tmp/avofis-s1-account.html
+          echo 'HTTP registration gate: PASS, no live accounts created'

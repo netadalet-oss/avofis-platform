@@ -1,146 +1,45 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
-import { SiteFooter } from "@/components/site-footer";
+import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
-import { useUser } from "@/hooks/useUser";
+import { SiteFooter } from "@/components/site-footer";
 
-export default function Page() {
-  const router = useRouter();
-  const { isAuthenticated, loading: authLoading } = useUser();
+export const metadata: Metadata = {
+  title: "Hesap açılışı | AVOfis",
+  description: "AVOfis kuruluş aşamasındadır; müşteri, personel ve meslekî hesap açılışı etkin değildir."
+};
 
-  const [role, setRole] = useState("user");
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (!authLoading && isAuthenticated) {
-      router.replace("/dashboard");
-    }
-  }, [authLoading, isAuthenticated, router]);
-
-  async function handleRegister(e: React.FormEvent) {
-    e.preventDefault();
-    setLoading(true);
-    setMessage("");
-
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: fullName,
-          role,
-        },
-      },
-    });
-
-    if (error) {
-      setMessage(error.message);
-      setLoading(false);
-      return;
-    }
-
-    const userId = data.user?.id;
-
-    if (userId) {
-      const { error: profileError } = await supabase.from("profiles").upsert({
-        id: userId,
-        full_name: fullName,
-        role,
-        email,
-      });
-
-      if (profileError) {
-        setMessage(profileError.message);
-        setLoading(false);
-        return;
-      }
-    }
-
-    setMessage("Kayıt başarılı. E-posta doğrulaması açıksa kutunuzu kontrol edin, ardından giriş yapın.");
-    setLoading(false);
-  }
-
+export default function RegistrationPage() {
   return (
     <main>
       <SiteHeader />
-
-      <section className="container-shell py-16 sm:py-20 md:py-24">
-        <div className="mx-auto mb-6 max-w-md">
-          <Link
-            href="/"
-            className="inline-flex items-center text-sm text-white/70 transition hover:text-white"
-          >
-            ← Ana sayfaya dön
-          </Link>
-        </div>
-
-        <div className="mx-auto max-w-md rounded-[28px] border border-white/10 bg-white/5 p-6 sm:p-8">
-          <h1 className="text-3xl font-semibold text-white">Hesap Oluştur</h1>
-
-          <p className="mt-4 text-sm leading-7 text-slate-300">
-            Avukat, stajyer ve ofis hesabı için rol seçimi destekli kayıt ekranı.
+      <section className="container-shell py-16 md:py-24">
+        <div className="mx-auto max-w-2xl rounded-[28px] border border-white/10 bg-white/5 p-7 md:p-10">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-300">Kuruluş öncesi bilgilendirme</p>
+          <h1 className="mt-4 text-3xl font-semibold">Hesap açılışı şu anda kapalı</h1>
+          <p className="mt-5 text-base leading-8 text-slate-300">
+            AVOfis henüz kuruluş ve fizibilite aşamasındadır. Müşteri hesabı,
+            personel hesabı, avukat veya uzman profili açılışı yapılmamaktadır.
+            Meslekî unvanlar ve roller ancak gerçek belgeler ile ilgili ülke yetkileri
+            doğrulandıktan sonra ayrı incelemeyle tanımlanabilir.
           </p>
-
-          <form onSubmit={handleRegister} className="mt-8 space-y-4">
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none"
-            >
-              <option value="user">Genel Kullanıcı</option>
-              <option value="lawyer">Avukat</option>
-              <option value="intern">Stajyer</option>
-              <option value="office">Ofis</option>
-            </select>
-
-            <input
-              type="text"
-              placeholder="Ad Soyad"
-              required
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none"
-            />
-
-            <input
-              type="email"
-              placeholder="E-posta"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none"
-            />
-
-            <input
-              type="password"
-              placeholder="Şifre"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none"
-            />
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full rounded-lg bg-blue-600 py-3 text-sm font-medium text-white hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {loading ? "Kayıt oluşturuluyor..." : "Hesap Oluştur"}
-            </button>
-          </form>
-
-          {message && <p className="mt-4 text-sm text-slate-300">{message}</p>}
+          <p className="mt-4 text-sm leading-7 text-slate-300">
+            Bu ekran ad, e-posta, parola, kimlik belgesi veya başka kişisel veri istemez.
+            Lütfen gizli dosyanızı genel iletişim kanallarına göndermeyin.
+          </p>
+          <p role="status" className="mt-6 rounded-xl border border-amber-300/30 bg-amber-300/10 p-4 text-sm leading-7 text-amber-100">
+            Yeni kullanıcı kaydı etkin değildir. Bir hesap oluşturulduğu veya
+            hukukî hizmet ilişkisinin kurulduğu anlamına gelen işlem yapılmaz.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link href="/baslangic" className="rounded-xl bg-sky-200 px-5 py-3 text-sm font-semibold text-slate-950 hover:bg-white">
+              Sorununuza göre genel bilgi alın
+            </Link>
+            <Link href="/hizmetler" className="rounded-xl border border-white/20 px-5 py-3 text-sm text-slate-100 hover:bg-white/10">
+              Planlanan hizmetleri inceleyin
+            </Link>
+          </div>
         </div>
       </section>
-
       <SiteFooter />
     </main>
   );

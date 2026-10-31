@@ -26,10 +26,6 @@ import {
   type EditableMetaCardItem
 } from "@/components/cms/EditableMetaCardGrid";
 import { EditableList } from "@/components/cms/EditableList";
-import {
-  EditableStatGrid,
-  type EditableStatItem
-} from "@/components/cms/EditableStatGrid";
 import { EditableText } from "@/components/cms/EditableText";
 import { useEditMode } from "@/components/providers/EditModeProvider";
 import { ModuleGrid } from "@/components/module-grid";
@@ -37,8 +33,8 @@ import { SectionTitle } from "@/components/section-title";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { useUser } from "@/hooks/useUser";
-import { stats } from "@/lib/site";
 import { supabase } from "@/lib/supabase";
+import { PUBLIC_CMS_EDITING_ENABLED } from "@/lib/launch-gates";
 
 const featurePills = [
   "İçtihat araştırma",
@@ -62,7 +58,7 @@ const researchCards: EditableCardItem[] = [
   },
   {
     title: "Çalışılabilir hukuk verisi",
-    text: "Sadece okuma değil; kaydetme, not alma, sınıflandırma ve üretim için aktif kullanım sağlar."
+    text: "Kaydetme, not alma, sınıflandırma ve belge hazırlama gibi işlevler hedeflenmektedir."
   }
 ];
 
@@ -88,7 +84,7 @@ const careerColumns: EditableColumnItem[] = [
 ];
 
 const officeHighlights = [
-  "Doğrulanmış profil yapısı",
+  "Profil doğrulama tasarımı",
   "Uzmanlık alanı görünürlüğü",
   "Staj ve kariyer ilanları",
   "Ofis ekip yapısı ve rol modeli"
@@ -97,36 +93,31 @@ const officeHighlights = [
 const communityCards: EditableMetaCardItem[] = [
   {
     title: "İçtihat Tartışmaları",
-    meta: "248 başlık",
+    meta: "Planlanan tartışma alanı",
     text: "Kararların gerekçesi, uygulama alanı ve emsal etkisi üzerine uzman görüşleri."
   },
   {
     title: "Mevzuat Değerlendirmeleri",
-    meta: "182 başlık",
+    meta: "Planlanan tartışma alanı",
     text: "Madde değişiklikleri, yorum farkları ve uygulamaya etkiler."
   },
   {
     title: "Staj ve Kariyer Deneyimleri",
-    meta: "331 başlık",
+    meta: "Planlanan tartışma alanı",
     text: "Ofis kültürü, başvuru süreci ve mesleğe geçiş deneyimleri."
   },
   {
     title: "Mesleki Uygulama",
-    meta: "416 başlık",
+    meta: "Planlanan tartışma alanı",
     text: "Ofis yönetimi, süreç verimliliği ve profesyonel iş akışı önerileri."
   }
 ];
 
-const defaultStatsItems: EditableStatItem[] = stats.map((item) => ({
-  value: item.value,
-  label: item.label
-}));
-
 const defaultHeroTitle =
-  "Hukuk araştırması, belge üretimi ve kariyer ağı tek platformda.";
+  "Avrupa genelinde hukukî ve idarî işlemler için açık, sistemli hazırlık.";
 
 const defaultHeroSubtitle =
-  "İçtihat, mevzuat, dosya analizi, taslak üretimi, forum, ofis profilleri, staj eşleşmeleri ve profesyonel workspace deneyimini tek bir modern hukuk arayüzünde birleştirin.";
+  "Sorununuza uygun hizmet alanını inceleyin, ülkenizi seçin ve kişisel bilgi vermeden ilk hazırlık adımlarınızı belirleyin. AVOfis henüz kuruluş öncesi geliştirme aşamasındadır.";
 
 type HomeCmsContent = {
   hero?: {
@@ -138,7 +129,6 @@ type HomeCmsContent = {
   careerColumns?: EditableColumnItem[];
   communityCards?: EditableMetaCardItem[];
   officeHighlights?: string[];
-  statsItems?: EditableStatItem[];
   sections?: {
     research?: {
       eyebrow?: string;
@@ -201,12 +191,9 @@ export default function HomePage() {
   const [heroSaving, setHeroSaving] = useState(false);
   const [heroMessage, setHeroMessage] = useState("");
 
-  const role = useMemo(() => {
-    const rawRole = session?.user?.user_metadata?.role;
-    return typeof rawRole === "string" ? rawRole.toLowerCase() : "";
-  }, [session]);
-
-  const isAdmin = role === "admin" || role === "super_admin";
+  // Client-controlled account metadata never establishes editing authority.
+  // Keep public CMS disabled until verified server-side staff authorization.
+  const isAdmin = false;
 
   useEffect(() => {
     let mounted = true;
@@ -245,6 +232,10 @@ export default function HomePage() {
   }, []);
 
   async function saveContentField(path: string[], value: any) {
+    if (!PUBLIC_CMS_EDITING_ENABLED) {
+      setHeroMessage("İçerik yayını için yetkili inceleme gereklidir.");
+      return;
+    }
     try {
       setHeroSaving(true);
       setHeroMessage("");
@@ -270,6 +261,10 @@ export default function HomePage() {
   }
 
   async function saveHeroField(field: "title" | "subtitle", value: string) {
+    if (!PUBLIC_CMS_EDITING_ENABLED) {
+      setHeroMessage("İçerik yayını için yetkili inceleme gereklidir.");
+      return;
+    }
     const currentContent: HomeCmsContent = cmsContent || {};
 
     const nextHero = {
@@ -342,21 +337,20 @@ export default function HomePage() {
     ? cmsContent.careerColumns
     : careerColumns;
 
-  const currentCommunityCards = cmsContent?.communityCards?.length
+  const currentCommunityCards = (cmsContent?.communityCards?.length
     ? cmsContent.communityCards
-    : communityCards;
+    : communityCards).map((card) => ({ ...card, meta: "Forum henüz kamuya açık değil" }));
 
   const currentOfficeHighlights = cmsContent?.officeHighlights?.length
     ? cmsContent.officeHighlights
     : officeHighlights;
 
-  const currentStatsItems = cmsContent?.statsItems?.length
-    ? cmsContent.statsItems
-    : defaultStatsItems;
-
   return (
     <main className="min-h-screen">
       <SiteHeader />
+      <div role="note" className="border-b border-amber-300/20 bg-amber-300/10 px-4 py-3 text-center text-sm leading-6 text-amber-100">
+        AVOfis kuruluş öncesi geliştirme aşamasındadır. Bu portal henüz aktif hukukî danışmanlık veya dosya kabulü sunmamaktadır.
+      </div>
 
       <section className="relative overflow-hidden">
         <div className="container-shell grid gap-14 pb-20 pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:pb-28 lg:pt-20">
@@ -440,36 +434,25 @@ export default function HomePage() {
 
             <div className="mt-10 flex flex-wrap gap-4">
               <a
-                href="#moduller"
+                href="/baslangic"
                 className="inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-4 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
               >
-                Platformu Keşfet
+                Sorununuza Göre Başlayın
                 <ArrowRight className="h-4 w-4" />
               </a>
               <a
                 href="#arastirma"
                 className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-6 py-4 text-sm font-semibold text-white transition hover:border-white/20 hover:bg-white/10"
               >
-                Modülleri İncele
+                Platformu Keşfet
                 <ChevronRight className="h-4 w-4" />
               </a>
             </div>
 
-            <div className="mt-12 grid max-w-2xl grid-cols-2 gap-4 md:grid-cols-4">
-              {currentStatsItems.slice(0, 4).map((item, index) => (
-                <div
-                  key={`${item.label}-${index}`}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm"
-                >
-                  <div className="text-2xl font-semibold text-white">
-                    {item.value}
-                  </div>
-                  <div className="mt-1 text-xs leading-5 text-slate-400">
-                    {item.label}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <p className="mt-10 max-w-2xl text-sm leading-7 text-slate-400">
+              İlk adımda ülke ve konunuzu seçerek kişisel bilgi vermeden hazırlık kontrol listesi oluşturabilirsiniz.
+              AVOfis henüz müşteri dosyası kabul etmiyor.
+            </p>
           </div>
 
           <div className="relative">
@@ -488,7 +471,7 @@ export default function HomePage() {
                     </div>
                   </div>
                   <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
-                    Canlı yapı
+                    Geliştirme örneği
                   </div>
                 </div>
 
@@ -911,14 +894,14 @@ export default function HomePage() {
 
             <div className="rounded-[28px] border border-white/10 bg-gradient-to-b from-sky-400/10 to-white/5 p-7">
               <div className="text-xl font-semibold text-white">
-                Canlı metrikler
+                Planlanan kariyer özellikleri
               </div>
               <div className="mt-6 grid grid-cols-2 gap-4">
                 {[
-                  { value: "420+", label: "Aktif ilan" },
-                  { value: "350+", label: "Ofis profili" },
-                  { value: "7.2K+", label: "Başvuru" },
-                  { value: "%68", label: "Eşleşme dönüşümü" }
+                  { value: "Planlanan", label: "İlan listeleme" },
+                  { value: "Planlanan", label: "Ofis profilleri" },
+                  { value: "Planlanan", label: "Başvuru takibi" },
+                  { value: "Planlanan", label: "Aday eşleşmesi" }
                 ].map((item) => (
                   <div
                     key={item.label}
@@ -970,7 +953,7 @@ export default function HomePage() {
               {[
                 "Medeni hukuk, ceza hukuku, idare hukuku, iş hukuku ve diğer uzmanlık alanları",
                 "En iyi cevap, oylama, etiketleme, takip ve raporlama sistemi",
-                "Doğrulanmış uzman profilleri ve katkı görünürlüğü",
+                "Uzman profilleri için planlanan doğrulama süreci",
                 "İçtihat ve mevzuat sayfalarıyla bağlantılı tartışmalar"
               ].map((item) => (
                 <div
@@ -1012,7 +995,7 @@ export default function HomePage() {
             }
             text={
               cmsContent?.sections?.offices?.text ||
-              "Ofis uzmanlık alanları, ekip yapısı, staj ilanları, doğrulanmış profil bilgileri ve işbirliği olanakları tek profilde sunulur."
+              "Ofis uzmanlık alanları, ekip yapısı, staj ilanları, doğrulanması hedeflenen profil bilgileri ve işbirliği olanakları tek profilde sunulur."
             }
             editable
             onSaveEyebrow={async (nextValue) => {
@@ -1038,7 +1021,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
-                  Doğrulanmış Ofis
+                  Temsili profil
                 </div>
               </div>
               <div className="mt-6 grid gap-4 md:grid-cols-[0.8fr_1.2fr]">
@@ -1047,10 +1030,10 @@ export default function HomePage() {
                     AH
                   </div>
                   <div className="mt-4 text-lg font-semibold text-white">
-                    Avo Legal Partners
+                    Örnek kurum profili
                   </div>
                   <div className="mt-1 text-sm text-slate-400">
-                    İstanbul · Ticaret Hukuku · İş Hukuku
+                    Temsili görünüm · Gerçek kurum kaydı değildir
                   </div>
                 </div>
                 <EditableList
@@ -1089,42 +1072,6 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
-
-      <section id="istatistikler" className="container-shell py-24">
-        <SectionTitle
-          eyebrow={cmsContent?.sections?.stats?.eyebrow || "Şeffaf istatistikler"}
-          title={
-            cmsContent?.sections?.stats?.title ||
-            "Platform kullanımını görünür, anlaşılır ve ölçülebilir hale getirir."
-          }
-          text={
-            cmsContent?.sections?.stats?.text ||
-            "Kullanıcı sayısı, içerik performansı, forum hareketliliği, kariyer dönüşümü ve belge üretim yoğunluğu panel ve public alan arasında tutarlı bir veri akışına bağlanır."
-          }
-          editable
-          onSaveEyebrow={async (nextValue) => {
-            await saveContentField(["sections", "stats", "eyebrow"], nextValue);
-          }}
-          onSaveTitle={async (nextValue) => {
-            await saveContentField(["sections", "stats", "title"], nextValue);
-          }}
-          onSaveText={async (nextValue) => {
-            await saveContentField(["sections", "stats", "text"], nextValue);
-          }}
-        />
-        <EditableStatGrid
-          items={currentStatsItems}
-          className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
-          cardClassName="rounded-[26px] border border-white/10 bg-white/5 p-6"
-          valueClassName="text-3xl font-semibold text-white"
-          labelClassName="mt-2 text-sm text-slate-400"
-          valuePlaceholder="İstatistik değeri"
-          labelPlaceholder="İstatistik etiketi"
-          onSave={async (nextItems) => {
-            await saveContentField(["statsItems"], nextItems);
-          }}
-        />
       </section>
 
       <section className="bg-gradient-to-r from-sky-400/15 via-white/5 to-indigo-400/15 py-20">

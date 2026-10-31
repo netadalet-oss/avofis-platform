@@ -10,6 +10,7 @@ import {
   type NavigationItem,
 } from "@/lib/site";
 import { supabase } from "@/lib/supabase";
+import { PUBLIC_CMS_EDITING_ENABLED } from "@/lib/launch-gates";
 
 type NavigationSettingRow = {
   value?: NavigationItem[];
@@ -25,12 +26,9 @@ export function SiteHeader() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
 
-  const role = useMemo(() => {
-    const rawRole = session?.user?.user_metadata?.role;
-    return typeof rawRole === "string" ? rawRole.toLowerCase() : "";
-  }, [session]);
-
-  const isAdmin = role === "admin" || role === "super_admin";
+  // Client-controlled account metadata never establishes editing authority.
+  // Keep public CMS disabled until verified server-side staff authorization.
+  const isAdmin = false;
 
   useEffect(() => {
     let mounted = true;
@@ -116,6 +114,10 @@ export function SiteHeader() {
   }
 
   async function saveMenuInline() {
+    if (!PUBLIC_CMS_EDITING_ENABLED) {
+      setMessage("İçerik düzenleme yetkisi henüz açılmamıştır.");
+      return;
+    }
     try {
       setSaving(true);
       setMessage("");

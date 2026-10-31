@@ -36,13 +36,14 @@ export type FooterColumn = {
 };
 
 export const navigation: NavigationItem[] = [
+  { label: "Sorununuza Göre Başlayın", href: "/baslangic" },
+  { label: "Hizmetler", href: "/hizmetler" },
   { label: "Modüller", href: "#moduller" },
   { label: "İçtihat", href: "#arastirma" },
   { label: "Mevzuat", href: "#arastirma" },
   { label: "Kariyer", href: "#kariyer" },
   { label: "Forum", href: "#topluluk" },
   { label: "Ofisler", href: "#ofisler" },
-  { label: "İstatistikler", href: "#istatistikler" },
 ];
 
 export const modules: ModuleItem[] = [
@@ -108,14 +109,9 @@ export const modules: ModuleItem[] = [
   },
 ];
 
-export const stats: StatItem[] = [
-  { value: "120K+", label: "İçtihat kaydı" },
-  { value: "5.200+", label: "Mevzuat / madde kaydı" },
-  { value: "18K+", label: "Kayıtlı kullanıcı" },
-  { value: "350+", label: "Aktif ofis profili" },
-  { value: "1.400+", label: "Forum başlığı" },
-  { value: "9.800+", label: "Aylık belge üretimi" },
-];
+// Yayınlanmış ve kaynağı doğrulanmış metrik olmadan istatistik gösterilmez.
+export const stats: StatItem[] = [];
+
 
 export const footerColumns: FooterColumn[] = [
   {
