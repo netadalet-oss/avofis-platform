@@ -86,7 +86,7 @@ const careerColumns: EditableColumnItem[] = [
 ];
 
 const officeHighlights = [
-  "Doğrulanmış profil yapısı",
+  "Profil doğrulama hedefi",
   "Uzmanlık alanı görünürlüğü",
   "Staj ve kariyer ilanları",
   "Ofis ekip yapısı ve rol modeli"
@@ -499,7 +499,7 @@ export default function HomePage() {
                     </div>
                   </div>
                   <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
-                    Canlı yapı
+                    Tasarım önizlemesi
                   </div>
                 </div>
 
@@ -604,8 +604,8 @@ export default function HomePage() {
                       </div>
 
                       <div className="mt-4 rounded-xl border border-emerald-400/15 bg-emerald-400/10 p-4 text-sm text-emerald-200">
-                        Connect cüzdanı, bildirimler ve dosya geçmişi aynı
-                        panelde görünür.
+                        Connect cüzdanı, bildirim ve dosya geçmişi görünümü
+                        henüz planlanan bir arayüzdür.
                       </div>
                     </div>
                   </div>
@@ -981,7 +981,7 @@ export default function HomePage() {
               {[
                 "Medeni hukuk, ceza hukuku, idare hukuku, iş hukuku ve diğer uzmanlık alanları",
                 "En iyi cevap, oylama, etiketleme, takip ve raporlama sistemi",
-                "Doğrulanmış uzman profilleri ve katkı görünürlüğü",
+                "Planlanan uzman doğrulama ve katkı görünürlüğü",
                 "İçtihat ve mevzuat sayfalarıyla bağlantılı tartışmalar"
               ].map((item) => (
                 <div
@@ -1049,7 +1049,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
-                  Doğrulanmış Ofis
+                  Örnek ofis görünümü
                 </div>
               </div>
               <div className="mt-6 grid gap-4 md:grid-cols-[0.8fr_1.2fr]">
