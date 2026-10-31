@@ -36,6 +36,22 @@ function check(d) {
     if(!w.id||!Number.isInteger(w.attempts_recorded_level6)
       ||w.attempts_recorded_level6<0||w.attempts_recorded_level6>2)throw Error('Stage 6 work violates attempt limit');
     if(w.status==='PRODUCTION_READY' || w.status==='HISTORICALLY_ACCEPTED')throw Error('Unproved acceptance');
+    if(w.attempts_recorded_level6>0){
+      if(!Array.isArray(w.attempts) || w.attempts.length!==w.attempts_recorded_level6)
+        throw Error('Attempt count lacks matching evidence');
+      for(const [index,a] of w.attempts.entries()){
+        if(a.index!==index+1 || !a.result || !a.code_commit)
+          throw Error('Attempt order/source evidence invalid');
+        if(a.result==='CODE_AND_CI_VERIFIED' && (!a.ci_run || !a.ci_job_id || !a.test_commit))
+          throw Error('CI success without verifiable run or test source');
+      }
+    }
+    if(w.status==='DRAFT_CODE_CI_PASS_NOT_MERGED'
+      && (w.production_deployed!==false || w.live_db_modified!==false
+          || w.accepted_as_historical_deliverable!==false
+          || w.staging_integration_verified!==false
+          || w.historical_work_id!==null))
+      throw Error('Draft code incorrectly claimed as live or historical delivery');
   }
   return {operational_stage:6,stage7_authorized:false,carried_items:10,open_live_rls:7,
           production_modified:false,stage5_historical_complete:false,
