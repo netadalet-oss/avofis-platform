@@ -100,11 +100,21 @@ jobs:
           # Breadth-first whole-product preview is a real Next page, not a drawing.
           curl -fsS http://127.0.0.1:3000/seviye-1-onizleme > /tmp/avofis-s1-whole-preview.html
           test -s /tmp/avofis-s1-whole-preview.html
-          grep -q 'bütün ürün kapsamı önizlemesi' /tmp/avofis-s1-whole-preview.html
-          grep -q '17 hizmet alanı' /tmp/avofis-s1-whole-preview.html
-          grep -q '14 hedef kitle' /tmp/avofis-s1-whole-preview.html
-          grep -q '12 işlem rotası' /tmp/avofis-s1-whole-preview.html
-          grep -q '16 personel modülü' /tmp/avofis-s1-whole-preview.html
-          grep -q '33 gereksinim bölümü' /tmp/avofis-s1-whole-preview.html
-          grep -q '0/594' /tmp/avofis-s1-whole-preview.html
-          echo 'Whole-product S1 preview HTTP: PASS'
+          # React SSR may interleave <!-- --> separators into dynamic numbers.
+          # Compare visible text after stripping HTML instead of brittle raw grep.
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const assert = require('node:assert/strict');
+          const raw = fs.readFileSync('/tmp/avofis-s1-whole-preview.html', 'utf8');
+          const visible = raw.replace(/<!--[\\s\\S]*?-->/g, '').replace(/<[^>]*>/g, ' ').replace(/\\s+/g, ' ');
+          for (const required of [
+            'bütün ürün kapsamı önizlemesi',
+            '17 hizmet alanı',
+            '14 hedef kitle',
+            '12 işlem rotası',
+            '16 personel modülü',
+            '33 gereksinim bölümü'
+          ]) assert.ok(visible.includes(required), 'Missing visible overview: ' + required);
+          assert.match(visible, /0\\s*\\/\\s*594/);
+          console.log('Whole-product S1 preview HTTP: PASS');
+          NODE
