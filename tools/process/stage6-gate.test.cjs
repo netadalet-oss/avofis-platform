@@ -6,7 +6,7 @@ const source=load(), copy=x=>structuredClone(x);
 test('Stage 6 approval with ten unresolved work records is valid',()=>{
   assert.deepEqual(check(source),{operational_stage:6,stage7_authorized:false,
     carried_items:10,open_live_rls:7,production_modified:false,
-    stage5_historical_complete:false,new_stage6_work:1});
+    stage5_historical_complete:false,new_stage6_work:2});
 });
 test('no Stage 7 transition without new approval',()=>{
   const d=copy(source);d.stage7_transition_approved=true;assert.throws(()=>check(d));
@@ -63,4 +63,19 @@ test('no false production deployment or live DB change may be claimed',()=>{
   assert.throws(()=>check(d),/live or historical/);
   const e=copy(source);e.new_work[0].live_db_modified=true;
   assert.throws(()=>check(e),/live or historical/);
+});
+
+test('two independent Stage 6 CMS code jobs are separately recorded',()=>{
+  const w=source.new_work;
+  assert.equal(w.length,2);
+  assert.deepEqual(w.map(x=>x.attempts_recorded_level6),[1,1]);
+  assert.deepEqual(w.map(x=>x.status),['DRAFT_CODE_CI_PASS_NOT_MERGED','DRAFT_CODE_CI_PASS_NOT_MERGED']);
+});
+test('admin CMS production acceptance cannot be fabricated',()=>{
+  const d=copy(source);d.new_work[1].production_deployed=true;
+  assert.throws(()=>check(d),/live or historical delivery/);
+});
+test('admin CMS forged code CI evidence is rejected',()=>{
+  const d=copy(source);d.new_work[1].attempts[0].ci_run='';
+  assert.throws(()=>check(d),/CI success/);
 });
