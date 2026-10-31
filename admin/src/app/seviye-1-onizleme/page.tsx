@@ -91,6 +91,9 @@ export default function AdminWholeProductPreview() {
                 <h3 className="mt-2 font-semibold">{title}</h3>
                 <p className="mt-3 text-sm leading-6 text-slate-300">{scope}</p>
                 <p className="mt-3 text-xs text-amber-200">İşlem ve yetki kabulü bekliyor</p>
+                <Link href={"/personel/" + slug} className="mt-4 inline-flex text-sm text-sky-200 underline underline-offset-4">
+                  Bu modülün ana ekranını aç
+                </Link>
               </article>
             ))}
           </div>
