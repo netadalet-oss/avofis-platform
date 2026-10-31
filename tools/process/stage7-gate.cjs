@@ -77,9 +77,12 @@ function validate(d){
     ||expansion.staging_browser_tested!==false
     ||expansion.accepted_as_historical_deliverable!==false
     ||!metrics ||metrics.status!=='DRAFT_CODE_CI_PASS_NOT_MERGED'
-    ||metrics.attempts_recorded_level7!==1
+    ||metrics.attempts_recorded_level7!==2
+    ||!Array.isArray(metrics.attempts) || metrics.attempts.length!==2
     ||metrics.attempts[0]?.result!=='CODE_AND_CI_VERIFIED'
-    ||!metrics.attempts[0]?.ci_run
+    ||metrics.attempts[1]?.result!=='CODE_AND_CI_VERIFIED'
+    ||!metrics.attempts[0]?.ci_run || !metrics.attempts[1]?.ci_run
+    ||metrics.attempts[1]?.total_tests_passed!==315
     ||metrics.production_deployed!==false
     ||metrics.staging_browser_tested!==false)throw Error('Expanded module attempt history or live acceptance falsified');
  if(d.stage7_code_test_proxy?.new_source_test_journeys!==17
@@ -108,7 +111,7 @@ function validate(d){
    throw Error('Live read-only Supabase risk summary ungrounded');
  return {current_level:7,next_level_approved:false,carryover_count:14,open_rls:7,
          historic_open_decisions:18,past_level6_failed_attempts:2,
-         new_level7_attempts:8,code_ci_passed:true,production_modified:false};
+         new_level7_attempts:9,code_ci_passed:true,production_modified:false};
 }
 function load(){return JSON.parse(fs.readFileSync(file,'utf8'));}
 if(require.main===module)process.stdout.write(JSON.stringify(validate(load()),null,2)+'\n');
