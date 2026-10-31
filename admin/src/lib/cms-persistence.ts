@@ -1,87 +1,89 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 type CmsClient = Pick<SupabaseClient, "from">;
-type Result = { error: { message: string } | null };
+type Failure = { message: string };
+type Result = { error: Failure | null };
 type Hero = { title: string; subtitle: string };
+type HomeResult = Result & { updatedContent?: Record<string, unknown> };
 export type SiteSettingKey = "navigation" | "modules" | "footer";
 
-const noResult = (item: string): Result => ({
+const notUpdated = (item: string): Result => ({
   error: {
-    message: `${item} kaydı güncellenmedi veya yetki doğrulanamadı. Sayfayı yenileyip tekrar kontrol edin.`,
+    message: `${item} kaydı değişmiş, kaybolmuş veya yetki reddedilmiş olabilir. İçeriği yenileyip tekrar deneyin.`,
   },
 });
 
+const isPlainObject = (v: unknown): v is Record<string, unknown> =>
+  typeof v === "object" && v !== null && !Array.isArray(v);
+
 /**
- * This is UI-side safety only; database RLS is the write authorization.
- * Read/merge/update preserves other top-level CMS fields, but is not
- * a transactional compare-and-swap against concurrent editors.
+ * Update ONLY the home record originally observed by this editor.
+ * PostgreSQL jsonb = jsonb comparison on the extra content filter makes
+ * the check-and-update one atomic filtered UPDATE. If another editor changed
+ * any field since load, the update affects zero rows and fails closed.
+ * The browser cannot bypass RLS; this check is not its substitute.
+ *
+ * No automatic retry: doing so can overwrite the other editor's changes.
  */
 export async function updateAdminHomeHero(
   client: CmsClient,
-  hero: Hero
-): Promise<Result> {
+  hero: Hero,
+  observedContent: unknown
+): Promise<HomeResult> {
+  if (!isPlainObject(observedContent)) return notUpdated("Ana sayfa");
+  const updatedContent = {
+    ...observedContent,
+    hero: { title: hero.title, subtitle: hero.subtitle },
+  };
+
   try {
-    const { data: existing, error: readError } = await client
-      .from("pages")
-      .select("content")
-      .eq("slug", "home")
-      .maybeSingle();
-
-    if (readError) return { error: { message: readError.message } };
-    const content = existing?.content;
-    if (!content || typeof content !== "object" || Array.isArray(content)) {
-      return noResult("Ana sayfa");
-    }
-
-    const mergedContent = {
-      ...content,
-      hero: {
-        title: hero.title,
-        subtitle: hero.subtitle,
-      },
-    };
-
     const { data, error } = await client
       .from("pages")
-      .update({ content: mergedContent })
+      .update({ content: updatedContent })
       .eq("slug", "home")
+      .eq("content", JSON.stringify(observedContent))
       .select("id");
 
     if (error) return { error: { message: error.message } };
     if (!Array.isArray(data) || data.length !== 1 || !data[0]?.id) {
-      return noResult("Ana sayfa");
+      return notUpdated("Ana sayfa");
     }
-    return { error: null };
+    return { error: null, updatedContent };
   } catch {
-    return noResult("Ana sayfa");
+    return notUpdated("Ana sayfa");
   }
 }
 
 /**
- * Live schema has UNIQUE(key) and each of these three rows already exists.
- * Never fall back to INSERT/UPSERT from the browser.
+ * Settings are arrays in the actual navigation/modules/footer UI.
+ * Compare against the last content this browser loaded, not a newly fetched
+ * snapshot at save time; stale editors must not overwrite intervening edits.
+ * This does not make the multi-setting "load defaults" action transactional.
  */
 export async function updateExistingSetting(
   client: CmsClient,
   key: SiteSettingKey,
-  value: unknown
+  value: unknown,
+  observedValue: unknown
 ): Promise<Result> {
-  if (key !== "navigation" && key !== "modules" && key !== "footer") {
-    return noResult("CMS ayarı");
+  if (!["navigation", "modules", "footer"].includes(key) ||
+      !Array.isArray(observedValue) || !Array.isArray(value)) {
+    return notUpdated("CMS ayarı");
   }
   try {
     const { data, error } = await client
       .from("site_settings")
       .update({ value })
       .eq("key", key)
+      .eq("value", JSON.stringify(observedValue))
       .select("id");
 
     if (error) return { error: { message: error.message } };
     if (!Array.isArray(data) || data.length !== 1 || !data[0]?.id) {
-      return noResult("CMS ayarı");
+      return notUpdated("CMS ayarı");
     }
     return { error: null };
   } catch {
-    return noResult("CMS ayarı");
+    return notUpdated("CMS ayarı");
   }
 }
