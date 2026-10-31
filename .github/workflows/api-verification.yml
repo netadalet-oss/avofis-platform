@@ -59,6 +59,8 @@ jobs:
         run: npm run typecheck --workspace portal
       - name: Portal CMS role regression tests
         run: npm run test --workspace portal
+      - name: Canonical 594 R ledger and acceptance integrity
+        run: node --test tools/process/r594-ledger-integrity.test.cjs
       - name: RLS baseline integrity tests (no live DB connection)
         run: node --test tools/security/rls-readiness.test.cjs
       - name: RLS snapshot advisory (risk remains open)
