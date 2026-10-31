@@ -65,11 +65,11 @@ test('no false production deployment or live DB change may be claimed',()=>{
   assert.throws(()=>check(e),/live or historical/);
 });
 
-test('two independent Stage 6 CMS code jobs are separately recorded',()=>{
+test('three independent Stage 6 CMS jobs preserve all bounded attempts',()=>{
   const w=source.new_work;
-  assert.equal(w.length,2);
-  assert.deepEqual(w.map(x=>x.attempts_recorded_level6),[1,1]);
-  assert.deepEqual(w.map(x=>x.status),['DRAFT_CODE_CI_PASS_NOT_MERGED','DRAFT_CODE_CI_PASS_NOT_MERGED']);
+  assert.equal(w.length,3);
+  assert.deepEqual(w.map(x=>x.attempts_recorded_level6),[1,1,2]);
+  assert.ok(w.every(x=>x.status==='DRAFT_CODE_CI_PASS_NOT_MERGED'));
 });
 test('admin CMS production acceptance cannot be fabricated',()=>{
   const d=copy(source);d.new_work[1].production_deployed=true;
