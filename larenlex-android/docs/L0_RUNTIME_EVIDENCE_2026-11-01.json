@@ -1,0 +1,92 @@
+{
+  "product": "LarenLex Android",
+  "level": "L0",
+  "date_local": "2026-11-01",
+  "execution_utc": "2026-10-31T23:13:02.498082+00:00",
+  "level_status": "OPEN_BLOCKED_NOT_COMPLETE",
+  "next_level": "L1",
+  "level_transition_approval": false,
+  "source_provenance": {
+    "larenlex_zip_sha256": "8049e3359b7822c458cb678431412e3f48e0d0f7dea1834a709859b7f4d5ff8c",
+    "combined_reference_zip_sha256": "51c672b5276a1acfd65a524921d6fd7095f85593d561084144db44d03757036c",
+    "source_trace_matrix_sha256": "54863e596613e6595a0e7f0b5edcf900884e5c2f08663649ae1107e4b086a311",
+    "source_matrix_counts": {
+      "LX": 62,
+      "A2": 453,
+      "API": 102,
+      "R_reference_only": 594
+    }
+  },
+  "local_validation": {
+    "location": "separate local test staging; not an identical verified GitHub HEAD checkout",
+    "source_and_bundle_tests": {
+      "exit_code": 0,
+      "passed": 13
+    },
+    "trace_and_identity_tests": {
+      "exit_code": 0,
+      "passed": 9
+    },
+    "trace_generation": {
+      "exit_code": 0
+    },
+    "includes_real_android_build": false,
+    "includes_independent_acceptance": false
+  },
+  "blocker_retries": [
+    {
+      "id": "A5-ANDROID-SDK",
+      "first_attempt": {
+        "exit_code": 1,
+        "utc": "2026-10-31T23:13:02.487577+00:00"
+      },
+      "second_attempt": {
+        "exit_code": 1,
+        "utc": "2026-10-31T23:13:02.489367+00:00"
+      },
+      "status": "OPEN"
+    },
+    {
+      "id": "A5-POSTGRES-LOCAL",
+      "first_attempt": {
+        "exit_code": 1,
+        "utc": "2026-10-31T23:13:02.490950+00:00"
+      },
+      "second_attempt": {
+        "exit_code": 1,
+        "utc": "2026-10-31T23:13:02.492221+00:00"
+      },
+      "status": "OPEN"
+    },
+    {
+      "id": "A5-18-INDEPENDENT-GIT-BUNDLE",
+      "first_attempt": {
+        "exit_code": 1,
+        "utc": "2026-10-31T23:13:02.493563+00:00"
+      },
+      "second_attempt": {
+        "exit_code": 1,
+        "utc": "2026-10-31T23:13:02.494824+00:00"
+      },
+      "status": "OPEN"
+    }
+  ],
+  "github": {
+    "branch": "work/larenlex-android",
+    "root_repo": "netadalet-oss/avofis-platform",
+    "actual_android_develop_history_imported": false,
+    "github_actions_successful_run_id": null,
+    "ci_status": "NOT_VERIFIED"
+  },
+  "historical_layers": {
+    "node_synthetic": 87,
+    "sqlite_synthetic_subset": 37,
+    "disabled": 15,
+    "real_production": 0
+  },
+  "restrictions": [
+    "No main merge or production writes",
+    "No secrets or real personal data in public repository",
+    "No standalone Android acceptances from document-only checks"
+  ]
+}
