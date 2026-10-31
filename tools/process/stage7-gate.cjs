@@ -42,7 +42,27 @@ function validate(d){
     || w.stage6_lifecycle_accepted_as_historical_deliverable!==false)
     throw Error('Past work or failure history lost: '+id);
  }
- if(!Array.isArray(d.new_work)||d.new_work.length!==1)throw Error('Stage 7 new work list invalid');
+ if(!Array.isArray(d.new_work)||d.new_work.length!==5)throw Error('Stage 7 new work list invalid');
+ const newly=[
+  'UX:S7-CASES-LOCAL-RESEARCH','UX:S7-STATUTES-LOCAL-RESEARCH',
+  'UX:S7-WORKSPACE-LOCAL-TASKS','SEC:S7-HEADER-NAV-ADMIN-ROLE'
+ ];
+ if(d.new_work.some((x,i)=>d.new_work.findIndex(y=>y.id===x.id)!==i) ||
+    newly.some(id=>!d.new_work.some(x=>x.id===id)))
+    throw Error('New stage work omitted or duplicated');
+ for(const item of d.new_work.slice(1)){
+   if(item.status!=='DRAFT_CODE_CI_PASS_NOT_MERGED'
+      ||item.attempts_recorded_level7!==1
+      ||!Array.isArray(item.attempts)||item.attempts.length!==1
+      ||item.attempts[0].index!==1||item.attempts[0].result!=='CODE_AND_CI_VERIFIED'
+      ||item.attempts[0].total_tests_passed!==261 || !item.attempts[0].ci_run
+      ||!item.attempts[0].ci_job_id ||item.production_deployed!==false
+      ||item.staging_browser_tested!==false||item.historical_work_id!==null
+      ||item.accepted_as_historical_deliverable!==false
+      ||!Array.isArray(item.source_paths) ||item.source_paths.length<2
+      ||!Array.isArray(item.test_sources)||item.test_sources.length===0)
+      throw Error('New portal code item lacks per-task evidence or invents acceptance');
+ }
  const w=d.new_work[0];
  if(w.id!=='SEC:S7-ADMIN-CMS-SESSION-WRITE-GUARD'
    ||w.status!=='DRAFT_CODE_CI_PASS_NOT_MERGED'
@@ -63,7 +83,7 @@ function validate(d){
    throw Error('Live read-only Supabase risk summary ungrounded');
  return {current_level:7,next_level_approved:false,carryover_count:14,open_rls:7,
          historic_open_decisions:18,past_level6_failed_attempts:2,
-         new_level7_attempts:1,code_ci_passed:true,production_modified:false};
+         new_level7_attempts:5,code_ci_passed:true,production_modified:false};
 }
 function load(){return JSON.parse(fs.readFileSync(file,'utf8'));}
 if(require.main===module)process.stdout.write(JSON.stringify(validate(load()),null,2)+'\n');
