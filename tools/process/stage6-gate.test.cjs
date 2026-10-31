@@ -42,3 +42,25 @@ test('open 18 decisions remain open',()=>{
 test('no fabricated completion of new Stage 6 work',()=>{
   const d=copy(source);d.new_work[0].status='PRODUCTION_READY';assert.throws(()=>check(d));
 });
+
+test('Stage 6 CMS code/CI success is not production acceptance',()=>{
+  const d=copy(source),w=d.new_work[0];
+  assert.equal(w.status,'DRAFT_CODE_CI_PASS_NOT_MERGED');
+  assert.equal(w.attempts_recorded_level6,1);
+  assert.equal(w.production_deployed,false);
+  assert.equal(w.staging_integration_verified,false);
+});
+test('a successful CI claim must have an existing workflow evidence reference',()=>{
+  const d=copy(source);delete d.new_work[0].attempts[0].ci_run;
+  assert.throws(()=>check(d),/CI success/);
+});
+test('attempt total must equal number of recorded attempts',()=>{
+  const d=copy(source);d.new_work[0].attempts_recorded_level6=2;
+  assert.throws(()=>check(d),/matching evidence/);
+});
+test('no false production deployment or live DB change may be claimed',()=>{
+  const d=copy(source);d.new_work[0].production_deployed=true;
+  assert.throws(()=>check(d),/live or historical/);
+  const e=copy(source);e.new_work[0].live_db_modified=true;
+  assert.throws(()=>check(e),/live or historical/);
+});
