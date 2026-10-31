@@ -8,7 +8,6 @@ const fs = require('node:fs');
 const path = require('node:path');
 const ts = require('typescript');
 const express = require('express');
-const cors = require('cors');
 
 const API = path.resolve(__dirname, '..');
 function loadTs(relativePath, mocks = {}) {
@@ -27,6 +26,9 @@ function loadTs(relativePath, mocks = {}) {
   return mod.exports;
 }
 const { configuredCorsOrigins } = loadTs('src/security/cors-origin.ts');
+const { configureApiHttpSecurity } = loadTs('src/security/http-hardening.ts', {
+  './cors-origin': { configuredCorsOrigins },
+});
 const expectedSeed = { title: 'Test home page', menu: [{ label: 'Home', href: '/' }] };
 function createCmsApp(origins) {
   const { rejectUnverifiedCmsMutation } = loadTs('src/lib/cms-write-gate.ts');
@@ -35,8 +37,7 @@ function createCmsApp(origins) {
     '../../lib/cms-write-gate': { rejectUnverifiedCmsMutation },
   });
   const app = express();
-  app.use(cors({ origin: configuredCorsOrigins(origins) }));
-  app.use(express.json({ limit: '10mb' }));
+  configureApiHttpSecurity(app, origins);
   app.use('/api/cms', cmsRouter);
   return app;
 }
@@ -107,5 +108,31 @@ test('empty CORS setting never allows browser origin', async () => {
     const r = await fetch(url + '/api/cms/pages/home', { headers: { Origin: allowed } });
     assert.equal(r.status, 200);
     assert.equal(r.headers.get('access-control-allow-origin'), null);
+  });
+});
+
+test('oversized JSON request is rejected with HTTP 413 before CMS routing', async () => {
+  await withServer(allowed, async (url) => {
+    const canary = 'OVERSIZED_SECRET_NOT_FOR_RESPONSE';
+    const r = await fetch(url + '/api/cms/pages/home', {
+      method: 'POST',
+      headers: { Origin: allowed, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ canary, padding: 'x'.repeat(70 * 1024) }),
+    });
+    assert.equal(r.status, 413);
+    assert.equal(r.headers.get('x-powered-by'), null);
+    assert.equal(r.headers.get('x-content-type-options'), 'nosniff');
+    assert.doesNotMatch(await r.text(), /OVERSIZED_SECRET_NOT_FOR_RESPONSE/);
+  });
+});
+
+test('API response does not expose Express signature or permit origin wildcard', async () => {
+  await withServer(allowed, async (url) => {
+    const r = await fetch(url + '/api/cms/pages/home', { headers: { Origin: denied } });
+    assert.equal(r.status, 200);
+    assert.equal(r.headers.get('x-powered-by'), null);
+    assert.equal(r.headers.get('x-content-type-options'), 'nosniff');
+    assert.equal(r.headers.get('access-control-allow-origin'), null);
+    assert.equal(r.headers.get('access-control-allow-credentials'), null);
   });
 });
