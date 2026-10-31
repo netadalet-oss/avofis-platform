@@ -15,6 +15,7 @@ on:
       - seviye4-security-cms-cors-20261030
       - seviye5-kademeli-devam-20261031
       - seviye6-kontrollu-devam-20261031
+      - seviye7-kontrollu-devam-20261031
     paths:
       - 'api/**'
       - 'admin/**'
