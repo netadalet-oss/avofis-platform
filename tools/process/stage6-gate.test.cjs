@@ -97,6 +97,5 @@ test('concurrency hardening cannot use a third attempt in Stage 6',()=>{
 test('failed concurrency test cannot silently be reclassified as success',()=>{
   const d=copy(source),w=d.new_work.find(w=>w.id==='SEC:S6-CMS-CONCURRENT-EDIT-GUARD');
   w.attempts[0].result='CODE_AND_CI_VERIFIED';
-  // This historical-result assertion is a regression contract for the recorded failure.
-  assert.equal(source.new_work.find(w=>w.id==='SEC:S6-CMS-CONCURRENT-EDIT-GUARD').attempts[0].result,'FAILED_TEST_ASSERTION');
+  assert.throws(()=>check(d),/Historical concurrency attempt record/);
 });
