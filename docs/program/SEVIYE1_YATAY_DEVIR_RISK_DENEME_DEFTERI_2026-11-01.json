@@ -129,7 +129,8 @@
       "detail": "Non-Next named export broke Next build; removed and independently rebuilt.",
       "evidence": [
         "https://github.com/netadalet-oss/avofis-platform/actions/runs/41253814753",
-        "https://github.com/netadalet-oss/avofis-platform/actions/runs/41253905512"
+        "https://github.com/netadalet-oss/avofis-platform/actions/runs/41253905512",
+        "https://github.com/netadalet-oss/avofis-platform/actions/runs/41254007538"
       ],
       "level1Attempts": [
         {
@@ -139,6 +140,10 @@
         {
           "run": "41253905512",
           "result": "FAILED"
+        },
+        {
+          "run": "41254007538",
+          "result": "SUCCESS"
         }
       ]
     },
