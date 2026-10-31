@@ -5,7 +5,7 @@ const {load,validate}=require('./stage7-gate.cjs');
 const source=load(),copy=()=>structuredClone(source);
 test('consented Level 7 active, Level 8 locked, 14 carryovers preserved',()=>{
  assert.deepEqual(validate(source),{current_level:7,next_level_approved:false,carryover_count:14,open_rls:7,
- historic_open_decisions:18,past_level6_failed_attempts:2,new_level7_attempts:5,
+ historic_open_decisions:18,past_level6_failed_attempts:2,new_level7_attempts:8,
  code_ci_passed:true,production_modified:false});
 });
 test('no Level 8 without renewed explicit consent',()=>{
@@ -64,8 +64,8 @@ test('no secret rewrites of live risk count',()=>{
 
 test('new functional portal areas are separate works with only one verified code attempt',()=>{
   const work=source.new_work;
-  assert.equal(work.length,5);
-  assert.deepEqual(work.slice(1).map(x=>x.attempts_recorded_level7),[1,1,1,1]);
+  assert.equal(work.length,7);
+  assert.deepEqual(work.slice(1).map(x=>x.attempts_recorded_level7),[1,1,1,1,2,1]);
   assert.ok(work.every(x=>x.production_deployed===false));
   assert.ok(work.every(x=>x.staging_browser_tested===false));
 });
@@ -80,4 +80,24 @@ test('cannot mark new portal research as deployed or historically accepted',()=>
 test('cannot count an invented second attempt for new work',()=>{
   const d=copy();d.new_work[1].attempts_recorded_level7=2;
   assert.throws(()=>validate(d),/per-task evidence/);
+});
+
+test('expanded module first failed test remains an explicit failure',()=>{
+ const d=copy(),x=d.new_work.find(w=>w.id==='UX:S7-LOCAL-MODULE-EXPANSION');
+ x.attempts[0].result='CODE_AND_CI_VERIFIED';
+ assert.throws(()=>validate(d),/attempt history/);
+});
+test('expanded modules cannot execute a third attempt within Stage 7',()=>{
+ const d=copy(),x=d.new_work.find(w=>w.id==='UX:S7-LOCAL-MODULE-EXPANSION');
+ x.attempts_recorded_level7=3;
+ assert.throws(()=>validate(d),/attempt history/);
+});
+test('unverified metric removal cannot be called production deployed',()=>{
+ const d=copy(),x=d.new_work.find(w=>w.id==='SEC:S7-UNVERIFIED-METRICS-HIDE');
+ x.production_deployed=true;
+ assert.throws(()=>validate(d),/live acceptance/);
+});
+test('stage progress cannot turn code coverage into live acceptance',()=>{
+ const d=copy();d.stage7_code_test_proxy.new_accepted_live_journeys=17;
+ assert.throws(()=>validate(d),/misrepresented/);
 });
