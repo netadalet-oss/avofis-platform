@@ -146,6 +146,46 @@
         "Review admin CMS page upserts and Data API insert policies",
         "Production merge and deployment require separate approval"
       ]
+    },
+    {
+      "id": "SEC:S6-ADMIN-CMS-EXISTING-ROWS",
+      "subject": "Admin CMS upsert false-success/hero overwrite hardening",
+      "status": "DRAFT_CODE_CI_PASS_NOT_MERGED",
+      "attempts_recorded_level6": 1,
+      "attempts": [
+        {
+          "index": 1,
+          "result": "CODE_AND_CI_VERIFIED",
+          "code_commit": "e788f8ab702be0dca42eb762ed25ddc1494318b2",
+          "test_commit": "050a230e1ff13c550555494a2a791e86c6b4aa20",
+          "workflow_commit": "2f2028f63102eb0b1db3f5d38a3f0e219c5a14ae",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41156311439",
+          "ci_job_id": 124403760544,
+          "tests_passed": 160,
+          "tests_failed": 0,
+          "admin_tests_passed": 41,
+          "admin_typescript": "PASS",
+          "portal_typescript": "PASS",
+          "api_build": "PASS"
+        }
+      ],
+      "source_paths": [
+        "admin/src/app/cms/page.tsx",
+        "admin/src/lib/cms-persistence.ts",
+        "admin/tests/cms-persistence.test.cjs"
+      ],
+      "verified_source": "Live public.pages.slug UNIQUE and home=1, site_settings.key UNIQUE and keys footer/modules/navigation present on 2026-10-31, read-only catalog and key checks.",
+      "production_deployed": false,
+      "live_db_modified": false,
+      "historical_work_id": null,
+      "accepted_as_historical_deliverable": false,
+      "staging_integration_verified": false,
+      "outstanding": [
+        "Concurrent edit stale-read writes are not prevented; require optimistic concurrency or authenticated atomic RPC in later approved design.",
+        "Four-step load-defaults operation is nontransactional; partial effects may occur if a later step fails.",
+        "Only client-side write guard; RLS is authoritative, seven separate public table RLS vulnerabilities remain.",
+        "A real authenticated browser-to-Supabase negative/positive RLS test is required before deployment."
+      ]
     }
   ],
   "hollanda_business_gov_controls": "CONDITIONAL_APPLICABILITY_RETAINED",
