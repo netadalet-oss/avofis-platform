@@ -26,10 +26,6 @@ import {
   type EditableMetaCardItem
 } from "@/components/cms/EditableMetaCardGrid";
 import { EditableList } from "@/components/cms/EditableList";
-import {
-  EditableStatGrid,
-  type EditableStatItem
-} from "@/components/cms/EditableStatGrid";
 import { EditableText } from "@/components/cms/EditableText";
 import { useEditMode } from "@/components/providers/EditModeProvider";
 import { ModuleGrid } from "@/components/module-grid";
@@ -37,7 +33,6 @@ import { SectionTitle } from "@/components/section-title";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { useUser } from "@/hooks/useUser";
-import { stats } from "@/lib/site";
 import { supabase } from "@/lib/supabase";
 
 const featurePills = [
@@ -117,11 +112,6 @@ const communityCards: EditableMetaCardItem[] = [
   }
 ];
 
-const defaultStatsItems: EditableStatItem[] = stats.map((item) => ({
-  value: item.value,
-  label: item.label
-}));
-
 const defaultHeroTitle =
   "Hukuk araştırması, belge üretimi ve kariyer ağı tek platformda.";
 
@@ -138,7 +128,6 @@ type HomeCmsContent = {
   careerColumns?: EditableColumnItem[];
   communityCards?: EditableMetaCardItem[];
   officeHighlights?: string[];
-  statsItems?: EditableStatItem[];
   sections?: {
     research?: {
       eyebrow?: string;
@@ -342,21 +331,20 @@ export default function HomePage() {
     ? cmsContent.careerColumns
     : careerColumns;
 
-  const currentCommunityCards = cmsContent?.communityCards?.length
+  const currentCommunityCards = (cmsContent?.communityCards?.length
     ? cmsContent.communityCards
-    : communityCards;
+    : communityCards).map((card) => ({ ...card, meta: "Forum henüz kamuya açık değil" }));
 
   const currentOfficeHighlights = cmsContent?.officeHighlights?.length
     ? cmsContent.officeHighlights
     : officeHighlights;
 
-  const currentStatsItems = cmsContent?.statsItems?.length
-    ? cmsContent.statsItems
-    : defaultStatsItems;
-
   return (
     <main className="min-h-screen">
       <SiteHeader />
+      <div role="note" className="border-b border-amber-300/20 bg-amber-300/10 px-4 py-3 text-center text-sm leading-6 text-amber-100">
+        AVOfis kuruluş öncesi geliştirme aşamasındadır. Bu portal henüz aktif hukukî danışmanlık veya dosya kabulü sunmamaktadır.
+      </div>
 
       <section className="relative overflow-hidden">
         <div className="container-shell grid gap-14 pb-20 pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:pb-28 lg:pt-20">
@@ -440,36 +428,25 @@ export default function HomePage() {
 
             <div className="mt-10 flex flex-wrap gap-4">
               <a
-                href="#moduller"
+                href="/baslangic"
                 className="inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-4 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
               >
-                Platformu Keşfet
+                Sorununuza Göre Başlayın
                 <ArrowRight className="h-4 w-4" />
               </a>
               <a
                 href="#arastirma"
                 className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-6 py-4 text-sm font-semibold text-white transition hover:border-white/20 hover:bg-white/10"
               >
-                Modülleri İncele
+                Platformu Keşfet
                 <ChevronRight className="h-4 w-4" />
               </a>
             </div>
 
-            <div className="mt-12 grid max-w-2xl grid-cols-2 gap-4 md:grid-cols-4">
-              {currentStatsItems.slice(0, 4).map((item, index) => (
-                <div
-                  key={`${item.label}-${index}`}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm"
-                >
-                  <div className="text-2xl font-semibold text-white">
-                    {item.value}
-                  </div>
-                  <div className="mt-1 text-xs leading-5 text-slate-400">
-                    {item.label}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <p className="mt-10 max-w-2xl text-sm leading-7 text-slate-400">
+              İlk adımda ülke ve konunuzu seçerek kişisel bilgi vermeden hazırlık kontrol listesi oluşturabilirsiniz.
+              AVOfis henüz müşteri dosyası kabul etmiyor.
+            </p>
           </div>
 
           <div className="relative">
@@ -1089,42 +1066,6 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
-
-      <section id="istatistikler" className="container-shell py-24">
-        <SectionTitle
-          eyebrow={cmsContent?.sections?.stats?.eyebrow || "Şeffaf istatistikler"}
-          title={
-            cmsContent?.sections?.stats?.title ||
-            "Platform kullanımını görünür, anlaşılır ve ölçülebilir hale getirir."
-          }
-          text={
-            cmsContent?.sections?.stats?.text ||
-            "Kullanıcı sayısı, içerik performansı, forum hareketliliği, kariyer dönüşümü ve belge üretim yoğunluğu panel ve public alan arasında tutarlı bir veri akışına bağlanır."
-          }
-          editable
-          onSaveEyebrow={async (nextValue) => {
-            await saveContentField(["sections", "stats", "eyebrow"], nextValue);
-          }}
-          onSaveTitle={async (nextValue) => {
-            await saveContentField(["sections", "stats", "title"], nextValue);
-          }}
-          onSaveText={async (nextValue) => {
-            await saveContentField(["sections", "stats", "text"], nextValue);
-          }}
-        />
-        <EditableStatGrid
-          items={currentStatsItems}
-          className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
-          cardClassName="rounded-[26px] border border-white/10 bg-white/5 p-6"
-          valueClassName="text-3xl font-semibold text-white"
-          labelClassName="mt-2 text-sm text-slate-400"
-          valuePlaceholder="İstatistik değeri"
-          labelPlaceholder="İstatistik etiketi"
-          onSave={async (nextItems) => {
-            await saveContentField(["statsItems"], nextItems);
-          }}
-        />
       </section>
 
       <section className="bg-gradient-to-r from-sky-400/15 via-white/5 to-indigo-400/15 py-20">
