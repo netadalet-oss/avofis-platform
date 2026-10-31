@@ -29,6 +29,12 @@ jobs:
           python-version: '3.12'
       - name: Run no-archive unit tests (integration skips are explicit)
         run: python3 -m unittest discover -s larenlex-android/tests -v
+      - name: Lint local tooling and verify bundle preflight syntax
+        run: |
+          python3 -m compileall -q larenlex-android/tools larenlex-android/tests
+          bash -n larenlex-android/tools/preflight_android_bundle.sh
+      - name: Repeat under optimized Python (fail-closed guards)
+        run: python3 -O -m unittest discover -s larenlex-android/tests -v
       - name: Preserve distinction between source gate and Android acceptance
         run: |
           echo 'L0 unit tests do not prove Android Git bundle, Gradle build, device, staging, legal or production acceptance.'
