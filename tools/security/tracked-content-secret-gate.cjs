@@ -11,7 +11,7 @@ const fs = require("node:fs");
 const { execFileSync } = require("node:child_process");
 
 const detectors = [
-  ["PRIVATE_KEY_BLOCK", /-----BEGIN (?:OPENSSH|RSA|EC|DSA|ENCRYPTED|PRIVATE) PRIVATE KEY-----/],
+  ["PRIVATE_KEY_BLOCK", /-----BEGIN (?:(?:OPENSSH|RSA|EC|DSA|ENCRYPTED) )?PRIVATE KEY-----/],
   ["GITHUB_TOKEN", /\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]{36,}\b/],
   ["GITHUB_FINE_GRAINED_TOKEN", /\bgithub_pat_[A-Za-z0-9_]{60,}\b/],
   ["AWS_ACCESS_KEY_ID", /\b(?:AKIA|ASIA)[0-9A-Z]{16}\b/],
