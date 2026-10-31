@@ -1,0 +1,127 @@
+{
+  "program": "AVOfis",
+  "version": "SEVIYE1_REBASELINE_2026-10-31",
+  "date": "2026-10-31",
+  "authorizing_user_message": "Tüm çalışmayı sıfırla seviye1 den başla",
+  "active_stage": 1,
+  "stage_2_approved": false,
+  "all_later_stages_require_explicit_user_approval": true,
+  "reset_kind": "OPERATIONAL_PROGRESS_AND_ACCEPTANCE_RESET_NOT_DESTRUCTIVE_DATA_DELETION",
+  "previous_operational_level": 7,
+  "git_policy": {
+    "new_branch": "seviye1-yeniden-baslangic-20261031",
+    "base_branch": "main",
+    "base_sha": "c97d03d67ffe9b4db0affc6b36f12dd331bc4cb6",
+    "old_prs": "HISTORICAL_NOT_NEW_ACCEPTANCE",
+    "main_changed": false,
+    "production_deployed": false,
+    "live_database_modified": false
+  },
+  "source_authority": [
+    {
+      "name": "AVOfis v18 594 R/J/P + B01-B18 + T01-T13",
+      "date": "2026-10-29",
+      "priority": "PRIMARY_PRODUCT_SPEC",
+      "original_requirements_immutable": true
+    },
+    {
+      "name": "AVOfis 64 maddelik kuruluş ve faaliyet fizibilite konuşması",
+      "date": "2026-10-31",
+      "priority": "CURRENT_COMPANY_FORMATION_FEASIBILITY_SOURCE",
+      "legal_statements_require_source_and_current_verification": true
+    },
+    {
+      "name": "v18 original latest workbook P09 P10 MFA CMS",
+      "date": "2026-10-29",
+      "priority": "IMMUTABLE_HISTORICAL_EVIDENCE_AND_ACCEPTANCE_REFERENCE"
+    },
+    {
+      "name": "Later explicit user workflow constraints",
+      "priority": "GOVERNANCE_UNLESS_INCOMPATIBLE_WITH_NEW_RESET"
+    }
+  ],
+  "baseline_from_original_workbook": {
+    "requirements_total": 594,
+    "unique_ids": 594,
+    "sections": 33,
+    "priority_P0": 324,
+    "priority_P1": 270,
+    "partial_technical_evidence_historical": 41,
+    "not_proven_item_level": 553,
+    "historically_independently_accepted": 0,
+    "historically_live_accepted": 0,
+    "past_accepted_pct": 0
+  },
+  "fresh_level1_acceptance": {
+    "accepted_R_ids": [],
+    "accepted_total": 0,
+    "accepted_pct": 0,
+    "count_as_completed_without_new_evidence": false,
+    "browser_staging_accepted": 0,
+    "source_code_work_not_automatically_accepted": true
+  },
+  "company_stage": {
+    "description": "IDEA_AND_FEASIBILITY_NOT_REGISTERED_OR_OPERATING",
+    "kvk_registration_proven": false,
+    "legal_right_to_operate_or_represent_proven": false,
+    "client_acceptance_approved": false,
+    "real_payments_approved": false,
+    "confirmed_partners_or_staff": false
+  },
+  "first_level_outcomes": [
+    {
+      "id": "S1-01",
+      "title": "Verify R-001..R-594 exact source and approval states",
+      "status": "SOURCE_COUNT_VERIFIED_ACCEPTANCE_ZERO"
+    },
+    {
+      "id": "S1-02",
+      "title": "Use 64-point company feasibility brief; identify legal activity boundaries, responsible persons and first lawful service options",
+      "status": "OPEN_REQUIRES_REAL_IDENTITIES_AND_DECISIONS"
+    },
+    {
+      "id": "S1-03",
+      "title": "Re-establish current GitHub/product inventory against v18 scope; identify legacy code as reusable not automatically accepted",
+      "status": "OPEN"
+    },
+    {
+      "id": "S1-04",
+      "title": "Preserve seven known live RLS issues and B01-B18 as launch blockers until newly verified",
+      "status": "OPEN_NOT_REMediated"
+    },
+    {
+      "id": "S1-05",
+      "title": "Build and accept one end-to-end consumer journey: country/language -> service -> safe pre-screen -> document draft -> permitted human review",
+      "status": "OPEN"
+    },
+    {
+      "id": "S1-06",
+      "title": "Prepare measured proof: unit tests, browser, secure staging, legal and language approval, verified preview",
+      "status": "OPEN"
+    }
+  ],
+  "fixed_constraints": {
+    "min_10_percentage_points_per_stage_target": true,
+    "measurement": "594 ORIGINAL REQUIREMENTS WITH SEPARATE CODE_TEST_AND_INDEPENDENT_ACCEPTANCE",
+    "max_actual_attempts_per_item_per_level": 2,
+    "dont_rewrite_failed_attempt_history": true,
+    "share_non_technical_progress_during_each_work_session": true,
+    "no_stage2_without_explicit_user_approval": true,
+    "no_unapproved_merges_or_production_or_money_or_official_submissions": true
+  },
+  "historical_carryover": {
+    "old_Level7_17_of_60": "HISTORICAL_PROXY_NOT_VALID_COMPLETION_MEASURE_FOR_NEW_LEVEL1",
+    "old_973_tasks": "HISTORICAL_RECORDED_NUMBER_WITHOUT_VERIFIED_594_MAPPING",
+    "old_63_modules": "HISTORICAL_UNVERIFIED_COMPLETE_SCOPE",
+    "unmerged_prs": "RETAIN_AS_REFERENCE_NOT_AUTOMATICALLY_APPLY",
+    "old_tests": "HISTORICAL_TESTS_NOT_NEW_ACCEPTANCE"
+  },
+  "reset_is_complete_in_governance": true,
+  "reset_is_not": {
+    "deleting_the_repository": true,
+    "rewriting_commit_history": true,
+    "reverting_production": true,
+    "revoking_real_customer_accounts": true,
+    "closing_old_prs": true
+  }
+}
