@@ -26,10 +26,7 @@ import {
   type EditableMetaCardItem
 } from "@/components/cms/EditableMetaCardGrid";
 import { EditableList } from "@/components/cms/EditableList";
-import {
-  EditableStatGrid,
-  type EditableStatItem
-} from "@/components/cms/EditableStatGrid";
+import type { EditableStatItem } from "@/components/cms/EditableStatGrid";
 import { EditableText } from "@/components/cms/EditableText";
 import { useEditMode } from "@/components/providers/EditModeProvider";
 import { ModuleGrid } from "@/components/module-grid";
@@ -37,7 +34,6 @@ import { SectionTitle } from "@/components/section-title";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { useUser } from "@/hooks/useUser";
-import { stats } from "@/lib/site";
 import { supabase } from "@/lib/supabase";
 import { hasPortalCmsAdminAccess } from "@/lib/cms-access";
 import { updateExistingHomeContent } from "@/lib/cms-write";
@@ -99,30 +95,25 @@ const officeHighlights = [
 const communityCards: EditableMetaCardItem[] = [
   {
     title: "İçtihat Tartışmaları",
-    meta: "248 başlık",
+    meta: "Planlanan konu alanı",
     text: "Kararların gerekçesi, uygulama alanı ve emsal etkisi üzerine uzman görüşleri."
   },
   {
     title: "Mevzuat Değerlendirmeleri",
-    meta: "182 başlık",
+    meta: "Planlanan konu alanı",
     text: "Madde değişiklikleri, yorum farkları ve uygulamaya etkiler."
   },
   {
     title: "Staj ve Kariyer Deneyimleri",
-    meta: "331 başlık",
+    meta: "Planlanan konu alanı",
     text: "Ofis kültürü, başvuru süreci ve mesleğe geçiş deneyimleri."
   },
   {
     title: "Mesleki Uygulama",
-    meta: "416 başlık",
+    meta: "Planlanan konu alanı",
     text: "Ofis yönetimi, süreç verimliliği ve profesyonel iş akışı önerileri."
   }
 ];
-
-const defaultStatsItems: EditableStatItem[] = stats.map((item) => ({
-  value: item.value,
-  label: item.label
-}));
 
 const defaultHeroTitle =
   "Hukuk araştırması, belge üretimi ve kariyer ağı tek platformda.";
@@ -376,17 +367,15 @@ export default function HomePage() {
     ? cmsContent.careerColumns
     : careerColumns;
 
-  const currentCommunityCards = cmsContent?.communityCards?.length
+  const currentCommunityCards = (cmsContent?.communityCards?.length
     ? cmsContent.communityCards
-    : communityCards;
+    : communityCards).map((item) => ({ ...item, meta: "Planlanan konu alanı" }));
 
   const currentOfficeHighlights = cmsContent?.officeHighlights?.length
     ? cmsContent.officeHighlights
     : officeHighlights;
 
-  const currentStatsItems = cmsContent?.statsItems?.length
-    ? cmsContent.statsItems
-    : defaultStatsItems;
+  // Numeric platform statistics are withheld until audited provenance exists.
 
   return (
     <main className="min-h-screen">
@@ -489,15 +478,10 @@ export default function HomePage() {
               </a>
             </div>
 
-            <div className="mt-12 grid max-w-2xl grid-cols-2 gap-4 md:grid-cols-4">
-              {currentStatsItems.slice(0, 4).map((item, index) => (
-                <div
-                  key={`${item.label}-${index}`}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm"
-                >
-                  <div className="text-2xl font-semibold text-white">
-                    {item.value}
-                  </div>
+            <p className="mt-12 text-sm text-slate-400">
+              Kullanım istatistikleri doğrulanmış kaynağıyla birlikte yayımlanacaktır.
+            </p>
+          </div>
                   <div className="mt-1 text-xs leading-5 text-slate-400">
                     {item.label}
                   </div>
@@ -1147,18 +1131,10 @@ export default function HomePage() {
             await saveContentField(["sections", "stats", "text"], nextValue);
           }}
         />
-        <EditableStatGrid
-          items={currentStatsItems}
-          className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
-          cardClassName="rounded-[26px] border border-white/10 bg-white/5 p-6"
-          valueClassName="text-3xl font-semibold text-white"
-          labelClassName="mt-2 text-sm text-slate-400"
-          valuePlaceholder="İstatistik değeri"
-          labelPlaceholder="İstatistik etiketi"
-          onSave={async (nextItems) => {
-            await saveContentField(["statsItems"], nextItems);
-          }}
-        />
+        <p className="mt-8 rounded-xl border border-white/10 bg-white/5 p-5 text-sm text-slate-300">
+          Doğrulanmış bir kullanım istatistiği henüz yayımlanmıyor. Her sayı için
+          veri kaynağı, hesaplama yöntemi ve güncelleme tarihi belgelenmelidir.
+        </p>
       </section>
 
       <section className="bg-gradient-to-r from-sky-400/15 via-white/5 to-indigo-400/15 py-20">
