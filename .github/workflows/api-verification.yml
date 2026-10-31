@@ -63,6 +63,8 @@ jobs:
         run: npm run typecheck --workspace portal
       - name: Portal CMS role regression tests
         run: npm run test --workspace portal
+      - name: Evidence ledger and fresh per-stage carryover attempt integrity
+        run: node --test tools/process/whole-product-ledger.test.cjs
       - name: Whole-product 12-level breadth and carryover retries
         run: node --test tools/process/whole-product-levels.test.cjs
       - name: Canonical 594 R ledger and acceptance integrity
