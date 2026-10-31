@@ -36,3 +36,16 @@
 2. Onaylı RLS sahiplik modeli, anon/A-B/tenant negatif SQL + HTTP kabulü (AV-014).
 3. Hassas oturumlarda CSRF, rate limit, replay ve MFA/AAL2 kanıtı (AV-017/019).
 4. B01–B18 için yazılı bağımsız kabul ve kullanıcıdan ayrı production onayı.
+
+## 01.11.2026 — Yönetim girişinde güvenli dönüş yolu
+
+**Eski uygulama dalı HEAD:** `82f7050d9db96ebe174cbd0690c1c6cfb3c4be23`. **Yeni kod + CI HEAD:** `4f3f3fb6cc1b24df9b4d2fb7da7fd7c5dd660552`.
+
+- Bulgusu: `admin/src/app/auth/login/page.tsx` mevcut oturum ve yeni giriş dallarında doğrulanmamış `?next` değerini `router.replace` fonksiyonuna iletiyordu. Resmî Next.js API referansı güvenilmeyen URL yönlendirmelerinin XSS tehlikesini bildirir: `https://nextjs.org/docs/app/api-reference/functions/use-router`.
+- Düzeltme: `admin/src/lib/safe-admin-redirect.ts` yeni, sadece mevcut ve izinli yönetim yollarını kabul eden fonksiyon. Giriş sayfasının **her iki** `router.replace` çağrısı doğrulayıcıya bağlandı. Dış URI, script URI, protocol-relative URL, dot traversal, encoded slash, query/fragment, tekrarlı next ve uzun değerler güvenli `/cms` varsayılanına döner.
+- Test: `admin/tests/safe-admin-redirect.test.cjs` yeni (olumlu, olumsuz ve kaynak bağlantı testi).
+- [GitHub Actions #41251442218](https://github.com/netadalet-oss/avofis-platform/actions/runs/41251442218): **SUCCESS**; TypeScript API build, gerçek Express HTTP ve admin testleri, admin/portal typecheck ve mevcut güvenlik regresyonları bu kod SHA'sında başarılı.
+- Vercel portal/admin preview kontrollerinde build rate-limit bağlantısı bildirildi; **yayın/gerçek tarayıcı kabulü değildir**.
+- Kanonik kimlik notu: Özel talimatnamede `AV-019` için `R-541–558` ve `AV-052` için `R-451–468` bağlantıları, özgün R metinlerinin konusuyla örtüşmemektedir. Kod izinde `R-523` ve `R-527` ile konusal ilişki ayrıca tutulur; **özgün tanımlar değişmez, R kabulü sayılmaz**.
+
+**Kalanlar:** server Auth, session revocation, MFA, rate limit, tenant ve Storage A/B, gerçek staging ve hukukî/bağımsız kabul. `main`, canlı Supabase, production, müşteri verisi veya ödeme değiştirilmedi. B01–B18 ve 7 canlı RLS riski açık.
