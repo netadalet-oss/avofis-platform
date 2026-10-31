@@ -56,8 +56,35 @@ function validate(stage, register) {
       throw Error('Legal conclusion/attempt count cannot be fabricated: '+item.id);
     }
   }
+  // Operational code work uses a per-level attempt counter independent of
+  // the original 973 historical items; CI success is never production approval.
+  if (!Array.isArray(register.operational_security_fixes)) {
+    throw Error('Operational security change register missing');
+  }
+  for (const fix of register.operational_security_fixes) {
+    if (fix.level !== 5 || !fix.id || !Number.isInteger(fix.attempt_count_level5)
+      || fix.attempt_count_level5 < 0 || fix.attempt_count_level5 > 2
+      || !Array.isArray(fix.attempts)
+      || fix.attempts.length !== fix.attempt_count_level5
+      || fix.production_deployed !== false
+      || fix.accepted_as_historical_deliverable !== false
+      || fix.historical_work_id !== null) {
+      throw Error('Operational change lacks evidence or exceeds per-level attempt/approval boundary');
+    }
+    for (const [index, attempt] of fix.attempts.entries()) {
+      if (attempt.index !== index + 1 || !attempt.result
+        || !attempt.git_commit || !attempt.pr) {
+        throw Error('Missing sequential evidence for operational attempt');
+      }
+      if (attempt.result === 'CODE_AND_CI_VERIFIED' && (!attempt.ci_run || !attempt.ci_job_id)) {
+        throw Error('Claimed CI success without CI evidence');
+      }
+    }
+  }
   return {active_stage:5,next_stage_authorized:false,open_rls:7,
-          security_fixes_confirmed:0,scope_inventories:2,legal_compliance_accepted:0,
+          security_fixes_confirmed:0,code_fixes_ci_verified:register.operational_security_fixes.filter(
+            fix => fix.current_status === 'DRAFT_CODE_CI_PASS_NOT_MERGED'
+          ).length,scope_inventories:2,legal_compliance_accepted:0,
           historical_stage4_completed:false,attempts_invented:0};
 }
 function load() {
