@@ -41,6 +41,10 @@ jobs:
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '22'
+      - name: Tracked key/env filename regression (no content read)
+        run: node --test tools/security/tracked-file-gate.test.cjs
+      - name: Reject tracked local env and private key files
+        run: node tools/security/tracked-file-gate.cjs
       - name: Install dependencies (without package scripts)
         run: npm install --ignore-scripts --no-audit --no-fund
       - name: TypeScript API build
