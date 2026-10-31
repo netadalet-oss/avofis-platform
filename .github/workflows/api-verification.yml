@@ -71,3 +71,7 @@ jobs:
         run: node --test tools/process/stage7-gate.test.cjs
       - name: Stage 7 source-backed carryover summary (read only)
         run: node tools/process/stage7-gate.cjs
+      - name: Portal 10 point functional-growth truthfulness tests
+        run: node --test tools/process/portal-progress-gate.test.cjs
+      - name: Portal functional-growth scorecard
+        run: node tools/process/portal-progress-gate.cjs
