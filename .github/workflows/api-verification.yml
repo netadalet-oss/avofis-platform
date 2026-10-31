@@ -4,17 +4,24 @@ on:
     paths:
       - 'api/**'
       - 'admin/**'
+      - 'portal/**'
       - 'docs/security/**'
       - 'tools/security/**'
+      - 'docs/process/**'
+      - 'tools/process/**'
       - '.github/workflows/api-verification.yml'
   push:
     branches:
       - seviye4-security-cms-cors-20261030
+      - seviye5-kademeli-devam-20261031
     paths:
       - 'api/**'
       - 'admin/**'
+      - 'portal/**'
       - 'docs/security/**'
       - 'tools/security/**'
+      - 'docs/process/**'
+      - 'tools/process/**'
       - '.github/workflows/api-verification.yml'
 permissions:
   contents: read
@@ -40,7 +47,15 @@ jobs:
         run: npm run test --workspace api
       - name: Admin authorization regression tests
         run: npm run test --workspace admin
+      - name: Portal TypeScript verification
+        run: npm run typecheck --workspace portal
+      - name: Portal CMS role regression tests
+        run: npm run test --workspace portal
       - name: RLS baseline integrity tests (no live DB connection)
         run: node --test tools/security/rls-readiness.test.cjs
       - name: RLS snapshot advisory (risk remains open)
         run: node tools/security/rls-readiness.cjs
+      - name: Stage 5 approval and carryover invariants
+        run: node --test tools/process/approval-gate.test.cjs
+      - name: Stage 5 source-backed approval summary
+        run: node tools/process/approval-gate.cjs
