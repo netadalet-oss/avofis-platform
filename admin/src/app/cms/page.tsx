@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { isCmsAdminRole } from "@/lib/cms-role";
+import { updateAdminHomeHero, updateExistingSetting } from "@/lib/cms-persistence";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
@@ -277,68 +278,40 @@ export default function Page() {
         },
       ];
 
-      const { error: heroError } = await supabase
-        .from("pages")
-        .upsert(
-          {
-            slug: "home",
-            content: {
-              hero: {
-                title: defaultHeroTitle,
-                subtitle: defaultHeroSubtitle,
-              },
-            },
-          },
-          { onConflict: "slug" }
-        );
+      const { error: heroError } = await updateAdminHomeHero(supabase, {
+        title: defaultHeroTitle,
+        subtitle: defaultHeroSubtitle,
+      });
 
       if (heroError) {
         setMessage(`Varsayılan hero yüklenemedi: ${heroError.message}`);
         return;
       }
 
-      const { error: navigationError } = await supabase
-        .from("site_settings")
-        .upsert(
-          {
-            key: "navigation",
-            value: defaultNavigation,
-          },
-          { onConflict: "key" }
-        );
+      const { error: navigationError } = await updateExistingSetting(
+        supabase, "navigation", defaultNavigation
+      );
 
       if (navigationError) {
-        setMessage(`Varsayılan menü yüklenemedi: ${navigationError.message}`);
+        setMessage(`Varsayılan menü yüklenemedi: Önceki adımlar uygulanmış olabilir.  ${navigationError.message}`);
         return;
       }
 
-      const { error: modulesError } = await supabase
-        .from("site_settings")
-        .upsert(
-          {
-            key: "modules",
-            value: defaultModules,
-          },
-          { onConflict: "key" }
-        );
+      const { error: modulesError } = await updateExistingSetting(
+        supabase, "modules", defaultModules
+      );
 
       if (modulesError) {
-        setMessage(`Varsayılan modüller yüklenemedi: ${modulesError.message}`);
+        setMessage(`Varsayılan modüller yüklenemedi: Önceki adımlar uygulanmış olabilir.  ${modulesError.message}`);
         return;
       }
 
-      const { error: footerError } = await supabase
-        .from("site_settings")
-        .upsert(
-          {
-            key: "footer",
-            value: defaultFooter,
-          },
-          { onConflict: "key" }
-        );
+      const { error: footerError } = await updateExistingSetting(
+        supabase, "footer", defaultFooter
+      );
 
       if (footerError) {
-        setMessage(`Varsayılan footer yüklenemedi: ${footerError.message}`);
+        setMessage(`Varsayılan footer yüklenemedi: Önceki adımlar uygulanmış olabilir.  ${footerError.message}`);
         return;
       }
 
@@ -359,20 +332,10 @@ export default function Page() {
       setSaving(true);
       setMessage("");
 
-      const { error } = await supabase
-        .from("pages")
-        .upsert(
-          {
-            slug: "home",
-            content: {
-              hero: {
-                title: heroTitle,
-                subtitle: heroSubtitle,
-              },
-            },
-          },
-          { onConflict: "slug" }
-        );
+      const { error } = await updateAdminHomeHero(supabase, {
+        title: heroTitle,
+        subtitle: heroSubtitle,
+      });
 
       if (error) {
         setMessage(`Hero kaydedilemedi: ${error.message}`);
@@ -390,15 +353,9 @@ export default function Page() {
       setSaving(true);
       setMessage("");
 
-      const { error } = await supabase
-        .from("site_settings")
-        .upsert(
-          {
-            key: "navigation",
-            value: navigation,
-          },
-          { onConflict: "key" }
-        );
+      const { error } = await updateExistingSetting(
+        supabase, "navigation", navigation
+      );
 
       if (error) {
         setMessage(`Menü kaydedilemedi: ${error.message}`);
@@ -416,15 +373,9 @@ export default function Page() {
       setSaving(true);
       setMessage("");
 
-      const { error } = await supabase
-        .from("site_settings")
-        .upsert(
-          {
-            key: "modules",
-            value: modules,
-          },
-          { onConflict: "key" }
-        );
+      const { error } = await updateExistingSetting(
+        supabase, "modules", modules
+      );
 
       if (error) {
         setMessage(`Modüller kaydedilemedi: ${error.message}`);
@@ -442,15 +393,9 @@ export default function Page() {
       setSaving(true);
       setMessage("");
 
-      const { error } = await supabase
-        .from("site_settings")
-        .upsert(
-          {
-            key: "footer",
-            value: footerColumns,
-          },
-          { onConflict: "key" }
-        );
+      const { error } = await updateExistingSetting(
+        supabase, "footer", footerColumns
+      );
 
       if (error) {
         setMessage(`Footer kaydedilemedi: ${error.message}`);
