@@ -106,7 +106,7 @@ jobs:
           const fs = require('node:fs');
           const assert = require('node:assert/strict');
           const raw = fs.readFileSync('/tmp/avofis-s1-whole-preview.html', 'utf8');
-          const visible = raw.replace(/<!--[\\s\\S]*?-->/g, '').replace(/<[^>]*>/g, ' ').replace(/\\s+/g, ' ');
+          const visible = raw.replace(/<!--[\s\S]*?-->/g, '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
           for (const required of [
             'bütün ürün kapsamı önizlemesi',
             '17 hizmet alanı',
@@ -115,6 +115,6 @@ jobs:
             '16 personel modülü',
             '33 gereksinim bölümü'
           ]) assert.ok(visible.includes(required), 'Missing visible overview: ' + required);
-          assert.match(visible, /0\\s*\\/\\s*594/);
+          assert.match(visible, /0\s*\/\s*594/);
           console.log('Whole-product S1 preview HTTP: PASS');
           NODE
