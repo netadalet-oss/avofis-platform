@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import { safeLoginDestinationFromSearch } from "@/lib/safe-login-redirect";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function LoginPage() {
       if (!mounted) return;
 
       if (session) {
-        router.replace("/dashboard");
+        router.replace(safeLoginDestinationFromSearch(window.location.search));
       }
     }
 
@@ -51,12 +52,8 @@ export default function LoginPage() {
         return;
       }
 
-      const next =
-        typeof window !== "undefined"
-          ? new URLSearchParams(window.location.search).get("next")
-          : null;
-
-      router.replace(next || "/dashboard");
+      // Only verified local destination paths may reach the Next.js router.
+      router.replace(safeLoginDestinationFromSearch(window.location.search));
       router.refresh();
     } catch (err) {
       setError("Giriş sırasında beklenmeyen bir hata oluştu.");
