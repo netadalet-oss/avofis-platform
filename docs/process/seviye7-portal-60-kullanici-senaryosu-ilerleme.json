@@ -11,8 +11,8 @@
   "minimum_incremental_target_pct_points": 10,
   "baseline_from_original_approved_register": null,
   "denominator_fixed": 60,
-  "new_source_level_journeys": 13,
-  "new_source_level_pct_points": 21.67,
+  "new_source_level_journeys": 17,
+  "new_source_level_pct_points": 28.33,
   "real_browser_journeys_accepted": 0,
   "real_browser_acceptance_pct_points": 0,
   "full_project_target_proven": false,
@@ -327,26 +327,42 @@
     {
       "id": "documents:create-legal-draft",
       "area": "Belge ve taslaklar",
-      "status": "UNKNOWN_OR_NOT_VERIFIED",
-      "source": []
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/lib/draft-builder.ts",
+        "portal/src/app/documents/page.tsx",
+        "portal/tests/local-expanded-modules.test.cjs"
+      ]
     },
     {
       "id": "documents:edit-draft",
       "area": "Belge ve taslaklar",
-      "status": "UNKNOWN_OR_NOT_VERIFIED",
-      "source": []
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/lib/draft-builder.ts",
+        "portal/src/app/documents/page.tsx",
+        "portal/tests/local-expanded-modules.test.cjs"
+      ]
     },
     {
       "id": "documents:export-draft",
       "area": "Belge ve taslaklar",
-      "status": "UNKNOWN_OR_NOT_VERIFIED",
-      "source": []
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/lib/draft-builder.ts",
+        "portal/src/app/documents/page.tsx",
+        "portal/tests/local-expanded-modules.test.cjs"
+      ]
     },
     {
       "id": "documents:version-draft",
       "area": "Belge ve taslaklar",
-      "status": "UNKNOWN_OR_NOT_VERIFIED",
-      "source": []
+      "status": "NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE",
+      "source": [
+        "portal/src/lib/draft-builder.ts",
+        "portal/src/app/documents/page.tsx",
+        "portal/tests/local-expanded-modules.test.cjs"
+      ]
     },
     {
       "id": "documents:validate-citations",
@@ -444,5 +460,49 @@
       "status": "UNKNOWN_OR_NOT_VERIFIED",
       "source": []
     }
-  ]
+  ],
+  "functional_code_last_ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41177872703",
+  "new_prototype_workflows_not_scored_as_live_capabilities": [
+    {
+      "area": "careers",
+      "achieved": [
+        "manually track own vacancy",
+        "filter manually entered opportunities",
+        "update personal application status",
+        "remove local item"
+      ],
+      "excluded": [
+        "search-real-vacancies",
+        "submit-application",
+        "review-applicants"
+      ],
+      "source": [
+        "portal/src/lib/local-careers.ts",
+        "portal/src/app/careers/page.tsx",
+        "portal/tests/local-expanded-modules.test.cjs"
+      ]
+    },
+    {
+      "area": "forum",
+      "achieved": [
+        "create a private topic draft",
+        "add personal reply drafts",
+        "search local drafts",
+        "delete draft or reply"
+      ],
+      "excluded": [
+        "view-real-topics",
+        "create-topic",
+        "reply-to-topic",
+        "report-post",
+        "moderation"
+      ],
+      "source": [
+        "portal/src/lib/local-forum.ts",
+        "portal/src/app/forum/page.tsx",
+        "portal/tests/local-expanded-modules.test.cjs"
+      ]
+    }
+  ],
+  "notes_v20": "17/60 is 28.33pp code-and-test proxy. It is not an independently proven 10pp increase in the whole AVOfis portal; 0 staging/browser accepted and original 973 work acceptance denominator still unknown."
 }
