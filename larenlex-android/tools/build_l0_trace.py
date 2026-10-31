@@ -19,6 +19,11 @@ INDEX = 'DENETIM/LARENLEX_ANDROID_TALIMAT_KANONIK_IZ_DIZINI.json'
 R_MARKDOWN = 'EKLER/594_R_ORTAK_KONU_KAPSAMI_REFERANS.md'
 
 
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
 def digest(text):
     return hashlib.sha256(text.encode('utf-8')).hexdigest()
 
@@ -48,12 +53,12 @@ def build(larenlex_zip):
         ops = json.loads(z.read(API_JSON))['operations']
         r_text = z.read(R_MARKDOWN).decode('utf-8')
         r = re.findall(r'^\d+\. \*\*\[(R-\d{3})\]\*\*\s*(.+)$', r_text, re.M)
-    assert len(rows) == len({x['A2 İşlev ID'] for x in rows}) == 453
-    assert len(ops) == len({x['operationId'] for x in ops}) == 102
-    assert len(r) == 594 and [x[0] for x in r] == [f'R-{i:03}' for i in range(1,595)]
-    assert {x['A2 İşlev ID'] for x in rows} == set(idx['A2'])
-    assert {x['operationId'] for x in ops} == set(idx['API'])
-    assert len(idx['LX_GOREV']) == 62
+    require(len(rows) == len({x['A2 İşlev ID'] for x in rows}) == 453, 'A2 count or duplicate')
+    require(len(ops) == len({x['operationId'] for x in ops}) == 102, 'API count or duplicate')
+    require(len(r) == 594 and [x[0] for x in r] == [f'R-{i:03}' for i in range(1,595)], 'R list mismatch')
+    require({x['A2 İşlev ID'] for x in rows} == set(idx['A2']), 'A2 canonical index mismatch')
+    require({x['operationId'] for x in ops} == set(idx['API']), 'API canonical index mismatch')
+    require(len(idx['LX_GOREV']) == 62, 'LX canonical index mismatch')
     lx = [{
         'id': key, 'type': 'LARENLEX_LX',
         'source_line': value['new_line'],
@@ -99,11 +104,11 @@ def build(larenlex_zip):
         'API_disabled_historical': sum(not x['historical_RAM_synthetic'] for x in api),
         'API_live_production_historical': sum(x['historical_production_backend'] for x in api),
         'verified_cross_product_links': 0, 'verified_device_acceptance': 0}
-    assert counters['API_RAM_synthetic_historical'] == 87
-    assert counters['API_SQLite_subset_historical'] == 37
-    assert counters['API_disabled_historical'] == 15
-    assert counters['API_live_production_historical'] == 0
-    assert all(not x['historical_SQLite_synthetic_subset'] or x['historical_RAM_synthetic'] for x in api)
+    require(counters['API_RAM_synthetic_historical'] == 87, 'RAM scope mismatch')
+    require(counters['API_SQLite_subset_historical'] == 37, 'SQLite scope mismatch')
+    require(counters['API_disabled_historical'] == 15, 'Disabled scope mismatch')
+    require(counters['API_live_production_historical'] == 0, 'Unexpected production claim')
+    require(all(not x['historical_SQLite_synthetic_subset'] or x['historical_RAM_synthetic'] for x in api), 'SQLite not RAM subset')
     return {
         'meta': {'status': 'HISTORICAL_TRACE_ONLY', 'source_zip_sha256': hashlib.sha256(Path(larenlex_zip).read_bytes()).hexdigest(),
                  'mapping_policy': 'Explicit primary-code evidence required, never inferred',
