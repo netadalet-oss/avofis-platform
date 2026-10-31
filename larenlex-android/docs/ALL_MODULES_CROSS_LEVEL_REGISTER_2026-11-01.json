@@ -1,0 +1,439 @@
+{
+  "product": "LarenLex Android",
+  "source": "LARENLEX_ANDROID_TEKIL_ANA_TALIMATNAME.md",
+  "interpretation": "ALL_14_MODULES_AT_EACH_LEVEL_WITH_PROGRESSIVE_DEPTH",
+  "source_inventory": {
+    "systems": 14,
+    "subgroups": 69,
+    "a2_features": 453,
+    "api_contracts": 102,
+    "staff_modules": 16
+  },
+  "current_scope": "L0 cross-app foundational coverage",
+  "level0_cycle": "FOUNDATIONAL_DESIGN_DELIVERED_WITH_OPEN_EVIDENCE",
+  "real_android_app_implemented": false,
+  "android_apk_preview_available": false,
+  "current_independent_acceptance": "NOT_ESTABLISHED",
+  "levels": [
+    {
+      "id": "L0",
+      "focus": "Kapsam, temel gezinim ve güvenli tasarım önizlemesi",
+      "applies_to": [
+        "LX-01",
+        "LX-02",
+        "LX-03",
+        "LX-04",
+        "LX-05",
+        "LX-06",
+        "LX-07",
+        "LX-08",
+        "LX-09",
+        "LX-10",
+        "LX-11",
+        "LX-12",
+        "LX-13",
+        "LX-14"
+      ],
+      "open_items_carried_forward": true,
+      "unresolved_attempt_policy": "at least two new attempts per later level when eligible",
+      "user_transition_approval_required": true
+    },
+    {
+      "id": "L1",
+      "focus": "Veri nesneleri, tenant/ownership, erişim ve RLS",
+      "applies_to": [
+        "LX-01",
+        "LX-02",
+        "LX-03",
+        "LX-04",
+        "LX-05",
+        "LX-06",
+        "LX-07",
+        "LX-08",
+        "LX-09",
+        "LX-10",
+        "LX-11",
+        "LX-12",
+        "LX-13",
+        "LX-14"
+      ],
+      "open_items_carried_forward": true,
+      "unresolved_attempt_policy": "at least two new attempts per later level when eligible",
+      "user_transition_approval_required": true
+    },
+    {
+      "id": "L2",
+      "focus": "API sözleşmeleri, kimlik, temel olumlu/olumsuz iş akışları",
+      "applies_to": [
+        "LX-01",
+        "LX-02",
+        "LX-03",
+        "LX-04",
+        "LX-05",
+        "LX-06",
+        "LX-07",
+        "LX-08",
+        "LX-09",
+        "LX-10",
+        "LX-11",
+        "LX-12",
+        "LX-13",
+        "LX-14"
+      ],
+      "open_items_carried_forward": true,
+      "unresolved_attempt_policy": "at least two new attempts per later level when eligible",
+      "user_transition_approval_required": true
+    },
+    {
+      "id": "L3",
+      "focus": "Android arayüzleri, yerel güvenlik ve belge/cihaz akışları",
+      "applies_to": [
+        "LX-01",
+        "LX-02",
+        "LX-03",
+        "LX-04",
+        "LX-05",
+        "LX-06",
+        "LX-07",
+        "LX-08",
+        "LX-09",
+        "LX-10",
+        "LX-11",
+        "LX-12",
+        "LX-13",
+        "LX-14"
+      ],
+      "open_items_carried_forward": true,
+      "unresolved_attempt_policy": "at least two new attempts per later level when eligible",
+      "user_transition_approval_required": true
+    },
+    {
+      "id": "L4",
+      "focus": "Hukukî doğruluk, 6 dil/RTL, personel ve belge ayrıntıları",
+      "applies_to": [
+        "LX-01",
+        "LX-02",
+        "LX-03",
+        "LX-04",
+        "LX-05",
+        "LX-06",
+        "LX-07",
+        "LX-08",
+        "LX-09",
+        "LX-10",
+        "LX-11",
+        "LX-12",
+        "LX-13",
+        "LX-14"
+      ],
+      "open_items_carried_forward": true,
+      "unresolved_attempt_policy": "at least two new attempts per later level when eligible",
+      "user_transition_approval_required": true
+    },
+    {
+      "id": "L5",
+      "focus": "Uçtan uca, negatif regresyon, izlenebilir kanıt",
+      "applies_to": [
+        "LX-01",
+        "LX-02",
+        "LX-03",
+        "LX-04",
+        "LX-05",
+        "LX-06",
+        "LX-07",
+        "LX-08",
+        "LX-09",
+        "LX-10",
+        "LX-11",
+        "LX-12",
+        "LX-13",
+        "LX-14"
+      ],
+      "open_items_carried_forward": true,
+      "unresolved_attempt_policy": "at least two new attempts per later level when eligible",
+      "user_transition_approval_required": true
+    },
+    {
+      "id": "L6",
+      "focus": "Cihaz, işletim, imza ve yetkili yayın hazırlığı",
+      "applies_to": [
+        "LX-01",
+        "LX-02",
+        "LX-03",
+        "LX-04",
+        "LX-05",
+        "LX-06",
+        "LX-07",
+        "LX-08",
+        "LX-09",
+        "LX-10",
+        "LX-11",
+        "LX-12",
+        "LX-13",
+        "LX-14"
+      ],
+      "open_items_carried_forward": true,
+      "unresolved_attempt_policy": "at least two new attempts per later level when eligible",
+      "user_transition_approval_required": true
+    }
+  ],
+  "modules": [
+    {
+      "id": "LX-01",
+      "name": "Ürün, hukukî rol ve işletme yönetişimi",
+      "groups": 4,
+      "features": 20,
+      "level0": {
+        "status": "OFFLINE_CATALOGUE_AND_NAVIGATION_PROTOTYPE_ONLY",
+        "code": "NOT_VERIFIED",
+        "tests": "STATIC_PREVIEW_ONLY",
+        "independent_acceptance": false
+      },
+      "carry_forward": [
+        "L0-A518-ANDROID-GIT",
+        "L0-ANDROID-BUILD-DEVICE",
+        "L0-A514-HANDOFF",
+        "L0-REAL_BACKEND_AND_LEGAL_ACCEPTANCE"
+      ]
+    },
+    {
+      "id": "LX-02",
+      "name": "Mobil deneyim, marka ve erişilebilirlik",
+      "groups": 8,
+      "features": 57,
+      "level0": {
+        "status": "OFFLINE_CATALOGUE_AND_NAVIGATION_PROTOTYPE_ONLY",
+        "code": "NOT_VERIFIED",
+        "tests": "STATIC_PREVIEW_ONLY",
+        "independent_acceptance": false
+      },
+      "carry_forward": [
+        "L0-A518-ANDROID-GIT",
+        "L0-ANDROID-BUILD-DEVICE",
+        "L0-A514-HANDOFF",
+        "L0-REAL_BACKEND_AND_LEGAL_ACCEPTANCE"
+      ]
+    },
+    {
+      "id": "LX-03",
+      "name": "Hizmetler, hukukî bilgi ve kamu içerikleri",
+      "groups": 7,
+      "features": 67,
+      "level0": {
+        "status": "OFFLINE_CATALOGUE_AND_NAVIGATION_PROTOTYPE_ONLY",
+        "code": "NOT_VERIFIED",
+        "tests": "STATIC_PREVIEW_ONLY",
+        "independent_acceptance": false
+      },
+      "carry_forward": [
+        "L0-A518-ANDROID-GIT",
+        "L0-ANDROID-BUILD-DEVICE",
+        "L0-A514-HANDOFF",
+        "L0-REAL_BACKEND_AND_LEGAL_ACCEPTANCE"
+      ]
+    },
+    {
+      "id": "LX-04",
+      "name": "Başvuru, ilk değerlendirme ve süreç rehberi",
+      "groups": 4,
+      "features": 21,
+      "level0": {
+        "status": "OFFLINE_CATALOGUE_AND_NAVIGATION_PROTOTYPE_ONLY",
+        "code": "NOT_VERIFIED",
+        "tests": "STATIC_PREVIEW_ONLY",
+        "independent_acceptance": false
+      },
+      "carry_forward": [
+        "L0-A518-ANDROID-GIT",
+        "L0-ANDROID-BUILD-DEVICE",
+        "L0-A514-HANDOFF",
+        "L0-REAL_BACKEND_AND_LEGAL_ACCEPTANCE"
+      ]
+    },
+    {
+      "id": "LX-05",
+      "name": "Müşteri dosyası, kronoloji ve iletişim",
+      "groups": 5,
+      "features": 26,
+      "level0": {
+        "status": "OFFLINE_CATALOGUE_AND_NAVIGATION_PROTOTYPE_ONLY",
+        "code": "NOT_VERIFIED",
+        "tests": "STATIC_PREVIEW_ONLY",
+        "independent_acceptance": false
+      },
+      "carry_forward": [
+        "L0-A518-ANDROID-GIT",
+        "L0-ANDROID-BUILD-DEVICE",
+        "L0-A514-HANDOFF",
+        "L0-REAL_BACKEND_AND_LEGAL_ACCEPTANCE"
+      ]
+    },
+    {
+      "id": "LX-06",
+      "name": "Formlar, belge ve çıktı motoru",
+      "groups": 5,
+      "features": 28,
+      "level0": {
+        "status": "OFFLINE_CATALOGUE_AND_NAVIGATION_PROTOTYPE_ONLY",
+        "code": "NOT_VERIFIED",
+        "tests": "STATIC_PREVIEW_ONLY",
+        "independent_acceptance": false
+      },
+      "carry_forward": [
+        "L0-A518-ANDROID-GIT",
+        "L0-ANDROID-BUILD-DEVICE",
+        "L0-A514-HANDOFF",
+        "L0-REAL_BACKEND_AND_LEGAL_ACCEPTANCE"
+      ]
+    },
+    {
+      "id": "LX-07",
+      "name": "Kimlik, izin, GDPR ve cihaz güvenliği",
+      "groups": 5,
+      "features": 28,
+      "level0": {
+        "status": "OFFLINE_CATALOGUE_AND_NAVIGATION_PROTOTYPE_ONLY",
+        "code": "NOT_VERIFIED",
+        "tests": "STATIC_PREVIEW_ONLY",
+        "independent_acceptance": false
+      },
+      "carry_forward": [
+        "L0-A518-ANDROID-GIT",
+        "L0-ANDROID-BUILD-DEVICE",
+        "L0-A514-HANDOFF",
+        "L0-REAL_BACKEND_AND_LEGAL_ACCEPTANCE"
+      ]
+    },
+    {
+      "id": "LX-08",
+      "name": "Finans, muhasebe ve tüketici hakları",
+      "groups": 4,
+      "features": 20,
+      "level0": {
+        "status": "OFFLINE_CATALOGUE_AND_NAVIGATION_PROTOTYPE_ONLY",
+        "code": "NOT_VERIFIED",
+        "tests": "STATIC_PREVIEW_ONLY",
+        "independent_acceptance": false
+      },
+      "carry_forward": [
+        "L0-A518-ANDROID-GIT",
+        "L0-ANDROID-BUILD-DEVICE",
+        "L0-A514-HANDOFF",
+        "L0-REAL_BACKEND_AND_LEGAL_ACCEPTANCE"
+      ]
+    },
+    {
+      "id": "LX-09",
+      "name": "16 alanlı personel ve yönetim çalışma alanı",
+      "groups": 5,
+      "features": 41,
+      "level0": {
+        "status": "OFFLINE_CATALOGUE_AND_NAVIGATION_PROTOTYPE_ONLY",
+        "code": "NOT_VERIFIED",
+        "tests": "STATIC_PREVIEW_ONLY",
+        "independent_acceptance": false
+      },
+      "carry_forward": [
+        "L0-A518-ANDROID-GIT",
+        "L0-ANDROID-BUILD-DEVICE",
+        "L0-A514-HANDOFF",
+        "L0-REAL_BACKEND_AND_LEGAL_ACCEPTANCE"
+      ]
+    },
+    {
+      "id": "LX-10",
+      "name": "Altı dil, yerelleştirme ve RTL",
+      "groups": 4,
+      "features": 21,
+      "level0": {
+        "status": "OFFLINE_CATALOGUE_AND_NAVIGATION_PROTOTYPE_ONLY",
+        "code": "NOT_VERIFIED",
+        "tests": "STATIC_PREVIEW_ONLY",
+        "independent_acceptance": false
+      },
+      "carry_forward": [
+        "L0-A518-ANDROID-GIT",
+        "L0-ANDROID-BUILD-DEVICE",
+        "L0-A514-HANDOFF",
+        "L0-REAL_BACKEND_AND_LEGAL_ACCEPTANCE"
+      ]
+    },
+    {
+      "id": "LX-11",
+      "name": "Rechtspraak, IND ve resmî kurum bağlantıları",
+      "groups": 5,
+      "features": 38,
+      "level0": {
+        "status": "OFFLINE_CATALOGUE_AND_NAVIGATION_PROTOTYPE_ONLY",
+        "code": "NOT_VERIFIED",
+        "tests": "STATIC_PREVIEW_ONLY",
+        "independent_acceptance": false
+      },
+      "carry_forward": [
+        "L0-A518-ANDROID-GIT",
+        "L0-ANDROID-BUILD-DEVICE",
+        "L0-A514-HANDOFF",
+        "L0-REAL_BACKEND_AND_LEGAL_ACCEPTANCE"
+      ]
+    },
+    {
+      "id": "LX-12",
+      "name": "Android uygulaması, APK ve imzalama",
+      "groups": 4,
+      "features": 20,
+      "level0": {
+        "status": "OFFLINE_CATALOGUE_AND_NAVIGATION_PROTOTYPE_ONLY",
+        "code": "NOT_VERIFIED",
+        "tests": "STATIC_PREVIEW_ONLY",
+        "independent_acceptance": false
+      },
+      "carry_forward": [
+        "L0-A518-ANDROID-GIT",
+        "L0-ANDROID-BUILD-DEVICE",
+        "L0-A514-HANDOFF",
+        "L0-REAL_BACKEND_AND_LEGAL_ACCEPTANCE"
+      ]
+    },
+    {
+      "id": "LX-13",
+      "name": "Güvenlik QA, kanıt matrisi ve regresyon",
+      "groups": 5,
+      "features": 38,
+      "level0": {
+        "status": "OFFLINE_CATALOGUE_AND_NAVIGATION_PROTOTYPE_ONLY",
+        "code": "NOT_VERIFIED",
+        "tests": "STATIC_PREVIEW_ONLY",
+        "independent_acceptance": false
+      },
+      "carry_forward": [
+        "L0-A518-ANDROID-GIT",
+        "L0-ANDROID-BUILD-DEVICE",
+        "L0-A514-HANDOFF",
+        "L0-REAL_BACKEND_AND_LEGAL_ACCEPTANCE"
+      ]
+    },
+    {
+      "id": "LX-14",
+      "name": "İşletim, yayın ve genişleme",
+      "groups": 4,
+      "features": 28,
+      "level0": {
+        "status": "OFFLINE_CATALOGUE_AND_NAVIGATION_PROTOTYPE_ONLY",
+        "code": "NOT_VERIFIED",
+        "tests": "STATIC_PREVIEW_ONLY",
+        "independent_acceptance": false
+      },
+      "carry_forward": [
+        "L0-A518-ANDROID-GIT",
+        "L0-ANDROID-BUILD-DEVICE",
+        "L0-A514-HANDOFF",
+        "L0-REAL_BACKEND_AND_LEGAL_ACCEPTANCE"
+      ]
+    }
+  ],
+  "approval": {
+    "auto_after_one_minute": "NOT_SUPPORTED_BY_CHAT_RUNTIME",
+    "user_button_required": true
+  },
+  "release_safety": "No production, signing, sensitive customer data or legal submissions without separate authority"
+}
