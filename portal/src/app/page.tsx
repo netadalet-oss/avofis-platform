@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   BadgeCheck,
@@ -39,6 +39,7 @@ import { SiteHeader } from "@/components/site-header";
 import { useUser } from "@/hooks/useUser";
 import { stats } from "@/lib/site";
 import { supabase } from "@/lib/supabase";
+import { hasPortalCmsAdminAccess } from "@/lib/cms-access";
 
 const featurePills = [
   "İçtihat araştırma",
@@ -201,12 +202,39 @@ export default function HomePage() {
   const [heroSaving, setHeroSaving] = useState(false);
   const [heroMessage, setHeroMessage] = useState("");
 
-  const role = useMemo(() => {
-    const rawRole = session?.user?.user_metadata?.role;
-    return typeof rawRole === "string" ? rawRole.toLowerCase() : "";
-  }, [session]);
+  // Never grant CMS access from user-editable session.user.user_metadata.
+  // RLS must separately enforce the server/database write permission.
+  const [authorizedAdminSession, setAuthorizedAdminSession] = useState<{
+    userId: string;
+    accessToken: string;
+  } | null>(null);
+  const currentUserId = session?.user?.id || null;
+  const currentAccessToken = session?.access_token || null;
+  const isAdmin = Boolean(
+    currentUserId &&
+      currentAccessToken &&
+      authorizedAdminSession?.userId === currentUserId &&
+      authorizedAdminSession.accessToken === currentAccessToken
+  );
 
-  const isAdmin = role === "admin" || role === "super_admin";
+  useEffect(() => {
+    let active = true;
+    setAuthorizedAdminSession(null);
+
+    if (currentUserId && currentAccessToken) {
+      hasPortalCmsAdminAccess(supabase, currentUserId).then((allowed) => {
+        if (active) {
+          setAuthorizedAdminSession(
+            allowed ? { userId: currentUserId, accessToken: currentAccessToken } : null
+          );
+        }
+      });
+    }
+
+    return () => {
+      active = false;
+    };
+  }, [currentUserId, currentAccessToken]);
 
   useEffect(() => {
     let mounted = true;
@@ -245,6 +273,11 @@ export default function HomePage() {
   }, []);
 
   async function saveContentField(path: string[], value: any) {
+    if (!isAdmin) {
+      setHeroMessage("Bu içerik değişikliğini yapma yetkiniz yok.");
+      return;
+    }
+
     try {
       setHeroSaving(true);
       setHeroMessage("");
@@ -270,6 +303,11 @@ export default function HomePage() {
   }
 
   async function saveHeroField(field: "title" | "subtitle", value: string) {
+    if (!isAdmin) {
+      setHeroMessage("Bu içerik değişikliğini yapma yetkiniz yok.");
+      return;
+    }
+
     const currentContent: HomeCmsContent = cmsContent || {};
 
     const nextHero = {
@@ -313,6 +351,7 @@ export default function HomePage() {
   }
 
   function openHeroEditMode() {
+    if (!isAdmin) return;
     setEditMode(true);
     setHeroMessage("");
     setHeroDraft({
