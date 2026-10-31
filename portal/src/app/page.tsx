@@ -57,7 +57,7 @@ const researchCards: EditableCardItem[] = [
   },
   {
     title: "Çalışılabilir hukuk verisi",
-    text: "Sadece okuma değil; kaydetme, not alma, sınıflandırma ve üretim için aktif kullanım sağlar."
+    text: "Kaydetme, not alma, sınıflandırma ve belge hazırlama gibi işlevler hedeflenmektedir."
   }
 ];
 
@@ -83,7 +83,7 @@ const careerColumns: EditableColumnItem[] = [
 ];
 
 const officeHighlights = [
-  "Doğrulanmış profil yapısı",
+  "Profil doğrulama tasarımı",
   "Uzmanlık alanı görünürlüğü",
   "Staj ve kariyer ilanları",
   "Ofis ekip yapısı ve rol modeli"
@@ -92,31 +92,31 @@ const officeHighlights = [
 const communityCards: EditableMetaCardItem[] = [
   {
     title: "İçtihat Tartışmaları",
-    meta: "248 başlık",
+    meta: "Planlanan tartışma alanı",
     text: "Kararların gerekçesi, uygulama alanı ve emsal etkisi üzerine uzman görüşleri."
   },
   {
     title: "Mevzuat Değerlendirmeleri",
-    meta: "182 başlık",
+    meta: "Planlanan tartışma alanı",
     text: "Madde değişiklikleri, yorum farkları ve uygulamaya etkiler."
   },
   {
     title: "Staj ve Kariyer Deneyimleri",
-    meta: "331 başlık",
+    meta: "Planlanan tartışma alanı",
     text: "Ofis kültürü, başvuru süreci ve mesleğe geçiş deneyimleri."
   },
   {
     title: "Mesleki Uygulama",
-    meta: "416 başlık",
+    meta: "Planlanan tartışma alanı",
     text: "Ofis yönetimi, süreç verimliliği ve profesyonel iş akışı önerileri."
   }
 ];
 
 const defaultHeroTitle =
-  "Hukuk araştırması, belge üretimi ve kariyer ağı tek platformda.";
+  "Avrupa genelinde hukukî ve idarî işlemler için açık, sistemli hazırlık.";
 
 const defaultHeroSubtitle =
-  "İçtihat, mevzuat, dosya analizi, taslak üretimi, forum, ofis profilleri, staj eşleşmeleri ve profesyonel workspace deneyimini tek bir modern hukuk arayüzünde birleştirin.";
+  "Sorununuza uygun hizmet alanını inceleyin, ülkenizi seçin ve kişisel bilgi vermeden ilk hazırlık adımlarınızı belirleyin. AVOfis henüz kuruluş öncesi geliştirme aşamasındadır.";
 
 type HomeCmsContent = {
   hero?: {
@@ -465,7 +465,7 @@ export default function HomePage() {
                     </div>
                   </div>
                   <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
-                    Canlı yapı
+                    Geliştirme örneği
                   </div>
                 </div>
 
@@ -888,14 +888,14 @@ export default function HomePage() {
 
             <div className="rounded-[28px] border border-white/10 bg-gradient-to-b from-sky-400/10 to-white/5 p-7">
               <div className="text-xl font-semibold text-white">
-                Canlı metrikler
+                Planlanan kariyer özellikleri
               </div>
               <div className="mt-6 grid grid-cols-2 gap-4">
                 {[
-                  { value: "420+", label: "Aktif ilan" },
-                  { value: "350+", label: "Ofis profili" },
-                  { value: "7.2K+", label: "Başvuru" },
-                  { value: "%68", label: "Eşleşme dönüşümü" }
+                  { value: "Planlanan", label: "İlan listeleme" },
+                  { value: "Planlanan", label: "Ofis profilleri" },
+                  { value: "Planlanan", label: "Başvuru takibi" },
+                  { value: "Planlanan", label: "Aday eşleşmesi" }
                 ].map((item) => (
                   <div
                     key={item.label}
@@ -947,7 +947,7 @@ export default function HomePage() {
               {[
                 "Medeni hukuk, ceza hukuku, idare hukuku, iş hukuku ve diğer uzmanlık alanları",
                 "En iyi cevap, oylama, etiketleme, takip ve raporlama sistemi",
-                "Doğrulanmış uzman profilleri ve katkı görünürlüğü",
+                "Uzman profilleri için planlanan doğrulama süreci",
                 "İçtihat ve mevzuat sayfalarıyla bağlantılı tartışmalar"
               ].map((item) => (
                 <div
@@ -989,7 +989,7 @@ export default function HomePage() {
             }
             text={
               cmsContent?.sections?.offices?.text ||
-              "Ofis uzmanlık alanları, ekip yapısı, staj ilanları, doğrulanmış profil bilgileri ve işbirliği olanakları tek profilde sunulur."
+              "Ofis uzmanlık alanları, ekip yapısı, staj ilanları, doğrulanması hedeflenen profil bilgileri ve işbirliği olanakları tek profilde sunulur."
             }
             editable
             onSaveEyebrow={async (nextValue) => {
@@ -1015,7 +1015,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
-                  Doğrulanmış Ofis
+                  Temsili profil
                 </div>
               </div>
               <div className="mt-6 grid gap-4 md:grid-cols-[0.8fr_1.2fr]">
@@ -1024,10 +1024,10 @@ export default function HomePage() {
                     AH
                   </div>
                   <div className="mt-4 text-lg font-semibold text-white">
-                    Avo Legal Partners
+                    Örnek kurum profili
                   </div>
                   <div className="mt-1 text-sm text-slate-400">
-                    İstanbul · Ticaret Hukuku · İş Hukuku
+                    Temsili görünüm · Gerçek kurum kaydı değildir
                   </div>
                 </div>
                 <EditableList
