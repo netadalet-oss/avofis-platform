@@ -186,6 +186,61 @@
         "Only client-side write guard; RLS is authoritative, seven separate public table RLS vulnerabilities remain.",
         "A real authenticated browser-to-Supabase negative/positive RLS test is required before deployment."
       ]
+    },
+    {
+      "id": "SEC:S6-CMS-CONCURRENT-EDIT-GUARD",
+      "subject": "Admin CMS stale-editor optimistic concurrency on live jsonb pages/settings rows",
+      "status": "DRAFT_CODE_CI_PASS_NOT_MERGED",
+      "attempts_recorded_level6": 2,
+      "attempts": [
+        {
+          "index": 1,
+          "result": "FAILED_TEST_ASSERTION",
+          "code_commit": "5ff1f14288bd3ad242139a6c14d5ec04da9198b4",
+          "test_commit": "f8d7892b21780a4a6d33787bd57726873d3b2637",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41174570965",
+          "ci_job_id": 124459350122,
+          "admin_tests_passed": 45,
+          "admin_tests_total": 46,
+          "failed": 1,
+          "reason": "A source-level regression assertion expected the closing parenthesis immediately after a snapshot argument, but the call spans a newline.",
+          "failure_classification": "TEST_ASSERTION_FORMAT_MISMATCH",
+          "not_claimed_as_feature_success": true
+        },
+        {
+          "index": 2,
+          "result": "CODE_AND_CI_VERIFIED",
+          "code_commit": "5ff1f14288bd3ad242139a6c14d5ec04da9198b4",
+          "test_commit": "f59cf1435ebadba8e873537d138e19fbf082fd97",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41174624419",
+          "ci_job_id": 124459514709,
+          "total_tests_passed": 168,
+          "failed": 0,
+          "admin_tests_passed": 46,
+          "admin_typescript": "PASS",
+          "portal_typescript": "PASS",
+          "api_build": "PASS"
+        }
+      ],
+      "source_paths": [
+        "admin/src/lib/cms-persistence.ts",
+        "admin/src/app/cms/page.tsx",
+        "admin/tests/cms-persistence.test.cjs"
+      ],
+      "technical_intent": "Compare persisted jsonb content/value against immutable client-loaded snapshot in the same PostgREST filtered UPDATE; a 0-row result is treated as failure, never auto-retry.",
+      "truth_limit": "Only mocked unit tests and TypeScript builds; PostgREST JSONB equality behavior has not been tested using live authenticated browser sessions or staging.",
+      "production_deployed": false,
+      "live_db_modified": false,
+      "historical_work_id": null,
+      "accepted_as_historical_deliverable": false,
+      "staging_integration_verified": false,
+      "outstanding": [
+        "Authenticated multi-user browser-to-staging conflict test",
+        "RLS negative/positive user test",
+        "Resolve four-step default operation partial-write risk",
+        "Review portal content writers for stale snapshot and revision model",
+        "Separate merge/production authorization"
+      ]
     }
   ],
   "hollanda_business_gov_controls": "CONDITIONAL_APPLICABILITY_RETAINED",
