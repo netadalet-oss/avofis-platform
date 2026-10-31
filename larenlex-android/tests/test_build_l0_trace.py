@@ -32,6 +32,19 @@ class TraceTests(unittest.TestCase):
     def test_missing_archive_rejected(self):
         with self.assertRaises(FileNotFoundError): builder.build('/not-a-file.zip')
 
+    def test_canonical_line_tampering_rejected(self):
+        original='#### LX-001 — valid  '
+        index={'counts':{'LX_GOREV':1,'A2':0,'API':0},
+               'entries':{'LX_GOREV':{'LX-001':{'new_line':1,'source_text':original,'sha256_original_line':builder.digest(original)}},'A2':{},'API':{}}}
+        with self.assertRaises(ValueError):
+            builder.validate_canonical(index, 'changed content')
+
+    def test_canonical_digest_tampering_rejected(self):
+        index={'counts':{'LX_GOREV':62,'A2':453,'API':102},
+               'entries':{'LX_GOREV':{'LX-001':{'new_line':1,'source_text':'line','sha256_original_line':'0'*64}},'A2':{},'API':{}}}
+        with self.assertRaises(ValueError):
+            builder.validate_canonical(index, 'line')
+
     @unittest.skipUnless(os.getenv('LARENLEX_SOURCE_ZIP'), 'private source ZIP not provided')
     def test_actual_source_unaccepted_and_nonduplicated(self):
         r = builder.build(os.environ['LARENLEX_SOURCE_ZIP'])
