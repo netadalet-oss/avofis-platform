@@ -1,0 +1,29 @@
+name: LarenLex L1 all-module contracts (offline)
+on:
+  push:
+    branches: [work/larenlex-android]
+    paths:
+      - 'larenlex-android/l1/**'
+      - 'larenlex-android/preview/whole-app-l1.html'
+      - '.github/workflows/larenlex-l1-contracts.yml'
+  pull_request:
+    paths:
+      - 'larenlex-android/l1/**'
+      - 'larenlex-android/preview/whole-app-l1.html'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scope-and-safety:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline L1 scope and RLS draft checks
+        run: python3 -m unittest discover -s larenlex-android/l1/tests -v
+      - name: Keep acceptance claims separate
+        run: |
+          echo 'This scope job does not execute PostgreSQL, Android Gradle, real Auth, device tests or independent acceptance.'
