@@ -14,6 +14,7 @@ import { connectRouter } from "./modules/connect/connect.router";
 import { analyticsRouter } from "./modules/analytics/analytics.router";
 import { supportRouter } from "./modules/support/support.router";
 import { adminRouter } from "./modules/admin/admin.router";
+import { programRouter } from "./modules/program/program.router";
 
 const app = express();
 configureApiHttpSecurity(app);
@@ -22,6 +23,7 @@ app.get("/health", (_req, res) => {
   res.json({ ok: true, service: "avofis-api" });
 });
 
+app.use("/api/program", programRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/cms", cmsRouter);
 app.use("/api/cases", casesRouter);
