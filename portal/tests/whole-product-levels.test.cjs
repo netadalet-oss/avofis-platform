@@ -101,6 +101,10 @@ test("whole product preview does not collect data or claim completion", () => {
   assert.match(page, /yedi RLS/i);
   assert.match(page, /resmî kurum gönderimi açık değildir/);
   assert.match(page, /robots:\s*\{\s*index:\s*false/);
+  for (const item of [
+    "J01–J16", "P01–P10", "B01–B18", "T01–T13", "G1–G4",
+    "TR · NL · DE · EN · AR RTL · RU"
+  ]) assert.ok(page.includes(item), item);
   for (const forbidden of [
     '"use client"', "supabase", "signInWithPassword",
     "createSignedUrl", "<form", "<input", "fetch(", "localStorage",
