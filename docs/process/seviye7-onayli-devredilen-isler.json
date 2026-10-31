@@ -1,0 +1,331 @@
+{
+  "project": "AVOfis",
+  "record_date": "2026-10-31",
+  "stage": 7,
+  "source_stage": 6,
+  "stage_status": "ACTIVE_EXPLICIT_USER_APPROVAL",
+  "transition_approval_evidence": "AVOfis projesinde Seviye 6'dan Seviye 7'ye geçişi açıkça onaylıyorum. Açık ve başarısız işleri tüm kanıt ve deneme geçmişleriyle Seviye 7'ye taşıyarak çalışmaya devam et. Seviye 8'e geçmeden önce yeniden açık onayımı iste.",
+  "next_stage": 8,
+  "next_stage_approved": false,
+  "all_future_transitions_require_explicit_advance_approval": true,
+  "previous_stage_historically_completed": false,
+  "previous_stage_completion_ratio": null,
+  "maximum_real_attempts_per_item_per_stage": 2,
+  "original_approved_work_items": 973,
+  "original_technical_contracts": 973,
+  "original_total_workflows": 154,
+  "original_open_decisions": 18,
+  "original_stage7_task_ids_available": false,
+  "carried_items": [
+    {
+      "id": "RLS:public.applications",
+      "category": "LIVE_RLS",
+      "status": "OPEN_UNREMEDIATED",
+      "attempts_recorded_level5": 0,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Production RLS policy authorization, ownership rules and staging negative tests not yet accepted.",
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json",
+      "from_stage": 6,
+      "to_stage": 7,
+      "attempts_recorded_level7": 0,
+      "carry_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "RLS:public.jobs",
+      "category": "LIVE_RLS",
+      "status": "OPEN_UNREMEDIATED",
+      "attempts_recorded_level5": 0,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Production RLS policy authorization, ownership rules and staging negative tests not yet accepted.",
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json",
+      "from_stage": 6,
+      "to_stage": 7,
+      "attempts_recorded_level7": 0,
+      "carry_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "RLS:public.media_assets",
+      "category": "LIVE_RLS",
+      "status": "OPEN_UNREMEDIATED",
+      "attempts_recorded_level5": 0,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Production RLS policy authorization, ownership rules and staging negative tests not yet accepted.",
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json",
+      "from_stage": 6,
+      "to_stage": 7,
+      "attempts_recorded_level7": 0,
+      "carry_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "RLS:public.office_members",
+      "category": "LIVE_RLS",
+      "status": "OPEN_UNREMEDIATED",
+      "attempts_recorded_level5": 0,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Production RLS policy authorization, ownership rules and staging negative tests not yet accepted.",
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json",
+      "from_stage": 6,
+      "to_stage": 7,
+      "attempts_recorded_level7": 0,
+      "carry_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "RLS:public.offices",
+      "category": "LIVE_RLS",
+      "status": "OPEN_UNREMEDIATED",
+      "attempts_recorded_level5": 0,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Production RLS policy authorization, ownership rules and staging negative tests not yet accepted.",
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json",
+      "from_stage": 6,
+      "to_stage": 7,
+      "attempts_recorded_level7": 0,
+      "carry_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "RLS:public.posts",
+      "category": "LIVE_RLS",
+      "status": "OPEN_UNREMEDIATED",
+      "attempts_recorded_level5": 0,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Production RLS policy authorization, ownership rules and staging negative tests not yet accepted.",
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json",
+      "from_stage": 6,
+      "to_stage": 7,
+      "attempts_recorded_level7": 0,
+      "carry_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "RLS:public.topics",
+      "category": "LIVE_RLS",
+      "status": "OPEN_UNREMEDIATED",
+      "attempts_recorded_level5": 0,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Production RLS policy authorization, ownership rules and staging negative tests not yet accepted.",
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json",
+      "from_stage": 6,
+      "to_stage": 7,
+      "attempts_recorded_level7": 0,
+      "carry_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "UYUM:NL-11",
+      "category": "GDPR",
+      "status": "LEGAL_SCOPE_OPEN",
+      "attempts_recorded_level5": 0,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Controller/processor, actual processing, retention, transfers and DPA applicability unverified.",
+      "evidence": "docs/process/seviye5-ilk-gdpr-dsa-kapsam-incelemesi.md",
+      "from_stage": 6,
+      "to_stage": 7,
+      "attempts_recorded_level7": 0,
+      "carry_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "UYUM:NL-14",
+      "category": "DSA",
+      "status": "LEGAL_SCOPE_OPEN",
+      "attempts_recorded_level5": 0,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Actual intermediary hosting and public dissemination classification unverified.",
+      "evidence": "docs/process/seviye5-ilk-gdpr-dsa-kapsam-incelemesi.md",
+      "from_stage": 6,
+      "to_stage": 7,
+      "attempts_recorded_level7": 0,
+      "carry_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "SEC:S5-PORTAL-CMS-ROLE",
+      "category": "FRONTEND_AUTHORIZATION",
+      "status": "CODE_CI_PASS_NOT_MERGED_NOT_DEPLOYED",
+      "attempts_recorded_level5": 1,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Stage 5 source CI PASS but branch remains draft; real deployment and RLS behavior unverified.",
+      "evidence": "docs/process/seviye5-onayli-devreden-isler-ve-uyum-kapsami.json",
+      "from_stage": 6,
+      "to_stage": 7,
+      "attempts_recorded_level7": 0,
+      "carry_status": "OPEN_NOT_CLOSED"
+    },
+    {
+      "id": "SEC:S6-CMS-EXISTING-ROW-UPDATE",
+      "category": "STAGE6_TECHNICAL_WORK",
+      "from_stage": 6,
+      "to_stage": 7,
+      "attempts_recorded_level6": 1,
+      "attempts_recorded_level7": 0,
+      "attempts_level6": [
+        {
+          "index": 1,
+          "result": "CODE_AND_CI_VERIFIED",
+          "code_commit": "6c5273139bb8a3d4915878df219e03ecd95075e4",
+          "test_commit": "3dfe64261af23b1acbe7d8fb0aaf703edf3adbb8",
+          "ci_head_commit": "603425225cb6c42c46f0b9c9612b6dbd5133f9c1",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41153680961",
+          "ci_job_id": 124395667180,
+          "total_passed": 132,
+          "failed": 0,
+          "portal_typescript": "PASS",
+          "new_cms_write_tests": 12,
+          "remarks": "Tested query behavior with in-process mocks; no live CMS write, no staging/production acceptance."
+        }
+      ],
+      "source_paths": [
+        "portal/src/app/page.tsx"
+      ],
+      "stage6_status": "DRAFT_CODE_CI_PASS_NOT_MERGED",
+      "carry_status": "OPEN_PENDING_STAGING_OR_PRODUCTION_ACCEPTANCE",
+      "stage6_lifecycle_production_deployed": false,
+      "stage6_lifecycle_accepted_as_historical_deliverable": false,
+      "carry_reason": "Code/CI evidence exists, but staging integration, live RLS or deployment approval remain outstanding. Historic attempt record preserved."
+    },
+    {
+      "id": "SEC:S6-ADMIN-CMS-EXISTING-ROWS",
+      "category": "STAGE6_TECHNICAL_WORK",
+      "from_stage": 6,
+      "to_stage": 7,
+      "attempts_recorded_level6": 1,
+      "attempts_recorded_level7": 0,
+      "attempts_level6": [
+        {
+          "index": 1,
+          "result": "CODE_AND_CI_VERIFIED",
+          "code_commit": "e788f8ab702be0dca42eb762ed25ddc1494318b2",
+          "test_commit": "050a230e1ff13c550555494a2a791e86c6b4aa20",
+          "workflow_commit": "2f2028f63102eb0b1db3f5d38a3f0e219c5a14ae",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41156311439",
+          "ci_job_id": 124403760544,
+          "tests_passed": 160,
+          "tests_failed": 0,
+          "admin_tests_passed": 41,
+          "admin_typescript": "PASS",
+          "portal_typescript": "PASS",
+          "api_build": "PASS"
+        }
+      ],
+      "source_paths": [
+        "admin/src/app/cms/page.tsx",
+        "admin/src/lib/cms-persistence.ts",
+        "admin/tests/cms-persistence.test.cjs"
+      ],
+      "stage6_status": "DRAFT_CODE_CI_PASS_NOT_MERGED",
+      "carry_status": "OPEN_PENDING_STAGING_OR_PRODUCTION_ACCEPTANCE",
+      "stage6_lifecycle_production_deployed": false,
+      "stage6_lifecycle_accepted_as_historical_deliverable": false,
+      "carry_reason": "Code/CI evidence exists, but staging integration, live RLS or deployment approval remain outstanding. Historic attempt record preserved."
+    },
+    {
+      "id": "SEC:S6-CMS-CONCURRENT-EDIT-GUARD",
+      "category": "STAGE6_TECHNICAL_WORK",
+      "from_stage": 6,
+      "to_stage": 7,
+      "attempts_recorded_level6": 2,
+      "attempts_recorded_level7": 0,
+      "attempts_level6": [
+        {
+          "index": 1,
+          "result": "FAILED_TEST_ASSERTION",
+          "code_commit": "5ff1f14288bd3ad242139a6c14d5ec04da9198b4",
+          "test_commit": "f8d7892b21780a4a6d33787bd57726873d3b2637",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41174570965",
+          "ci_job_id": 124459350122,
+          "admin_tests_passed": 45,
+          "admin_tests_total": 46,
+          "failed": 1,
+          "reason": "A source-level regression assertion expected the closing parenthesis immediately after a snapshot argument, but the call spans a newline.",
+          "failure_classification": "TEST_ASSERTION_FORMAT_MISMATCH",
+          "not_claimed_as_feature_success": true
+        },
+        {
+          "index": 2,
+          "result": "CODE_AND_CI_VERIFIED",
+          "code_commit": "5ff1f14288bd3ad242139a6c14d5ec04da9198b4",
+          "test_commit": "f59cf1435ebadba8e873537d138e19fbf082fd97",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41174624419",
+          "ci_job_id": 124459514709,
+          "total_tests_passed": 168,
+          "failed": 0,
+          "admin_tests_passed": 46,
+          "admin_typescript": "PASS",
+          "portal_typescript": "PASS",
+          "api_build": "PASS"
+        }
+      ],
+      "source_paths": [
+        "admin/src/lib/cms-persistence.ts",
+        "admin/src/app/cms/page.tsx",
+        "admin/tests/cms-persistence.test.cjs"
+      ],
+      "stage6_status": "DRAFT_CODE_CI_PASS_NOT_MERGED",
+      "carry_status": "OPEN_PENDING_STAGING_OR_PRODUCTION_ACCEPTANCE",
+      "stage6_lifecycle_production_deployed": false,
+      "stage6_lifecycle_accepted_as_historical_deliverable": false,
+      "carry_reason": "Code/CI evidence exists, but staging integration, live RLS or deployment approval remain outstanding. Historic attempt record preserved."
+    },
+    {
+      "id": "SEC:S6-CMS-DEFAULTS-PARTIAL-RESET",
+      "category": "STAGE6_TECHNICAL_WORK",
+      "from_stage": 6,
+      "to_stage": 7,
+      "attempts_recorded_level6": 2,
+      "attempts_recorded_level7": 0,
+      "attempts_level6": [
+        {
+          "index": 1,
+          "result": "FAILED_TEST_ASSERTION",
+          "code_commit": "6259aa6a65a5f0b99fe56c074faffe7c27f00b4d",
+          "test_commit": "52796109f9f9ab98c3cc97905fd221403f5f3c56",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41175029768",
+          "ci_job_id": 124460695547,
+          "admin_tests_total": 57,
+          "admin_tests_passed": 56,
+          "admin_tests_failed": 1,
+          "reason": "Test AST visitor used a callback returning a truthy array and stopped before all call expressions; source preview behavior was not falsified.",
+          "failure_classification": "TEST_HARNESS_EARLY_TERMINATION"
+        },
+        {
+          "index": 2,
+          "result": "CODE_AND_CI_VERIFIED",
+          "code_commit": "6259aa6a65a5f0b99fe56c074faffe7c27f00b4d",
+          "test_commit": "2602190ba0ad2497280f239ce773c4c3dce322e7",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41175089926",
+          "ci_job_id": 124460877159,
+          "total_tests_passed": 182,
+          "total_tests_failed": 0,
+          "admin_tests_passed": 57,
+          "api_build": "PASS",
+          "admin_typescript": "PASS",
+          "portal_typescript": "PASS"
+        }
+      ],
+      "source_paths": [
+        "admin/src/app/cms/page.tsx",
+        "admin/tests/cms-default-preview.test.cjs",
+        "admin/tests/cms-persistence.test.cjs"
+      ],
+      "stage6_status": "DRAFT_CODE_CI_PASS_NOT_MERGED",
+      "carry_status": "OPEN_PENDING_STAGING_OR_PRODUCTION_ACCEPTANCE",
+      "stage6_lifecycle_production_deployed": false,
+      "stage6_lifecycle_accepted_as_historical_deliverable": false,
+      "carry_reason": "Code/CI evidence exists, but staging integration, live RLS or deployment approval remain outstanding. Historic attempt record preserved."
+    }
+  ],
+  "new_work": [
+    {
+      "id": "SEC:S7-ADMIN-CMS-SESSION-WRITE-GUARD",
+      "description": "Verify current authenticated identity and database-backed role for every admin CMS write; invalidate stale UI privileges on auth event",
+      "status": "PLANNED",
+      "attempts_recorded_level7": 0
+    }
+  ],
+  "production_modified": false,
+  "main_merged": false,
+  "stage7_approved_PR_merge": false,
+  "explanatory_notes": [
+    "Transition approval only; no production modification authorization.",
+    "Seven open RLS cases and GDPR/DSA questions remain open.",
+    "The four stage 6 work items include their original per-attempt records (including failed first attempts); no reinterpretation of failed runs.",
+    "No original 973 historical work ID is assigned to a newly created operational work item.",
+    "Hollanda/AB legal applicability checks remain conditional."
+  ]
+}
