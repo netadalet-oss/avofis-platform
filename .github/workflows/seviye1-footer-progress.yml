@@ -5,6 +5,8 @@ on:
       - "portal/src/components/site-footer.tsx"
       - "portal/src/app/ilerleme/**"
       - "portal/tests/public-footer-security.test.cjs"
+      - "portal/src/app/api/payments/webhook/route.ts"
+      - "portal/tests/payment-webhook-closed.test.cjs"
       - ".github/workflows/seviye1-footer-progress.yml"
   push:
     branches:
@@ -13,6 +15,8 @@ on:
       - "portal/src/components/site-footer.tsx"
       - "portal/src/app/ilerleme/**"
       - "portal/tests/public-footer-security.test.cjs"
+      - "portal/src/app/api/payments/webhook/route.ts"
+      - "portal/tests/payment-webhook-closed.test.cjs"
       - ".github/workflows/seviye1-footer-progress.yml"
 permissions:
   contents: read
