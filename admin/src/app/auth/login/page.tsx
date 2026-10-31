@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { safeAdminDestinationFromSearch } from "@/lib/safe-admin-redirect";
+import { verifyAdminLoginAccess } from "@/lib/admin-login-access";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -18,14 +19,13 @@ export default function LoginPage() {
     let mounted = true;
 
     async function checkSession() {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-
+      // Existing browser sessions are never sufficient to enter admin routes.
+      const access = await verifyAdminLoginAccess(supabase);
       if (!mounted) return;
-
-      if (session) {
+      if (access.allowed) {
         router.replace(safeAdminDestinationFromSearch(window.location.search));
+      } else if (access.reason === "MFA_REQUIRED") {
+        router.replace("/mfa");
       }
     }
 
@@ -52,6 +52,18 @@ export default function LoginPage() {
         return;
       }
 
+      const access = await verifyAdminLoginAccess(supabase);
+      if (!access.allowed) {
+        if (access.reason === "MFA_REQUIRED") {
+          router.replace("/mfa");
+          return;
+        }
+        // On a missing staff record/RLS denial, do not retain a session
+        // from an unapproved attempt to access the administrative portal.
+        await supabase.auth.signOut();
+        setError("Yönetici kimliği, yetkisi ve ikinci faktör doğrulanamadı.");
+        return;
+      }
       router.replace(safeAdminDestinationFromSearch(window.location.search));
       router.refresh();
     } catch (err) {
