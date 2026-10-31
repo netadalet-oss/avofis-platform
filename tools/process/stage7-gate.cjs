@@ -42,15 +42,16 @@ function validate(d){
     || w.stage6_lifecycle_accepted_as_historical_deliverable!==false)
     throw Error('Past work or failure history lost: '+id);
  }
- if(!Array.isArray(d.new_work)||d.new_work.length!==5)throw Error('Stage 7 new work list invalid');
+ if(!Array.isArray(d.new_work)||d.new_work.length!==7)throw Error('Stage 7 new work list invalid');
  const newly=[
   'UX:S7-CASES-LOCAL-RESEARCH','UX:S7-STATUTES-LOCAL-RESEARCH',
-  'UX:S7-WORKSPACE-LOCAL-TASKS','SEC:S7-HEADER-NAV-ADMIN-ROLE'
+  'UX:S7-WORKSPACE-LOCAL-TASKS','SEC:S7-HEADER-NAV-ADMIN-ROLE',
+  'UX:S7-LOCAL-MODULE-EXPANSION','SEC:S7-UNVERIFIED-METRICS-HIDE'
  ];
  if(d.new_work.some((x,i)=>d.new_work.findIndex(y=>y.id===x.id)!==i) ||
     newly.some(id=>!d.new_work.some(x=>x.id===id)))
     throw Error('New stage work omitted or duplicated');
- for(const item of d.new_work.slice(1)){
+ for(const item of d.new_work.slice(1,5)){
    if(item.status!=='DRAFT_CODE_CI_PASS_NOT_MERGED'
       ||item.attempts_recorded_level7!==1
       ||!Array.isArray(item.attempts)||item.attempts.length!==1
@@ -63,6 +64,30 @@ function validate(d){
       ||!Array.isArray(item.test_sources)||item.test_sources.length===0)
       throw Error('New portal code item lacks per-task evidence or invents acceptance');
  }
+ const expansion=d.new_work.find(x=>x.id==='UX:S7-LOCAL-MODULE-EXPANSION');
+ const metrics=d.new_work.find(x=>x.id==='SEC:S7-UNVERIFIED-METRICS-HIDE');
+ if(!expansion || expansion.status!=='DRAFT_CODE_CI_PASS_NOT_MERGED'
+    ||expansion.attempts_recorded_level7!==2
+    ||!Array.isArray(expansion.attempts)||expansion.attempts.length!==2
+    ||expansion.attempts[0]?.result!=='FAILED_TEST_ASSERTION'
+    ||expansion.attempts[1]?.result!=='CODE_AND_CI_VERIFIED'
+    ||!expansion.attempts[0]?.ci_run ||!expansion.attempts[1]?.ci_run
+    ||expansion.attempts[1]?.total_tests_passed!==307
+    ||expansion.production_deployed!==false
+    ||expansion.staging_browser_tested!==false
+    ||expansion.accepted_as_historical_deliverable!==false
+    ||!metrics ||metrics.status!=='DRAFT_CODE_CI_PASS_NOT_MERGED'
+    ||metrics.attempts_recorded_level7!==1
+    ||metrics.attempts[0]?.result!=='CODE_AND_CI_VERIFIED'
+    ||!metrics.attempts[0]?.ci_run
+    ||metrics.production_deployed!==false
+    ||metrics.staging_browser_tested!==false)throw Error('Expanded module attempt history or live acceptance falsified');
+ if(d.stage7_code_test_proxy?.new_source_test_journeys!==17
+    ||d.stage7_code_test_proxy?.denominator!==60
+    ||d.stage7_code_test_proxy?.new_accepted_live_journeys!==0
+    ||d.stage7_code_test_proxy?.original_project_completion_percent!==null
+    ||d.stage7_code_test_proxy?.stage8_authorized!==false)
+    throw Error('Stage 7 functional proxy misrepresented as full acceptance');
  const w=d.new_work[0];
  if(w.id!=='SEC:S7-ADMIN-CMS-SESSION-WRITE-GUARD'
    ||w.status!=='DRAFT_CODE_CI_PASS_NOT_MERGED'
@@ -83,7 +108,7 @@ function validate(d){
    throw Error('Live read-only Supabase risk summary ungrounded');
  return {current_level:7,next_level_approved:false,carryover_count:14,open_rls:7,
          historic_open_decisions:18,past_level6_failed_attempts:2,
-         new_level7_attempts:5,code_ci_passed:true,production_modified:false};
+         new_level7_attempts:8,code_ci_passed:true,production_modified:false};
 }
 function load(){return JSON.parse(fs.readFileSync(file,'utf8'));}
 if(require.main===module)process.stdout.write(JSON.stringify(validate(load()),null,2)+'\n');
