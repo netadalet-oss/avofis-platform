@@ -133,9 +133,10 @@ test('settings exception hides transport details',async ()=>{
 test('admin CMS page has no insert or upsert call sites',()=>{
   assert.doesNotMatch(cmsPage,/\.insert\(|\.upsert\(/);
 });
-test('all 8 CMS call sites are still wired to conditional-update helpers',()=>{
-  assert.equal((cmsPage.match(/updateAdminHomeHero\(supabase/g)||[]).length,2);
-  assert.equal((cmsPage.match(/updateExistingSetting\(/g)||[]).length,6);
+test('all explicit CMS saves still use conditional-update helpers',()=>{
+  // Bulk default reset is a local-only preview, not four database writes.
+  assert.equal((cmsPage.match(/updateAdminHomeHero\(supabase/g)||[]).length,1);
+  assert.equal((cmsPage.match(/updateExistingSetting\(/g)||[]).length,3);
 });
 test('immutable loaded snapshots are stored without sharing mutable UI objects',()=>{
   assert.match(cmsPage,/useRef<Record<string, unknown> \| null>/);
@@ -143,10 +144,10 @@ test('immutable loaded snapshots are stored without sharing mutable UI objects',
   assert.match(cmsPage,/settingBaseline\.current\.(?:navigation|modules|footer)/);
   assert.ok((cmsPage.match(/JSON\.parse\(JSON\.stringify\(data\.value\)\)/g)||[]).length===3);
 });
-test('CMS handlers pass original observed content, not newly fetched snapshot',()=>{
-  assert.ok((cmsPage.match(/heroBaseline\.current\)/g)||[]).length===2);
+test('each explicit CMS save uses the original observed snapshot',()=>{
+  assert.ok((cmsPage.match(/heroBaseline\.current\)/g)||[]).length===1);
   for(const key of ['navigation','modules','footer']){
-    assert.equal((cmsPage.match(new RegExp('settingBaseline\\.current\\.'+key+'\\s*\\)','g'))||[]).length,2);
+    assert.equal((cmsPage.match(new RegExp('settingBaseline\\.current\\.'+key+'\\s*\\)','g'))||[]).length,1);
   }
 });
 test('admin page still authorizes using database profile role',()=>{
