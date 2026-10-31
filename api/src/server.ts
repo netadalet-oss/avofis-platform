@@ -1,6 +1,5 @@
 import express from "express";
-import cors from "cors";
-import { configuredCorsOrigins } from "./security/cors-origin";
+import { configureApiHttpSecurity } from "./security/http-hardening";
 import { cmsRouter } from "./modules/cms/cms.router";
 import { authRouter } from "./modules/auth/auth.router";
 import { casesRouter } from "./modules/cases/cases.router";
@@ -17,8 +16,7 @@ import { supportRouter } from "./modules/support/support.router";
 import { adminRouter } from "./modules/admin/admin.router";
 
 const app = express();
-app.use(cors({ origin: configuredCorsOrigins(process.env.CORS_ORIGIN) }));
-app.use(express.json({ limit: "10mb" }));
+configureApiHttpSecurity(app);
 
 app.get("/health", (_req, res) => {
   res.json({ ok: true, service: "avofis-api" });
