@@ -196,161 +196,124 @@ export default function Page() {
     router.replace("/login");
   }
 
-  async function loadDefaults() {
-    try {
-      setSaving(true);
-      setMessage("");
+  function previewDefaults() {
+    // This action is deliberately local-only. Four independent DB writes
+    // would be non-atomic and could leave partially reset CMS content.
+    if (!isAuthorized || saving) return;
+    setMessage("");
 
-      const defaultHeroTitle =
-        "Hukuk araştırması, belge üretimi ve kariyer ağı tek platformda.";
-      const defaultHeroSubtitle =
-        "İçtihat, mevzuat, dosya analizi, taslak üretimi, forum, ofis profilleri, staj eşleşmeleri ve profesyonel workspace deneyimini tek bir modern hukuk arayüzünde birleştirin.";
+    const defaultHeroTitle =
+      "Hukuk araştırması, belge üretimi ve kariyer ağı tek platformda.";
+    const defaultHeroSubtitle =
+      "İçtihat, mevzuat, dosya analizi, taslak üretimi, forum, ofis profilleri, staj eşleşmeleri ve profesyonel workspace deneyimini tek bir modern hukuk arayüzünde birleştirin.";
 
-      const defaultNavigation: NavItem[] = [
-        { label: "Modüller", href: "#moduller" },
-        { label: "İçtihat", href: "#arastirma" },
-        { label: "Mevzuat", href: "#arastirma" },
-        { label: "Kariyer", href: "#kariyer" },
-        { label: "Forum", href: "#topluluk" },
-        { label: "Ofisler", href: "#ofisler" },
-        { label: "İstatistikler", href: "#istatistikler" },
-      ];
+    const defaultNavigation: NavItem[] = [
+      { label: "Modüller", href: "#moduller" },
+      { label: "İçtihat", href: "#arastirma" },
+      { label: "Mevzuat", href: "#arastirma" },
+      { label: "Kariyer", href: "#kariyer" },
+      { label: "Forum", href: "#topluluk" },
+      { label: "Ofisler", href: "#ofisler" },
+      { label: "İstatistikler", href: "#istatistikler" },
+    ];
 
-      const defaultModules: ModuleItem[] = [
-        {
-          title: "İçtihat Araştırma",
-          text: "Karar arama, filtreleme ve emsal kümeleri.",
-        },
-        {
-          title: "Mevzuat Modülü",
-          text: "Madde bazlı görüntüleme ve değişiklik geçmişi.",
-        },
-        {
-          title: "Dosya Analizi",
-          text: "Belge yükleme ve hukuki sorun tespiti.",
-        },
-        {
-          title: "Taslak Üretim",
-          text: "Dilekçe, savunma ve sözleşme üretimi.",
-        },
-        {
-          title: "Kariyer ve Staj",
-          text: "Stajyer ve ofis eşleşme sistemi.",
-        },
-        {
-          title: "Forum ve Topluluk",
-          text: "Mesleki tartışma ve bilgi paylaşımı.",
-        },
-        {
-          title: "Profesyonel Workspace",
-          text: "Dosya, görev ve ekip yönetimi.",
-        },
-        {
-          title: "Analitik ve Yönetim",
-          text: "Platform ve içerik performansı.",
-        },
-        {
-          title: "Güvenlik ve Uyum",
-          text: "Rol bazlı erişim ve audit log.",
-        },
-        {
-          title: "Ofis Profilleri",
-          text: "Doğrulanmış hukuk bürosu profilleri.",
-        },
-        {
-          title: "Bildirim Sistemi",
-          text: "Platform içi ve e-posta bildirimleri.",
-        },
-        {
-          title: "Connect Ekonomisi",
-          text: "Platform içi kredi ve görünürlük sistemi.",
-        },
-      ];
+    const defaultModules: ModuleItem[] = [
+      {
+        title: "İçtihat Araştırma",
+        text: "Karar arama, filtreleme ve emsal kümeleri.",
+      },
+      {
+        title: "Mevzuat Modülü",
+        text: "Madde bazlı görüntüleme ve değişiklik geçmişi.",
+      },
+      {
+        title: "Dosya Analizi",
+        text: "Belge yükleme ve hukuki sorun tespiti.",
+      },
+      {
+        title: "Taslak Üretim",
+        text: "Dilekçe, savunma ve sözleşme üretimi.",
+      },
+      {
+        title: "Kariyer ve Staj",
+        text: "Stajyer ve ofis eşleşme sistemi.",
+      },
+      {
+        title: "Forum ve Topluluk",
+        text: "Mesleki tartışma ve bilgi paylaşımı.",
+      },
+      {
+        title: "Profesyonel Workspace",
+        text: "Dosya, görev ve ekip yönetimi.",
+      },
+      {
+        title: "Analitik ve Yönetim",
+        text: "Platform ve içerik performansı.",
+      },
+      {
+        title: "Güvenlik ve Uyum",
+        text: "Rol bazlı erişim ve audit log.",
+      },
+      {
+        title: "Ofis Profilleri",
+        text: "Doğrulanmış hukuk bürosu profilleri.",
+      },
+      {
+        title: "Bildirim Sistemi",
+        text: "Platform içi ve e-posta bildirimleri.",
+      },
+      {
+        title: "Connect Ekonomisi",
+        text: "Platform içi kredi ve görünürlük sistemi.",
+      },
+    ];
 
-      const defaultFooter: FooterColumn[] = [
-        {
-          title: "Platform",
-          links: [
-            "Ana Sayfa",
-            "Modüller",
-            "İçtihat",
-            "Mevzuat",
-            "Forum",
-            "Kariyer",
-          ],
-        },
-        {
-          title: "Kurumsal",
-          links: [
-            "Hakkında",
-            "Yayın İlkeleri",
-            "Güvenlik",
-            "Gizlilik",
-            "İletişim",
-          ],
-        },
-        {
-          title: "Destek",
-          links: [
-            "Yardım Merkezi",
-            "Sık Sorulan Sorular",
-            "Kullanım Şartları",
-            "KVKK",
-          ],
-        },
-      ];
+    const defaultFooter: FooterColumn[] = [
+      {
+        title: "Platform",
+        links: [
+          "Ana Sayfa",
+          "Modüller",
+          "İçtihat",
+          "Mevzuat",
+          "Forum",
+          "Kariyer",
+        ],
+      },
+      {
+        title: "Kurumsal",
+        links: [
+          "Hakkında",
+          "Yayın İlkeleri",
+          "Güvenlik",
+          "Gizlilik",
+          "İletişim",
+        ],
+      },
+      {
+        title: "Destek",
+        links: [
+          "Yardım Merkezi",
+          "Sık Sorulan Sorular",
+          "Kullanım Şartları",
+          "KVKK",
+        ],
+      },
+    ];
 
-      const { error: heroError, updatedContent: defaultHeroContent } = await updateAdminHomeHero(supabase, {
-        title: defaultHeroTitle,
-        subtitle: defaultHeroSubtitle,
-      }, heroBaseline.current);
 
-      if (heroError) {
-        setMessage(`Varsayılan hero yüklenemedi: ${heroError.message}`);
-        return;
-      }
-      heroBaseline.current = defaultHeroContent || null;
-
-      const { error: navigationError } = await updateExistingSetting(
-        supabase, "navigation", defaultNavigation, settingBaseline.current.navigation
-      );
-
-      if (navigationError) {
-        setMessage(`Varsayılan menü yüklenemedi: Önceki adımlar uygulanmış olabilir.  ${navigationError.message}`);
-        return;
-      }
-      settingBaseline.current.navigation = JSON.parse(JSON.stringify(defaultNavigation));
-
-      const { error: modulesError } = await updateExistingSetting(
-        supabase, "modules", defaultModules, settingBaseline.current.modules
-      );
-
-      if (modulesError) {
-        setMessage(`Varsayılan modüller yüklenemedi: Önceki adımlar uygulanmış olabilir.  ${modulesError.message}`);
-        return;
-      }
-      settingBaseline.current.modules = JSON.parse(JSON.stringify(defaultModules));
-
-      const { error: footerError } = await updateExistingSetting(
-        supabase, "footer", defaultFooter, settingBaseline.current.footer
-      );
-
-      if (footerError) {
-        setMessage(`Varsayılan footer yüklenemedi: Önceki adımlar uygulanmış olabilir.  ${footerError.message}`);
-        return;
-      }
-      settingBaseline.current.footer = JSON.parse(JSON.stringify(defaultFooter));
-
-      setHeroTitle(defaultHeroTitle);
-      setHeroSubtitle(defaultHeroSubtitle);
-      setNavigation(defaultNavigation);
-      setModules(defaultModules);
-      setFooterColumns(defaultFooter);
-
-      setMessage("Varsayılan içerikler başarıyla yüklendi.");
-    } finally {
-      setSaving(false);
-    }
+    setHeroTitle(defaultHeroTitle);
+    setHeroSubtitle(defaultHeroSubtitle);
+    setNavigation(defaultNavigation);
+    setModules(defaultModules);
+    setFooterColumns(defaultFooter);
+    // Keep the original server-loaded baselines unchanged for each explicit
+    // per-section optimistic-concurrency save.
+    setMessage(
+      "Varsayılanlar yalnızca bu ekranda önizleniyor; veritabanına kaydedilmedi. " +
+      "Değişiklikleri uygulamak için Hero, Menü, Modüller ve Footer bölümlerini ayrı ayrı kaydedin. " +
+      "Başka biri içerikleri değiştirdiyse kayıt reddedilir."
+    );
   }
 
   async function saveHero() {
@@ -580,11 +543,11 @@ export default function Page() {
               </button>
 
               <button
-                onClick={loadDefaults}
+                onClick={previewDefaults}
                 disabled={saving}
                 className="rounded-xl bg-orange-600 px-5 py-3 text-white disabled:opacity-60"
               >
-                {saving ? "Yükleniyor..." : "Varsayılan Verileri Yükle"}
+                {saving ? "Kaydetme sürüyor..." : "Varsayılanları Önizle (Kaydetmez)"}
               </button>
             </div>
 
