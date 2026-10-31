@@ -61,3 +61,11 @@
 - Portal çalışma dalı aynı entegrasyon tabanından ayrıldığı için bu temizliği otomatik devralmamıştır; iki dalın birleşmesinde dosya takibi ve güvenlik kapısı ayrıca denetlenmelidir.
 
 **Durum:** AV-023/R-540 için kısmi kod+CI kanıtı, tam güvenlik/bağımsız kabul veya sır rotasyonu **YOK**. Seviye 1 sürüyor; B01–B18, 7 canlı RLS, bağımsız staging ve hukukî kabul açık.
+
+## 01.11.2026 — Kanonik 594 R kayıt testleri, son staging durumu
+
+- `tools/process/r594-ledger-integrity.test.cjs` geliştirme testine eklendi: `R-001..R-594` benzersiz, 33 × 18 bölümlenme, eski statü sayacı 389/118/70/10/7 ve kabul `HAYIR` tutarlılığı. `docs/program/r594-kanit-esleme-2026-10-31.csv` özgün 594 şartın yerine geçen kabul belgesi değildir.
+- `.github/workflows/api-verification.yml` üzerinde gerçek test koşusu yeni commit'e bağlandı. [CI 41252276628](https://github.com/netadalet-oss/avofis-platform/actions/runs/41252276628): **SUCCESS**, kod+workflow HEAD `a7bb3cfdc5b6b406b2a2519b265f8029dd2af9d1`.
+- Bu 594 test **kaynak/eşleme bütünlüğünü** ispatlar; her gereksinimin gerçek ürün, hukuk, kullanıcı veya bağımsız denetim kabulünü ispatlamaz. **0/594 bağımsız, 0/594 canlı kabul**.
+- 01.11.2026 Supabase salt okunur management: mevcut `avofis` projesinde development branch listesi **boş**; Security Advisor **7 açık public RLS ERROR, 1 leaked-password-protection WARN**. Ücretli yeni dal kurulmadı. Bunlar `docs/security/AVOFIS_S1_STAGING_KAPISI_GUNCEL_2026-11-01.md` dosyasında hedef/izin/bağımsız Auth–Storage–A/B kabul sırasına bağlandı.
+- Mevcut repo için `package-lock.json` bulunmadığından tam deterministik npm kurulumu henüz ispatlanmadı (AV-006). Kaynak CI `npm install --ignore-scripts` kullanır; bu işlem bir sürüm kilidi değildir. İşletim ortamı yerel `npm view` denemesini `EAI_AGAIN` ağ/DNS hatasıyla reddetti. Kilit dosyası yapılmış/üretime alınmış sayılmıyor.
