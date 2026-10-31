@@ -57,16 +57,17 @@ test("search parameter decoding is safe, and duplicate next keys are rejected", 
   }
 });
 
-test("both login paths and the ProtectedRoute producer use the same safe policy", () => {
+test("unapproved public login is static while ProtectedRoute uses a safe return-path producer", () => {
   const login = readFileSync(path.join(root, "src/app/auth/login/page.tsx"), "utf8");
   const protectedRoute = readFileSync(
     path.join(root, "src/components/auth/ProtectedRoute.tsx"), "utf8"
   );
-  assert.equal(
-    (login.match(/router\.replace\(safeLoginDestinationFromSearch\(window\.location\.search\)\)/g) || []).length,
-    2
-  );
-  assert.doesNotMatch(login, /router\.replace\(next\s*\|\|/);
+  assert.match(login, /PUBLIC_ACCOUNT_LOGIN_ENABLED/);
+  assert.match(login, /Müşteri girişi şu anda kapalı/);
+  for (const forbidden of [
+    /"use client"/, /signInWithPassword/, /auth\.getSession/,
+    /@\/lib\/supabase/, /router\.replace/, /<form/, /<input/
+  ]) assert.doesNotMatch(login, forbidden);
   assert.match(protectedRoute, /safePortalReturnPath\(pathname\)/);
   assert.match(protectedRoute, /encodeURIComponent\(safePath\)/);
 });
