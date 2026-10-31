@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import { safeAdminDestinationFromSearch } from "@/lib/safe-admin-redirect";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -24,12 +25,7 @@ export default function LoginPage() {
       if (!mounted) return;
 
       if (session) {
-        const next =
-          typeof window !== "undefined"
-            ? new URLSearchParams(window.location.search).get("next")
-            : null;
-
-        router.replace(next || "/cms");
+        router.replace(safeAdminDestinationFromSearch(window.location.search));
       }
     }
 
@@ -56,12 +52,7 @@ export default function LoginPage() {
         return;
       }
 
-      const next =
-        typeof window !== "undefined"
-          ? new URLSearchParams(window.location.search).get("next")
-          : null;
-
-      router.replace(next || "/cms");
+      router.replace(safeAdminDestinationFromSearch(window.location.search));
       router.refresh();
     } catch (err) {
       setError("Giriş sırasında beklenmeyen bir hata oluştu.");
