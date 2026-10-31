@@ -7,6 +7,8 @@ on:
       - "portal/tests/public-footer-security.test.cjs"
       - "portal/src/app/api/payments/webhook/route.ts"
       - "portal/tests/payment-webhook-closed.test.cjs"
+      - "portal/src/lib/document-draft-contract.ts"
+      - "portal/scripts/document-draft-contract.test.mjs"
       - ".github/workflows/seviye1-footer-progress.yml"
   push:
     branches:
@@ -17,6 +19,8 @@ on:
       - "portal/tests/public-footer-security.test.cjs"
       - "portal/src/app/api/payments/webhook/route.ts"
       - "portal/tests/payment-webhook-closed.test.cjs"
+      - "portal/src/lib/document-draft-contract.ts"
+      - "portal/scripts/document-draft-contract.test.mjs"
       - ".github/workflows/seviye1-footer-progress.yml"
 permissions:
   contents: read
@@ -43,6 +47,8 @@ jobs:
         run: npm run test --workspace portal
       - name: Run public-trust checks
         run: node --test portal/tests/public-trust.test.mjs
+      - name: Assert signed release barrier on production document drafts
+        run: node --test portal/scripts/document-draft-contract.test.mjs
       - name: Build Next.js portal
         run: npm run build:portal
       - name: Verify real HTTP progress route
