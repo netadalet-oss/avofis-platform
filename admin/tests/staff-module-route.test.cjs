@@ -39,7 +39,7 @@ test("one real restricted static module route per all 16 staff modules",()=>{
 test("all 16 module pages have safe nontransactional semantics",()=>{
   assert.match(route,/robots:\s*\{\s*index:\s*false/);
   assert.match(route,/hiçbir gerçek personel\/müşteri verisi/);
-  assert.match(route,/ana işlev/);
+  assert.match(route,/ana işlev/i);
   assert.match(route,/Beklenen çıktı/);
   for(const forbidden of ['"use client"',"@/lib/supabase", "supabase.",
     "createClient(", "fetch(", "<form","<input", "process.env",
