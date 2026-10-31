@@ -37,6 +37,7 @@ export type FooterColumn = {
 
 export const navigation: NavigationItem[] = [
   { label: "Sorununuza Göre Başlayın", href: "/baslangic" },
+  { label: "Hizmetler", href: "/hizmetler" },
   { label: "Modüller", href: "#moduller" },
   { label: "İçtihat", href: "#arastirma" },
   { label: "Mevzuat", href: "#arastirma" },
