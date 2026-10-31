@@ -5,6 +5,9 @@ on:
       - "admin/src/app/seviye-1-onizleme/**"
       - "admin/src/app/page.tsx"
       - "admin/tests/whole-product-admin-preview.test.cjs"
+      - "admin/src/app/personel/**"
+      - "admin/src/lib/staff-module-directory.ts"
+      - "admin/tests/staff-module-route.test.cjs"
       - ".github/workflows/seviye1-admin-preview.yml"
   push:
     branches:
@@ -13,6 +16,9 @@ on:
       - "admin/src/app/seviye-1-onizleme/**"
       - "admin/src/app/page.tsx"
       - "admin/tests/whole-product-admin-preview.test.cjs"
+      - "admin/src/app/personel/**"
+      - "admin/src/lib/staff-module-directory.ts"
+      - "admin/tests/staff-module-route.test.cjs"
       - ".github/workflows/seviye1-admin-preview.yml"
 permissions:
   contents: read
@@ -67,3 +73,11 @@ jobs:
           assert.doesNotMatch(raw, /type="password"|<form/);
           console.log('Whole product admin preview HTTP: PASS');
           NODE
+          # Each of the canonical 16 personnel main routes must be real HTTP.
+          for module in inbox triage matters calendar documents pleadings research judicial ind messages billing payables reporting audit people settings; do
+            curl -fsS "http://127.0.0.1:3001/personel/$module" > /tmp/avofis-admin-personel.html
+            grep -q 'Statü: Seviye 1 ana iskelet' /tmp/avofis-admin-personel.html
+          done
+          status="$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3001/personel/unknown-module)"
+          test "$status" = "404"
+          echo '16 staff module main routes: PASS'
