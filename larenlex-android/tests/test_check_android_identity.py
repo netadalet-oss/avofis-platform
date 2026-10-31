@@ -89,3 +89,27 @@ class SourceBoundaryRegression(unittest.TestCase):
             result = checks.verify(d)
             self.assertIn('LOCAL_ENV_FILE_MUST_NOT_ENTER_SOURCE_SCAN', result['reasons'])
             self.assertNotIn('FAKE_SECRET_DO_NOT_PRINT', str(result))
+
+
+class SecretFilesRegression(unittest.TestCase):
+    def test_local_env_variant_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            fixture(d)
+            (Path(d) / '.env.local').write_text('SECRET=NEVER_PRINT_ME')
+            r = checks.verify(d)
+            self.assertIn('LOCAL_ENV_FILE_MUST_NOT_ENTER_SOURCE_SCAN', r['reasons'])
+            self.assertNotIn('NEVER_PRINT_ME', str(r))
+
+    def test_jks_key_presence_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            fixture(d)
+            (Path(d) / 'release.jks').write_bytes(b'FAKE_KEY_FIXTURE')
+            self.assertIn('SIGNING_KEY_MATERIAL_IN_SOURCE_TREE', checks.verify(d)['reasons'])
+
+    def test_properties_literal_password_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            fixture(d)
+            (Path(d) / 'gradle.properties').write_text('storePassword=SYNTHETIC_FIXTURE_PASSWORD')
+            result = checks.verify(d)
+            self.assertIn('LITERAL_SIGNING_PASSWORD_IN_CONFIGURATION', result['reasons'])
+            self.assertNotIn('SYNTHETIC_FIXTURE_PASSWORD', str(result))
