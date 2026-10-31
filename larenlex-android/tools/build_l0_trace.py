@@ -16,6 +16,8 @@ import zipfile
 A2_CSV = 'KAYNAK_KANIT/LARENLEX_453_A2_ISLEV_KABUL_BASLANGIC.csv'
 API_JSON = 'KAYNAK_KANIT/A5_18_102_API_COVERAGE.json'
 INDEX = 'DENETIM/LARENLEX_ANDROID_TALIMAT_KANONIK_IZ_DIZINI.json'
+MAIN = 'LARENLEX_ANDROID_TEKIL_ANA_TALIMATNAME.md'
+API_CSV = 'KAYNAK_KANIT/LARENLEX_A4_102_API_OPERASYON_BASLANGIC.csv'
 R_MARKDOWN = 'EKLER/594_R_ORTAK_KONU_KAPSAMI_REFERANS.md'
 
 
@@ -45,16 +47,43 @@ def verify_archive(z):
     return len(verified)
 
 
+def validate_canonical(index, main_text):
+    expected = {'LX_GOREV': 62, 'A2': 453, 'API': 102}
+    require(index['counts'] == expected, 'Canonical count summary mismatch')
+    lines = main_text.splitlines()
+    for group, count in expected.items():
+        entries = index['entries'][group]
+        require(len(entries) == count, 'Canonical count mismatch: ' + group)
+        for ident, record in entries.items():
+            line = record['new_line']
+            source = record['source_text']
+            require(type(line) is int and 0 < line <= len(lines), 'Canonical line bounds: ' + ident)
+            require(lines[line - 1] == source, 'Canonical source line mismatch: ' + ident)
+            require(digest(source) == record['sha256_original_line'], 'Canonical line SHA mismatch: ' + ident)
+            require(lines.count(source) == 1, 'Canonical line uniqueness mismatch: ' + ident)
+    return expected
+
+
 def build(larenlex_zip):
     with zipfile.ZipFile(larenlex_zip) as z:
         verify_archive(z)
-        idx = json.loads(z.read(INDEX))['entries']
+        index = json.loads(z.read(INDEX))
+        validate_canonical(index, z.read(MAIN).decode('utf-8'))
+        idx = index['entries']
+        api_csv = list(csv.DictReader(io.StringIO(z.read(API_CSV).decode('utf-8-sig'))))
         rows = list(csv.DictReader(io.StringIO(z.read(A2_CSV).decode('utf-8-sig'))))
         ops = json.loads(z.read(API_JSON))['operations']
         r_text = z.read(R_MARKDOWN).decode('utf-8')
         r = re.findall(r'^\d+\. \*\*\[(R-\d{3})\]\*\*\s*(.+)$', r_text, re.M)
     require(len(rows) == len({x['A2 İşlev ID'] for x in rows}) == 453, 'A2 count or duplicate')
     require(len(ops) == len({x['operationId'] for x in ops}) == 102, 'API count or duplicate')
+    require(len(api_csv) == 102 and len({x['operationId'] for x in api_csv}) == 102, 'API CSV count/duplicate')
+    require({x['operationId'] for x in api_csv} == {x['operationId'] for x in ops}, 'API CSV identities differ')
+    by_id = {x['operationId']: x for x in api_csv}
+    require(all((x['method'], x['path']) == (by_id[x['operationId']]['HTTP'], by_id[x['operationId']]['Yol']) for x in ops), 'API verb/path mismatch')
+    require(len({x['path'] for x in ops}) == 73, 'API path count mismatch')
+    require(all(x['Bağımsız kabul'] == 'BAĞIMSIZ KABUL YOK' for x in rows), 'A2 historical acceptance changed')
+    require(all(x['A2 İşlev ID'].startswith(x['Alt grup ID'] + '.F') for x in rows), 'A2 parent group differs')
     require(len(r) == 594 and [x[0] for x in r] == [f'R-{i:03}' for i in range(1,595)], 'R list mismatch')
     require({x['A2 İşlev ID'] for x in rows} == set(idx['A2']), 'A2 canonical index mismatch')
     require({x['operationId'] for x in ops} == set(idx['API']), 'API canonical index mismatch')
