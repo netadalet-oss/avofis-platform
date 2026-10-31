@@ -1,0 +1,63 @@
+name: AVOfis Seviye 1 - Public issue preparation
+on:
+  push:
+    branches:
+      - seviye1-yeniden-baslangic-20261031
+    paths:
+      - 'portal/src/app/baslangic/**'
+      - 'portal/src/lib/intake-preparation.ts'
+      - 'portal/src/app/page.tsx'
+      - 'portal/src/lib/site.ts'
+      - 'portal/tests/intake-preparation.test.mjs'
+      - '.github/workflows/seviye1-public-intake.yml'
+  pull_request:
+    paths:
+      - 'portal/src/app/baslangic/**'
+      - 'portal/src/lib/intake-preparation.ts'
+      - 'portal/src/app/page.tsx'
+      - 'portal/src/lib/site.ts'
+      - 'portal/tests/intake-preparation.test.mjs'
+      - '.github/workflows/seviye1-public-intake.yml'
+permissions:
+  contents: read
+jobs:
+  privacy-safe-intake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      NEXT_PUBLIC_SUPABASE_URL: 'https://example.invalid'
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: 'build-check-only-not-a-real-token'
+    steps:
+      - name: Checkout exact draft source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Test all twelve problem journeys and safety boundaries
+        run: node --experimental-strip-types --test portal/tests/intake-preparation.test.mjs
+      - name: Install workspaces without lifecycle scripts
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Build full public portal in isolated placeholder configuration
+        run: npm run build:portal
+      - name: Verify actual HTTP pages without live credentials or data
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm --workspace portal run start > /tmp/avofis-s1-public-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for i in $(seq 1 45); do
+            if curl -fsS http://127.0.0.1:3000/baslangic > /tmp/avofis-s1-intake.html; then break; fi
+            sleep 1
+          done
+          test -s /tmp/avofis-s1-intake.html
+          grep -q 'Sorununuza göre başlayın' /tmp/avofis-s1-intake.html
+          grep -q 'kişisel hukukî danışmanlık' /tmp/avofis-s1-intake.html
+          curl -fsS http://127.0.0.1:3000/ > /tmp/avofis-s1-home.html
+          grep -q 'Sorununuza Göre Başlayın' /tmp/avofis-s1-home.html
+          grep -q 'kuruluş öncesi geliştirme' /tmp/avofis-s1-home.html
+          echo 'HTTP smoke: / and /baslangic PASS, live credentials absent'
