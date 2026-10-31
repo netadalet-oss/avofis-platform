@@ -58,5 +58,5 @@ test('signup stores only an unverified role request, not a verified role',()=>{
 test('public dashboard does not claim a metadata role as verified professional status',()=>{
  const src=read('portal/src/app/dashboard/page.tsx');
  assert.doesNotMatch(src,/user\?\.user_metadata\?\.role/);
- assert.match(src,/doğrulanmadı/);
+ assert.match(src,/doğrulanmadı/i);
 });
