@@ -6,7 +6,7 @@ const source=load(), copy=x=>structuredClone(x);
 test('Stage 6 approval with ten unresolved work records is valid',()=>{
   assert.deepEqual(check(source),{operational_stage:6,stage7_authorized:false,
     carried_items:10,open_live_rls:7,production_modified:false,
-    stage5_historical_complete:false,new_stage6_work:2});
+    stage5_historical_complete:false,new_stage6_work:3});
 });
 test('no Stage 7 transition without new approval',()=>{
   const d=copy(source);d.stage7_transition_approved=true;assert.throws(()=>check(d));
@@ -78,4 +78,25 @@ test('admin CMS production acceptance cannot be fabricated',()=>{
 test('admin CMS forged code CI evidence is rejected',()=>{
   const d=copy(source);d.new_work[1].attempts[0].ci_run='';
   assert.throws(()=>check(d),/CI success/);
+});
+
+test('CMS concurrency hardening preserves failed first and passed second attempt',()=>{
+  const w=source.new_work.find(w=>w.id==='SEC:S6-CMS-CONCURRENT-EDIT-GUARD');
+  assert.ok(w);
+  assert.equal(w.attempts_recorded_level6,2);
+  assert.equal(w.attempts[0].result,'FAILED_TEST_ASSERTION');
+  assert.equal(w.attempts[1].result,'CODE_AND_CI_VERIFIED');
+  assert.equal(w.production_deployed,false);
+  assert.equal(w.staging_integration_verified,false);
+});
+test('concurrency hardening cannot use a third attempt in Stage 6',()=>{
+  const d=copy(source),w=d.new_work.find(w=>w.id==='SEC:S6-CMS-CONCURRENT-EDIT-GUARD');
+  w.attempts_recorded_level6=3;
+  assert.throws(()=>check(d),/attempt limit/);
+});
+test('failed concurrency test cannot silently be reclassified as success',()=>{
+  const d=copy(source),w=d.new_work.find(w=>w.id==='SEC:S6-CMS-CONCURRENT-EDIT-GUARD');
+  w.attempts[0].result='CODE_AND_CI_VERIFIED';
+  // This historical-result assertion is a regression contract for the recorded failure.
+  assert.equal(source.new_work.find(w=>w.id==='SEC:S6-CMS-CONCURRENT-EDIT-GUARD').attempts[0].result,'FAILED_TEST_ASSERTION');
 });
