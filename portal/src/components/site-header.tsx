@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Gavel, Menu, Pencil, Plus, Save, Trash2, X } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useEditMode } from "@/components/providers/EditModeProvider";
 import { useUser } from "@/hooks/useUser";
 import {
@@ -10,6 +10,8 @@ import {
   type NavigationItem,
 } from "@/lib/site";
 import { supabase } from "@/lib/supabase";
+import { hasPortalCmsAdminAccess } from "@/lib/cms-access";
+import { saveVerifiedNavigation } from "@/lib/navigation-access";
 
 type NavigationSettingRow = {
   value?: NavigationItem[];
@@ -25,12 +27,30 @@ export function SiteHeader() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
 
-  const role = useMemo(() => {
-    const rawRole = session?.user?.user_metadata?.role;
-    return typeof rawRole === "string" ? rawRole.toLowerCase() : "";
-  }, [session]);
+  const [verifiedAdmin, setVerifiedAdmin] = useState<{
+    userId: string;
+    token: string;
+  } | null>(null);
+  const navigationBaseline = useRef<NavigationItem[] | null>(null);
+  const currentUserId = session?.user?.id || null;
+  const currentToken = session?.access_token || null;
+  const isAdmin = Boolean(
+    currentUserId && currentToken &&
+    verifiedAdmin?.userId === currentUserId &&
+    verifiedAdmin.token === currentToken
+  );
 
-  const isAdmin = role === "admin" || role === "super_admin";
+  useEffect(() => {
+    let active = true;
+    setVerifiedAdmin(null);
+    setEditMode(false);
+    if (currentUserId && currentToken) {
+      void hasPortalCmsAdminAccess(supabase, currentUserId).then((allowed) => {
+        if (active) setVerifiedAdmin(allowed ? {userId:currentUserId,token:currentToken} : null);
+      });
+    }
+    return () => { active = false; };
+  }, [currentUserId, currentToken, setEditMode]);
 
   useEffect(() => {
     let mounted = true;
@@ -45,9 +65,11 @@ export function SiteHeader() {
       if (!mounted) return;
 
       if (error || !data?.value || !Array.isArray(data.value)) {
+        navigationBaseline.current = null;
         setMenuDraft(defaultNavigation);
         return;
       }
+      navigationBaseline.current = JSON.parse(JSON.stringify(data.value));
 
       const normalizedItems = (data.value as NavigationItem[]).filter(
         (item) =>
@@ -81,6 +103,7 @@ export function SiteHeader() {
   }, [editMode, menuItems]);
 
   function openEditMode() {
+    if (!isAdmin) return;
     setMessage("");
     setMenuDraft(menuItems.length > 0 ? menuItems : defaultNavigation);
     setEditMode(true);
@@ -119,6 +142,10 @@ export function SiteHeader() {
     try {
       setSaving(true);
       setMessage("");
+      if (!isAdmin || !currentUserId) {
+        setMessage("Yönetici yetkisi doğrulanamadı.");
+        return;
+      }
 
       const normalizedItems = menuDraft
         .map((item) => ({
@@ -132,16 +159,16 @@ export function SiteHeader() {
         return;
       }
 
-      const { error } = await supabase.from("site_settings").upsert({
-        key: "navigation",
-        value: normalizedItems,
-      });
+      const { error } = await saveVerifiedNavigation(
+        supabase, currentUserId, normalizedItems, navigationBaseline.current
+      );
 
       if (error) {
         setMessage(`Menü kaydedilemedi: ${error.message}`);
         return;
       }
 
+      navigationBaseline.current = JSON.parse(JSON.stringify(normalizedItems));
       setMenuItems(normalizedItems);
       setMenuDraft(normalizedItems);
       setMessage("Menü başarıyla kaydedildi.");
