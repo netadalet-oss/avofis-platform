@@ -50,3 +50,11 @@
 ### Dış yayın durumu
 
 Vercel preview kontrolünde planın `build-rate-limit` durumuna rastlanmıştır; CI başarıları bu önizleme kısıtını ortadan kaldırmaz. `main`, canlı veri, production ve müşteri işlemlerinde değişiklik yapılmadı.
+
+## 01.11.2026 — Kamu ilerleme kartı, son HTTP kabul alt testi
+
+- Kod + workflow HEAD: `a050e131dfedc2e14b762f56f633c1010a871c47`. `/ilerleme` sayfası yalnız doğrulanmış yeni güvenlik gelişmesini ve açık sınırlamaları 1 Kasım tarihiyle belirtir. `robots.index=false`, form/veri toplama yoktur.
+- İlk yeni sayfa koşusu [CI 41251668575](https://github.com/netadalet-oss/avofis-platform/actions/runs/41251668575): **FAIL**. Kaynak testler ve Next.js build geçti; gerçek yerel HTTP kontrolündeki `grep -q 'müşteri kabulü'` büyük/küçük harf duyarlı olduğu için `Müşteri kabulü` metnini bulamadı.
+- En küçük düzeltme: aynı HTTP bekleme ve olumlu gereksinim korunup yalnız `grep -qi` kullanıldı. Kod güvenlik kapıları veya kamu iddiası gevşetilmedi.
+- İkinci koşu [Portal CI 41251758016](https://github.com/netadalet-oss/avofis-platform/actions/runs/41251758016): **SUCCESS**; negatif kamu CMS, document gate, portal build ve `/ilerleme` HTTP kontrolleri başarılı. Eş kod HEAD [API/admin/portal güvenlik CI 41251758019](https://github.com/netadalet-oss/avofis-platform/actions/runs/41251758019): **SUCCESS**.
+- Vercel preview build-rate-limit devam edebilir; bu koşular bağımsız gerçek tarayıcı, canlı Auth/Storage veya kamu production yayını değildir. B01–B18, 7 canlı RLS, insan hukuk/dil/kurum kabulü ve 0/594 bağımsız R sonucu değişmedi.
