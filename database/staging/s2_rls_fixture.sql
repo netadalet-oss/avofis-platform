@@ -36,7 +36,9 @@ CREATE POLICY "Allow admin read settings" ON public.site_settings FOR SELECT TO 
 CREATE POLICY "Only admins can read settings" ON public.site_settings FOR SELECT TO PUBLIC USING (false);
 CREATE POLICY "Only admins can update settings" ON public.site_settings FOR UPDATE TO PUBLIC USING (false);
 GRANT USAGE ON SCHEMA public TO anon, authenticated;
-GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA public TO anon,authenticated;
+GRANT SELECT,INSERT,UPDATE,DELETE ON public.applications, public.jobs, public.media_assets,
+ public.office_members, public.offices, public.posts, public.topics,
+ public.pages, public.site_settings TO anon,authenticated;
 INSERT INTO public.profiles(id) VALUES
  ('00000000-0000-0000-0000-0000000000a1'),('00000000-0000-0000-0000-0000000000b1');
 INSERT INTO public.offices(id,name) VALUES ('10000000-0000-0000-0000-000000000001','Synthetic office');

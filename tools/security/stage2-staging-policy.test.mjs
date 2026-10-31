@@ -39,3 +39,11 @@ test('synthetic A/B, null owner, anonymous and mutation checks exist',()=>{
  assert.match(ab,/SET ROLE authenticated/);
  assert.match(ab,/EXCEPTION WHEN insufficient_privilege/);
 });
+
+test('synthetic profile identities never receive public or authenticated grants',()=>{
+ assert.doesNotMatch(fixture,/ON ALL TABLES IN SCHEMA public TO anon/i);
+ assert.match(fixture,/GRANT SELECT,INSERT,UPDATE,DELETE ON public\.applications/);
+ assert.doesNotMatch(fixture,/GRANT [^;]*public\.profiles[^;]*TO anon/i);
+ assert.match(ab,/Anonymous synthetic identity SELECT succeeded/);
+ assert.match(ab,/Synthetic identity directory is readable/);
+});

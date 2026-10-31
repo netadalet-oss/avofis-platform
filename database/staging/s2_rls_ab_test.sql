@@ -33,6 +33,9 @@ DO $$ BEGIN
  BEGIN PERFORM count(*) FROM public.pages;
  RAISE EXCEPTION 'Anonymous CMS SELECT succeeded';
  EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+ BEGIN PERFORM count(*) FROM public.profiles;
+ RAISE EXCEPTION 'Anonymous synthetic identity SELECT succeeded';
+ EXCEPTION WHEN insufficient_privilege THEN NULL; END;
 END $$;
 RESET ROLE;
 
@@ -89,6 +92,8 @@ DO $$ BEGIN
   RAISE EXCEPTION 'CMS pages are readable'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
  BEGIN PERFORM count(*) FROM public.site_settings;
   RAISE EXCEPTION 'CMS settings are readable'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+ BEGIN PERFORM count(*) FROM public.profiles;
+  RAISE EXCEPTION 'Synthetic identity directory is readable'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
 END $$;
 RESET ROLE;
 SELECT 'S2_RLS_AB_GRANTS_PASS' AS result;
