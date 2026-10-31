@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false }
 };
 
-export const staffModules = [
+const staffModules = [
   ["inbox", "Gelen işler", "Başvuruların güvenli karşılanması; henüz gerçek erişim yok"],
   ["triage", "Ön değerlendirme", "Ülke, işlem, aciliyet ve uzman yönlendirmesi"],
   ["matters", "Dosyalar", "Müşteri, tenant, atama ve dosya durumları"],
@@ -26,7 +26,7 @@ export const staffModules = [
   ["settings", "Ayarlar", "Yayın, roller, kurumlar ve ortam sınırları"]
 ] as const;
 
-export const backendModules = [
+const backendModules = [
   "admin","analytics","auth","careers","cases","cms","connect",
   "forum","messaging","notifications","offices","statutes",
   "support","workspace"
