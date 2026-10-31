@@ -10,19 +10,19 @@ export const metadata: Metadata = {
 const report = [
   {
     title: "Bu dönem ne değişti?",
-    body: "Açık hizmet kataloğu ve kişisel veri toplamayan hazırlık ekranları için yazılım ve test çalışmaları yapıldı. Kamuya açık hesap kaydı ile içerik düzenleme işlevleri kapalı tutuldu.",
+    body: "Açık hizmet kataloğu ve kişisel verisiz hazırlık ekranları korundu. Kamu altbilgisindeki içerik yazma yolu kaldırıldı; giriş sonrası yönlendirmeler yalnız güvenli iç sayfalara sınırlandırıldı.",
   },
   {
     title: "Şimdi neredeyiz?",
-    body: "Portal kuruluş öncesi geliştirme ve önizleme aşamasındadır. Kod testlerinden geçmek, gerçek kullanıcı güvenliği veya bağımsız hukukî kabul anlamına gelmez.",
+    body: "Portal hâlâ kuruluş öncesi geliştirme ve önizleme aşamasındadır. Kod testlerinin başarılı olması, gerçek müşteri güvenliği veya bağımsız hukukî kabul anlamına gelmez.",
   },
   {
     title: "Sırada ne var?",
-    body: "Ayrı bir test ortamında kimlik, dosya erişimi, yayın yetkisi ve güvenlik sınırları doğrulanacak. Dil ve hukuk içerikleri yetkili kişilerce ayrıca incelenecek.",
+    body: "Bağımsız test ortamında hesap, dosya erişimi, rol ve yayın yetkileri doğrulanmalı. Hukukî içerik ile altı dildeki metinler yetkili kişilerce ayrıca incelenmelidir.",
   },
   {
     title: "Önemli sınır",
-    body: "Şu anda müşteri kabulü, kişisel belge gönderimi, resmî başvuru, hukukî temsil veya ödeme işlemi açık değildir. Bu sayfa güncel canlı sistem onayı değil, tarihli bir ilerleme özetidir.",
+    body: "Müşteri kabulü, kişisel belge gönderimi, resmî başvuru, hukukî temsil ve ödeme işlemleri açık değildir. Bu sayfa üretim yayını, güvenlik sertifikası veya doğrulanmış hukukî hizmet taahhüdü değildir.",
   },
 ] as const;
 
@@ -43,7 +43,7 @@ export default function PublicProgressPage() {
             İlerleme ve Şeffaflık
           </h1>
           <p className="mt-4 text-sm leading-7 text-slate-300">
-            Bilgi tarihi: 31 Ekim 2026 · Kaynak kodu kanıtı: 56697cdf ·
+            Bilgi tarihi: 1 Kasım 2026 · Son doğrulanan CI kodu: 856ea77d ·
             Bu içerik bağımsız ürün kabulü veya üretim yayını beyanı değildir.
           </p>
         </header>
