@@ -45,6 +45,10 @@ jobs:
         run: node --test tools/security/tracked-file-gate.test.cjs
       - name: Reject tracked local env and private key files
         run: node tools/security/tracked-file-gate.cjs
+      - name: High-confidence secret-pattern regression (synthetic only)
+        run: node --test tools/security/tracked-content-secret-gate.test.cjs
+      - name: Redacted tracked plaintext secret scan
+        run: node tools/security/tracked-content-secret-gate.cjs
       - name: Install dependencies (without package scripts)
         run: npm install --ignore-scripts --no-audit --no-fund
       - name: TypeScript API build
