@@ -1,0 +1,127 @@
+{
+  "project": "AVOfis",
+  "record_date": "2026-10-31",
+  "stage": 6,
+  "stage_status": "ACTIVE_EXPLICIT_USER_APPROVAL",
+  "approval_evidence": {
+    "message": "Onay",
+    "context": "Asistanın bir önceki yanıtta 'Seviye 6'ya geçiş yapılmadı; geçmeden önce yeniden açık onayınızı isteyeceğim.' beyanına doğrudan kullanıcı yanıtı.",
+    "interpretation": "Seviye 5 → 6 geçişine onay; PR merge/production/DB mutation onayı değildir."
+  },
+  "source_stage": 5,
+  "stage5_historically_completed": false,
+  "stage5_completion_percent": null,
+  "stage7_transition_approved": false,
+  "all_later_transitions_require_explicit_approval": true,
+  "per_item_attempts_max_per_level": 2,
+  "original_work_items_approved": 973,
+  "technical_contracts_approved": 973,
+  "total_workflows_approved": 154,
+  "historical_open_decisions": 18,
+  "original_stage6_task_registry_available": false,
+  "production_modified": false,
+  "main_modified": false,
+  "carried_open_items": [
+    {
+      "id": "RLS:public.applications",
+      "category": "LIVE_RLS",
+      "status": "OPEN_UNREMEDIATED",
+      "attempts_recorded_level5": 0,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Production RLS policy authorization, ownership rules and staging negative tests not yet accepted.",
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json"
+    },
+    {
+      "id": "RLS:public.jobs",
+      "category": "LIVE_RLS",
+      "status": "OPEN_UNREMEDIATED",
+      "attempts_recorded_level5": 0,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Production RLS policy authorization, ownership rules and staging negative tests not yet accepted.",
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json"
+    },
+    {
+      "id": "RLS:public.media_assets",
+      "category": "LIVE_RLS",
+      "status": "OPEN_UNREMEDIATED",
+      "attempts_recorded_level5": 0,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Production RLS policy authorization, ownership rules and staging negative tests not yet accepted.",
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json"
+    },
+    {
+      "id": "RLS:public.office_members",
+      "category": "LIVE_RLS",
+      "status": "OPEN_UNREMEDIATED",
+      "attempts_recorded_level5": 0,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Production RLS policy authorization, ownership rules and staging negative tests not yet accepted.",
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json"
+    },
+    {
+      "id": "RLS:public.offices",
+      "category": "LIVE_RLS",
+      "status": "OPEN_UNREMEDIATED",
+      "attempts_recorded_level5": 0,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Production RLS policy authorization, ownership rules and staging negative tests not yet accepted.",
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json"
+    },
+    {
+      "id": "RLS:public.posts",
+      "category": "LIVE_RLS",
+      "status": "OPEN_UNREMEDIATED",
+      "attempts_recorded_level5": 0,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Production RLS policy authorization, ownership rules and staging negative tests not yet accepted.",
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json"
+    },
+    {
+      "id": "RLS:public.topics",
+      "category": "LIVE_RLS",
+      "status": "OPEN_UNREMEDIATED",
+      "attempts_recorded_level5": 0,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Production RLS policy authorization, ownership rules and staging negative tests not yet accepted.",
+      "evidence": "docs/security/rls-live-baseline-2026-10-31.json"
+    },
+    {
+      "id": "UYUM:NL-11",
+      "category": "GDPR",
+      "status": "LEGAL_SCOPE_OPEN",
+      "attempts_recorded_level5": 0,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Controller/processor, actual processing, retention, transfers and DPA applicability unverified.",
+      "evidence": "docs/process/seviye5-ilk-gdpr-dsa-kapsam-incelemesi.md"
+    },
+    {
+      "id": "UYUM:NL-14",
+      "category": "DSA",
+      "status": "LEGAL_SCOPE_OPEN",
+      "attempts_recorded_level5": 0,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Actual intermediary hosting and public dissemination classification unverified.",
+      "evidence": "docs/process/seviye5-ilk-gdpr-dsa-kapsam-incelemesi.md"
+    },
+    {
+      "id": "SEC:S5-PORTAL-CMS-ROLE",
+      "category": "FRONTEND_AUTHORIZATION",
+      "status": "CODE_CI_PASS_NOT_MERGED_NOT_DEPLOYED",
+      "attempts_recorded_level5": 1,
+      "attempts_recorded_level6": 0,
+      "carry_reason": "Stage 5 source CI PASS but branch remains draft; real deployment and RLS behavior unverified.",
+      "evidence": "docs/process/seviye5-onayli-devreden-isler-ve-uyum-kapsami.json"
+    }
+  ],
+  "new_work": [
+    {
+      "id": "SEC:S6-CMS-EXISTING-ROW-UPDATE",
+      "status": "SOURCE_VERIFIED_IMPLEMENTATION_PENDING",
+      "attempts_recorded_level6": 0,
+      "source": "portal/src/app/page.tsx",
+      "caveat": "Existing live public.pages has UNIQUE(slug) and one home row at snapshot, no production write performed."
+    }
+  ],
+  "hollanda_business_gov_controls": "CONDITIONAL_APPLICABILITY_RETAINED",
+  "notes": "Stage 6 operationally active following contextual explicit consent. No Stage 7 approval. Original historical stage6 acceptance records unavailable; status/attempts never substituted for original task IDs."
+}
