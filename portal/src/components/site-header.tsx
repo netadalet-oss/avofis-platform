@@ -123,39 +123,7 @@ export function SiteHeader() {
       setMessage("İçerik düzenleme yetkisi henüz açılmamıştır.");
       return;
     }
-    try {
-      setSaving(true);
-      setMessage("");
-
-      const normalizedItems = menuDraft
-        .map((item) => ({
-          label: typeof item.label === "string" ? item.label.trim() : "",
-          href: typeof item.href === "string" ? item.href.trim() : "",
-        }))
-        .filter((item) => item.label && item.href);
-
-      if (normalizedItems.length === 0) {
-        setMessage("En az bir geçerli menü öğesi gerekli.");
-        return;
-      }
-
-      const { error } = await supabase.from("site_settings").upsert({
-        key: "navigation",
-        value: normalizedItems,
-      });
-
-      if (error) {
-        setMessage(`Menü kaydedilemedi: ${error.message}`);
-        return;
-      }
-
-      setMenuItems(normalizedItems);
-      setMenuDraft(normalizedItems);
-      setMessage("Menü başarıyla kaydedildi.");
-      setEditMode(false);
-    } finally {
-      setSaving(false);
-    }
+    setMessage("Kamu portalından menü yayımlanamaz; yetkili personel onayı gereklidir.");
   }
 
   return (

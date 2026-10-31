@@ -7,3 +7,7 @@ Tarihî Seviye 4–7 CMS arayüz testleri dört canlı kayıt eylemi ve varsayı
 Ek güvenlik daraltması: public ana sayfa ve menü artık bağımsız içerik/yetki onayından geçmemiş `pages` veya `site_settings` kayıtlarını otomatik sorgulamıyor. `PUBLIC_CMS_CONTENT_READER_ENABLED=false`, ortam değişkeninden açılamayan kod kapısıdır. Kamu kaydı ve CMS yazma yine kapalıdır.
 
 **Dikkat:** Uygulama düzeyinde kapatma canlı Supabase tablo RLS/GRANT veya doğrudan REST erişimini **düzeltmez**. B01/B02 dahil B01–B18 açık, gerçek kullanıcı kaydı kapalı, bağımsız kabul 0/594. CI, HTTP ve staging kanıtı ayrı değerlendirilir; hukuki/dilsel insan yayın onayı verilmiş sayılmaz.
+
+## Ek kod güvenliği — doğrudan CMS yazmalarının kaldırılması
+
+Önceki sürümde kamu ana sayfasında iki ve menüde bir `supabase.from(...).upsert(...)` çağrısı, sabit kapının arkasında dahi kaynak kodda bulunuyordu. Bu **üç doğrudan istemci yazma çağrısı kaldırıldı**. İlgili olay işleyicileri sunucuya ulaşmadan güvenli bilgilendirme mesajı gösterir. Tarihî yardımcı işlevler ve saf atomik güncelleme testleri kodda ayrı kalır; kamu bileşenlerinden çağrılmaz. Bu önlem B01/B02 veritabanı ACL ve RLS düzeltmesi değildir.

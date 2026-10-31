@@ -80,27 +80,27 @@ test('does not perform an implicit INSERT or UPSERT', async () => {
   await updateExistingHomeContent(fakeClient({data:[{id:'abc'}],error:null},calls),{});
   assert.ok(!calls.some(c=>['insert','upsert'].includes(c[0])));
 });
-test('portal contains exactly two verified update call sites', () => {
-  const page = fs.readFileSync(pageFile,'utf8');
-  assert.equal((page.match(/updateExistingHomeContent\(supabase, nextContent\)/g)||[]).length,2);
+test('public homepage has no direct CMS persistence call',()=>{
+ const page=fs.readFileSync(pageFile,'utf8');
+ for(const prohibited of ['.upsert(','.update(','.insert(','updateExistingHomeContent(']){
+  assert.ok(!page.includes(prohibited),prohibited);
+ }
 });
-test('portal no longer calls the previous unsafe pages upsert', () => {
-  const page = fs.readFileSync(pageFile,'utf8');
-  assert.doesNotMatch(page, /\.from\(["']pages["']\)\s*\.upsert\(/);
+test('legacy helper remains isolated and uses existing unique home row',()=>{
+ const code=fs.readFileSync(helperFile,'utf8');
+ assert.match(code,/\.update\(\{\s*content\s*\}\)/);
+ assert.match(code,/\.eq\(["']slug["'],\s*["']home["']\)/);
+ assert.match(code,/\.select\(["']id["']\)/);
+ assert.doesNotMatch(code,/\.upsert\(|\.insert\(/);
 });
-test('write helper uses equality on backed unique slug key, never creates rows', () => {
-  const src = fs.readFileSync(helperFile,'utf8');
-  assert.match(src,/\.update\(\{\s*content\s*\}\)/);
-  assert.match(src,/\.eq\(["']slug["'],\s*["']home["']\)/);
-  assert.match(src,/\.select\(["']id["']\)/);
-  assert.doesNotMatch(src, /\.upsert\(/);
-  assert.doesNotMatch(src, /\.insert\(/);
-});
-test('portal keeps both admin authorization checks on mutations', () => {
-  const page=fs.readFileSync(pageFile,'utf8');
-  for(const func of ['saveContentField','saveHeroField']) {
-    const i=page.indexOf('function '+func);
-    assert.ok(i>0,func);
-    assert.match(page.slice(i,i+200),/if \(!isAdmin\)/,func);
-  }
+test('public CMS editor handlers report unavailability and never call mutation helpers',()=>{
+ const page=fs.readFileSync(pageFile,'utf8');
+ for(const handler of ['saveContentField','saveHeroField']){
+  const start=page.indexOf('function '+handler),end=page.indexOf('\n  }',start);
+  const body=page.slice(start,end);
+  assert.ok(start>0&&end>start,handler);
+  assert.match(body,/if \(!PUBLIC_CMS_EDITING_ENABLED\)/);
+  assert.match(body,/Bu kamu ekranından içerik kaydedilemez/);
+  assert.doesNotMatch(body,/supabase|\.from\(|\.upsert\(|\.update\(/);
+ }
 });

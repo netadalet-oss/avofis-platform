@@ -73,30 +73,26 @@ test('database transport failure fails closed', async () => {
 test('broken response fails closed', async () => {
   assert.equal(await hasPortalCmsAdminAccess(clientWithResult({}), 'self-id'), false);
 });
-test('portal page must not use editable user metadata as a role source', () => {
-  const page = fs.readFileSync(pageFile, 'utf8');
-  assert.doesNotMatch(page, /session\?\.user\?\.user_metadata\?\.role/);
-  assert.match(page, /hasPortalCmsAdminAccess\(supabase,\s*currentUserId\)/);
-  assert.match(page, /authorizedAdminSession\?\.userId\s*===\s*currentUserId/);
-  assert.match(page, /authorizedAdminSession\.accessToken\s*===\s*currentAccessToken/);
+test('public homepage never grants CMS role using editable metadata',()=>{
+ const page=fs.readFileSync(pageFile,'utf8');
+ assert.doesNotMatch(page,/session\?\.user\?\.user_metadata\?\.role/);
+ assert.match(page,/const isAdmin = false;/);
+ assert.doesNotMatch(page,/hasPortalCmsAdminAccess\(/);
 });
-test('portal CMS mutations and edit enablement are each gated', () => {
-  const page = fs.readFileSync(pageFile, 'utf8');
-  for (const name of ['saveContentField', 'saveHeroField', 'openHeroEditMode']) {
-    const beginning = page.indexOf('function ' + name);
-    assert.ok(beginning > 0, 'missing ' + name);
-    assert.match(page.slice(beginning, beginning + 180), /if \(!isAdmin\)/, name);
-  }
+test('public home CMS edit entry and both handlers are always fail closed',()=>{
+ const page=fs.readFileSync(pageFile,'utf8');
+ for(const name of ['saveContentField','saveHeroField']){
+  const beginning=page.indexOf('function '+name);
+  assert.ok(beginning>0,name);
+  assert.match(page.slice(beginning,beginning+210),/if \(!PUBLIC_CMS_EDITING_ENABLED\)/,name);
+ }
+ assert.match(page,/const isAdmin = false;/);
 });
-test('portal role query depends on current session and is cancelled on change', () => {
-  const page = fs.readFileSync(pageFile, 'utf8');
-  assert.match(page, /setAuthorizedAdminSession\(null\)/);
-  assert.match(page, /if \(active\)/);
-  assert.match(page, /active = false/);
-  assert.match(page, /\[currentUserId,\s*currentAccessToken\]/);
-});
-test('metadata roles cannot change RLS grants or authorized session state', () => {
-  const page = fs.readFileSync(pageFile, 'utf8');
-  assert.match(page, /const isAdmin = Boolean\(/);
-  assert.doesNotMatch(page, /const isAdmin = role ===/);
+test('unreviewed CMS content is not fetched by default on public home',()=>{
+ const page=fs.readFileSync(pageFile,'utf8');
+ const fn=page.indexOf('async function loadCMS()');
+ const gate=page.indexOf('if (!PUBLIC_CMS_CONTENT_READER_ENABLED)',fn);
+ const read=page.indexOf('.from("pages")',fn);
+ assert.ok(fn>=0&&gate>fn&&read>gate);
+ assert.ok(page.slice(gate,read).includes('return;'));
 });

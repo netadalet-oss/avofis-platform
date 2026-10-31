@@ -87,12 +87,12 @@ test('current public header never treats user metadata as CMS admin approval',()
  assert.doesNotMatch(src,/user_metadata\\?\\.role/);
  assert.match(gates,/PUBLIC_CMS_EDITING_ENABLED = false;/);
 });
-test('current header fails closed before any dormant CMS persistence code',()=>{
+test('public header does not contain a dormant client-side CMS mutation',()=>{
  const src=fs.readFileSync(path.join(root,'src/components/site-header.tsx'),'utf8');
- const guard=src.indexOf('if (!PUBLIC_CMS_EDITING_ENABLED)');
- const write=src.indexOf('.upsert(');
- assert.ok(guard>=0 && write>guard);
- assert.match(src,/İçerik düzenleme yetkisi henüz açılmamıştır/);
+ assert.match(src,/if \(!PUBLIC_CMS_EDITING_ENABLED\)/);
+ for(const forbidden of ['.upsert(','.update(','.insert('])
+  assert.ok(!src.includes(forbidden),forbidden);
+ assert.match(src,/Kamu portalından menü yayımlanamaz/);
 });
 test('public navigation does not claim verified staff editing rights',()=>{
  const src=fs.readFileSync(path.join(root,'src/components/site-header.tsx'),'utf8');
