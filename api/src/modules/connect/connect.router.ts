@@ -1,7 +1,9 @@
 import { Router } from "express";
+import { unavailableModuleMetadata } from "../../security/module-availability";
 
 export const connectRouter = Router();
 
 connectRouter.get("/", (_req, res) => {
-  res.json({ module: "connect", actions: ["wallet", "transactions", "earn", "spend", "pricing"] });
+  res.setHeader("Cache-Control", "no-store");
+  res.json(unavailableModuleMetadata("connect", ["wallet", "transactions", "earn", "spend", "pricing"]));
 });
