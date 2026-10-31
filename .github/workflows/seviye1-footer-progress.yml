@@ -73,5 +73,5 @@ jobs:
           test -s /tmp/avofis-progress.html
           grep -q 'İlerleme ve Şeffaflık' /tmp/avofis-progress.html
           grep -q 'Önemli sınır' /tmp/avofis-progress.html
-          grep -q 'müşteri kabulü' /tmp/avofis-progress.html
+          grep -qi 'müşteri kabulü' /tmp/avofis-progress.html
           echo 'Public progress HTTP: PASS'
