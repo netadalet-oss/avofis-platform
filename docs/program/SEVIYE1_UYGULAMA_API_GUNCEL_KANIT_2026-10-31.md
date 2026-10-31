@@ -49,3 +49,15 @@
 - Kanonik kimlik notu: Özel talimatnamede `AV-019` için `R-541–558` ve `AV-052` için `R-451–468` bağlantıları, özgün R metinlerinin konusuyla örtüşmemektedir. Kod izinde `R-523` ve `R-527` ile konusal ilişki ayrıca tutulur; **özgün tanımlar değişmez, R kabulü sayılmaz**.
 
 **Kalanlar:** server Auth, session revocation, MFA, rate limit, tenant ve Storage A/B, gerçek staging ve hukukî/bağımsız kabul. `main`, canlı Supabase, production, müşteri verisi veya ödeme değiştirilmedi. B01–B18 ve 7 canlı RLS riski açık.
+
+## 01.11.2026 — AV-023 / R-540 izlenen kimlik dosyası riski
+
+- Yalnız Git **ağaç metaverisi** okundu, içerik/anahtar/credential okunmadı. `admin/.env.local` blob SHA `1e003665f6c3b3135e9dc1173f0924b922872777` ve boyutu 305 bayt: `main` (`c97d03d...`), entegrasyon (`56697cdf...`) ve bu çalışma dalının önceki halinde izleniyordu. Dosyanın gerçek gizli anahtar içerdiği **belirlenmedi**.
+- İzin verilen development çalışma dalında Git takibinden çıkarıldı: commit `13c213e96a69522e0725b4bb8880396dcd95f0be`; `main` veya production değiştirilmedi. **Geçmiş commitlerdeki kopyalar kalır.**
+- `.gitignore` yerel keystore ve sertifika anahtarı türleri için genişletildi.
+- `tools/security/tracked-file-gate.cjs` ve `tracked-file-gate.test.cjs` eklendi; izlenen dosya adları için fail-closed CI: ortam dosyaları ve özel anahtar biçimleri yasak, `.env.example` / sentetik kaynak dosyası izinli. Gerçek sır içeriği **taranmaz**.
+- Bu kod HEAD `651d6cff4ee20215557022ceec827bc8a41e09f5` üzerinde Git ağacında eşleşen izlenen ortam/anahtar dosyası kalmadığı kontrol edildi. [GitHub Actions 41251621674](https://github.com/netadalet-oss/avofis-platform/actions/runs/41251621674) **SUCCESS**: dosya adları geçidi, unit testler, API/admin/portal güvenlik regresyonu.
+- **Açık haricî koşul:** Yetkili proje sahibi önceki dosyanın içeriğinde gerçek kimlik bilgisi bulunup bulunmadığını yalnız gizli yönetim kanalında belirlemeli; varsa ilgili servis kimliğini iptal/rotate etmeli, kullanım logları ve Git geçmişinin temizlenmesi için ayrıca güvenli prosedür yürütmelidir. Test kodu geçmiş sızıntı riskini gidermez; gerçek credential değeri Git/sohbet/CI çıktısına **konulmaz**.
+- Portal çalışma dalı aynı entegrasyon tabanından ayrıldığı için bu temizliği otomatik devralmamıştır; iki dalın birleşmesinde dosya takibi ve güvenlik kapısı ayrıca denetlenmelidir.
+
+**Durum:** AV-023/R-540 için kısmi kod+CI kanıtı, tam güvenlik/bağımsız kabul veya sır rotasyonu **YOK**. Seviye 1 sürüyor; B01–B18, 7 canlı RLS, bağımsız staging ve hukukî kabul açık.
