@@ -1,10 +1,11 @@
 "use client";
 
+import { canOfferCmsEditing, refuseUnverifiedCmsWrite } from "@/lib/cms-publication-gate";
+
 import Link from "next/link";
 import { Gavel, Menu, Pencil, Plus, Save, Trash2, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useEditMode } from "@/components/providers/EditModeProvider";
-import { useUser } from "@/hooks/useUser";
 import {
   navigation as defaultNavigation,
   type NavigationItem,
@@ -16,7 +17,6 @@ type NavigationSettingRow = {
 };
 
 export function SiteHeader() {
-  const { session, loading: authLoading } = useUser();
   const { editMode, setEditMode } = useEditMode();
 
   const [open, setOpen] = useState(false);
@@ -25,12 +25,8 @@ export function SiteHeader() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
 
-  const role = useMemo(() => {
-    const rawRole = session?.user?.user_metadata?.role;
-    return typeof rawRole === "string" ? rawRole.toLowerCase() : "";
-  }, [session]);
-
-  const isAdmin = role === "admin" || role === "super_admin";
+  // User metadata is not publication authority.
+  const isAdmin = canOfferCmsEditing();
 
   useEffect(() => {
     let mounted = true;
@@ -132,10 +128,7 @@ export function SiteHeader() {
         return;
       }
 
-      const { error } = await supabase.from("site_settings").upsert({
-        key: "navigation",
-        value: normalizedItems,
-      });
+      const { error } = await refuseUnverifiedCmsWrite();
 
       if (error) {
         setMessage(`Menü kaydedilemedi: ${error.message}`);
@@ -177,7 +170,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          {isAdmin && !authLoading ? (
+          {isAdmin ? (
             <button
               type="button"
               onClick={() => {

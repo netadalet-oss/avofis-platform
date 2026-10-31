@@ -1,5 +1,7 @@
 "use client";
 
+import { canOfferCmsEditing, refuseUnverifiedCmsWrite } from "@/lib/cms-publication-gate";
+
 import { useEffect, useMemo, useState } from "react";
 import {
   ArrowRight,
@@ -36,7 +38,6 @@ import { ModuleGrid } from "@/components/module-grid";
 import { SectionTitle } from "@/components/section-title";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { useUser } from "@/hooks/useUser";
 import { stats } from "@/lib/site";
 import { supabase } from "@/lib/supabase";
 
@@ -190,7 +191,6 @@ function setDeepValue<T extends Record<string, any>>(obj: T, path: string[], val
 }
 
 export default function HomePage() {
-  const { session, loading: authLoading } = useUser();
   const { editMode, setEditMode } = useEditMode();
 
   const [cmsContent, setCmsContent] = useState<HomeCmsContent | null>(null);
@@ -201,12 +201,8 @@ export default function HomePage() {
   const [heroSaving, setHeroSaving] = useState(false);
   const [heroMessage, setHeroMessage] = useState("");
 
-  const role = useMemo(() => {
-    const rawRole = session?.user?.user_metadata?.role;
-    return typeof rawRole === "string" ? rawRole.toLowerCase() : "";
-  }, [session]);
-
-  const isAdmin = role === "admin" || role === "super_admin";
+  // User metadata is not publication authority.
+  const isAdmin = canOfferCmsEditing();
 
   useEffect(() => {
     let mounted = true;
@@ -252,10 +248,7 @@ export default function HomePage() {
       const currentContent: HomeCmsContent = cmsContent || {};
       const nextContent = setDeepValue(currentContent, path, value);
 
-      const { error } = await supabase.from("pages").upsert({
-        slug: "home",
-        content: nextContent
-      });
+      const { error } = await refuseUnverifiedCmsWrite();
 
       if (error) {
         setHeroMessage(`İçerik kaydedilemedi: ${error.message}`);
@@ -294,10 +287,7 @@ export default function HomePage() {
       setHeroSaving(true);
       setHeroMessage("");
 
-      const { error } = await supabase.from("pages").upsert({
-        slug: "home",
-        content: nextContent
-      });
+      const { error } = await refuseUnverifiedCmsWrite();
 
       if (error) {
         setHeroMessage(`Hero kaydedilemedi: ${error.message}`);
@@ -366,7 +356,7 @@ export default function HomePage() {
               Açık erişim araştırma + profesyonel çalışma katmanı
             </div>
 
-            {isAdmin && !authLoading ? (
+            {isAdmin ? (
               <div className="mb-4 flex flex-wrap items-center gap-3">
                 <button
                   type="button"
