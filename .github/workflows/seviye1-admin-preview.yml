@@ -8,6 +8,9 @@ on:
       - "admin/src/app/personel/**"
       - "admin/src/lib/staff-module-directory.ts"
       - "admin/tests/staff-module-route.test.cjs"
+      - "admin/src/lib/staff-synthetic-flow.ts"
+      - "admin/src/components/StaffSyntheticDemonstration.tsx"
+      - "admin/tests/staff-synthetic-flow.test.cjs"
       - ".github/workflows/seviye1-admin-preview.yml"
   push:
     branches:
@@ -19,6 +22,9 @@ on:
       - "admin/src/app/personel/**"
       - "admin/src/lib/staff-module-directory.ts"
       - "admin/tests/staff-module-route.test.cjs"
+      - "admin/src/lib/staff-synthetic-flow.ts"
+      - "admin/src/components/StaffSyntheticDemonstration.tsx"
+      - "admin/tests/staff-synthetic-flow.test.cjs"
       - ".github/workflows/seviye1-admin-preview.yml"
 permissions:
   contents: read
