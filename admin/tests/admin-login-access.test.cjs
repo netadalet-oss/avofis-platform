@@ -25,7 +25,7 @@ function fake(opts = {}) {
         identityChecks++;
         if (opts.authThrows) throw Error("synthetic auth offline");
         const id = identityChecks === 2 && Object.hasOwn(opts, "secondId")
-          ? opts.secondId : (opts.id ?? "synthetic-admin");
+          ? opts.secondId : (Object.hasOwn(opts, "id") ? opts.id : "synthetic-admin");
         return {
           data: { user: id ? { id, user_metadata: { role: "admin" } } : null },
           error: opts.authError ? { message: "denied" } : null
@@ -56,7 +56,7 @@ function fake(opts = {}) {
                   if (opts.roleThrows) throw Error("synthetic RLS outage");
                   return {
                     data: opts.roleMissing ? null :
-                      { role: opts.role ?? "admin" },
+                      { role: Object.hasOwn(opts, "role") ? opts.role : "admin" },
                     error: opts.roleError ? { message: "denied" } : null
                   };
                 }
