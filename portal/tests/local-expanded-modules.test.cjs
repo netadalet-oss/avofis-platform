@@ -177,3 +177,11 @@ test('homepage does not render fabricated count cards',()=>{
  assert.doesNotMatch(p,/currentStatsItems|<EditableStatGrid|meta: "\d+ başlık"/);
  assert.match(p,/Doğrulanmış bir kullanım istatistiği henüz yayımlanmıyor/);
 });
+
+test('homepage does not claim demo panels are live or offices are verified',()=>{
+ const page=read('src/app/page.tsx');
+ assert.doesNotMatch(page,/Canlı yapı|Doğrulanmış Ofis|Doğrulanmış profil yapısı/);
+ assert.match(page,/Tasarım önizlemesi/);
+ assert.match(page,/Örnek ofis görünümü/);
+ assert.match(page,/henüz planlanan bir arayüzdür/);
+});
