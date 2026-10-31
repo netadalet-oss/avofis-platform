@@ -34,7 +34,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { useUser } from "@/hooks/useUser";
 import { supabase } from "@/lib/supabase";
-import { PUBLIC_CMS_EDITING_ENABLED } from "@/lib/launch-gates";
+import { PUBLIC_CMS_EDITING_ENABLED, PUBLIC_CMS_CONTENT_READER_ENABLED } from "@/lib/launch-gates";
 
 const featurePills = [
   "İçtihat araştırma",
@@ -199,6 +199,11 @@ export default function HomePage() {
     let mounted = true;
 
     async function loadCMS() {
+      if (!PUBLIC_CMS_CONTENT_READER_ENABLED) {
+        setCmsContent(null);
+        setHeroDraft({ title: defaultHeroTitle, subtitle: defaultHeroSubtitle });
+        return;
+      }
       const { data, error } = await supabase
         .from("pages")
         .select("content")
@@ -231,80 +236,22 @@ export default function HomePage() {
     };
   }, []);
 
-  async function saveContentField(path: string[], value: any) {
+  // No public-browser CMS writes, even if a future developer alters a UI gate.
+  // Publication requires a separately reviewed server-side staff workflow.
+  async function saveContentField(_path: string[], _value: any) {
     if (!PUBLIC_CMS_EDITING_ENABLED) {
       setHeroMessage("İçerik yayını için yetkili inceleme gereklidir.");
       return;
     }
-    try {
-      setHeroSaving(true);
-      setHeroMessage("");
-
-      const currentContent: HomeCmsContent = cmsContent || {};
-      const nextContent = setDeepValue(currentContent, path, value);
-
-      const { error } = await supabase.from("pages").upsert({
-        slug: "home",
-        content: nextContent
-      });
-
-      if (error) {
-        setHeroMessage(`İçerik kaydedilemedi: ${error.message}`);
-        return;
-      }
-
-      setCmsContent(nextContent);
-      setHeroMessage("İçerik başarıyla kaydedildi.");
-    } finally {
-      setHeroSaving(false);
-    }
+    setHeroMessage("Bu kamu ekranından içerik kaydedilemez; onaylı personel yayın akışı gereklidir.");
   }
 
-  async function saveHeroField(field: "title" | "subtitle", value: string) {
+  async function saveHeroField(_field: "title" | "subtitle", _value: string) {
     if (!PUBLIC_CMS_EDITING_ENABLED) {
       setHeroMessage("İçerik yayını için yetkili inceleme gereklidir.");
       return;
     }
-    const currentContent: HomeCmsContent = cmsContent || {};
-
-    const nextHero = {
-      title:
-        field === "title"
-          ? value
-          : (currentContent?.hero?.title || heroDraft.title || defaultHeroTitle),
-      subtitle:
-        field === "subtitle"
-          ? value
-          : (currentContent?.hero?.subtitle ||
-              heroDraft.subtitle ||
-              defaultHeroSubtitle),
-    };
-
-    const nextContent: HomeCmsContent = {
-      ...currentContent,
-      hero: nextHero
-    };
-
-    try {
-      setHeroSaving(true);
-      setHeroMessage("");
-
-      const { error } = await supabase.from("pages").upsert({
-        slug: "home",
-        content: nextContent
-      });
-
-      if (error) {
-        setHeroMessage(`Hero kaydedilemedi: ${error.message}`);
-        return;
-      }
-
-      setCmsContent(nextContent);
-      setHeroDraft(nextHero);
-      setHeroMessage("Hero başarıyla kaydedildi.");
-    } finally {
-      setHeroSaving(false);
-    }
+    setHeroMessage("Bu kamu ekranından içerik kaydedilemez; onaylı personel yayın akışı gereklidir.");
   }
 
   function openHeroEditMode() {
