@@ -34,6 +34,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { useUser } from "@/hooks/useUser";
 import { supabase } from "@/lib/supabase";
+import { PUBLIC_CMS_EDITING_ENABLED } from "@/lib/launch-gates";
 
 const featurePills = [
   "İçtihat araştırma",
@@ -190,12 +191,9 @@ export default function HomePage() {
   const [heroSaving, setHeroSaving] = useState(false);
   const [heroMessage, setHeroMessage] = useState("");
 
-  const role = useMemo(() => {
-    const rawRole = session?.user?.user_metadata?.role;
-    return typeof rawRole === "string" ? rawRole.toLowerCase() : "";
-  }, [session]);
-
-  const isAdmin = role === "admin" || role === "super_admin";
+  // Client-controlled account metadata never establishes editing authority.
+  // Keep public CMS disabled until verified server-side staff authorization.
+  const isAdmin = false;
 
   useEffect(() => {
     let mounted = true;
@@ -234,6 +232,10 @@ export default function HomePage() {
   }, []);
 
   async function saveContentField(path: string[], value: any) {
+    if (!PUBLIC_CMS_EDITING_ENABLED) {
+      setHeroMessage("İçerik yayını için yetkili inceleme gereklidir.");
+      return;
+    }
     try {
       setHeroSaving(true);
       setHeroMessage("");
@@ -259,6 +261,10 @@ export default function HomePage() {
   }
 
   async function saveHeroField(field: "title" | "subtitle", value: string) {
+    if (!PUBLIC_CMS_EDITING_ENABLED) {
+      setHeroMessage("İçerik yayını için yetkili inceleme gereklidir.");
+      return;
+    }
     const currentContent: HomeCmsContent = cmsContent || {};
 
     const nextHero = {
