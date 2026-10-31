@@ -550,9 +550,9 @@
     },
     {
       "id": "SEC:S7-UNVERIFIED-METRICS-HIDE",
-      "description": "Prevent unsupported homepage platform counts, forum topic-count claims and default fake site statistics",
+      "description": "Prevent unsupported homepage platform counts, forum topic-count claims and default fake site statistics; remove unsupported 'live platform' and 'verified office' preview labels",
       "status": "DRAFT_CODE_CI_PASS_NOT_MERGED",
-      "attempts_recorded_level7": 1,
+      "attempts_recorded_level7": 2,
       "attempts": [
         {
           "index": 1,
@@ -562,6 +562,16 @@
           "ci_head_commit": "cce469294e261eab402d56c792fd5ea7ac32257e",
           "total_tests_passed": 307,
           "total_tests_failed": 0
+        },
+        {
+          "index": 2,
+          "result": "CODE_AND_CI_VERIFIED",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41178186928",
+          "ci_job_id": 124469989363,
+          "ci_head_commit": "d19e31ff68afe2d0dddca8e2a987735aa1395135",
+          "total_tests_passed": 315,
+          "total_tests_failed": 0,
+          "explanation": "Second separate source change: remove unverified live/verified-office labels and add regression test."
         }
       ],
       "source_paths": [
@@ -580,7 +590,8 @@
         "Existing other marketing copy still needs an evidence review",
         "Public CMS statistic data kept in database but not shown by the current homepage",
         "Not deployed to production"
-      ]
+      ],
+      "available_level7_attempts_remaining": 0
     }
   ],
   "production_modified": false,
