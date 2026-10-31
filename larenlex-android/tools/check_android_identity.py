@@ -18,6 +18,9 @@ IGNORED = {'.git', '.gradle', 'build', 'node_modules', '.next', 'dist', '.idea'}
 SCAN_EXTENSIONS = {'.kt', '.java', '.gradle', '.kts', '.json', '.xml', '.properties', '.toml', '.yaml', '.yml'}
 MAX_SOURCE_FILES = 5000
 MAX_FILE_BYTES = 1024 * 1024
+SECRET_FILES = {'.jks', '.keystore', '.p12', '.pfx', '.pem'}
+SENSITIVE_ENV = {'.env', '.env.local', '.env.production', '.env.development', '.env.test'}
+PASSWORD_KV = re.compile(r'(?im)^\s*(?:storePassword|keyPassword)\s*[:=]\s*(?![$][{])[^\s#]+')
 
 
 def verify(root):
@@ -41,7 +44,10 @@ def verify(root):
             if path.is_symlink():
                 reasons.append('LINKED_SOURCE_PATH_REVIEW_REQUIRED')
                 continue
-            if name not in {'build.gradle', 'build.gradle.kts', 'settings.gradle', 'settings.gradle.kts', '.env'} and path.suffix not in SCAN_EXTENSIONS:
+            if path.suffix.lower() in SECRET_FILES:
+                reasons.append('SIGNING_KEY_MATERIAL_IN_SOURCE_TREE')
+                continue
+            if name not in {'build.gradle', 'build.gradle.kts', 'settings.gradle', 'settings.gradle.kts'} and name not in SENSITIVE_ENV and path.suffix not in SCAN_EXTENSIONS:
                 continue
             files.append(path)
             if len(files) > MAX_SOURCE_FILES:
@@ -58,7 +64,7 @@ def verify(root):
             settings.append(path)
         if name == 'AndroidManifest.xml':
             manifests.append(path)
-        if name == '.env':
+        if name in SENSITIVE_ENV:
             reasons.append('LOCAL_ENV_FILE_MUST_NOT_ENTER_SOURCE_SCAN')
             continue
         try:
@@ -73,6 +79,8 @@ def verify(root):
             ids.extend(APP_ID.findall(contents))
             if PASSWORD.search(contents):
                 reasons.append('LITERAL_SIGNING_PASSWORD_IN_BUILD_SCRIPT')
+        if path.suffix == '.properties' and PASSWORD_KV.search(contents):
+            reasons.append('LITERAL_SIGNING_PASSWORD_IN_CONFIGURATION')
         if UNSAFE.search(contents):
             if name in {'build.gradle', 'build.gradle.kts'}:
                 reasons.append('OTHER_PRODUCT_REFERENCE_IN_BUILD_SCRIPT')
