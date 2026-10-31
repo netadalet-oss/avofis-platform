@@ -75,3 +75,13 @@ jobs:
           grep -q 'Önemli sınır' /tmp/avofis-progress.html
           grep -qi 'müşteri kabulü' /tmp/avofis-progress.html
           echo 'Public progress HTTP: PASS'
+          # AV-025: the public auth page must be non-transactional over real HTTP.
+          curl -fsS http://127.0.0.1:3000/auth/login > /tmp/avofis-public-login.html
+          test -s /tmp/avofis-public-login.html
+          grep -q 'Müşteri girişi şu anda kapalı' /tmp/avofis-public-login.html
+          grep -q 'noindex' /tmp/avofis-public-login.html
+          if grep -Eq 'type="password"|name="password"|<form' /tmp/avofis-public-login.html; then
+            echo 'Unapproved login form found on public page' >&2
+            exit 1
+          fi
+          echo 'Public auth unavailable HTTP: PASS'
