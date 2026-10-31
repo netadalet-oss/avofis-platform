@@ -1,0 +1,64 @@
+name: AVOfis Seviye 1 - Original 17 service catalog
+on:
+  push:
+    branches:
+      - seviye1-yeniden-baslangic-20261031
+    paths:
+      - 'portal/src/lib/service-catalog.ts'
+      - 'portal/src/app/hizmetler/**'
+      - 'portal/src/lib/site.ts'
+      - 'portal/tests/service-catalog.test.mjs'
+      - '.github/workflows/seviye1-service-catalog.yml'
+  pull_request:
+    paths:
+      - 'portal/src/lib/service-catalog.ts'
+      - 'portal/src/app/hizmetler/**'
+      - 'portal/src/lib/site.ts'
+      - 'portal/tests/service-catalog.test.mjs'
+      - '.github/workflows/seviye1-service-catalog.yml'
+permissions:
+  contents: read
+jobs:
+  original-services:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      NEXT_PUBLIC_SUPABASE_URL: 'https://example.invalid'
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: 'build-check-only-not-a-real-token'
+    steps:
+      - name: Checkout exact draft source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Validate all 17 original services
+        run: node --experimental-strip-types --test portal/tests/service-catalog.test.mjs
+      - name: Install project workspaces without lifecycle scripts
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Production-build isolated public portal
+        run: npm run build:portal
+      - name: HTTP check home, catalog, a service, and invalid service
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm --workspace portal run start > /tmp/avofis-s1-service-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for i in $(seq 1 50); do
+            if curl -fsS http://127.0.0.1:3000/hizmetler > /tmp/avofis-services.html; then break; fi
+            sleep 1
+          done
+          test -s /tmp/avofis-services.html
+          grep -q 'Hizmet alanlarını inceleyin' /tmp/avofis-services.html
+          curl -fsS http://127.0.0.1:3000/hizmetler/resmi-basvuru-itiraz > /tmp/avofis-one-service.html
+          grep -q 'Resmî başvuru ve itiraz' /tmp/avofis-one-service.html
+          grep -q 'Hizmet durumu: yalnız genel bilgi' /tmp/avofis-one-service.html
+          code=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3000/hizmetler/not-a-valid-service)
+          test "$code" = 404
+          curl -fsS http://127.0.0.1:3000/ > /tmp/avofis-s1-home.html
+          grep -q 'Hizmetler' /tmp/avofis-s1-home.html
+          echo 'HTTP service catalog: PASS, no live customer operations'
