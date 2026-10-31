@@ -15,6 +15,7 @@ on:
       - seviye4-security-cms-cors-20261030
       - seviye5-kademeli-devam-20261031
       - seviye6-kontrollu-devam-20261031
+      - seviye7-kontrollu-devam-20261031
     paths:
       - 'api/**'
       - 'admin/**'
@@ -66,3 +67,11 @@ jobs:
         run: node --test tools/process/stage6-gate.test.cjs
       - name: Stage 6 carryover audit (read only)
         run: node tools/process/stage6-gate.cjs
+      - name: Stage 7 explicit approval and historical carryover tests
+        run: node --test tools/process/stage7-gate.test.cjs
+      - name: Stage 7 source-backed carryover summary (read only)
+        run: node tools/process/stage7-gate.cjs
+      - name: Portal 10 point functional-growth truthfulness tests
+        run: node --test tools/process/portal-progress-gate.test.cjs
+      - name: Portal functional-growth scorecard
+        run: node tools/process/portal-progress-gate.cjs

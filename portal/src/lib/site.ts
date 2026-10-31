@@ -39,7 +39,8 @@ export const navigation: NavigationItem[] = [
   { label: "Modüller", href: "#moduller" },
   { label: "İçtihat", href: "#arastirma" },
   { label: "Mevzuat", href: "#arastirma" },
-  { label: "Kariyer", href: "#kariyer" },
+  { label: "Kariyer", href: "/careers" },
+  { label: "Belge Taslakları", href: "/documents" },
   { label: "Forum", href: "#topluluk" },
   { label: "Ofisler", href: "#ofisler" },
   { label: "İstatistikler", href: "#istatistikler" },
@@ -108,14 +109,8 @@ export const modules: ModuleItem[] = [
   },
 ];
 
-export const stats: StatItem[] = [
-  { value: "120K+", label: "İçtihat kaydı" },
-  { value: "5.200+", label: "Mevzuat / madde kaydı" },
-  { value: "18K+", label: "Kayıtlı kullanıcı" },
-  { value: "350+", label: "Aktif ofis profili" },
-  { value: "1.400+", label: "Forum başlığı" },
-  { value: "9.800+", label: "Aylık belge üretimi" },
-];
+// No platform metrics are presented without verifiable provenance.
+export const stats: StatItem[] = [];
 
 export const footerColumns: FooterColumn[] = [
   {

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { isCmsAdminRole } from "@/lib/cms-role";
+import { canCurrentUserWriteCms } from "@/lib/cms-current-access";
 import { updateAdminHomeHero, updateExistingSetting } from "@/lib/cms-persistence";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -35,6 +36,7 @@ export default function Page() {
   const [message, setMessage] = useState("");
   const [authChecking, setAuthChecking] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const authGeneration = useRef(0);
   // Immutable snapshots of the rows this editor actually loaded. These must
   // not share object references with mutable UI arrays.
   const heroBaseline = useRef<Record<string, unknown> | null>(null);
@@ -46,74 +48,87 @@ export default function Page() {
 
   useEffect(() => {
     let isMounted = true;
+    const firstGeneration = ++authGeneration.current;
+    void checkAccess(() => isMounted && authGeneration.current === firstGeneration);
 
-    async function init() {
-      await checkAccess(isMounted);
-    }
+    // Supabase auth callbacks must be synchronous. Re-check asynchronously
+    // after the auth event has completed; reject stale in-flight lookups.
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (event === "INITIAL_SESSION") return;
+        const generation = ++authGeneration.current;
+        setIsAuthorized(false);
+        setAuthChecking(true);
+        heroBaseline.current = null;
+        settingBaseline.current = { navigation: null, modules: null, footer: null };
+        if (!session?.user) {
+          router.replace("/login");
+          return;
+        }
 
-    init();
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session?.user) {
-        router.replace("/login");
+        queueMicrotask(() => {
+          if (isMounted && authGeneration.current === generation) {
+            void checkAccess(() => isMounted && authGeneration.current === generation);
+          }
+        });
       }
-    });
-
+    );
     return () => {
       isMounted = false;
+      ++authGeneration.current;
       subscription.unsubscribe();
     };
   }, [router]);
 
-  async function checkAccess(isMounted = true) {
-    if (isMounted) setAuthChecking(true);
+  async function checkAccess(isCurrent: () => boolean = () => true) {
+    if (!isCurrent()) return;
+    setAuthChecking(true);
+    setIsAuthorized(false);
 
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
+    try {
+      // getUser() confirms current user with the Auth server; getSession()
+      // alone is a locally stored session and is not authorization proof.
+      const { data: auth, error: authError } = await supabase.auth.getUser();
+      if (!isCurrent()) return;
+      if (authError || !auth?.user) {
+        setAuthChecking(false);
+        router.replace("/login");
+        return;
+      }
 
-    if (!session?.user) {
-      router.replace("/login");
-      return;
-    }
+      const { data: profile, error: roleError } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", auth.user.id)
+        .maybeSingle();
+      if (!isCurrent()) return;
 
-    const userId = session.user.id;
-    let allowed = false;
+      // User-editable metadata must never grant a CMS administrator role.
+      const allowed = isCmsAdminRole(profile?.role);
+      if (roleError || !allowed) {
+        setAuthChecking(false);
+        return;
+      }
 
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", userId)
-      .maybeSingle();
-
-    // Authorization comes exclusively from the database-backed profile role.
-    // Supabase user_metadata is user-editable and must not grant admin access.
-    allowed = isCmsAdminRole(profile?.role);
-
-    if (!allowed) {
-      if (isMounted) {
+      // Still only a UI guard. Database RLS must authorize every write.
+      setIsAuthorized(true);
+      await Promise.all([loadHero(),loadNavigation(),loadModules(),loadFooter()]);
+      if (isCurrent()) setAuthChecking(false);
+    } catch {
+      if (isCurrent()) {
         setIsAuthorized(false);
         setAuthChecking(false);
       }
-      return;
     }
+  }
 
-    if (isMounted) {
-      setIsAuthorized(true);
+  async function requireCmsWriteAccess(): Promise<boolean> {
+    if (!isAuthorized || saving || !(await canCurrentUserWriteCms(supabase))) {
+      setIsAuthorized(false);
+      setMessage("Yetki doğrulanamadı. İçerikler kaydedilmedi; yeniden giriş yapıp yetkinizi kontrol edin.");
+      return false;
     }
-
-    await Promise.all([
-      loadHero(),
-      loadNavigation(),
-      loadModules(),
-      loadFooter(),
-    ]);
-
-    if (isMounted) {
-      setAuthChecking(false);
-    }
+    return true;
   }
 
   async function loadHero() {
@@ -320,6 +335,7 @@ export default function Page() {
     try {
       setSaving(true);
       setMessage("");
+      if (!(await requireCmsWriteAccess())) return;
 
       const { error, updatedContent } = await updateAdminHomeHero(supabase, {
         title: heroTitle,
@@ -342,6 +358,7 @@ export default function Page() {
     try {
       setSaving(true);
       setMessage("");
+      if (!(await requireCmsWriteAccess())) return;
 
       const { error } = await updateExistingSetting(
         supabase, "navigation", navigation, settingBaseline.current.navigation
@@ -363,6 +380,7 @@ export default function Page() {
     try {
       setSaving(true);
       setMessage("");
+      if (!(await requireCmsWriteAccess())) return;
 
       const { error } = await updateExistingSetting(
         supabase, "modules", modules, settingBaseline.current.modules
@@ -384,6 +402,7 @@ export default function Page() {
     try {
       setSaving(true);
       setMessage("");
+      if (!(await requireCmsWriteAccess())) return;
 
       const { error } = await updateExistingSetting(
         supabase, "footer", footerColumns, settingBaseline.current.footer
