@@ -314,8 +314,44 @@
     {
       "id": "SEC:S7-ADMIN-CMS-SESSION-WRITE-GUARD",
       "description": "Verify current authenticated identity and database-backed role for every admin CMS write; invalidate stale UI privileges on auth event",
-      "status": "PLANNED",
-      "attempts_recorded_level7": 0
+      "status": "DRAFT_CODE_CI_PASS_NOT_MERGED",
+      "attempts_recorded_level7": 1,
+      "attempts": [
+        {
+          "index": 1,
+          "result": "CODE_AND_CI_VERIFIED",
+          "code_commits": [
+            "37b9223edbcf24e2f2b3db9c64bc1678182e3b3d",
+            "09e7294333f49bfc9d38147c8c123814a65c21c3"
+          ],
+          "test_commit": "9656ea43d13727f46f60831e99ec0fa223eee988",
+          "ci_head_commit": "81dfe0b534a8eb885c0a746c71061e7194311f56",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41176028085",
+          "ci_job_id": 124463653678,
+          "total_tests_passed": 211,
+          "total_tests_failed": 0,
+          "admin_tests_passed": 82,
+          "api_typescript": "PASS",
+          "admin_typescript": "PASS",
+          "portal_typescript": "PASS"
+        }
+      ],
+      "production_deployed": false,
+      "live_db_modified": false,
+      "historical_work_id": null,
+      "accepted_as_historical_deliverable": false,
+      "staging_browser_tested": false,
+      "source_paths": [
+        "admin/src/lib/cms-current-access.ts",
+        "admin/src/app/cms/page.tsx",
+        "admin/tests/cms-current-access.test.cjs"
+      ],
+      "outstanding": [
+        "Staging authenticated browser with two different sessions and role change",
+        "Verify real RLS-protected CMS update allow/deny behavior",
+        "PR merge/production deployment requires separate approval",
+        "Possible in-flight page content read effects on auth changes should be tested with browser integration"
+      ]
     }
   ],
   "production_modified": false,
@@ -327,5 +363,19 @@
     "The four stage 6 work items include their original per-attempt records (including failed first attempts); no reinterpretation of failed runs.",
     "No original 973 historical work ID is assigned to a newly created operational work item.",
     "Hollanda/AB legal applicability checks remain conditional."
-  ]
+  ],
+  "live_security_readonly_observations": {
+    "observed_on": "2026-10-31",
+    "profiles": {
+      "rls_enabled": true,
+      "select_own_policy": "Users can read own profile",
+      "predicate": "auth.uid() = id",
+      "update_policy_observed": false,
+      "anon_auth_object_grants_present": true,
+      "interpretation": "Object grants do not bypass RLS. No UPDATE RLS policy returned by pg_policies in point-in-time read."
+    },
+    "other_public_tables_rls_disabled": 7,
+    "other_auth_password_protection_warnings": 1,
+    "source": "Supabase MCP read-only: pg_class, pg_roles, pg_policies and get_advisors"
+  }
 }
