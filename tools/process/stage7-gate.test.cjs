@@ -5,7 +5,7 @@ const {load,validate}=require('./stage7-gate.cjs');
 const source=load(),copy=()=>structuredClone(source);
 test('consented Level 7 active, Level 8 locked, 14 carryovers preserved',()=>{
  assert.deepEqual(validate(source),{current_level:7,next_level_approved:false,carryover_count:14,open_rls:7,
- historic_open_decisions:18,past_level6_failed_attempts:2,new_level7_attempts:1,
+ historic_open_decisions:18,past_level6_failed_attempts:2,new_level7_attempts:5,
  code_ci_passed:true,production_modified:false});
 });
 test('no Level 8 without renewed explicit consent',()=>{
@@ -60,4 +60,24 @@ test('code CI success cannot be promoted to production without evidence',()=>{
 test('no secret rewrites of live risk count',()=>{
  const d=copy();d.live_security_readonly_observations.other_public_tables_rls_disabled=0;
  assert.throws(()=>validate(d),/ungrounded/);
+});
+
+test('new functional portal areas are separate works with only one verified code attempt',()=>{
+  const work=source.new_work;
+  assert.equal(work.length,5);
+  assert.deepEqual(work.slice(1).map(x=>x.attempts_recorded_level7),[1,1,1,1]);
+  assert.ok(work.every(x=>x.production_deployed===false));
+  assert.ok(work.every(x=>x.staging_browser_tested===false));
+});
+test('cannot inflate new stage work count without source evidence',()=>{
+  const d=copy();d.new_work[1].test_sources=[];
+  assert.throws(()=>validate(d),/New portal code item lacks/);
+});
+test('cannot mark new portal research as deployed or historically accepted',()=>{
+  const d=copy();d.new_work[1].production_deployed=true;
+  assert.throws(()=>validate(d),/invent/);
+});
+test('cannot count an invented second attempt for new work',()=>{
+  const d=copy();d.new_work[1].attempts_recorded_level7=2;
+  assert.throws(()=>validate(d),/per-task evidence/);
 });
