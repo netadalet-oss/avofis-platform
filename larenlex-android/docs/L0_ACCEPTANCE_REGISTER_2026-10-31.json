@@ -1,0 +1,136 @@
+{
+  "product": "LarenLex Android",
+  "level": "L0",
+  "closure": "NOT_COMPLETE",
+  "next_level": "L1",
+  "transition_approval_requested": false,
+  "transition_authorized": false,
+  "github": {
+    "repository": "netadalet-oss/avofis-platform",
+    "branch": "work/larenlex-android",
+    "base": "main",
+    "branch_is_actual_android_develop": false
+  },
+  "evidence": {
+    "execution_date": "2026-10-31",
+    "input_zip_sha256": {
+      "larenlex": "8049e3359b7822c458cb678431412e3f48e0d0f7dea1834a709859b7f4d5ff8c",
+      "combined_reference": "51c672b5276a1acfd65a524921d6fd7095f85593d561084144db44d03757036c"
+    },
+    "source_manifest_commands": {
+      "larenlex": "sha256sum -c SHA256SUMS.txt: exit 0, 14 verified",
+      "reference": "sha256sum -c SHA256SUMS.txt: exit 0, 21 verified"
+    },
+    "original_source_sha256": "88af14aee01a000eada61437e36cf7775c157cd325c74465e55899a4c58c845e",
+    "canonical_identifiers": {
+      "LX": 62,
+      "A2": 453,
+      "API": 102,
+      "R_reference_only": 594
+    },
+    "historical_API_layers": {
+      "ram_synthetic": 87,
+      "sqlite_subset_of_ram": 37,
+      "disabled": 15,
+      "real_production": 0
+    },
+    "local_source_audit": "PASS_SOURCE_ONLY; not app/build/CI/device acceptance",
+    "negative_bundle_trials": {
+      "missing": {
+        "exit_code": 2
+      },
+      "synthetic_wrong_head": {
+        "exit_code": 1
+      }
+    },
+    "github_ci": "PENDING_OR_NOT_VERIFIED; workflow definition is not proof of a workflow run",
+    "connected_commit_status": "Vercel portal/admin statuses failed due to build-rate-limit, unrelated to Android acceptance",
+    "real_android_develop_sha_from_historical_document": "46338372045277e6856a488c9c01ff5749b3522b",
+    "real_android_main_sha_from_historical_document": "db796003982e1447969f610efe68de5cd80df268",
+    "git_bundle_present": false,
+    "android_gradle_source_present": false,
+    "adb_available_in_local_audit": false,
+    "gradle_available_in_local_audit": false,
+    "psql_available_in_local_audit": false
+  },
+  "tasks": [
+    {
+      "id": "LX-001",
+      "status": "PARTIAL",
+      "open": "A5.14 handoff archive and A5.18 Git bundle absent; cannot git bundle verify"
+    },
+    {
+      "id": "LX-002",
+      "status": "BLOCKED_SOURCE",
+      "open": "Cannot validate Git origin/develop HEAD, origin/main, git fsck or clean checkout"
+    },
+    {
+      "id": "LX-003",
+      "status": "PARTIAL",
+      "open": "Canonical priority confirmed; original A1-A4 architecture files and decisions not independently checked"
+    },
+    {
+      "id": "LX-004",
+      "status": "PARTIAL",
+      "open": "Namespace and Git branch separated; actual Android appId, endpoints, tokens and backend isolation not inspected"
+    },
+    {
+      "id": "LX-005",
+      "status": "PARTIAL",
+      "open": "453 A2 and 594 R identities checked; live A2-R-API-test-legal mapping not established"
+    },
+    {
+      "id": "LX-006",
+      "status": "PARTIAL",
+      "open": "102 source API identities and A5.18 status verified; current OpenAPI/data registry unavailable"
+    },
+    {
+      "id": "LX-007",
+      "status": "BLOCKED_SOURCE",
+      "open": "No executable Android sources for architecture/Node/Python/Chromium/Gradle regression rerun"
+    },
+    {
+      "id": "LX-008",
+      "status": "PARTIAL",
+      "open": "Historical evidence layers separated in audit tooling; independent runtime and acceptance still absent"
+    },
+    {
+      "id": "LX-009",
+      "status": "PARTIAL",
+      "open": "Initial failures and negative bundle controls recorded; source BLOCKER_CONTINUITY integration remains"
+    },
+    {
+      "id": "LX-010",
+      "status": "BLOCKED_SOURCE",
+      "open": "Cannot make actual A5 Android code/test commit without source tree; audit tooling commits do not count"
+    }
+  ],
+  "blockers": [
+    {
+      "id": "L0-MISSING-A518-GIT-BUNDLE",
+      "state": "OPEN",
+      "need": "User-provided real LarenLex_A5_18_bagimsiz_git_v2.8.0.bundle and/or authoritative independent Android Git remote"
+    },
+    {
+      "id": "L0-MISSING-A514-HANDOFF",
+      "state": "OPEN",
+      "need": "Historical LarenLex_DEVIR_A5_14_2026-10-31.zip plus source manifests"
+    },
+    {
+      "id": "L0-MISSING-RUNNABLE-ANDROID",
+      "state": "OPEN",
+      "need": "Authentic Git source and reproducible Android SDK/Gradle device test access"
+    },
+    {
+      "id": "L0-INDEPENDENT-ACCEPTANCE",
+      "state": "OPEN",
+      "need": "Independent security, technical, legal and product acceptance evidence"
+    }
+  ],
+  "restrictions": [
+    "Do not merge main",
+    "Do not use Avofis Supabase as Android backend",
+    "Do not elevate historical synthetic passes to real acceptance",
+    "No production writes, real customer data, signing or publication"
+  ]
+}
