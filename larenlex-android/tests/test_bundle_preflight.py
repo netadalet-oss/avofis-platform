@@ -45,5 +45,18 @@ class BundleGateTests(unittest.TestCase):
             p=run('bash',str(SCRIPT),str(bundle),str(home/'checkout'))
             self.assertEqual(p.returncode,1,p.stderr)
             self.assertIn('FAIL: Android source refs do not match',p.stderr)
+            self.assertFalse((home/'checkout').exists(), 'Rejected source must not be published')
+
+    def test_dangling_symlink_target_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            home = pathlib.Path(tmp)
+            bundle = home/'synthetic.bundle'
+            bundle.write_bytes(b'not used')
+            target = home/'checkout'
+            target.symlink_to(home/'nowhere')
+            p = run('bash', str(SCRIPT), str(bundle), str(target))
+            self.assertEqual(p.returncode, 2)
+            self.assertIn('REFUSED: target already exists', p.stderr)
+            self.assertTrue(target.is_symlink())
 
 if __name__=='__main__': unittest.main()
