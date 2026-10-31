@@ -29,6 +29,11 @@ jobs:
         run: node --test portal/tests/local-expanded-modules.test.cjs portal/tests/local-portal-workflows.test.cjs portal/tests/navigation-access.test.cjs tools/security/rls-readiness.test.cjs
       - name: Build customer portal
         if: always()
+        # Non-sensitive CI-only placeholders: the client cannot accept live cases.
+        # No production or staging Supabase instance is contacted by this job.
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://offline-placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: offline-ci-not-an-authenticated-credential
         run: npm run build:portal
       - name: Build staff portal
         if: always()

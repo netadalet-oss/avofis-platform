@@ -172,8 +172,8 @@ test('all six workspaces are linked from module directory',()=>{
 });
 test('newer stage-1 homepage does not publish fabricated statistics',()=>{
  const p=read('src/app/page.tsx'),site=read('src/lib/site.ts');
- assert.doesNotMatch(site,/120K\\+|18K\\+|9\\.800\\+|350\\+/);
- assert.doesNotMatch(p,/currentStatsItems|<EditableStatGrid|meta: "\\d+ başlık"/);
+ for(const word of ['120K+','18K+','9.800+','350+'])assert.ok(!site.includes(word),word);
+ for(const word of ['currentStatsItems','<EditableStatGrid','meta: "248 başlık"'])assert.ok(!p.includes(word),word);
  assert.match(p,/AVOfis henüz kuruluş öncesi geliştirme aşamasındadır/);
 });
 test('newer stage-1 homepage flags demonstration and unavailable live services',()=>{

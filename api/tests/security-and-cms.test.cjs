@@ -36,6 +36,8 @@ function cmsHandlers() {
 function invoke(handler, body) {
   const response = { statusCode: 200, json: null, headers: {} };
   const res = {
+    get statusCode() { return response.statusCode; },
+    set statusCode(value) { response.statusCode = value; },
     status(code) { response.statusCode = code; return res; },
     json(value) { response.json = value; return res; },
     setHeader(name, value) { response.headers[name.toLowerCase()] = value; return res; },

@@ -98,5 +98,5 @@ test('public navigation does not claim verified staff editing rights',()=>{
  const src=fs.readFileSync(path.join(root,'src/components/site-header.tsx'),'utf8');
  assert.match(src,/const isAdmin = false;/);
  assert.match(src,/PUBLIC_CMS_EDITING_ENABLED/);
- assert.doesNotMatch(src,/saveVerifiedNavigation\\(/);
+ assert.equal(src.includes('saveVerifiedNavigation('), false);
 });
