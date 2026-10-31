@@ -1,0 +1,59 @@
+name: AVOfis S1 public footer and progress preview
+on:
+  pull_request:
+    paths:
+      - "portal/src/components/site-footer.tsx"
+      - "portal/src/app/ilerleme/**"
+      - "portal/tests/public-footer-security.test.cjs"
+      - ".github/workflows/seviye1-footer-progress.yml"
+  push:
+    branches:
+      - work/avofis-portal-s1-20261031
+    paths:
+      - "portal/src/components/site-footer.tsx"
+      - "portal/src/app/ilerleme/**"
+      - "portal/tests/public-footer-security.test.cjs"
+      - ".github/workflows/seviye1-footer-progress.yml"
+permissions:
+  contents: read
+jobs:
+  negative-public-cms-and-http:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      NEXT_PUBLIC_SUPABASE_URL: "https://example.invalid"
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: "synthetic-ci-only-not-a-real-key"
+    steps:
+      - name: Checkout reviewed source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Use Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+      - name: Install without lifecycle scripts
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Portal negative source and role tests
+        run: npm run test --workspace portal
+      - name: Run public-trust checks
+        run: node --test portal/tests/public-trust.test.mjs
+      - name: Build Next.js portal
+        run: npm run build:portal
+      - name: Verify real HTTP progress route
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm --workspace portal run start > /tmp/avofis-progress-http.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          for i in $(seq 1 50); do
+            if curl -fsS http://127.0.0.1:3000/ilerleme > /tmp/avofis-progress.html; then break; fi
+            sleep 1
+          done
+          test -s /tmp/avofis-progress.html
+          grep -q 'İlerleme ve Şeffaflık' /tmp/avofis-progress.html
+          grep -q 'Önemli sınır' /tmp/avofis-progress.html
+          grep -q 'müşteri kabulü' /tmp/avofis-progress.html
+          echo 'Public progress HTTP: PASS'
