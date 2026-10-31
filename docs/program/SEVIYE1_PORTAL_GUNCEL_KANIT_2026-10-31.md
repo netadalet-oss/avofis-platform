@@ -58,3 +58,12 @@ Vercel preview kontrolünde planın `build-rate-limit` durumuna rastlanmıştır
 - En küçük düzeltme: aynı HTTP bekleme ve olumlu gereksinim korunup yalnız `grep -qi` kullanıldı. Kod güvenlik kapıları veya kamu iddiası gevşetilmedi.
 - İkinci koşu [Portal CI 41251758016](https://github.com/netadalet-oss/avofis-platform/actions/runs/41251758016): **SUCCESS**; negatif kamu CMS, document gate, portal build ve `/ilerleme` HTTP kontrolleri başarılı. Eş kod HEAD [API/admin/portal güvenlik CI 41251758019](https://github.com/netadalet-oss/avofis-platform/actions/runs/41251758019): **SUCCESS**.
 - Vercel preview build-rate-limit devam edebilir; bu koşular bağımsız gerçek tarayıcı, canlı Auth/Storage veya kamu production yayını değildir. B01–B18, 7 canlı RLS, insan hukuk/dil/kurum kabulü ve 0/594 bağımsız R sonucu değişmedi.
+
+## 01.11.2026 — Portaldaki izlenen yerel ortam dosyasının giderilmesi
+
+- Geçerli portal çalışma dalının Git ağacı meta verisinde `admin/.env.local` dosyası SHA `1e003665f6c3b3135e9dc1173f0924b922872777` ile izleniyordu; **dosya içeriği veya sır değerleri okunmadı**.
+- Salt development dalında dosya Git takibinden çıkarıldı: `72f4f00d683b7869f31cec1f0ef2ad6283b0f34d`.
+- `portal/tests/tracked-env-gate.test.cjs` eklendi; Git index'ini **yalnız adlar üzerinden** tarar, `.env.local` ve imzalama/özel anahtar uzantılarının takip edilmesi durumunda hata verir; `.env.example` gibi örnekleri korur. `.gitignore` keystore/sertifika biçimleri için genişletildi.
+- Aynı kod için [GitHub Actions portal CI 41252222742](https://github.com/netadalet-oss/avofis-platform/actions/runs/41252222742) **SUCCESS**, [API/admin güvenlik CI 41252222708](https://github.com/netadalet-oss/avofis-platform/actions/runs/41252222708) **SUCCESS**. Kod HEAD `59970f601f35a5f3935f15ca84a8f736522bb908`.
+- Son portal Git ağacı doğrulamasında bu dosya ve `*.key`/`*.pem` takibi yoktur; bu sonuç yalnız **dalın son kaynak durumudur**. Tarihî `main`, birleşik PR #12 geçmişi veya gerçek kimlik bilgisi rotasyonu gerçekleşmedi.
+- **Risk/ret:** İçerik bilinmediği için sır sızıntısı ileri sürülmez; ama eski Git commit'inde çevresel dosyanın bulunması nedeniyle yetkili gizli inceleme ve gerekirse credential rotation tamamlanmadan R-540 için bağımsız kabul iddia edilemez.
