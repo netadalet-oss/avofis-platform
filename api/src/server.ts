@@ -1,5 +1,5 @@
 import express from "express";
-import { configureApiHttpSecurity } from "./security/http-hardening";
+import { configureApiHttpSecurity, installApiErrorResponses } from "./security/http-hardening";
 import { cmsRouter } from "./modules/cms/cms.router";
 import { authRouter } from "./modules/auth/auth.router";
 import { casesRouter } from "./modules/cases/cases.router";
@@ -36,6 +36,9 @@ app.use("/api/connect", connectRouter);
 app.use("/api/analytics", analyticsRouter);
 app.use("/api/support", supportRouter);
 app.use("/api/admin", adminRouter);
+
+// All route and JSON-body exceptions must receive a redacted API response.
+installApiErrorResponses(app);
 
 const port = Number(process.env.PORT || 4000);
 app.listen(port, () => {
