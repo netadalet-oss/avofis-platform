@@ -53,6 +53,15 @@ function check(d) {
           || w.historical_work_id!==null))
       throw Error('Draft code incorrectly claimed as live or historical delivery');
   }
+  const concurrency = d.new_work.find(w=>w.id==='SEC:S6-CMS-CONCURRENT-EDIT-GUARD');
+  if(concurrency){
+    if(concurrency.attempts_recorded_level6!==2
+      || concurrency.attempts[0]?.result!=='FAILED_TEST_ASSERTION'
+      || concurrency.attempts[1]?.result!=='CODE_AND_CI_VERIFIED'
+      || concurrency.production_deployed!==false
+      || concurrency.staging_integration_verified!==false)
+      throw Error('Historical concurrency attempt record tampered with');
+  }
   return {operational_stage:6,stage7_authorized:false,carried_items:10,open_live_rls:7,
           production_modified:false,stage5_historical_complete:false,
           new_stage6_work:d.new_work.length};
