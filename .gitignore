@@ -7,3 +7,10 @@ coverage/
 !.env.example
 *.pem
 *.key
+
+# Private signing, TLS and mobile push credentials
+*.p8
+*.p12
+*.pfx
+*.jks
+*.keystore
