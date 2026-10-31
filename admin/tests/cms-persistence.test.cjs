@@ -146,7 +146,7 @@ test('immutable loaded snapshots are stored without sharing mutable UI objects',
 test('CMS handlers pass original observed content, not newly fetched snapshot',()=>{
   assert.ok((cmsPage.match(/heroBaseline\.current\)/g)||[]).length===2);
   for(const key of ['navigation','modules','footer']){
-    assert.equal((cmsPage.match(new RegExp('settingBaseline\\.current\\.'+key+'\\)','g'))||[]).length,2);
+    assert.equal((cmsPage.match(new RegExp('settingBaseline\\.current\\.'+key+'\\s*\\)','g'))||[]).length,2);
   }
 });
 test('admin page still authorizes using database profile role',()=>{
