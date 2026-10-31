@@ -189,6 +189,26 @@ export default function WholeProductLevelOnePreview() {
           </ol>
         </section>
 
+        <section className="mt-12" aria-labelledby="parallel-tracks">
+          <h2 id="parallel-tracks" className="text-2xl font-semibold">Her seviyede izlenen ek iş ve güvenlik kayıtları</h2>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              ["J01–J16", "16 dijital yargı işi", "Resmî makam bağlantısı veya makbuz teyidi yok"],
+              ["P01–P10", "10 personel yetki protokolü", "Bireysel atama, MFA ve audit kabulü bekliyor"],
+              ["B01–B18", "18 yayın ve işletme engeli", "Her engel kanıtla ayrı kapanmalı"],
+              ["T01–T13", "13 teslimat kilometre taşı", "CI, staging, hukuk ve yayın aynı kanıt değildir"],
+              ["G1–G4", "4 IND izin kapısı", "İmza ve iki kişinin incelemesi olmadan gönderim yok"],
+              ["TR · NL · DE · EN · AR RTL · RU", "6 dil ve RTL", "İnsan hukukî/linguistik onayı olmayan metin onaylı sayılmaz"]
+            ].map(([id, title, note]) => (
+              <div key={id} className="rounded-xl border border-white/15 bg-white/5 p-4">
+                <p className="text-xs font-semibold text-sky-300">{id}</p>
+                <h3 className="mt-2 font-semibold">{title}</h3>
+                <p className="mt-2 text-xs leading-6 text-slate-300">{note}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         <section className="mt-12 rounded-2xl border border-amber-300/30 bg-white/5 p-6" aria-labelledby="human-review">
           <h2 id="human-review" className="text-xl font-semibold">Yayın ve insan onayı gereken işler</h2>
           <ul className="mt-4 list-inside list-disc space-y-2 text-sm leading-7 text-slate-300">
