@@ -241,6 +241,58 @@
         "Review portal content writers for stale snapshot and revision model",
         "Separate merge/production authorization"
       ]
+    },
+    {
+      "id": "SEC:S6-CMS-DEFAULTS-PARTIAL-RESET",
+      "subject": "Four-step bulk CMS default reset was non-atomic and could partially persist content",
+      "status": "DRAFT_CODE_CI_PASS_NOT_MERGED",
+      "attempts_recorded_level6": 2,
+      "attempts": [
+        {
+          "index": 1,
+          "result": "FAILED_TEST_ASSERTION",
+          "code_commit": "6259aa6a65a5f0b99fe56c074faffe7c27f00b4d",
+          "test_commit": "52796109f9f9ab98c3cc97905fd221403f5f3c56",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41175029768",
+          "ci_job_id": 124460695547,
+          "admin_tests_total": 57,
+          "admin_tests_passed": 56,
+          "admin_tests_failed": 1,
+          "reason": "Test AST visitor used a callback returning a truthy array and stopped before all call expressions; source preview behavior was not falsified.",
+          "failure_classification": "TEST_HARNESS_EARLY_TERMINATION"
+        },
+        {
+          "index": 2,
+          "result": "CODE_AND_CI_VERIFIED",
+          "code_commit": "6259aa6a65a5f0b99fe56c074faffe7c27f00b4d",
+          "test_commit": "2602190ba0ad2497280f239ce773c4c3dce322e7",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41175089926",
+          "ci_job_id": 124460877159,
+          "total_tests_passed": 182,
+          "total_tests_failed": 0,
+          "admin_tests_passed": 57,
+          "api_build": "PASS",
+          "admin_typescript": "PASS",
+          "portal_typescript": "PASS"
+        }
+      ],
+      "source_paths": [
+        "admin/src/app/cms/page.tsx",
+        "admin/tests/cms-default-preview.test.cjs",
+        "admin/tests/cms-persistence.test.cjs"
+      ],
+      "technical_intent": "Default values only update browser-local editable fields. Original loaded content baselines stay unchanged, and users must explicitly save each section with existing CAS checks. No four-step bulk SQL writes remain.",
+      "risk_reduced_in_draft": "Eliminates nontransactional one-click four-step write and false bulk-success message in draft code.",
+      "remaining_limitations": [
+        "Not a four-field atomic transaction; users can independently save only some sections",
+        "Production deployment and real authenticated browser test not performed",
+        "RLS still authoritative and seven separate disabled-RLS errors remain"
+      ],
+      "production_deployed": false,
+      "live_db_modified": false,
+      "historical_work_id": null,
+      "accepted_as_historical_deliverable": false,
+      "staging_integration_verified": false
     }
   ],
   "hollanda_business_gov_controls": "CONDITIONAL_APPLICABILITY_RETAINED",
