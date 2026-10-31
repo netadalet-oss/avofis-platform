@@ -39,3 +39,22 @@ python3 -m unittest discover -s larenlex-android/tests -v
 4. L0 kabul ve L1 geçişi kullanıcı onayı olmadan ilan edilmeyecek.
 
 Portal çalışmalarına veya `main` dalına otomatik merge yoktur.
+
+## 2026-11-01 L0 iz matrisi ve kaynak karar kaydı
+
+Bu dalda L0 iz üreticisi ve sürüm farkı kaydı vardır:
+
+- docs/L0_DECISION_AND_BLOCKERS_2026-11-01.md
+- tools/build_l0_trace.py
+- tests/test_build_l0_trace.py
+
+Özel kaynak ZIP yalnız yetkili yerel dosya sisteminde bulunuyorsa:
+
+```bash
+python3 larenlex-android/tools/build_l0_trace.py \
+  --source /secure/path/LARENLEX_ANDROID_AYRI_TALIMATNAME_TESLIM.zip \
+  --out /tmp/larenlex-trace.json
+python3 -O -m unittest discover -s larenlex-android/tests -v
+```
+
+Yukarıdaki iz matrisi, A2↔R↔API bağlantısını delilsiz otomatik doldurmaz. SHA ve temel sayım doğrulaması geçse bile, sonuç **Android APK testi veya bağımsız kabul değildir**. Birleşik kaynak ZIP'i ve özel talimat ZIP'i GitHub'a yüklenmez. GitHub Actions sadece bağımsız unit kontrolüdür; özel dosya sağlanmadıkça ZIP entegrasyonu atlanır.
