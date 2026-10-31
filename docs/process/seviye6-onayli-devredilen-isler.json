@@ -116,10 +116,36 @@
   "new_work": [
     {
       "id": "SEC:S6-CMS-EXISTING-ROW-UPDATE",
-      "status": "SOURCE_VERIFIED_IMPLEMENTATION_PENDING",
-      "attempts_recorded_level6": 0,
+      "status": "DRAFT_CODE_CI_PASS_NOT_MERGED",
+      "attempts_recorded_level6": 1,
       "source": "portal/src/app/page.tsx",
-      "caveat": "Existing live public.pages has UNIQUE(slug) and one home row at snapshot, no production write performed."
+      "caveat": "Existing live public.pages has UNIQUE(slug) and one home row at snapshot, no production write performed.",
+      "attempts": [
+        {
+          "index": 1,
+          "result": "CODE_AND_CI_VERIFIED",
+          "code_commit": "6c5273139bb8a3d4915878df219e03ecd95075e4",
+          "test_commit": "3dfe64261af23b1acbe7d8fb0aaf703edf3adbb8",
+          "ci_head_commit": "603425225cb6c42c46f0b9c9612b6dbd5133f9c1",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41153680961",
+          "ci_job_id": 124395667180,
+          "total_passed": 132,
+          "failed": 0,
+          "portal_typescript": "PASS",
+          "new_cms_write_tests": 12,
+          "remarks": "Tested query behavior with in-process mocks; no live CMS write, no staging/production acceptance."
+        }
+      ],
+      "production_deployed": false,
+      "live_db_modified": false,
+      "historical_work_id": null,
+      "accepted_as_historical_deliverable": false,
+      "staging_integration_verified": false,
+      "deferred_acceptance": [
+        "Staging / browser-to-Supabase authenticated CMS update under RLS",
+        "Review admin CMS page upserts and Data API insert policies",
+        "Production merge and deployment require separate approval"
+      ]
     }
   ],
   "hollanda_business_gov_controls": "CONDITIONAL_APPLICABILITY_RETAINED",
