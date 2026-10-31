@@ -67,3 +67,7 @@ jobs:
         run: node --test tools/process/stage6-gate.test.cjs
       - name: Stage 6 carryover audit (read only)
         run: node tools/process/stage6-gate.cjs
+      - name: Stage 7 explicit approval and historical carryover tests
+        run: node --test tools/process/stage7-gate.test.cjs
+      - name: Stage 7 source-backed carryover summary (read only)
+        run: node tools/process/stage7-gate.cjs
