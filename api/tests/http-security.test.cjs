@@ -26,7 +26,7 @@ function loadTs(relativePath, mocks = {}) {
   return mod.exports;
 }
 const { configuredCorsOrigins } = loadTs('src/security/cors-origin.ts');
-const { configureApiHttpSecurity } = loadTs('src/security/http-hardening.ts', {
+const { configureApiHttpSecurity, installApiErrorResponses } = loadTs('src/security/http-hardening.ts', {
   './cors-origin': { configuredCorsOrigins },
 });
 const expectedSeed = { title: 'Test home page', menu: [{ label: 'Home', href: '/' }] };
@@ -39,6 +39,7 @@ function createCmsApp(origins) {
   const app = express();
   configureApiHttpSecurity(app, origins);
   app.use('/api/cms', cmsRouter);
+  installApiErrorResponses(app);
   return app;
 }
 async function startServer(originConfiguration) {
@@ -135,4 +136,49 @@ test('API response does not expose Express signature or permit origin wildcard',
     assert.equal(r.headers.get('access-control-allow-origin'), null);
     assert.equal(r.headers.get('access-control-allow-credentials'), null);
   });
+});
+
+
+test('malformed JSON is a redacted 400 with no parser stack or echoed secret', async () => {
+  await withServer(allowed, async (url) => {
+    const canary = 'PARSER_CANARY_NEVER_REFLECTED';
+    const response = await fetch(url + '/api/cms/pages/home', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: '{"secret":"' + canary + '",'
+    });
+    assert.equal(response.status, 400);
+    assert.equal(response.headers.get('cache-control'), 'no-store');
+    assert.equal(response.headers.get('x-content-type-options'), 'nosniff');
+    assert.deepEqual(await response.json(), { error: 'INVALID_JSON' });
+  });
+});
+
+test('oversized input gets a static JSON 413 rather than Express HTML diagnostics', async () => {
+  await withServer(allowed, async (url) => {
+    const response = await fetch(url + '/api/cms/pages/home', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ payload: 'Y'.repeat(70 * 1024) })
+    });
+    assert.equal(response.status, 413);
+    assert.equal(response.headers.get('content-type')?.includes('application/json'), true);
+    assert.deepEqual(await response.json(), { error: 'REQUEST_TOO_LARGE' });
+  });
+});
+
+test('unexpected API exceptions are redacted without exposing internal error text', async () => {
+  const app = express();
+  configureApiHttpSecurity(app, allowed);
+  app.get('/throw', () => { throw Error('PRIVATE_INTERNAL_ERROR_CANARY'); });
+  installApiErrorResponses(app);
+  const server = app.listen(0, '127.0.0.1');
+  await once(server, 'listening');
+  try {
+    const response = await fetch('http://127.0.0.1:' + server.address().port + '/throw');
+    assert.equal(response.status, 500);
+    assert.deepEqual(await response.json(), { error: 'REQUEST_FAILED' });
+  } finally {
+    await new Promise(resolve => server.close(resolve));
+  }
 });
