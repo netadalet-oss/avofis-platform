@@ -51,13 +51,19 @@ jobs:
             sleep 1
           done
           test -s /tmp/avofis-admin-s1.html
-          grep -q 'Yönetim, API ve personel ana modülleri' /tmp/avofis-admin-s1.html
-          grep -q '16 personel modülünün ana noktaları' /tmp/avofis-admin-s1.html
-          grep -q '14 API modül iskeleti' /tmp/avofis-admin-s1.html
-          grep -q '0/594 bağımsız R kabul' /tmp/avofis-admin-s1.html
-          grep -q 'noindex' /tmp/avofis-admin-s1.html
-          if grep -Eq 'type="password"|<form' /tmp/avofis-admin-s1.html; then
-            echo 'Unexpected personal-data input in preview' >&2
-            exit 1
-          fi
-          echo 'Whole product admin preview HTTP: PASS'
+          # Assert visible Next HTML, stripping React dynamic text separators.
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const assert = require('node:assert/strict');
+          const raw = fs.readFileSync('/tmp/avofis-admin-s1.html', 'utf8');
+          const visible = raw.replace(/<!--[\s\S]*?-->/g, '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
+          for(const required of [
+            'Yönetim, API ve personel ana modülleri',
+            '16 personel modülünün ana noktaları',
+            '14 API modül iskeleti',
+            '0/594 bağımsız R kabul'
+          ]) assert.ok(visible.includes(required), 'Missing actual admin preview: '+required);
+          assert.match(raw, /noindex/);
+          assert.doesNotMatch(raw, /type="password"|<form/);
+          console.log('Whole product admin preview HTTP: PASS');
+          NODE
