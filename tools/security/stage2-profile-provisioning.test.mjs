@@ -24,7 +24,10 @@ test('profile fixture exactly mirrors source-backed Auth FK and default user',()
  assert.doesNotMatch(fixture,/email text|raw_app_meta_data|CREATE TRIGGER/i);
 });
 test('no privileged definer, public trigger or self-granted role is permitted',()=>{
- for(const s of [fixture,proposal,seed,ab])assert.doesNotMatch(s,/SECURITY DEFINER|CREATE TRIGGER|GRANT\s+[^\n;]*provisioner\s+TO\s+(?:anon|authenticated)/i);
+ for(const s of [fixture,proposal,seed,ab]){
+  const executable=s.replace(/^--[^\n]*/gm,'');
+  assert.doesNotMatch(executable,/SECURITY DEFINER|CREATE TRIGGER|GRANT\s+[^\n;]*provisioner\s+TO\s+(?:anon|authenticated)/i);
+ }
  assert.match(proposal,/REVOKE ALL PRIVILEGES ON public\.profiles FROM PUBLIC,anon,authenticated/);
  assert.match(proposal,/GRANT SELECT ON public\.profiles TO authenticated/);
  assert.match(proposal,/GRANT INSERT ON public\.profiles TO avofis_s2_profile_provisioner/);
