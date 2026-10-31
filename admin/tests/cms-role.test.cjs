@@ -26,13 +26,11 @@ for (const role of [undefined, null, '', 'member', 'user', 'admin ', 'super-admi
     assert.equal(isCmsAdminRole(role), false);
   });
 }
-test('CMS auth gate consults only profile.role from the database', () => {
-  const page = fs.readFileSync(pageFile, 'utf8');
-  assert.match(page, /\.from\(["']profiles["']\)/);
-  assert.match(page, /\.select\(["']role["']\)/);
-  assert.match(page, /allowed\s*=\s*isCmsAdminRole\(profile\?\.role\)/);
-  assert.doesNotMatch(page, /session\.user\.user_metadata/);
-  assert.doesNotMatch(page, /session\.user\.app_metadata/);
+test('closed CMS page never authorizes a role or reaches direct database writes',()=>{
+ const page=fs.readFileSync(pageFile,'utf8');
+ for(const forbidden of ['profile.role','isCmsAdminRole(','.from(','.update(','.upsert('])
+  assert.ok(!page.includes(forbidden),forbidden);
+ assert.match(page,/henüz kullanıma açık değildir/);
 });
 test('UI-only role gate expressly delegates real write authorization to RLS', () => {
   assert.match(fs.readFileSync(roleFile, 'utf8'), /Database RLS must enforce/);

@@ -24,7 +24,7 @@ jobs:
       - name: Install monorepo dependencies (no live secrets)
         run: npm install --no-audit --no-fund --package-lock=false
       - name: Level 1 public safety / catalogue / RLS tests
-        run: node --test portal/tests/intake-preparation.test.mjs portal/tests/public-account-safety.test.mjs portal/tests/public-trust.test.mjs portal/tests/service-catalog.test.mjs tools/security/rls-preflight.test.mjs api/tests/cms-write-gate.test.mjs api/tests/admin-cms-safe-page.test.mjs
+        run: node --test portal/tests/intake-preparation.test.mjs portal/tests/public-account-safety.test.mjs portal/tests/public-cms-reader-gate.test.mjs portal/tests/public-trust.test.mjs portal/tests/service-catalog.test.mjs tools/security/rls-preflight.test.mjs api/tests/cms-write-gate.test.mjs api/tests/admin-cms-safe-page.test.mjs
       - name: Historical local workflow regression
         run: node --test portal/tests/local-expanded-modules.test.cjs portal/tests/local-portal-workflows.test.cjs portal/tests/navigation-access.test.cjs tools/security/rls-readiness.test.cjs
       - name: Build customer portal

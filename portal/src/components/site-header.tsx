@@ -10,7 +10,7 @@ import {
   type NavigationItem,
 } from "@/lib/site";
 import { supabase } from "@/lib/supabase";
-import { PUBLIC_CMS_EDITING_ENABLED } from "@/lib/launch-gates";
+import { PUBLIC_CMS_EDITING_ENABLED, PUBLIC_CMS_CONTENT_READER_ENABLED } from "@/lib/launch-gates";
 
 type NavigationSettingRow = {
   value?: NavigationItem[];
@@ -34,6 +34,11 @@ export function SiteHeader() {
     let mounted = true;
 
     async function loadNavigation() {
+      if (!PUBLIC_CMS_CONTENT_READER_ENABLED) {
+        setMenuItems(defaultNavigation);
+        setMenuDraft(defaultNavigation);
+        return;
+      }
       const { data, error } = await supabase
         .from("site_settings")
         .select("value")

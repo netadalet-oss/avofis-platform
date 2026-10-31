@@ -106,39 +106,17 @@ test('session disappearance during lookup invalidates authorization',async()=>{
  const {client}=fake({ids:['admin-uuid',null]});
  assert.equal(await canCurrentUserWriteCms(client),false);
 });
-test('admin CMS page must revalidate before all four persisted saves',()=>{
- assert.equal((page.match(/await requireCmsWriteAccess\(\)/g)||[]).length,4);
- for(const action of ['saveHero','saveNavigation','saveModules','saveFooter']){
-   const pos=page.indexOf('async function '+action+'()');
-   assert.ok(pos>=0,'missing handler '+action);
-   const body=page.slice(pos,pos+430);
-   assert.match(body,/await requireCmsWriteAccess\(\)/,action);
-   assert.match(body,/if \(!\(await requireCmsWriteAccess\(\)\)\) return;/,action);
- }
+test('current admin CMS page is an unavailable informational view',()=>{
+ assert.match(page,/Yayın ve içerik kontrolü/);
+ assert.match(page,/düzenleme ve yayımlama işlemleri henüz kullanıma açık değildir/);
+ assert.match(page,/ikinci kişinin yayın onayı/);
+ assert.doesNotMatch(page,/"use client"|from ["']@supabase|from ["'].*cms-(?:role|persistence|current-access)|useEffect|useState/);
 });
-test('denied authorization revokes admin UI and never writes',()=>{
- const pos=page.indexOf('async function requireCmsWriteAccess()');
- assert.ok(pos>0);
- const body=page.slice(pos,pos+500);
- assert.match(body,/setIsAuthorized\(false\)/);
- assert.match(body,/canCurrentUserWriteCms\(supabase\)/);
+test('CMS page has no reachable DB query, helper or write handler',()=>{
+ for(const text of ['.from(','.select(','.insert(','.upsert(','.update(','.delete(','.rpc(','canCurrentUserWriteCms(','requireCmsWriteAccess('])
+   assert.ok(!page.includes(text),text);
 });
-test('auth event revokes stale admin access before asynchronous recheck',()=>{
- assert.match(page,/onAuthStateChange\(/);
- assert.match(page,/const generation = \+\+authGeneration\.current/);
- assert.match(page,/setIsAuthorized\(false\)/);
- assert.match(page,/queueMicrotask\(/);
- assert.match(page,/authGeneration\.current === generation/);
-});
-test('initial auth check uses verified getUser, not local getSession',()=>{
- assert.match(page,/supabase\.auth\.getUser\(\)/);
- assert.doesNotMatch(page,/supabase\.auth\.getSession\(\)/);
-});
-test('unsafe user metadata cannot grant CMS role',()=>{
- assert.match(page,/isCmsAdminRole\(profile\?\.role\)/);
- assert.doesNotMatch(page,/session\.user\.user_metadata/);
-});
-test('no server-side role bypass or service secret is used',()=>{
- const guardSrc=fs.readFileSync(guardPath,'utf8');
- assert.doesNotMatch(guardSrc,/service_role|SECURITY DEFINER|\.upsert\(|\.insert\(/);
+test('working DB-role helper alone cannot unlock the closed CMS page',async()=>{
+ assert.equal(await canCurrentUserWriteCms(fake().client),true);
+ assert.doesNotMatch(page,/canCurrentUserWriteCms|cms-current-access/);
 });

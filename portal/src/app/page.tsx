@@ -34,7 +34,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { useUser } from "@/hooks/useUser";
 import { supabase } from "@/lib/supabase";
-import { PUBLIC_CMS_EDITING_ENABLED } from "@/lib/launch-gates";
+import { PUBLIC_CMS_EDITING_ENABLED, PUBLIC_CMS_CONTENT_READER_ENABLED } from "@/lib/launch-gates";
 
 const featurePills = [
   "İçtihat araştırma",
@@ -199,6 +199,11 @@ export default function HomePage() {
     let mounted = true;
 
     async function loadCMS() {
+      if (!PUBLIC_CMS_CONTENT_READER_ENABLED) {
+        setCmsContent(null);
+        setHeroDraft({ title: defaultHeroTitle, subtitle: defaultHeroSubtitle });
+        return;
+      }
       const { data, error } = await supabase
         .from("pages")
         .select("content")

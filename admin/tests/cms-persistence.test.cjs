@@ -130,31 +130,14 @@ test('settings exception hides transport details',async ()=>{
   assert.ok(r.error);
   assert.doesNotMatch(r.error.message,/secret/);
 });
-test('admin CMS page has no insert or upsert call sites',()=>{
-  assert.doesNotMatch(cmsPage,/\.insert\(|\.upsert\(/);
+test('admin CMS route cannot call any dormant CAS write helper',()=>{
+ for(const text of ['.insert(','.upsert(','.update(','.rpc(','updateAdminHomeHero(','updateExistingSetting('])
+  assert.ok(!cmsPage.includes(text),text);
+ assert.match(cmsPage,/henüz kullanıma açık değildir/);
 });
-test('all explicit CMS saves still use conditional-update helpers',()=>{
-  // Bulk default reset is a local-only preview, not four database writes.
-  assert.equal((cmsPage.match(/updateAdminHomeHero\(supabase/g)||[]).length,1);
-  assert.equal((cmsPage.match(/updateExistingSetting\(/g)||[]).length,3);
-});
-test('immutable loaded snapshots are stored without sharing mutable UI objects',()=>{
-  assert.match(cmsPage,/useRef<Record<string, unknown> \| null>/);
-  assert.match(cmsPage,/heroBaseline\.current/);
-  assert.match(cmsPage,/settingBaseline\.current\.(?:navigation|modules|footer)/);
-  assert.ok((cmsPage.match(/JSON\.parse\(JSON\.stringify\(data\.value\)\)/g)||[]).length===3);
-});
-test('each explicit CMS save uses the original observed snapshot',()=>{
-  assert.ok((cmsPage.match(/heroBaseline\.current\)/g)||[]).length===1);
-  for(const key of ['navigation','modules','footer']){
-    assert.equal((cmsPage.match(new RegExp('settingBaseline\\.current\\.'+key+'\\s*\\)','g'))||[]).length,1);
-  }
-});
-test('admin page still authorizes using database profile role',()=>{
-  assert.match(cmsPage,/allowed = isCmsAdminRole\(profile\?\.role\)/);
-  assert.doesNotMatch(cmsPage,/session\.user\.user_metadata\?\.role/);
-});
-test('helper has no INSERT, upsert, service key or privileged bypass',()=>{
-  const helper=fs.readFileSync(helperPath,'utf8');
-  assert.doesNotMatch(helper,/\.insert\(|\.upsert\(|service_role|SECURITY DEFINER/);
+test('helper stays tested but is not imported by closed page',()=>{
+ const helper=fs.readFileSync(helperPath,'utf8');
+ assert.match(helper,/export async function updateAdminHomeHero/);
+ assert.doesNotMatch(cmsPage,/from ["'].*cms-persistence/);
+ assert.doesNotMatch(helper,/\.insert\(|\.upsert\(|service_role|SECURITY DEFINER/);
 });
