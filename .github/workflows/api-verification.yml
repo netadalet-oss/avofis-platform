@@ -48,6 +48,8 @@ jobs:
         run: npm run test --workspace api
       - name: Admin authorization regression tests
         run: npm run test --workspace admin
+      - name: Admin TypeScript verification
+        run: npm run typecheck --workspace admin
       - name: Portal TypeScript verification
         run: npm run typecheck --workspace portal
       - name: Portal CMS role regression tests
