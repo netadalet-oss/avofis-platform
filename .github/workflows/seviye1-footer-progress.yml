@@ -1,4 +1,4 @@
-name: AVOfis S1 public footer and progress preview
+name: AVOfis S1 portal safety and public preview
 on:
   pull_request:
     paths:
@@ -9,6 +9,10 @@ on:
       - "portal/tests/payment-webhook-closed.test.cjs"
       - "portal/src/lib/document-draft-contract.ts"
       - "portal/scripts/document-draft-contract.test.mjs"
+      - "portal/src/lib/safe-login-redirect.ts"
+      - "portal/src/app/auth/login/page.tsx"
+      - "portal/src/components/auth/ProtectedRoute.tsx"
+      - "portal/tests/login-redirect-safety.test.cjs"
       - ".github/workflows/seviye1-footer-progress.yml"
   push:
     branches:
@@ -21,6 +25,10 @@ on:
       - "portal/tests/payment-webhook-closed.test.cjs"
       - "portal/src/lib/document-draft-contract.ts"
       - "portal/scripts/document-draft-contract.test.mjs"
+      - "portal/src/lib/safe-login-redirect.ts"
+      - "portal/src/app/auth/login/page.tsx"
+      - "portal/src/components/auth/ProtectedRoute.tsx"
+      - "portal/tests/login-redirect-safety.test.cjs"
       - ".github/workflows/seviye1-footer-progress.yml"
 permissions:
   contents: read
