@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { STAFF_TOP_LEVEL, staffModuleBySlug } from "@/lib/staff-module-directory";
+import { StaffSyntheticDemonstration } from "@/components/StaffSyntheticDemonstration";
 
 export const metadata: Metadata = {
   title: "AVOfis | Personel modülünün ana kapsamı",
@@ -45,6 +46,7 @@ export default function StaffModuleLevelOnePage({ params }: { params: { module: 
             <p className="mt-3 text-sm leading-7 text-slate-300">{item.output}</p>
           </section>
         </div>
+        <StaffSyntheticDemonstration slug={item.slug} />
         <section className="mt-7 rounded-2xl border border-amber-300/30 bg-amber-300/10 p-6">
           <h2 className="text-lg font-semibold">Güvenli işlem sınırı</h2>
           <p className="mt-3 text-sm leading-7 text-amber-100">
