@@ -28,8 +28,11 @@ jobs:
       - name: Historical local workflow regression
         run: node --test portal/tests/local-expanded-modules.test.cjs portal/tests/local-portal-workflows.test.cjs portal/tests/navigation-access.test.cjs tools/security/rls-readiness.test.cjs
       - name: Build customer portal
+        if: always()
         run: npm run build:portal
       - name: Build staff portal
+        if: always()
         run: npm run build:admin
       - name: Build API
+        if: always()
         run: npm run build:api

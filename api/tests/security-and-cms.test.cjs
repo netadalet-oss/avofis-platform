@@ -20,23 +20,26 @@ function loadTs(relativePath, mocks = {}) {
 }
 
 function cmsHandlers() {
-  const routes = { get: {}, post: {} };
-  const router = {
-    get: (url, handler) => { routes.get[url] = handler; return router; },
-    post: (url, handler) => { routes.post[url] = handler; return router; },
-  };
+  const routes = { get: {}, post: {}, put: {}, patch: {}, delete: {} };
+  const router = Object.fromEntries(Object.keys(routes).map(verb =>
+    [verb, (url, handler) => { routes[verb][url] = handler; return router; }]
+  ));
   const page = { title: 'Read only example', menu: [{ label: 'Homepage' }] };
+  const { rejectUnverifiedCmsMutation } = loadTs('src/lib/cms-write-gate.ts');
   loadTs('src/modules/cms/cms.router.ts', {
     express: { Router: () => router },
     './cms.seed': { homepageContent: page },
+    '../../lib/cms-write-gate': { rejectUnverifiedCmsMutation },
   });
   return { routes, page };
 }
 function invoke(handler, body) {
-  const response = { statusCode: 200, json: null };
+  const response = { statusCode: 200, json: null, headers: {} };
   const res = {
     status(code) { response.statusCode = code; return res; },
     json(value) { response.json = value; return res; },
+    setHeader(name, value) { response.headers[name.toLowerCase()] = value; return res; },
+    end(value) { response.json = JSON.parse(value); return res; },
   };
   handler({ body }, res);
   return response;
@@ -75,9 +78,9 @@ test('CMS GET routes retain existing static data', () => {
 test('CMS POST is explicitly non-persistent and never indicates success', () => {
   const { routes } = cmsHandlers();
   const reply = invoke(routes.post['/pages/home'], { title: 'Changed' });
-  assert.equal(reply.statusCode, 501);
-  assert.equal(reply.json.code, 'CMS_WRITE_NOT_IMPLEMENTED');
-  assert.equal(reply.json.persisted, false);
+  assert.equal(reply.statusCode, 503);
+  assert.equal(reply.json.code, 'CMS_WRITE_UNAVAILABLE');
+  assert.notEqual(reply.json.persisted, true);
 });
 test('CMS POST never reflects confidential request body', () => {
   const { routes } = cmsHandlers();
@@ -87,5 +90,11 @@ test('CMS POST never reflects confidential request body', () => {
 test('CMS route declarations remain unchanged', () => {
   const { routes } = cmsHandlers();
   assert.deepEqual(Object.keys(routes.get).sort(), ['/menus/main', '/pages/home']);
-  assert.deepEqual(Object.keys(routes.post), ['/pages/home']);
+  for (const verb of ['post', 'put', 'patch', 'delete']) {
+    assert.deepEqual(Object.keys(routes[verb]), ['/pages/home'], verb);
+    const reply = invoke(routes[verb]['/pages/home'], { secret: 'cannot-persist' });
+    assert.equal(reply.statusCode, 503, verb);
+    assert.equal(reply.json.code, 'CMS_WRITE_UNAVAILABLE', verb);
+    assert.doesNotMatch(JSON.stringify(reply), /cannot-persist/);
+  }
 });

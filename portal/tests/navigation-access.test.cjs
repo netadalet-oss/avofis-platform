@@ -80,20 +80,23 @@ test('two modified rows cannot be accepted',async()=>{
  const {client}=fake({result:{data:[{id:'a'},{id:'b'}],error:null}});
  assert.ok((await saveVerifiedNavigation(client,'admin-1',nav,nav)).error);
 });
-test('header does not trust user_metadata and never upserts navigation',()=>{
+test('current public header never treats user metadata as CMS admin approval',()=>{
  const src=fs.readFileSync(path.join(root,'src/components/site-header.tsx'),'utf8');
- assert.doesNotMatch(src,/user_metadata|\.upsert\(/);
- assert.match(src,/hasPortalCmsAdminAccess\(supabase,\s*currentUserId\)/);
- assert.match(src,/saveVerifiedNavigation\(/);
+ const gates=fs.readFileSync(path.join(root,'src/lib/launch-gates.ts'),'utf8');
+ assert.match(src,/const isAdmin = false;/);
+ assert.doesNotMatch(src,/user_metadata\\?\\.role/);
+ assert.match(gates,/PUBLIC_CMS_EDITING_ENABLED = false;/);
 });
-test('header has token- and identity-scoped verified access',()=>{
+test('current header fails closed before any dormant CMS persistence code',()=>{
  const src=fs.readFileSync(path.join(root,'src/components/site-header.tsx'),'utf8');
- assert.match(src,/verifiedAdmin\?\.userId === currentUserId/);
- assert.match(src,/verifiedAdmin\.token === currentToken/);
- assert.match(src,/setVerifiedAdmin\(null\)/);
+ const guard=src.indexOf('if (!PUBLIC_CMS_EDITING_ENABLED)');
+ const write=src.indexOf('.upsert(');
+ assert.ok(guard>=0 && write>guard);
+ assert.match(src,/İçerik düzenleme yetkisi henüz açılmamıştır/);
 });
-test('header uses original loaded navigation value as CAS precondition',()=>{
+test('public navigation does not claim verified staff editing rights',()=>{
  const src=fs.readFileSync(path.join(root,'src/components/site-header.tsx'),'utf8');
- assert.match(src,/navigationBaseline\.current = JSON\.parse/);
- assert.match(src,/normalizedItems,\s*navigationBaseline\.current/);
+ assert.match(src,/const isAdmin = false;/);
+ assert.match(src,/PUBLIC_CMS_EDITING_ENABLED/);
+ assert.doesNotMatch(src,/saveVerifiedNavigation\\(/);
 });

@@ -170,18 +170,15 @@ test('all six workspaces are linked from module directory',()=>{
  for(const route of ['/cases','/statutes','/documents','/workspace','/careers','/forum'])
    assert.ok(p.includes('href: "'+route+'"'),route);
 });
-test('homepage does not render fabricated count cards',()=>{
- const p=read('src/app/page.tsx');
- const site=read('src/lib/site.ts');
- assert.doesNotMatch(site, /120K\+|18K\+|9\.800\+|350\+/);
- assert.doesNotMatch(p,/currentStatsItems|<EditableStatGrid|meta: "\d+ başlık"/);
- assert.match(p,/Doğrulanmış bir kullanım istatistiği henüz yayımlanmıyor/);
+test('newer stage-1 homepage does not publish fabricated statistics',()=>{
+ const p=read('src/app/page.tsx'),site=read('src/lib/site.ts');
+ assert.doesNotMatch(site,/120K\\+|18K\\+|9\\.800\\+|350\\+/);
+ assert.doesNotMatch(p,/currentStatsItems|<EditableStatGrid|meta: "\\d+ başlık"/);
+ assert.match(p,/AVOfis henüz kuruluş öncesi geliştirme aşamasındadır/);
 });
-
-test('homepage does not claim demo panels are live or offices are verified',()=>{
+test('newer stage-1 homepage flags demonstration and unavailable live services',()=>{
  const page=read('src/app/page.tsx');
  assert.doesNotMatch(page,/Canlı yapı|Doğrulanmış Ofis|Doğrulanmış profil yapısı/);
- assert.match(page,/Tasarım önizlemesi/);
- assert.match(page,/Örnek ofis görünümü/);
- assert.match(page,/henüz planlanan bir arayüzdür/);
+ for(const label of ['Temsili profil','Geliştirme örneği','Planlanan kariyer özellikleri'])
+   assert.ok(page.includes(label),label);
 });

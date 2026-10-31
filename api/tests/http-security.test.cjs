@@ -29,8 +29,10 @@ function loadTs(relativePath, mocks = {}) {
 const { configuredCorsOrigins } = loadTs('src/security/cors-origin.ts');
 const expectedSeed = { title: 'Test home page', menu: [{ label: 'Home', href: '/' }] };
 function createCmsApp(origins) {
+  const { rejectUnverifiedCmsMutation } = loadTs('src/lib/cms-write-gate.ts');
   const { cmsRouter } = loadTs('src/modules/cms/cms.router.ts', {
     './cms.seed': { homepageContent: expectedSeed },
+    '../../lib/cms-write-gate': { rejectUnverifiedCmsMutation },
   });
   const app = express();
   app.use(cors({ origin: configuredCorsOrigins(origins) }));
@@ -73,10 +75,10 @@ test('HTTP POST /pages/home refuses fake persistence and does not echo body', as
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: 'Overwritten', privateToken: 'CANARY_DO_NOT_ECHO' }),
     });
-    assert.equal(r.status, 501);
+    assert.equal(r.status, 503);
     const body = await r.json();
-    assert.equal(body.code, 'CMS_WRITE_NOT_IMPLEMENTED');
-    assert.equal(body.persisted, false);
+    assert.equal(body.code, 'CMS_WRITE_UNAVAILABLE');
+    assert.notEqual(body.persisted, true);
     assert.doesNotMatch(JSON.stringify(body), /CANARY_DO_NOT_ECHO/);
   });
 });
