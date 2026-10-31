@@ -1,9 +1,9 @@
 "use client";
 
 import { Check, Pencil, Plus, Trash2, X } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useEditMode } from "@/components/providers/EditModeProvider";
-import { useUser } from "@/hooks/useUser";
+import { canOfferCmsEditing } from "@/lib/cms-publication-gate";
 
 export type EditableMetaCardItem = {
   title: string;
@@ -36,20 +36,14 @@ export function EditableMetaCardGrid({
   textPlaceholder = "Kart açıklaması",
   onSave,
 }: EditableMetaCardGridProps) {
-  const { session, loading } = useUser();
   const { editMode } = useEditMode();
 
   const [isEditing, setIsEditing] = useState(false);
   const [draft, setDraft] = useState<EditableMetaCardItem[]>(items || []);
   const [saving, setSaving] = useState(false);
 
-  const role = useMemo(() => {
-    const rawRole = session?.user?.user_metadata?.role;
-    return typeof rawRole === "string" ? rawRole.toLowerCase() : "";
-  }, [session]);
-
-  const isAdmin = role === "admin" || role === "super_admin";
-  const canEdit = isAdmin && !loading && editMode;
+  // Client metadata never conveys CMS publication permission.
+  const canEdit = canOfferCmsEditing();
 
   useEffect(() => {
     if (!isEditing) {

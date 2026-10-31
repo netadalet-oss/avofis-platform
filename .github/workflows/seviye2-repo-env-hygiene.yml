@@ -1,0 +1,36 @@
+name: AVOfis S2 tracked credential-file hygiene
+on:
+  push:
+    branches:
+      - seviye2-guvenlik-devam-20261031
+  pull_request:
+    paths:
+      - '.gitignore'
+      - '.env.example'
+      - 'admin/.env.local'
+      - 'tools/security/repo-env-hygiene*'
+      - '.github/workflows/seviye2-repo-env-hygiene.yml'
+permissions:
+  contents: read
+jobs:
+  reject-tracked-env-files:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: synthetic-public-ci-placeholder
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Audit tracked paths without reading secret file contents
+        run: node --test tools/security/repo-env-hygiene.test.mjs
+      - name: Verify zero tracked environment secrets
+        run: node tools/security/repo-env-hygiene.mjs
+      - name: Install build dependencies
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Check admin build without a committed .env.local
+        run: npm run build:admin

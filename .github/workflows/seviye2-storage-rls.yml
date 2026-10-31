@@ -1,0 +1,46 @@
+name: AVOfis S2 synthetic private Storage isolation
+on:
+  push:
+    branches:
+      - seviye2-guvenlik-devam-20261031
+  pull_request:
+    paths:
+      - 'database/staging/s2_storage_*'
+      - 'tools/security/stage2-storage-policy.test.mjs'
+      - '.github/workflows/seviye2-storage-rls.yml'
+      - 'docs/security/SEVIYE2_STORAGE_AB_2026-10-31.md'
+permissions:
+  contents: read
+jobs:
+  synthetic-storage-ab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: synthetic_ci_only
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - name: Checkout reviewed branch
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Source regression and negative test guard
+        run: node --test tools/security/stage2-storage-policy.test.mjs
+      - name: Create isolated database
+        run: docker exec "${{ job.services.postgres.id }}" psql -U postgres -v ON_ERROR_STOP=1 -c "CREATE DATABASE avofis_s2_storage_test;"
+      - name: Build synthetic Storage schema and two-user object fixtures
+        run: docker exec -i "${{ job.services.postgres.id }}" psql -U postgres -d avofis_s2_storage_test -v ON_ERROR_STOP=1 < database/staging/s2_storage_fixture.sql
+      - name: Apply guarded synthetic Storage RLS policy
+        run: docker exec -i "${{ job.services.postgres.id }}" psql -U postgres -d avofis_s2_storage_test -v ON_ERROR_STOP=1 < database/staging/s2_storage_rls_proposal.sql
+      - name: Verify PostgreSQL Storage owner and bucket isolation A vs B
+        run: docker exec -i "${{ job.services.postgres.id }}" psql -U postgres -d avofis_s2_storage_test -v ON_ERROR_STOP=1 < database/staging/s2_storage_ab_test.sql

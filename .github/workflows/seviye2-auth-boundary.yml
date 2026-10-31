@@ -1,0 +1,41 @@
+name: AVOfis S2 authentication navigation and professional claim boundary
+on:
+  push:
+    branches:
+      - seviye2-guvenlik-devam-20261031
+  pull_request:
+    paths:
+      - 'portal/src/app/auth/login/page.tsx'
+      - 'portal/src/app/auth/register/page.tsx'
+      - 'portal/src/app/dashboard/page.tsx'
+      - 'portal/src/lib/safe-next-path.ts'
+      - 'admin/src/app/auth/login/page.tsx'
+      - 'admin/src/lib/safe-next-path.ts'
+      - 'tools/security/stage2-auth-boundary.test.mjs'
+      - '.github/workflows/seviye2-auth-boundary.yml'
+permissions:
+  contents: read
+jobs:
+  auth-boundary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: synthetic-public-ci-placeholder
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Reject external redirects and self-asserted professional authority
+        run: node --experimental-strip-types --test tools/security/stage2-auth-boundary.test.mjs
+      - name: Install workspaces
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Real portal Next.js build
+        run: npm run build:portal
+      - name: Real admin Next.js build
+        run: npm run build:admin

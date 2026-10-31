@@ -1,0 +1,200 @@
+{
+  "observation_kind": "read_only_postgresql_catalog_metadata",
+  "observed_on": "2026-10-31",
+  "project_ref": "akigckpsktdxudumiwvm",
+  "production_modified": false,
+  "status": "OPEN_RISK_NOT_REMEDIATED",
+  "stage_1_independently_accepted": 0,
+  "requirements_total": 594,
+  "blockers_open": 18,
+  "tables": [
+    {
+      "name": "applications",
+      "rls_enabled": false,
+      "anon_crud": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "authenticated_crud": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "name": "jobs",
+      "rls_enabled": false,
+      "anon_crud": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "authenticated_crud": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "name": "media_assets",
+      "rls_enabled": false,
+      "anon_crud": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "authenticated_crud": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "name": "office_members",
+      "rls_enabled": false,
+      "anon_crud": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "authenticated_crud": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "name": "offices",
+      "rls_enabled": false,
+      "anon_crud": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "authenticated_crud": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "name": "pages",
+      "rls_enabled": true,
+      "anon_crud": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "authenticated_crud": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "name": "posts",
+      "rls_enabled": false,
+      "anon_crud": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "authenticated_crud": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "name": "site_settings",
+      "rls_enabled": true,
+      "anon_crud": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "authenticated_crud": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "name": "topics",
+      "rls_enabled": false,
+      "anon_crud": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "authenticated_crud": [
+        true,
+        true,
+        true,
+        true
+      ]
+    }
+  ],
+  "cms_policy_inventory": [
+    {
+      "table": "pages",
+      "policy": "Allow admin read",
+      "command": "SELECT",
+      "qualifier": "(auth.role() = 'authenticated'::text)"
+    },
+    {
+      "table": "pages",
+      "policy": "Only admins can read pages",
+      "command": "SELECT",
+      "qualifier": "profiles role membership check"
+    },
+    {
+      "table": "pages",
+      "policy": "Only admins can update pages",
+      "command": "UPDATE",
+      "qualifier": "profiles role membership check"
+    },
+    {
+      "table": "site_settings",
+      "policy": "Allow admin read settings",
+      "command": "SELECT",
+      "qualifier": "(auth.role() = 'authenticated'::text)"
+    },
+    {
+      "table": "site_settings",
+      "policy": "Only admins can read settings",
+      "command": "SELECT",
+      "qualifier": "profiles role membership check"
+    },
+    {
+      "table": "site_settings",
+      "policy": "Only admins can update settings",
+      "command": "UPDATE",
+      "qualifier": "profiles role membership check"
+    }
+  ],
+  "limitations": [
+    "No customer or staff row content was queried",
+    "Catalog privileges do not alone prove public Data API reachability or successful access to any individual row",
+    "The observation is time-bound; current state must be rechecked before any production decision",
+    "No staging Auth/Storage A/B isolation or independent security acceptance performed"
+  ]
+}

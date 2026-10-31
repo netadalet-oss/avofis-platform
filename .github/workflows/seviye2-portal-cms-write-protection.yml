@@ -1,0 +1,35 @@
+name: AVOfis S2 portal CMS fail-closed
+on:
+  push:
+    branches:
+      - seviye2-guvenlik-devam-20261031
+  pull_request:
+    paths:
+      - 'portal/src/app/page.tsx'
+      - 'portal/src/components/cms/**'
+      - 'portal/src/components/site-header.tsx'
+      - 'portal/src/lib/cms-publication-gate.ts'
+      - 'portal/tests/cms-publication-gate.test.mjs'
+      - '.github/workflows/seviye2-portal-cms-write-protection.yml'
+permissions:
+  contents: read
+jobs:
+  portal-cms:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: synthetic-public-ci-placeholder
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: CMS security negative tests
+        run: node --experimental-strip-types --test portal/tests/cms-publication-gate.test.mjs
+      - name: Install workspaces
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Portal Next.js TypeScript build
+        run: npm run build:portal

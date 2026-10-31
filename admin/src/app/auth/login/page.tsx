@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import { safeNextPath } from "@/lib/safe-next-path";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -29,7 +30,7 @@ export default function LoginPage() {
             ? new URLSearchParams(window.location.search).get("next")
             : null;
 
-        router.replace(next || "/cms");
+        router.replace(safeNextPath(next));
       }
     }
 
@@ -61,7 +62,7 @@ export default function LoginPage() {
           ? new URLSearchParams(window.location.search).get("next")
           : null;
 
-      router.replace(next || "/cms");
+      router.replace(safeNextPath(next));
       router.refresh();
     } catch (err) {
       setError("Giriş sırasında beklenmeyen bir hata oluştu.");

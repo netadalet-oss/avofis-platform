@@ -1,0 +1,53 @@
+name: AVOfis S2 isolated RLS and access audit
+on:
+  push:
+    branches:
+      - seviye2-guvenlik-devam-20261031
+  pull_request:
+    paths:
+      - 'tools/security/stage2-*'
+      - 'database/staging/s2_rls_*'
+      - 'docs/security/seviye2-*'
+      - '.github/workflows/seviye2-readonly-access.yml'
+permissions:
+  contents: read
+jobs:
+  source-regressions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Node source and negative tests
+        run: node --test tools/security/stage2-access-readiness.test.mjs tools/security/stage2-staging-policy.test.mjs
+      - name: Report open risks, do not connect to live DB
+        run: node tools/security/stage2-access-readiness.mjs
+  postgres-ab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      pg:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: synthetic_ci_only
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Create disposable test database
+        run: docker exec "${{ job.services.pg.id }}" psql -U postgres -v ON_ERROR_STOP=1 -c "CREATE DATABASE avofis_s2_test;"
+      - name: Seed synthetic A and B rows only
+        run: docker exec -i "${{ job.services.pg.id }}" psql -U postgres -d avofis_s2_test -v ON_ERROR_STOP=1 < database/staging/s2_rls_fixture.sql
+      - name: Apply transaction-guarded RLS and GRANT proposal to isolated DB only
+        run: docker exec -i "${{ job.services.pg.id }}" psql -U postgres -d avofis_s2_test -v ON_ERROR_STOP=1 < database/staging/s2_rls_grants_draft.sql
+      - name: Real PostgreSQL anonymous and A/B positive-negative tests
+        run: docker exec -i "${{ job.services.pg.id }}" psql -U postgres -d avofis_s2_test -v ON_ERROR_STOP=1 < database/staging/s2_rls_ab_test.sql
