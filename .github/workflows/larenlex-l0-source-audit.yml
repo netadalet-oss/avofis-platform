@@ -1,0 +1,35 @@
+name: LarenLex L0 source-audit unit tests
+
+on:
+  push:
+    branches:
+      - work/larenlex-android
+    paths:
+      - 'larenlex-android/**'
+      - '.github/workflows/larenlex-l0-source-audit.yml'
+  pull_request:
+    paths:
+      - 'larenlex-android/**'
+      - '.github/workflows/larenlex-l0-source-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-audit-unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact revision
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run no-archive unit tests (integration skips are explicit)
+        run: python3 -m unittest discover -s larenlex-android/tests -v
+      - name: Preserve distinction between source gate and Android acceptance
+        run: |
+          echo 'L0 unit tests do not prove Android Git bundle, Gradle build, device, staging, legal or production acceptance.'
+          echo 'For independent source ZIP checks, provide archives only in an isolated trusted execution environment.'
