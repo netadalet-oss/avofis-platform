@@ -6,7 +6,7 @@ const source=load(), copy=x=>structuredClone(x);
 test('Stage 6 approval with ten unresolved work records is valid',()=>{
   assert.deepEqual(check(source),{operational_stage:6,stage7_authorized:false,
     carried_items:10,open_live_rls:7,production_modified:false,
-    stage5_historical_complete:false,new_stage6_work:3});
+    stage5_historical_complete:false,new_stage6_work:4});
 });
 test('no Stage 7 transition without new approval',()=>{
   const d=copy(source);d.stage7_transition_approved=true;assert.throws(()=>check(d));
@@ -65,10 +65,10 @@ test('no false production deployment or live DB change may be claimed',()=>{
   assert.throws(()=>check(e),/live or historical/);
 });
 
-test('three independent Stage 6 CMS jobs preserve all bounded attempts',()=>{
+test('four independent Stage 6 CMS jobs preserve all bounded attempts',()=>{
   const w=source.new_work;
-  assert.equal(w.length,3);
-  assert.deepEqual(w.map(x=>x.attempts_recorded_level6),[1,1,2]);
+  assert.equal(w.length,4);
+  assert.deepEqual(w.map(x=>x.attempts_recorded_level6),[1,1,2,2]);
   assert.ok(w.every(x=>x.status==='DRAFT_CODE_CI_PASS_NOT_MERGED'));
 });
 test('admin CMS production acceptance cannot be fabricated',()=>{
@@ -98,4 +98,28 @@ test('failed concurrency test cannot silently be reclassified as success',()=>{
   const d=copy(source),w=d.new_work.find(w=>w.id==='SEC:S6-CMS-CONCURRENT-EDIT-GUARD');
   w.attempts[0].result='CODE_AND_CI_VERIFIED';
   assert.throws(()=>check(d),/Historical concurrency attempt record/);
+});
+
+test('defaults preview first CI attempt FAILED and second PASSED, exactly 2/2',()=>{
+  const w=source.new_work.find(x=>x.id==='SEC:S6-CMS-DEFAULTS-PARTIAL-RESET');
+  assert.ok(w);
+  assert.equal(w.attempts_recorded_level6,2);
+  assert.deepEqual(w.attempts.map(a=>a.result),['FAILED_TEST_ASSERTION','CODE_AND_CI_VERIFIED']);
+  assert.equal(w.production_deployed,false);
+  assert.equal(w.staging_integration_verified,false);
+});
+test('defaults first failed attempt cannot be relabelled',()=>{
+  const d=copy(source);const w=d.new_work.find(x=>x.id==='SEC:S6-CMS-DEFAULTS-PARTIAL-RESET');
+  w.attempts[0].result='CODE_AND_CI_VERIFIED';
+  assert.throws(()=>check(d),/defaults preview attempt history/);
+});
+test('defaults preview cannot be falsely accepted or deployed',()=>{
+  const d=copy(source);const w=d.new_work.find(x=>x.id==='SEC:S6-CMS-DEFAULTS-PARTIAL-RESET');
+  w.production_deployed=true;
+  assert.throws(()=>check(d),/defaults preview attempt history|live or historical/);
+});
+test('defaults preview cannot exceed two attempts',()=>{
+  const d=copy(source);const w=d.new_work.find(x=>x.id==='SEC:S6-CMS-DEFAULTS-PARTIAL-RESET');
+  w.attempts_recorded_level6=3;
+  assert.throws(()=>check(d),/attempt limit/);
 });
