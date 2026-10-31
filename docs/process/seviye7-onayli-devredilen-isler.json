@@ -486,6 +486,101 @@
       "staging_browser_tested": false,
       "data_scope": "Only local in-memory UI, except navigation write protected by database RLS",
       "acceptance_note": "Code and unit-test ready only; no live production or integrated authenticated browser acceptance."
+    },
+    {
+      "id": "UX:S7-LOCAL-MODULE-EXPANSION",
+      "description": "Document drafting with TXT export and local versions; manually curated career tracker; private forum drafts; six-workspace navigation",
+      "status": "DRAFT_CODE_CI_PASS_NOT_MERGED",
+      "attempts_recorded_level7": 2,
+      "attempts": [
+        {
+          "index": 1,
+          "result": "FAILED_TEST_ASSERTION",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41177814816",
+          "ci_job_id": 124468907380,
+          "failed": 1,
+          "reason": "Forum UI disclaimer test searched for a word not used in the actual, explicit privacy message",
+          "failed_test": "forum UI explicitly states drafts are not published",
+          "not_feature_failure_verified": true
+        },
+        {
+          "index": 2,
+          "result": "CODE_AND_CI_VERIFIED",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41177872703",
+          "ci_job_id": 124469077165,
+          "ci_head_commit": "cce469294e261eab402d56c792fd5ea7ac32257e",
+          "total_tests_passed": 307,
+          "total_tests_failed": 0,
+          "portal_tests_passed": 107,
+          "api_build": "PASS",
+          "admin_typecheck": "PASS",
+          "portal_typecheck": "PASS"
+        }
+      ],
+      "source_paths": [
+        "portal/src/app/documents/page.tsx",
+        "portal/src/lib/draft-builder.ts",
+        "portal/src/app/careers/page.tsx",
+        "portal/src/lib/local-careers.ts",
+        "portal/src/app/forum/page.tsx",
+        "portal/src/lib/local-forum.ts",
+        "portal/src/app/modules/page.tsx"
+      ],
+      "test_sources": [
+        "portal/tests/local-expanded-modules.test.cjs"
+      ],
+      "production_deployed": false,
+      "live_db_modified": false,
+      "historical_work_id": null,
+      "accepted_as_historical_deliverable": false,
+      "staging_browser_tested": false,
+      "source_level_features_added": [
+        "draft create/edit/preview/version/TXT export",
+        "manually curated opportunities and statuses",
+        "private topic and reply drafts",
+        "navigation across six areas"
+      ],
+      "limits": [
+        "No account-level persistence",
+        "No real vacancy or application submission",
+        "No public forum posting/moderation",
+        "No legal analysis or citation checking"
+      ],
+      "available_level7_attempts_remaining": 0
+    },
+    {
+      "id": "SEC:S7-UNVERIFIED-METRICS-HIDE",
+      "description": "Prevent unsupported homepage platform counts, forum topic-count claims and default fake site statistics",
+      "status": "DRAFT_CODE_CI_PASS_NOT_MERGED",
+      "attempts_recorded_level7": 1,
+      "attempts": [
+        {
+          "index": 1,
+          "result": "CODE_AND_CI_VERIFIED",
+          "ci_run": "https://github.com/netadalet-oss/avofis-platform/actions/runs/41177872703",
+          "ci_job_id": 124469077165,
+          "ci_head_commit": "cce469294e261eab402d56c792fd5ea7ac32257e",
+          "total_tests_passed": 307,
+          "total_tests_failed": 0
+        }
+      ],
+      "source_paths": [
+        "portal/src/lib/site.ts",
+        "portal/src/app/page.tsx"
+      ],
+      "test_sources": [
+        "portal/tests/local-expanded-modules.test.cjs"
+      ],
+      "production_deployed": false,
+      "live_db_modified": false,
+      "historical_work_id": null,
+      "accepted_as_historical_deliverable": false,
+      "staging_browser_tested": false,
+      "limits": [
+        "Existing other marketing copy still needs an evidence review",
+        "Public CMS statistic data kept in database but not shown by the current homepage",
+        "Not deployed to production"
+      ]
     }
   ],
   "production_modified": false,
@@ -511,5 +606,14 @@
     "other_public_tables_rls_disabled": 7,
     "other_auth_password_protection_warnings": 1,
     "source": "Supabase MCP read-only: pg_class, pg_roles, pg_policies and get_advisors"
+  },
+  "functional_portal_progress_tracking_file": "docs/process/seviye7-portal-60-kullanici-senaryosu-ilerleme.json",
+  "stage7_code_test_proxy": {
+    "new_accepted_live_journeys": 0,
+    "new_source_test_journeys": 17,
+    "denominator": 60,
+    "percentage_points": 28.33,
+    "original_project_completion_percent": null,
+    "stage8_authorized": false
   }
 }
