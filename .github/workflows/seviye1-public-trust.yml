@@ -1,0 +1,62 @@
+name: AVOfis Seviye 1 - Honest public presentation
+on:
+  push:
+    branches:
+      - seviye1-yeniden-baslangic-20261031
+    paths:
+      - 'portal/src/app/page.tsx'
+      - 'portal/src/lib/site.ts'
+      - 'portal/tests/public-trust.test.mjs'
+      - '.github/workflows/seviye1-public-trust.yml'
+  pull_request:
+    paths:
+      - 'portal/src/app/page.tsx'
+      - 'portal/src/lib/site.ts'
+      - 'portal/tests/public-trust.test.mjs'
+      - '.github/workflows/seviye1-public-trust.yml'
+permissions:
+  contents: read
+jobs:
+  no-fabricated-public-claims:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      NEXT_PUBLIC_SUPABASE_URL: 'https://example.invalid'
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: 'build-check-only-not-a-real-token'
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Test honest public descriptions
+        run: node --test portal/tests/public-trust.test.mjs
+      - name: Install isolated dependencies
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Build entire Next public portal
+        run: npm run build:portal
+      - name: Verify rendered home hides fabricated activity
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm --workspace portal run start > /tmp/avofis-s1-honest-home.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for i in $(seq 1 50); do
+            if curl -fsS http://127.0.0.1:3000/ > /tmp/avofis-s1-public-home.html; then break; fi
+            sleep 1
+          done
+          test -s /tmp/avofis-s1-public-home.html
+          grep -q 'kuruluş öncesi geliştirme' /tmp/avofis-s1-public-home.html
+          grep -q 'Planlanan kariyer özellikleri' /tmp/avofis-s1-public-home.html
+          grep -q 'Geliştirme örneği' /tmp/avofis-s1-public-home.html
+          grep -q 'Temsili profil' /tmp/avofis-s1-public-home.html
+          if grep -Eq 'Canlı metrikler|Doğrulanmış Ofis|Avo Legal Partners|420\+|7\.2K\+' /tmp/avofis-s1-public-home.html; then
+            echo 'Misleading public activity/identity remains'
+            exit 1
+          fi
+          echo 'HTTP honest home: PASS'
