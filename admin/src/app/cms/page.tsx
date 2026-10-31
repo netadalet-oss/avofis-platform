@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { isCmsAdminRole } from "@/lib/cms-role";
@@ -35,6 +35,14 @@ export default function Page() {
   const [message, setMessage] = useState("");
   const [authChecking, setAuthChecking] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
+  // Immutable snapshots of the rows this editor actually loaded. These must
+  // not share object references with mutable UI arrays.
+  const heroBaseline = useRef<Record<string, unknown> | null>(null);
+  const settingBaseline = useRef<{
+    navigation: unknown;
+    modules: unknown;
+    footer: unknown;
+  }>({ navigation: null, modules: null, footer: null });
 
   useEffect(() => {
     let isMounted = true;
@@ -115,6 +123,11 @@ export default function Page() {
       .eq("slug", "home")
       .single();
 
+    heroBaseline.current =
+      data?.content && typeof data.content === "object" && !Array.isArray(data.content)
+        ? JSON.parse(JSON.stringify(data.content))
+        : null;
+
     if (data?.content?.hero) {
       setHeroTitle(data.content.hero.title || "");
       setHeroSubtitle(data.content.hero.subtitle || "");
@@ -128,6 +141,9 @@ export default function Page() {
       .eq("key", "navigation")
       .single();
 
+    settingBaseline.current.navigation = Array.isArray(data?.value)
+      ? JSON.parse(JSON.stringify(data.value))
+      : null;
     if (data?.value && Array.isArray(data.value)) {
       setNavigation(data.value);
     }
@@ -140,6 +156,9 @@ export default function Page() {
       .eq("key", "modules")
       .single();
 
+    settingBaseline.current.modules = Array.isArray(data?.value)
+      ? JSON.parse(JSON.stringify(data.value))
+      : null;
     if (data?.value && Array.isArray(data.value)) {
       setModules(data.value);
     }
@@ -152,6 +171,9 @@ export default function Page() {
       .eq("key", "footer")
       .single();
 
+    settingBaseline.current.footer = Array.isArray(data?.value)
+      ? JSON.parse(JSON.stringify(data.value))
+      : null;
     if (data?.value && Array.isArray(data.value)) {
       setFooterColumns(data.value);
     }
@@ -278,42 +300,46 @@ export default function Page() {
         },
       ];
 
-      const { error: heroError } = await updateAdminHomeHero(supabase, {
+      const { error: heroError, updatedContent: defaultHeroContent } = await updateAdminHomeHero(supabase, {
         title: defaultHeroTitle,
         subtitle: defaultHeroSubtitle,
-      });
+      }, heroBaseline.current);
 
       if (heroError) {
         setMessage(`Varsayılan hero yüklenemedi: ${heroError.message}`);
         return;
       }
+      heroBaseline.current = defaultHeroContent || null;
 
       const { error: navigationError } = await updateExistingSetting(
-        supabase, "navigation", defaultNavigation
+        supabase, "navigation", defaultNavigation, settingBaseline.current.navigation
       );
 
       if (navigationError) {
         setMessage(`Varsayılan menü yüklenemedi: Önceki adımlar uygulanmış olabilir.  ${navigationError.message}`);
         return;
       }
+      settingBaseline.current.navigation = JSON.parse(JSON.stringify(defaultNavigation));
 
       const { error: modulesError } = await updateExistingSetting(
-        supabase, "modules", defaultModules
+        supabase, "modules", defaultModules, settingBaseline.current.modules
       );
 
       if (modulesError) {
         setMessage(`Varsayılan modüller yüklenemedi: Önceki adımlar uygulanmış olabilir.  ${modulesError.message}`);
         return;
       }
+      settingBaseline.current.modules = JSON.parse(JSON.stringify(defaultModules));
 
       const { error: footerError } = await updateExistingSetting(
-        supabase, "footer", defaultFooter
+        supabase, "footer", defaultFooter, settingBaseline.current.footer
       );
 
       if (footerError) {
         setMessage(`Varsayılan footer yüklenemedi: Önceki adımlar uygulanmış olabilir.  ${footerError.message}`);
         return;
       }
+      settingBaseline.current.footer = JSON.parse(JSON.stringify(defaultFooter));
 
       setHeroTitle(defaultHeroTitle);
       setHeroSubtitle(defaultHeroSubtitle);
@@ -332,16 +358,17 @@ export default function Page() {
       setSaving(true);
       setMessage("");
 
-      const { error } = await updateAdminHomeHero(supabase, {
+      const { error, updatedContent } = await updateAdminHomeHero(supabase, {
         title: heroTitle,
         subtitle: heroSubtitle,
-      });
+      }, heroBaseline.current);
 
       if (error) {
         setMessage(`Hero kaydedilemedi: ${error.message}`);
         return;
       }
 
+      heroBaseline.current = updatedContent || null;
       setMessage("Hero başarıyla kaydedildi.");
     } finally {
       setSaving(false);
@@ -354,7 +381,7 @@ export default function Page() {
       setMessage("");
 
       const { error } = await updateExistingSetting(
-        supabase, "navigation", navigation
+        supabase, "navigation", navigation, settingBaseline.current.navigation
       );
 
       if (error) {
@@ -362,6 +389,7 @@ export default function Page() {
         return;
       }
 
+      settingBaseline.current.navigation = JSON.parse(JSON.stringify(navigation));
       setMessage("Menü başarıyla kaydedildi.");
     } finally {
       setSaving(false);
@@ -374,7 +402,7 @@ export default function Page() {
       setMessage("");
 
       const { error } = await updateExistingSetting(
-        supabase, "modules", modules
+        supabase, "modules", modules, settingBaseline.current.modules
       );
 
       if (error) {
@@ -382,6 +410,7 @@ export default function Page() {
         return;
       }
 
+      settingBaseline.current.modules = JSON.parse(JSON.stringify(modules));
       setMessage("Modüller başarıyla kaydedildi.");
     } finally {
       setSaving(false);
@@ -394,7 +423,7 @@ export default function Page() {
       setMessage("");
 
       const { error } = await updateExistingSetting(
-        supabase, "footer", footerColumns
+        supabase, "footer", footerColumns, settingBaseline.current.footer
       );
 
       if (error) {
@@ -402,6 +431,7 @@ export default function Page() {
         return;
       }
 
+      settingBaseline.current.footer = JSON.parse(JSON.stringify(footerColumns));
       setMessage("Footer başarıyla kaydedildi.");
     } finally {
       setSaving(false);
