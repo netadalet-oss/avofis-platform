@@ -162,7 +162,7 @@ test('forum reply deletion retains topic and other replies',()=>{
 test('forum UI explicitly states drafts are not published',()=>{
  const p=read('src/app/forum/page.tsx');
  assert.match(p,/Bu bir canlı forum değildir/);
- assert.match(p,/topluluğa/);
+ assert.match(p,/başka kullanıcılar tarafından/);
  assert.doesNotMatch(p,/fetch\(|\.from\(|localStorage/);
 });
 test('all six workspaces are linked from module directory',()=>{
