@@ -1,0 +1,55 @@
+{
+  "product": "LarenLex Android",
+  "level": "L0",
+  "date": "2026-11-01",
+  "level_model": "WHOLE_PRODUCT_PROGRESSIVE_DEPTH",
+  "source_systems": 14,
+  "source_subgroups": 69,
+  "source_A2_features": 453,
+  "source_API_contracts": 102,
+  "staff_areas": 16,
+  "current_stage_delivery": "FOUNDATIONAL_WHOLE_APP_DESIGN_CYCLE_READY_FOR_USER_TRANSITION_REVIEW",
+  "technical_acceptance": "NOT_ESTABLISHED",
+  "android_source_code_available": false,
+  "android_apk_verified": false,
+  "live_backend_accepted": false,
+  "legal_acceptance": false,
+  "github_preview": "larenlex-android/preview/whole-app-l0.html",
+  "coverage_ledger": "larenlex-android/docs/ALL_MODULES_CROSS_LEVEL_REGISTER_2026-11-01.json",
+  "level_protocol": "larenlex-android/docs/HORIZONTAL_ALL_MODULE_LEVEL_PROTOCOL_2026-11-01.md",
+  "preview_sha256": "d17e88359f79082e6bc9445b84e0f68cf878f0856470c5fd094e24f738bbe3f5",
+  "browser_render": "NOT_VERIFIED_LOCAL_CHROMIUM_TIMED_OUT",
+  "test_evidence": "12 local static tests passed for local full-register/prototype; 10 GitHub test cases committed, live CI not confirmed",
+  "open_debts": [
+    {
+      "id": "A5.18_REAL_GIT_BUNDLE",
+      "status": "BLOCKED_MISSING",
+      "next_level_attempts_minimum": 2
+    },
+    {
+      "id": "A5.14_HANDOFF_ARCHIVE",
+      "status": "BLOCKED_MISSING",
+      "next_level_attempts_minimum": 2
+    },
+    {
+      "id": "ANDROID_GRADLE_SDK_DEVICE",
+      "status": "NOT_VERIFIED",
+      "next_level_attempts_minimum": 2
+    },
+    {
+      "id": "SEPARATE_POSTGRES_RLS_AND_AUTH",
+      "status": "NOT_VERIFIED",
+      "next_level_attempts_minimum": 2
+    },
+    {
+      "id": "LIVE_CI_AND_INDEPENDENT_ACCEPTANCE",
+      "status": "NOT_VERIFIED",
+      "next_level_attempts_minimum": 2
+    }
+  ],
+  "user_approval": {
+    "L0_to_L1": "PENDING_EXPLICIT_BUTTON",
+    "silence_auto_approval": "NOT_EXECUTABLE_WITHOUT_NEW_TURN"
+  },
+  "safety": "No main merge, live deployment, keystore, payments, court filings or customer data."
+}
