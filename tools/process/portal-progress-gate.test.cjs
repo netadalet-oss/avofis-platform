@@ -5,7 +5,7 @@ const original=load();const copy=()=>structuredClone(original);
 test('transparent 60 scenario reference has 13 code-tested gains but no live acceptance',()=>{
  assert.deepEqual(validate(original),{
  operational_level:7,next_level_approved:false,fixed_portal_proxy_denominator:60,
- new_code_test_scenarios:13,provisional_code_delta_pct_points:21.67,
+ new_code_test_scenarios:17,provisional_code_delta_pct_points:28.33,
  staging_browser_accepted:0,original_portal_completion_percent:null,
  original_project_10_percent_gain_proven:false
  });
@@ -19,3 +19,31 @@ test('each new code gain must have traceable source and tests',()=>{const o=copy
 test('no ungrounded staging acceptance percentage',()=>{const o=copy();o.real_browser_journeys_accepted=13;assert.throws(()=>validate(o));});
 test('counts derived from marked scenarios, not from test numbers',()=>{const o=copy();o.new_source_level_journeys=226;assert.throws(()=>validate(o));});
 test('cannot move live acceptance tier without explicit new evidence review',()=>{const o=copy();o.items.find(i=>i.status.startsWith('NEW_')).status='STAGING_BROWSER_ACCEPTED';assert.throws(()=>validate(o));});
+
+test('local-only careers tracking is not real platform application submission',()=>{
+ const d=copy();
+ const i=d.items.find(x=>x.id==='careers:submit-application');
+ i.status='NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE';
+ i.source=['portal/src/lib/local-careers.ts','portal/src/app/careers/page.tsx','portal/tests/local-expanded-modules.test.cjs'];
+ d.new_source_level_journeys=18;
+ d.new_source_level_pct_points=30;
+ assert.throws(()=>validate(d),/local demo falsely counted/);
+});
+test('private forum drafts are not public topic publishing',()=>{
+ const d=copy();
+ const i=d.items.find(x=>x.id==='forum:create-topic');
+ i.status='NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE';
+ i.source=['portal/src/lib/local-forum.ts','portal/src/app/forum/page.tsx','portal/tests/local-expanded-modules.test.cjs'];
+ d.new_source_level_journeys=18;
+ d.new_source_level_pct_points=30;
+ assert.throws(()=>validate(d),/local demo falsely counted/);
+});
+test('manual document drafting is not citation validation',()=>{
+ const d=copy();
+ const i=d.items.find(x=>x.id==='documents:validate-citations');
+ i.status='NEW_CODE_WITH_TESTS_PENDING_LIVE_ACCEPTANCE';
+ i.source=['portal/src/lib/draft-builder.ts','portal/src/app/documents/page.tsx','portal/tests/local-expanded-modules.test.cjs'];
+ d.new_source_level_journeys=18;
+ d.new_source_level_pct_points=30;
+ assert.throws(()=>validate(d),/local demo falsely counted/);
+});
