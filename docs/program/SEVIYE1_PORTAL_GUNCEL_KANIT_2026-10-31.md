@@ -31,3 +31,22 @@
 2. Doküman/staff/Auth/Storage, role/owner/tenant politikalarının A/B negatif testleri.
 3. Kişisel veri gerektirmeyen ilk hizmetin tarayıcı-E2E ve içerik/hukuk/dil insan incelemesi.
 4. Tüm `R-001–R-594` satırları için ayrı teknik, test, hukuk, staging ve prod kabul izleri; kriter dolmadan seviye kapanış beyanı yok.
+
+## 01.11.2026 — AV-019 / AV-052 giriş yönlendirmesi güvenlik düzeltmesi
+
+- Önceki portal HEAD: `74f640c7ef7fe111712b25708efaecb67e51f3d9`. Kod ve CI ile doğrulanan bu alt iş HEAD: `856ea77dfe4bb4b96765d8d152e06a62db38a929`.
+- Tespit: `portal/src/app/auth/login/page.tsx` doğrudan, doğrulanmamış `?next` değerini `router.replace` için kullanıyordu. Resmî Next.js uyarısı: `https://nextjs.org/docs/app/api-reference/functions/use-router`.
+- Uygulama: `portal/src/lib/safe-login-redirect.ts`, mevcut ve yeni oturumda URL allowlist; `portal/src/components/auth/ProtectedRoute.tsx` yalnız doğrulanmış iç pathname üretir.
+- Negatif test: `portal/tests/login-redirect-safety.test.cjs`; `javascript:`, dış URL, protokol-göreli URL, encoded path, dot traversal, query/hash, yanlış yol, tekrarlı next parametresi, yanlış tip ve aşırı uzun giriş reddi.
+- Kod HEAD için [API/admin/portal test CI #41251360454](https://github.com/netadalet-oss/avofis-platform/actions/runs/41251360454): **SUCCESS**; [Next portal build ve HTTP CI #41251360463](https://github.com/netadalet-oss/avofis-platform/actions/runs/41251360463): **SUCCESS**.
+- Ek bağımsız yerel kontrol: 25 saf TypeScript yardımcı kural testi (Node 22, TypeScript transpile) geçti; bunlar tarayıcı saldırı veya gerçek oturum kabulü değildir.
+
+### Kanonik kaynak referansı uyuşmazlığı — metin değiştirilmedi
+
+Özel ana talimatnamede `AV-019` görev satırında `R-541–R-558`, `AV-052` satırında `R-451–R-468` iz bağı yazılıdır. Oysa aynı talimatnamenin değişmez özgün R tanımlarında `R-541–R-558` **iç yönetim/CRM**, `R-451–R-468` **ücret/sözleşme/ödeme** kapsamındadır. Login/API güvenlik alt koşullarıyla daha doğrudan konu ilişkisi olan özgün metinler `R-523` (güvenli Auth/MFA), `R-527` (API sunucu kimlik/yetki), `R-528` (auth istek hız sınırı) ve `R-536` (güvenlik testi) olarak ayrı not edilmiştir.
+
+**Karar:** Özgün 594 R metni, AV görevlerinin tarihî metni ve hash kaydı değiştirilmez. Konusal ilişki ek belge ile not edilir; yanlış çapraz bağlardan bağımsız kabul çıkarılmaz. Bu düzeltme yalnız yönlendirme alt testidir; Auth/MFA, rate limiting, staging ve bağımsız hukukî inceleme **açıktır**.
+
+### Dış yayın durumu
+
+Vercel preview kontrolünde planın `build-rate-limit` durumuna rastlanmıştır; CI başarıları bu önizleme kısıtını ortadan kaldırmaz. `main`, canlı veri, production ve müşteri işlemlerinde değişiklik yapılmadı.
