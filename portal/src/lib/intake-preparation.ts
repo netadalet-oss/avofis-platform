@@ -114,7 +114,7 @@ export const officialSourceByCountry: Partial<Record<Country, { label: string; u
   TR: { label: "Türkiye e-Devlet Kapısı", url: "https://www.turkiye.gov.tr/" }
 };
 
-function isOwnKey<T extends object>(value: T, key: string): key is keyof T {
+function isOwnKey<T extends object>(value: T, key: string): key is Extract<keyof T, string> {
   return Object.prototype.hasOwnProperty.call(value, key);
 }
 function isAnswer(value: unknown): value is Answer {
