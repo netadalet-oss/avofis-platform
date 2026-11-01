@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { audiences } from "@/lib/avofis-site";
-import { extraAudiences } from "@/lib/avofis-expanded";
 import { SERVICES } from "@/lib/service-catalog";
 
 export const metadata: Metadata = {
@@ -12,7 +11,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false }
 };
 
-const groups = [...audiences, ...extraAudiences];
+const groups = audiences;
 const servicesBySlug = new Map(SERVICES.map(item => [item.slug, item] as const));
 
 export default function AudiencesPage() {
