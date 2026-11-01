@@ -1,0 +1,33 @@
+{
+  "date_utc": "2026-11-01T01:07:40.096821+00:00",
+  "product": "LarenLex Android",
+  "level": "L5",
+  "local_test_suite": "10/10 PASS using localhost WSGI synthetic SQLite (see L5_TEST_LOG.txt)",
+  "local_http_positive": 453,
+  "local_http_BOLA_negative": 453,
+  "all_modules": 14,
+  "chromium": "mobile+desktop, 14 modules, Arabic RTL, no horizontal overflow or JS errors",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "available_tools": {
+    "git": true,
+    "python3": true,
+    "javac": true,
+    "java": true,
+    "chromium": true,
+    "gradle": false,
+    "adb": false,
+    "sdkmanager": false,
+    "psql": false,
+    "postgres": false
+  },
+  "android_apk_device_build": "NOT_TESTED",
+  "real_postgres_rls": "NOT_TESTED",
+  "independent_auth_jwt": "NOT_TESTED",
+  "CI_successful_run_id": null,
+  "real_accepted_A2": 0,
+  "required_new_real_accepted_A2": 46,
+  "local_release_or_production_writes": false,
+  "preview_sha256": "9e665aff7a6a4bb50c77a8f359c2d84ff96712514480c9d92171f5f9c57ed70a",
+  "unverified_historical_bundle": "A5.18 not supplied; new snapshot bundle never substitutes it"
+}
