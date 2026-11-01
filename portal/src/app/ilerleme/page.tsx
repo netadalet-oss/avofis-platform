@@ -43,8 +43,9 @@ export default function PublicProgressPage() {
             İlerleme ve Şeffaflık
           </h1>
           <p className="mt-4 text-sm leading-7 text-slate-300">
-            Bilgi tarihi: 1 Kasım 2026 · Son doğrulanan CI kodu: 856ea77d ·
-            Bu içerik bağımsız ürün kabulü veya üretim yayını beyanı değildir.
+            Bilgi tarihi: 1 Kasım 2026 · Her kodun CI sonucu ilgili GitHub PR ve
+            kanıt kayıtlarında ayrı doğrulanır. Bu içerik bağımsız ürün kabulü
+            veya üretim yayını beyanı değildir.
           </p>
         </header>
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
