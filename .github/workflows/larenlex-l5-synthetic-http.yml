@@ -1,0 +1,27 @@
+name: LarenLex L5 localhost integration evidence
+on:
+  push:
+    branches: [work/larenlex-android]
+    paths:
+      - 'larenlex-android/l5/**'
+      - '.github/workflows/larenlex-l5-synthetic-http.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  local-synthetic-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Verify local synthetic HTTP positive/negative boundaries
+        run: |
+          cd larenlex-android/l5
+          python -m unittest discover -s tests -v
+      - name: Preserve non-acceptance status
+        run: |
+          echo 'Synthetic SQLite + loopback tests are not a real Android APK, independent Auth/JWT, PostgreSQL RLS or legal acceptance.'
+          echo 'No genuine +46 independent A2 acceptances have been established.'
