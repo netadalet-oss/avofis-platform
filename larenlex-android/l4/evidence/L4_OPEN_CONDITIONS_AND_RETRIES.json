@@ -1,0 +1,234 @@
+{
+  "product": "LarenLex Android",
+  "level": "L4",
+  "inherited_open_groups": 8,
+  "new_l4_legal_provenance_groups": 2,
+  "total_new_attempts": 20,
+  "groups": [
+    {
+      "id": "L0-A518-INDEPENDENT-BUNDLE",
+      "new_l4_attempts": [
+        {
+          "attempt": 1,
+          "utc": "2026-11-01T00:38:49.091754+00:00",
+          "result": "UNRESOLVED",
+          "method": "mounted authentic bundle extension check",
+          "matches": []
+        },
+        {
+          "attempt": 2,
+          "utc": "2026-11-01T00:38:49.091979+00:00",
+          "result": "UNRESOLVED",
+          "method": "special ZIP source member check",
+          "matches": []
+        }
+      ],
+      "resolved": false,
+      "carry_to_l5": true
+    },
+    {
+      "id": "L0-A514-HANDOFF",
+      "new_l4_attempts": [
+        {
+          "attempt": 1,
+          "utc": "2026-11-01T00:38:49.093588+00:00",
+          "result": "UNRESOLVED",
+          "method": "mounted handoff ZIP filename check",
+          "matches": []
+        },
+        {
+          "attempt": 2,
+          "utc": "2026-11-01T00:38:49.093724+00:00",
+          "result": "UNRESOLVED",
+          "method": "combined archive historic handoff manifest check",
+          "matches": []
+        }
+      ],
+      "resolved": false,
+      "carry_to_l5": true
+    },
+    {
+      "id": "L0-REAL-ANDROID-SOURCE",
+      "new_l4_attempts": [
+        {
+          "attempt": 1,
+          "utc": "2026-11-01T00:38:49.093790+00:00",
+          "result": "UNRESOLVED",
+          "method": "special ZIP source inspection",
+          "matches": []
+        },
+        {
+          "attempt": 2,
+          "utc": "2026-11-01T00:38:49.093866+00:00",
+          "result": "UNRESOLVED",
+          "method": "combined ZIP source inspection",
+          "matches": []
+        }
+      ],
+      "resolved": false,
+      "carry_to_l5": true
+    },
+    {
+      "id": "L0-ANDROID-SDK-DEVICE",
+      "new_l4_attempts": [
+        {
+          "attempt": 1,
+          "utc": "2026-11-01T00:38:49.094003+00:00",
+          "result": "UNRESOLVED",
+          "method": "tool executable availability",
+          "tools": {
+            "gradle": false,
+            "adb": false,
+            "sdkmanager": false
+          }
+        },
+        {
+          "attempt": 2,
+          "utc": "2026-11-01T00:38:49.094036+00:00",
+          "result": "UNRESOLVED",
+          "method": "Android API-35 SDK platform archive inspection",
+          "matches": []
+        }
+      ],
+      "resolved": false,
+      "carry_to_l5": true
+    },
+    {
+      "id": "L0-ISOLATED-POSTGRES-RLS",
+      "new_l4_attempts": [
+        {
+          "attempt": 1,
+          "utc": "2026-11-01T00:38:49.094146+00:00",
+          "result": "UNRESOLVED",
+          "method": "PostgreSQL local executables",
+          "tools": {
+            "postgres": false,
+            "initdb": false,
+            "pg_ctl": false,
+            "psql": false
+          }
+        },
+        {
+          "attempt": 2,
+          "utc": "2026-11-01T00:38:49.094243+00:00",
+          "result": "UNRESOLVED",
+          "method": "local PostgreSQL service socket presence",
+          "matches": []
+        }
+      ],
+      "resolved": false,
+      "carry_to_l5": true
+    },
+    {
+      "id": "L1-CANONICAL-13-PROFILES",
+      "new_l4_attempts": [
+        {
+          "attempt": 1,
+          "utc": "2026-11-01T00:38:49.095146+00:00",
+          "result": "UNRESOLVED",
+          "method": "primary special manual profile ID enumeration",
+          "matches": []
+        },
+        {
+          "attempt": 2,
+          "utc": "2026-11-01T00:38:49.095241+00:00",
+          "result": "UNRESOLVED",
+          "method": "source archive profile registry filename search",
+          "matches": []
+        }
+      ],
+      "resolved": false,
+      "carry_to_l5": true
+    },
+    {
+      "id": "L1-CANONICAL-52-ENTITIES",
+      "new_l4_attempts": [
+        {
+          "attempt": 1,
+          "utc": "2026-11-01T00:38:49.096098+00:00",
+          "result": "UNRESOLVED",
+          "method": "primary special manual data entity ID enumeration",
+          "matches": []
+        },
+        {
+          "attempt": 2,
+          "utc": "2026-11-01T00:38:49.096176+00:00",
+          "result": "UNRESOLVED",
+          "method": "source archive entity registry filename search",
+          "matches": []
+        }
+      ],
+      "resolved": false,
+      "carry_to_l5": true
+    },
+    {
+      "id": "L1-REAL-ANDROID-BUILD-EVIDENCE",
+      "new_l4_attempts": [
+        {
+          "attempt": 1,
+          "utc": "2026-11-01T00:38:49.096233+00:00",
+          "result": "UNRESOLVED",
+          "method": "authentic LarenLex APK presence in original package",
+          "matches": []
+        },
+        {
+          "attempt": 2,
+          "utc": "2026-11-01T00:38:49.096322+00:00",
+          "result": "UNRESOLVED",
+          "method": "actual SDK and ADB tooling presence",
+          "tools": {
+            "gradle": false,
+            "adb": false
+          }
+        }
+      ],
+      "resolved": false,
+      "carry_to_l5": true
+    },
+    {
+      "id": "L4-ORIGINAL-12-ISSUE-ROUTES",
+      "new_l4_attempts": [
+        {
+          "attempt": 1,
+          "utc": "2026-11-01T00:38:49.097375+00:00",
+          "result": "PRESENT_REQUIRES_VALIDATION",
+          "method": "special manual 12-issue original slug enumeration",
+          "matches": [
+            "5. `sozlesmeler-uyusmazliklar` — bireysel ve ticari sözleşmeler, tüketici hizmetleri, tur/tatil anlaşmaları, ifa sorunları ve müzakere."
+          ]
+        },
+        {
+          "attempt": 2,
+          "utc": "2026-11-01T00:38:49.102145+00:00",
+          "result": "UNRESOLVED",
+          "method": "historical merged manual distinct 12-route IDs",
+          "matches": []
+        }
+      ],
+      "resolved": false,
+      "carry_to_l5": true
+    },
+    {
+      "id": "L4-CANONICAL-GUIDE-PAGE-LIST-METADATA",
+      "new_l4_attempts": [
+        {
+          "attempt": 1,
+          "utc": "2026-11-01T00:38:49.102260+00:00",
+          "result": "UNRESOLVED",
+          "method": "special ZIP explicit source inventory file search",
+          "matches": []
+        },
+        {
+          "attempt": 2,
+          "utc": "2026-11-01T00:38:49.103122+00:00",
+          "result": "UNRESOLVED",
+          "method": "primary manual named guide records with URL+review metadata",
+          "matches": []
+        }
+      ],
+      "resolved": false,
+      "carry_to_l5": true
+    }
+  ],
+  "closure": "No missing artefact silently accepted; unresolved tasks do not stop other module development"
+}
