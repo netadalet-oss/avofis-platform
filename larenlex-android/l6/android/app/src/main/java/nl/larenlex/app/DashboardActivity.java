@@ -210,6 +210,9 @@ public final class DashboardActivity extends Activity {
         card(body,"BELGE","PDF / DOCX düzenleyici",
                 "Metin yazın ve seçtiğiniz konuma dışa aktarın.",
                 ()->openActivity(DocumentComposerActivity.class));
+        card(body,"YEREL GÖREVLER","Şifreli görev listesi",
+                "Görev ekleyin, düzenleyin, tamamlayın veya silin.",
+                ()->openActivity(LocalTaskActivity.class));
         card(body,"KİŞİSELLEŞTİRME","Kaydedilen işlevler",
                 "Yalnız katalog kimlikleri cihazda saklanır.",this::favorites);
         section("Tüm işlevlerde arayın","Modül, alt grup, başlık veya LX kimliği");
