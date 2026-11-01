@@ -14,8 +14,16 @@ const emitted=ts.transpileModule(source,{
  compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020,
    esModuleInterop:true}
 }).outputText;
+const flowSource=fs.readFileSync(path.join(root,"src/modules/program/flow-skeleton.ts"),"utf8");
+const flowScript=ts.transpileModule(flowSource,{
+ fileName:"flow-skeleton.ts",
+ compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}
+}).outputText;
+const flow={exports:{}};
+new Function("module","exports",flowScript)(flow,flow.exports);
 const m={exports:{}};
-new Function("module","exports","require",emitted)(m,m.exports,require);
+new Function("module","exports","require",emitted)(m,m.exports,
+ name=>name==="./flow-skeleton"?flow.exports:require(name));
 const {programRouter,STAGE_ONE_COUNTS,API_MAIN_MODULES}=m.exports;
 async function withServer(callback){
  const app=express();
