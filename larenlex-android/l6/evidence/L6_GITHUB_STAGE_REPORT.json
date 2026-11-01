@@ -1,0 +1,30 @@
+{
+  "product": "LarenLex Android",
+  "level": "L6",
+  "scope": {
+    "systems": 14,
+    "groups": 69,
+    "A2": 453,
+    "historical_A4": 102,
+    "A6_scenarios": 12
+  },
+  "tests": {
+    "python": 8,
+    "java_policy_conditions": 8,
+    "static_android": 14,
+    "chromium_mobile": "PASS_OFFLINE_PREVIEW",
+    "chromium_desktop": "PASS_OFFLINE_PREVIEW"
+  },
+  "inherited_debts": {
+    "groups": 10,
+    "new_attempts": 20
+  },
+  "independent_A6_acceptance": false,
+  "signed_APK": false,
+  "published": false,
+  "real_new_A2_acceptances": 0,
+  "production_authorization": false,
+  "full_source_zip_sha256": "8e2246754fa3cc2b2262e086b202f136aba786147186249903197b9a2531dd63",
+  "local_source_snapshot_commit": "72e42c315c7c50bdd79133dd25d3df3089555648",
+  "historical_A5_18_bundle_proven": false
+}
