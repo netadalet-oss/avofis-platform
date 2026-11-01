@@ -23,3 +23,10 @@
 - Son kodun Vercel'de güvenli *ayrı staging* dış preview URL'si doğrulanmadı; bunlar **gerçek localhost Next HTTP** denemeleridir.
 - `main` değişmedi, PR #15 taslak/açık, Vercel production ve gerçek ödeme/resmî kurum işlemi açılmadı.
 - **Seviye 1: IN_PROGRESS. Bağımsız R kabulü 0/594, canlı R kabulü 0/594.** Bu dosya bir sonraki seviyeye geçiş onayı veya seviye tamamlanma kararı değildir.
+
+## Son yeniden deneme ve devir defteri doğrulaması
+
+- Portalda eski bir SHA'yı zorlayan kaynak kontrolü [#41255979478](https://github.com/netadalet-oss/avofis-platform/actions/runs/41255979478) **FAIL** verdi; kaynak ve test düzeltilerek [#41256065609](https://github.com/netadalet-oss/avofis-platform/actions/runs/41256065609) **SUCCESS** ile kapatıldı. Bu iki **Seviye 1** denemesi gelecekteki Seviye 2'ye ait iki yeni deneme yerine geçmez.
+- Uygulama devir defteri `PORTAL_STALE_CI_EVIDENCE_ASSERTION` koduyla hatayı ve gerçek deneme referanslarını içerir; tarihî hata silinmedi.
+- Devir defteri test ve son kapsam sözleşmesi kod HEAD `4f945b60972c33d21ed869a4a69a97cecbb2c5fd`: [API + evidence ledger CI #41256166306](https://github.com/netadalet-oss/avofis-platform/actions/runs/41256166306) **SUCCESS**, [gerçek admin Next build + 16 staff + 13 eski bölüm HTTP #41256166309](https://github.com/netadalet-oss/avofis-platform/actions/runs/41256166309) **SUCCESS**.
+- Sözleşme kapsamı her iki dalda eşittir; bağımsız veya canlı kabul **0/594** olarak korunur.
