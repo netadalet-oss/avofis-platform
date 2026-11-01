@@ -5,11 +5,12 @@ import {PageFrame} from "@/components/avofis/PageFrame";
 import {usePortalLanguage} from "@/hooks/usePortalLanguage";
 import {useUser} from "@/hooks/useUser";
 import {supabase} from "@/lib/supabase";
+import {clientWorkspaceReleased} from "@/lib/client-workspace-release";
 import {indProcedureIds,evaluateINDAdmission} from "@/lib/ind-admission";
 
 // Both switches are off by default; this page never makes a live database
 // request while disabled. RLS and database triggers remain the security boundary.
-const enabled=process.env.NEXT_PUBLIC_AVOFIS_CLIENT_PORTAL_ENABLED==="true" &&
+const enabled=clientWorkspaceReleased(process.env.NEXT_PUBLIC_AVOFIS_CLIENT_PORTAL_ENABLED==="true") &&
  process.env.NEXT_PUBLIC_AVOFIS_IND_CLEARANCE_ENABLED==="true";
 type Case={id:string;title:string;status:string};
 const blank={
@@ -76,6 +77,7 @@ export default function INDStaffReviewPage(){
  const approved=!!reviews.find(x=>x.case_id===selected)?.human_approved;
  const current=cases.find(c=>c.id===selected);
  async function load(){
+   if(!enabled)return;
   const [c,r]=await Promise.all([
    supabase.from("avofis_cases").select("id,title,status").order("created_at",{ascending:false}).limit(100),
    supabase.from("avofis_case_clearances").select("*").limit(100)
