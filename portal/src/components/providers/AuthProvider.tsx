@@ -10,6 +10,7 @@ import {
 } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/lib/supabase";
+import { publicCustomerTransactionsAuthorized } from "@/lib/public-release-status";
 
 type AuthContextValue = {
   user: User | null;
@@ -25,6 +26,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!publicCustomerTransactionsAuthorized) {
+      setUser(null);
+      setSession(null);
+      setLoading(false);
+      return;
+    }
     let isMounted = true;
 
     async function restoreSession() {
