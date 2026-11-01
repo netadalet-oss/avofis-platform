@@ -9,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.security.KeyStore;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
@@ -22,6 +24,8 @@ public final class SecureDraftVault {
     private final Context context;
     private final String alias;
     private static final int MAX = 512 * 1024;
+    // Serializes draft read/compare/write in this app process; not a multi-process lock.
+    private static final Object LOCAL_WRITE_LOCK = new Object();
     private static final byte[] MAGIC = new byte[]{'L','L','X','3'};
     public SecureDraftVault(Context ctx, String tenant, String principal) throws Exception {
         if (!valid(tenant) || !valid(principal)) throw new IllegalArgumentException("Invalid account identity");
@@ -52,22 +56,40 @@ public final class SecureDraftVault {
         return (alias + ":" + matter + ":" + draft + ":" + revision).getBytes(StandardCharsets.UTF_8);
     }
     public void save(String matter,String draft,long revision,byte[] plaintext) throws Exception {
-        if (revision < 1 || plaintext==null || plaintext.length>MAX) throw new IllegalArgumentException("Invalid encrypted draft payload");
-        String name=fileName(matter,draft);
-        Cipher cipher=Cipher.getInstance("AES/GCM/NoPadding");
-        cipher.init(Cipher.ENCRYPT_MODE,key());
-        cipher.updateAAD(aad(matter,draft,revision));
-        byte[] iv=cipher.getIV(), sealed=cipher.doFinal(plaintext);
-        if (iv.length!=12) throw new IllegalStateException("Unsupported GCM nonce size");
-        ByteBuffer buffer=ByteBuffer.allocate(4+8+1+iv.length+sealed.length);
-        buffer.put(MAGIC).putLong(revision).put((byte)iv.length).put(iv).put(sealed);
-        File tmp=new File(context.getFilesDir(),name+".pending");
-        File output=new File(context.getFilesDir(),name);
-        // No plaintext temp; pending contains only encrypted ciphertext.
-        try(FileOutputStream stream=new FileOutputStream(tmp)){
-            stream.write(buffer.array()); stream.getFD().sync();
+        if (revision < 1 || plaintext == null || plaintext.length > MAX)
+            throw new IllegalArgumentException("Invalid encrypted draft payload");
+        String name = fileName(matter,draft);
+        File output = new File(context.getFilesDir(),name);
+        synchronized (LOCAL_WRITE_LOCK) {
+            long previous = DraftRevisionPolicy.precedingRevision(output,revision,MAX);
+            if (previous != 0) {
+                // Do not overwrite corrupted or foreign ciphertext merely because its
+                // clear header claims the expected revision. GCM authenticates the old bytes.
+                read(matter,draft,previous);
+            }
+            Cipher cipher=Cipher.getInstance("AES/GCM/NoPadding");
+            cipher.init(Cipher.ENCRYPT_MODE,key());
+            cipher.updateAAD(aad(matter,draft,revision));
+            byte[] iv=cipher.getIV(), sealed=cipher.doFinal(plaintext);
+            if (iv.length!=12) throw new IllegalStateException("Unsupported GCM nonce size");
+            ByteBuffer buffer=ByteBuffer.allocate(4+8+1+iv.length+sealed.length);
+            buffer.put(MAGIC).putLong(revision).put((byte)iv.length).put(iv).put(sealed);
+            // Unique ciphertext-only staging file avoids same-name pending collisions.
+            File tmp=File.createTempFile("llx-sealed-", ".pending", context.getFilesDir());
+            try {
+                try(FileOutputStream stream=new FileOutputStream(tmp)) {
+                    stream.write(buffer.array()); stream.getFD().sync();
+                }
+                // Fail closed if atomic replacement is unsupported; retain old draft.
+                Files.move(tmp.toPath(),output.toPath(),
+                        StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);
+                // This is local source-level verification, not an A6 device guarantee.
+                read(matter,draft,revision);
+            } finally {
+                // Do not delete or migrate any preexisting legacy unscoped files.
+                if (tmp.exists()) tmp.delete();
+            }
         }
-        if (!tmp.renameTo(output)) { tmp.delete(); throw new IOException("Encrypted draft commit failed"); }
     }
     public byte[] read(String matter,String draft,long requiredRevision) throws Exception {
         File f=new File(context.getFilesDir(),fileName(matter,draft));
