@@ -1,0 +1,43 @@
+name: LarenLex L2 offline module/API regression
+
+on:
+  push:
+    branches:
+      - work/larenlex-android
+    paths:
+      - 'larenlex-android/l2/**'
+      - '.github/workflows/larenlex-l2-offline.yml'
+  pull_request:
+    paths:
+      - 'larenlex-android/l2/**'
+      - '.github/workflows/larenlex-l2-offline.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-reference-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Parse and compile no-network fixtures
+        run: |
+          cd larenlex-android/l2
+          python -m compileall -q src tests contract_inventory.py
+      - name: Unit and in-process WSGI SQL reference tests
+        run: |
+          cd larenlex-android/l2
+          python -m unittest discover -s tests -v
+      - name: Optimized Python safety regression
+        run: |
+          cd larenlex-android/l2
+          python -O -m unittest discover -s tests -v
+      - name: Clarify acceptance boundary
+        run: |
+          echo 'This job does NOT run a real Android APK, PostgreSQL RLS, independent staging, Chromium, legal review, or production release.'
+          echo 'Browser evidence in repo is a local result record, not a new CI browser execution.'
