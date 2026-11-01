@@ -84,10 +84,13 @@ jobs:
           APK="app/build/outputs/apk/release/app-release-unsigned.apk"
           test -s "$APK" || { echo 'Unsigned APK missing'; exit 1; }
           unzip -tqq "$APK"
-          aapt dump badging "$APK" | grep -F "package: name='nl.larenlex.app'"
-          unzip -Z1 "$APK" | grep -Eq '^classes[0-9]*[.]dex
+          SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
+          test -x "$SDK/build-tools/35.0.0/aapt"
+          test -x "$SDK/build-tools/35.0.0/apksigner"
+          "$SDK/build-tools/35.0.0/aapt" dump badging "$APK" | grep -F "package: name='nl.larenlex.app'"
+          unzip -Z1 "$APK" | grep -Fqx "classes.dex"
 
-          if apksigner verify "$APK" >/tmp/larenlex-apk-signature-check.log 2>&1; then
+          if "$SDK/build-tools/35.0.0/apksigner" verify "$APK" >/tmp/larenlex-apk-signature-check.log 2>&1; then
             echo 'Unexpectedly signed APK: refusing to publish artifact'; exit 1
           fi
           echo 'APK intentionally unsigned and cannot be installed without separately authorized signing.'
