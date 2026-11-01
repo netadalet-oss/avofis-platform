@@ -32,6 +32,9 @@ export default function AdminWholeProductPreview() {
     <main className="min-h-screen bg-[#07111f] px-5 py-12 text-slate-100 sm:px-8">
       <div className="mx-auto max-w-6xl">
         <nav>
+          <Link href="/seviye-2-akis" className="mr-5 text-sm text-sky-200 underline underline-offset-4">
+            Seviye 2 personel akışları
+          </Link>
           <Link href="/" className="text-sm text-sky-200 underline underline-offset-4">
             AVOfis yönetim ana sayfa
           </Link>
