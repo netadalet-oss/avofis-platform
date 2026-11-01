@@ -15,6 +15,10 @@ export function SiteFooter() {
             Kuruluş öncesi geliştirme aşamasında, genel hukukî bilgi ve hazırlık
             için tasarlanan portal. Aktif hukukî temsil veya müşteri dosyası kabulü sunulmaz.
           </p>
+          <p className="mt-3 text-xs leading-6 text-slate-400">
+            Tescilli adres, şirket ve KVK/sicil numarası ile doğrulanmış genel iletişim kanalı henüz yayımlanmadı.
+            Doğrulanmamış adres veya meslekî sıfat gösterilmez.
+          </p>
           <Link href="/ilerleme" className="mt-4 inline-block text-sm text-sky-200 underline underline-offset-4">
             Geliştirme ve şeffaflık durumu
           </Link>
@@ -25,7 +29,13 @@ export function SiteFooter() {
               {column.title}
             </h2>
             <ul className="mt-4 space-y-3 text-sm text-slate-400">
-              {column.links.map((label) => <li key={label}>{label}</li>)}
+              {column.links.map((link) => (
+                <li key={link.href + link.label}>
+                  <Link href={link.href} className="inline-flex min-h-10 items-center text-sky-200 underline underline-offset-4 hover:text-white focus-visible:rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-sky-300">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         ))}
