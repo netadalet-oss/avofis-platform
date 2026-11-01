@@ -123,7 +123,7 @@ export default function WholeProductLevelOnePreview() {
             <summary className="cursor-pointer font-semibold">{audiences.length} hedef kitleyi görüntüle</summary>
             <ol className="mt-4 grid gap-2 text-sm text-slate-300 md:grid-cols-2">
               {audiences.map((audience) => (
-                <li key={audience.slug}>{audience.title.tr}</li>
+                <li key={audience.slug}><Link href={"/kimler-icin#" + audience.slug} className="text-sky-200 underline underline-offset-4">{audience.title.tr}</Link></li>
               ))}
             </ol>
           </details>
