@@ -56,3 +56,30 @@ test("12 static detail pages are personal-data-free and reached from all public 
     assert.ok(read(p).includes('"/islemler/"'), "missing detail route: " + p);
   }
 });
+
+test("all twelve journey topics link only to real service catalogue slugs, in both directions", () => {
+  const read = item => fs.readFileSync(path.join(root, item), "utf8");
+  const file = "src/lib/journey-service-links.ts";
+  const script = ts.transpileModule(read(file), {
+    fileName: file, compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 }
+  }).outputText;
+  const links = { exports: {} };
+  new Function("module", "exports", script)(links, links.exports);
+  const mapping = links.exports.journeyServiceSlugs;
+  const servicesText = read("src/lib/service-catalog.ts");
+  const known = new Set([...servicesText.matchAll(/"slug": "([a-z0-9-]+)"/g)].map(x => x[1]));
+  assert.equal(known.size, 17);
+  assert.deepEqual(Object.keys(mapping).sort(), journeys.map(item => item.id).sort());
+  for (const journey of journeys) {
+    assert.ok(mapping[journey.id].length >= 1, journey.id);
+    for (const slug of mapping[journey.id]) {
+      assert.ok(known.has(slug), journey.id + " -> " + slug);
+    }
+  }
+  const detail = read("src/components/JourneyPreparationView.tsx");
+  const service = read("src/app/hizmetler/[slug]/page.tsx");
+  assert.match(detail, /journeyServiceSlugs\[journey.id\]/);
+  assert.match(detail, /href=\{"\/hizmetler\/" \+ slug\}/);
+  assert.match(service, /journeyServiceSlugs\[item.id\]/);
+  assert.match(service, /href=\{"\/islemler\/" \+ item.id\}/);
+});

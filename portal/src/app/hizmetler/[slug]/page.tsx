@@ -5,6 +5,8 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SERVICES, findService } from "@/lib/service-catalog";
 import { ServicePreparationChecklist } from "@/components/ServicePreparationChecklist";
+import { journeys } from "@/lib/journeys";
+import { journeyServiceSlugs } from "@/lib/journey-service-links";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -58,6 +60,26 @@ export default function HizmetBilgiPage({ params }: { params: { slug: string } }
             </p>
           </section>
         </div>
+        {journeys.some(item => journeyServiceSlugs[item.id]?.includes(service.slug)) && (
+          <section className="mt-9 rounded-[24px] border border-sky-300/20 bg-white/5 p-6">
+            <h2 className="text-xl font-semibold">Bu hizmetle ilgili işlem hazırlıkları</h2>
+            <p className="mt-3 text-sm leading-7 text-slate-300">
+              Yalnız benzer konu başlıklarına ilişkin genel hazırlık bilgisidir;
+              somut olay için uzman değerlendirmesi veya kurumsal uygunluk kararı değildir.
+            </p>
+            <ul className="mt-5 grid gap-3 md:grid-cols-2">
+              {journeys.filter(item => journeyServiceSlugs[item.id]?.includes(service.slug))
+                .map(item => (
+                  <li key={item.id}>
+                    <Link href={"/islemler/" + item.id}
+                      className="flex min-h-12 items-center rounded-xl border border-white/15 px-4 py-3 text-sm text-sky-200 underline underline-offset-4 hover:border-sky-300/50">
+                      {item.title.tr}
+                    </Link>
+                  </li>
+                ))}
+            </ul>
+          </section>
+        )}
         <ServicePreparationChecklist key={service.slug}
           serviceSlug={service.slug} steps={service.preparation} />
         <section className="mt-9 rounded-[24px] border border-sky-400/20 bg-[#10213a]/70 p-6">
