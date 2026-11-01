@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const report = [
   {
     title: "Bu dönem ne değişti?",
-    body: "17 hizmet, 14 hedef kitle ve 12 işlem rotası esas alınarak kamu ana sayfası yenilendi. Kamu sayfaları yalnız AVOfis hizmet, işlem ve hukukî hazırlık kapsamına göre düzenlendi.",
+    body: "17 hizmet, 14 hedef kitle ve 12 işlem rotası esas alınarak kamu ana sayfası yenilendi. Kamu sayfaları yalnız AVOfis hizmet, işlem ve hukukî hazırlık kapsamına göre düzenlendi. 14 benzersiz hedef kitlenin her biri ilgili hizmet sayfalarına bağlandı; hukuk rehberlerinin insan yayın onayı kapısı korundu.",
   },
   {
     title: "Şimdi neredeyiz?",
@@ -63,6 +63,7 @@ export default function PublicProgressPage() {
         <div className="mt-7 flex flex-wrap gap-5 text-sm">
           <Link href="/seviye-1-onizleme" className="text-sky-200 underline">Bütün ürün Seviye 1 önizlemesi</Link>
           <Link href="/hizmetler" className="text-sky-200 underline">Hizmet alanları</Link>
+          <Link href="/kimler-icin" className="text-sky-200 underline">14 hedef kitle ve ilgili hizmetler</Link>
           <Link href="/baslangic" className="text-sky-200 underline">Kişisel verisiz hazırlık</Link>
           <Link href="/uyum" className="text-sky-200 underline">Yayın öncesi uyum sınırları</Link>
         </div>
