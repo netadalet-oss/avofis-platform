@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { programFlowSkeleton } from "./flow-skeleton";
 
 /**
  * AVOfis Seviye 1 / AV-003, AV-007, AV-062..077, AV-097.
@@ -50,5 +51,24 @@ programRouter.get("/overview", (_req, res) => {
     paymentEnabled: false,
     officialSubmissionEnabled: false,
     note: "Module presence and passing tests do not establish real authorization, independent acceptance or production release."
+  });
+});
+
+/**
+ * Level 2 topological read-only contract. Does not grant any of the ten
+ * modules user claims, CRUD access, external requests or production rights.
+ */
+programRouter.get("/flow-skeleton", (_req, res) => {
+  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.status(200).json({
+    product: "AVOfis",
+    developmentLevel: 2,
+    flowStatus: "PREVIEW_ONLY_NOT_ACCEPTED",
+    independentRAccepted: 0,
+    liveRAccepted: 0,
+    modules: programFlowSkeleton(API_MAIN_MODULES),
+    externalActionsEnabled: false,
+    realClientOperationsEnabled: false
   });
 });
