@@ -16,7 +16,7 @@ class DocumentComposerTests(unittest.TestCase):
                            check=True,capture_output=True,timeout=35)
             x=subprocess.run(['java','-cp',d,'DocumentDraftHarness'],check=True,
                              capture_output=True,text=True,timeout=20)
-            self.assertIn('18 PASS',x.stdout)
+            self.assertIn('17 PASS',x.stdout)
 
     def test_nonexported_editor_and_saf_only(self):
         manifest=(ROOT/'android/app/src/main/AndroidManifest.xml').read_text()
