@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "observations": [
+    {
+      "view": "mobile",
+      "width": 390,
+      "module_cards": 14,
+      "errors": [],
+      "overflow": false,
+      "screenshot": "LARENLEX_ANDROID_L2_MOBILE_EKRAN.png",
+      "synthetic_post": 201,
+      "cross_tenant_denial": 404
+    },
+    {
+      "view": "desktop",
+      "width": 1440,
+      "module_cards": 14,
+      "errors": [],
+      "overflow": false,
+      "screenshot": "LARENLEX_ANDROID_L2_DESKTOP_EKRAN.png",
+      "synthetic_post": 201,
+      "cross_tenant_denial": 404
+    }
+  ],
+  "browser": "system chromium, playwright, set_content; offline DOM"
+}
