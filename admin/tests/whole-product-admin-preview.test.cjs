@@ -21,9 +21,9 @@ test("the 16 canonical staff modules have exactly one safe first-level card",()=
   assert.match(page,/staffModules\.map/);
   assert.match(page,/İşlem ve yetki kabulü bekliyor/);
 });
-test("all current 14 API modules and seven A workstreams appear without fake CRUD",()=>{
-  const expected=["admin","analytics","auth","careers","cases","cms","connect",
-    "forum","messaging","notifications","offices","statutes","support","workspace"];
+test("all current 10 API modules and seven A workstreams appear without fake CRUD",()=>{
+  const expected=["admin","analytics","auth","cases","cms","messaging",
+    "notifications","statutes","support","workspace"];
   const start=page.indexOf("const backendModules = [");
   const end=page.indexOf("] as const;",start);
   assert.ok(start>=0 && end>start);
