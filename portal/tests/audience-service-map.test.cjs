@@ -22,12 +22,14 @@ function load(file, dependencies = {}) {
 const expanded = load("src/lib/avofis-expanded.ts");
 const site = load("src/lib/avofis-site.ts", { "./avofis-expanded": expanded });
 const catalog = load("src/lib/service-catalog.ts");
-const groups = [...site.audiences, ...expanded.extraAudiences];
+const groups = site.audiences;
 test("AV-044: fourteen unique audiences link to all seventeen canonical services", () => {
   const services = new Set(catalog.SERVICES.map(s => s.slug));
   const audiences = new Set(groups.map(a => a.slug));
   assert.equal(services.size, 17);
   assert.equal(groups.length, 14);
+  assert.equal(expanded.extraAudiences.length, 5);
+  assert.equal(groups.filter(g => expanded.extraAudiences.some(e => e.slug === g.slug)).length, 5);
   assert.equal(audiences.size, 14);
   const mapped = new Set();
   for (const group of groups) {
