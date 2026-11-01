@@ -61,7 +61,8 @@ test("AV-044: all 14 audiences map to real 12 issue routes and privacy-safe docu
   const page = fs.readFileSync(path.join(root, "src/app/kimler-icin/page.tsx"), "utf8");
   assert.match(page, /audienceFirstPaths\[group\.slug\]/);
   assert.match(page, /journeysById\.get\(id\)/);
-  assert.match(page, /href=\{"\/islemler#" \+ id\}/);
+  assert.ok(page.includes('href={"/islemler/" + id}'), "AV-044 / R-572: link directly to a canonical detail route");
+  assert.equal(page.includes('href={"/islemler#" + id}'), false, "Avoid list-only anchor detour");
   assert.match(page, /href="\/belge-hazirlik"/);
   assert.match(page, /hukukî uygunluk/);
 });
