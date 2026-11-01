@@ -1,1055 +1,209 @@
-"use client";
-
-import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import type { Metadata } from "next";
 import {
-  ArrowRight,
-  BadgeCheck,
-  BookOpen,
-  Building2,
-  ChevronRight,
-  Clock3,
-  FileSearch,
-  FileText,
-  GraduationCap,
-  Layers3,
-  MessageSquareMore,
-  Scale,
-  Search,
-  ShieldCheck,
-  Users2,
-  Workflow
+  ArrowRight, BookOpen, FileCheck2, FileSearch, Globe2,
+  Landmark, Scale, ShieldCheck, UsersRound
 } from "lucide-react";
-import { EditableCardGrid, type EditableCardItem } from "@/components/cms/EditableCardGrid";
-import { EditableColumnList, type EditableColumnItem } from "@/components/cms/EditableColumnList";
-import {
-  EditableMetaCardGrid,
-  type EditableMetaCardItem
-} from "@/components/cms/EditableMetaCardGrid";
-import { EditableList } from "@/components/cms/EditableList";
-import { EditableText } from "@/components/cms/EditableText";
-import { useEditMode } from "@/components/providers/EditModeProvider";
-import { ModuleGrid } from "@/components/module-grid";
-import { SectionTitle } from "@/components/section-title";
-import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { useUser } from "@/hooks/useUser";
-import { supabase } from "@/lib/supabase";
-import { PUBLIC_CMS_EDITING_ENABLED, PUBLIC_CMS_CONTENT_READER_ENABLED } from "@/lib/launch-gates";
+import { SiteFooter } from "@/components/site-footer";
+import { SERVICES } from "@/lib/service-catalog";
+import { audiences } from "@/lib/avofis-site";
+import { extraAudiences } from "@/lib/avofis-expanded";
+import { journeys } from "@/lib/journeys";
 
-const featurePills = [
-  "İçtihat araştırma",
-  "Mevzuat erişimi",
-  "Dosya analizi",
-  "Taslak üretimi",
-  "Forum ve topluluk",
-  "Staj ve kariyer",
-  "Workspace",
-  "Connect ekonomisi"
-];
-
-const researchCards: EditableCardItem[] = [
-  {
-    title: "Merkezi hukuk araştırması",
-    text: "İçtihat, mevzuat, rehber içerik ve topluluk tartışmalarını aynı araştırma deneyiminde birleştirir."
-  },
-  {
-    title: "Bağlantılı bilgi akışı",
-    text: "Bir kararın ilgili mevzuatını, forum tartışmasını ve ilişkili içeriklerini tek akışta sunar."
-  },
-  {
-    title: "Çalışılabilir hukuk verisi",
-    text: "Kaydetme, not alma, sınıflandırma ve belge hazırlama gibi işlevler hedeflenmektedir."
-  }
-];
-
-const careerColumns: EditableColumnItem[] = [
-  {
-    title: "Stajyerler için",
-    points: [
-      "Profil ve CV oluşturma",
-      "İlanlara başvuru ve takip",
-      "Ofis profillerini inceleme",
-      "Topluluk ve rehber alanlarına erişim"
-    ]
-  },
-  {
-    title: "Ofisler için",
-    points: [
-      "İlan yayınlama ve aday havuzu",
-      "Başvuru pipeline yönetimi",
-      "Mesajlaşma ve değerlendirme akışı",
-      "Marka görünürlüğü ve ekip profilleri"
-    ]
-  }
-];
-
-const officeHighlights = [
-  "Profil doğrulama tasarımı",
-  "Uzmanlık alanı görünürlüğü",
-  "Staj ve kariyer ilanları",
-  "Ofis ekip yapısı ve rol modeli"
-];
-
-const communityCards: EditableMetaCardItem[] = [
-  {
-    title: "İçtihat Tartışmaları",
-    meta: "Planlanan tartışma alanı",
-    text: "Kararların gerekçesi, uygulama alanı ve emsal etkisi üzerine uzman görüşleri."
-  },
-  {
-    title: "Mevzuat Değerlendirmeleri",
-    meta: "Planlanan tartışma alanı",
-    text: "Madde değişiklikleri, yorum farkları ve uygulamaya etkiler."
-  },
-  {
-    title: "Staj ve Kariyer Deneyimleri",
-    meta: "Planlanan tartışma alanı",
-    text: "Ofis kültürü, başvuru süreci ve mesleğe geçiş deneyimleri."
-  },
-  {
-    title: "Mesleki Uygulama",
-    meta: "Planlanan tartışma alanı",
-    text: "Ofis yönetimi, süreç verimliliği ve profesyonel iş akışı önerileri."
-  }
-];
-
-const defaultHeroTitle =
-  "Avrupa genelinde hukukî ve idarî işlemler için açık, sistemli hazırlık.";
-
-const defaultHeroSubtitle =
-  "Sorununuza uygun hizmet alanını inceleyin, ülkenizi seçin ve kişisel bilgi vermeden ilk hazırlık adımlarınızı belirleyin. AVOfis henüz kuruluş öncesi geliştirme aşamasındadır.";
-
-type HomeCmsContent = {
-  hero?: {
-    title?: string;
-    subtitle?: string;
-  };
-  featurePills?: string[];
-  researchCards?: EditableCardItem[];
-  careerColumns?: EditableColumnItem[];
-  communityCards?: EditableMetaCardItem[];
-  officeHighlights?: string[];
-  sections?: {
-    research?: {
-      eyebrow?: string;
-      title?: string;
-      text?: string;
-    };
-    career?: {
-      eyebrow?: string;
-      title?: string;
-      text?: string;
-    };
-    community?: {
-      eyebrow?: string;
-      title?: string;
-      text?: string;
-    };
-    offices?: {
-      eyebrow?: string;
-      title?: string;
-      text?: string;
-    };
-    stats?: {
-      eyebrow?: string;
-      title?: string;
-      text?: string;
-    };
-  };
+export const metadata: Metadata = {
+  title: "AVOfis | Hukukî bilgi, işlem hazırlığı ve güvenli dosya hizmetleri",
+  description: "17 hukukî ve idarî hizmet, 14 hedef kitle ve 12 işlem yolu için kaynak ve hazırlık bilgisi. Müşteri kaydı veya gerçek temsil henüz açık değil.",
+  robots: { index: false, follow: false }
 };
 
-type EditableHero = {
-  title: string;
-  subtitle: string;
-};
-
-function setDeepValue<T extends Record<string, any>>(obj: T, path: string[], value: any): T {
-  const clone: T = JSON.parse(JSON.stringify(obj || {}));
-  let current: any = clone;
-
-  for (let i = 0; i < path.length - 1; i += 1) {
-    const key = path[i];
-    if (!current[key] || typeof current[key] !== "object") {
-      current[key] = {};
-    }
-    current = current[key];
-  }
-
-  current[path[path.length - 1]] = value;
-  return clone;
-}
+const audiencesAll = [...audiences, ...extraAudiences];
+const steps = [
+  { n: "01", title: "Konunuzu belirleyin", description: "Ülke, işlem türü, ilgili kurum ve belge ihtiyacını kişisel bilgi vermeden ayırın.", href: "/baslangic" },
+  { n: "02", title: "Hazırlık şartlarını inceleyin", description: "Resmî kaynak, olası süre, belge türü ve profesyonel yetki gereksinimlerini kontrol edin.", href: "/islemler" },
+  { n: "03", title: "Güvenli işleme hazırlanın", description: "Şimdilik yalnız genel bilgi alın; özel dosya, ücret, sözleşme ve temsil için ayrı onay gerekir.", href: "/uyum" }
+];
 
 export default function HomePage() {
-  const { session, loading: authLoading } = useUser();
-  const { editMode, setEditMode } = useEditMode();
-
-  const [cmsContent, setCmsContent] = useState<HomeCmsContent | null>(null);
-  const [heroDraft, setHeroDraft] = useState<EditableHero>({
-    title: "",
-    subtitle: ""
-  });
-  const [heroSaving, setHeroSaving] = useState(false);
-  const [heroMessage, setHeroMessage] = useState("");
-
-  // Client-controlled account metadata never establishes editing authority.
-  // Keep public CMS disabled until verified server-side staff authorization.
-  const isAdmin = false;
-
-  useEffect(() => {
-    let mounted = true;
-
-    async function loadCMS() {
-      if (!PUBLIC_CMS_CONTENT_READER_ENABLED) {
-        setCmsContent(null);
-        setHeroDraft({ title: defaultHeroTitle, subtitle: defaultHeroSubtitle });
-        return;
-      }
-      const { data, error } = await supabase
-        .from("pages")
-        .select("content")
-        .eq("slug", "home")
-        .single();
-
-      if (!mounted) return;
-
-      if (error || !data?.content) {
-        setHeroDraft({
-          title: defaultHeroTitle,
-          subtitle: defaultHeroSubtitle
-        });
-        return;
-      }
-
-      const content = data.content as HomeCmsContent;
-
-      setCmsContent(content);
-      setHeroDraft({
-        title: content?.hero?.title || defaultHeroTitle,
-        subtitle: content?.hero?.subtitle || defaultHeroSubtitle
-      });
-    }
-
-    loadCMS();
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  // No public-browser CMS writes, even if a future developer alters a UI gate.
-  // Publication requires a separately reviewed server-side staff workflow.
-  async function saveContentField(_path: string[], _value: any) {
-    if (!PUBLIC_CMS_EDITING_ENABLED) {
-      setHeroMessage("İçerik yayını için yetkili inceleme gereklidir.");
-      return;
-    }
-    setHeroMessage("Bu kamu ekranından içerik kaydedilemez; onaylı personel yayın akışı gereklidir.");
-  }
-
-  async function saveHeroField(_field: "title" | "subtitle", _value: string) {
-    if (!PUBLIC_CMS_EDITING_ENABLED) {
-      setHeroMessage("İçerik yayını için yetkili inceleme gereklidir.");
-      return;
-    }
-    setHeroMessage("Bu kamu ekranından içerik kaydedilemez; onaylı personel yayın akışı gereklidir.");
-  }
-
-  function openHeroEditMode() {
-    setEditMode(true);
-    setHeroMessage("");
-    setHeroDraft({
-      title: cmsContent?.hero?.title || defaultHeroTitle,
-      subtitle: cmsContent?.hero?.subtitle || defaultHeroSubtitle
-    });
-  }
-
-  function cancelHeroEditMode() {
-    setEditMode(false);
-    setHeroMessage("");
-    setHeroDraft({
-      title: cmsContent?.hero?.title || defaultHeroTitle,
-      subtitle: cmsContent?.hero?.subtitle || defaultHeroSubtitle
-    });
-  }
-
-  const currentFeaturePills = cmsContent?.featurePills?.length
-    ? cmsContent.featurePills
-    : featurePills;
-
-  const currentResearchCards = cmsContent?.researchCards?.length
-    ? cmsContent.researchCards
-    : researchCards;
-
-  const currentCareerColumns = cmsContent?.careerColumns?.length
-    ? cmsContent.careerColumns
-    : careerColumns;
-
-  const currentCommunityCards = (cmsContent?.communityCards?.length
-    ? cmsContent.communityCards
-    : communityCards).map((card) => ({ ...card, meta: "Forum henüz kamuya açık değil" }));
-
-  const currentOfficeHighlights = cmsContent?.officeHighlights?.length
-    ? cmsContent.officeHighlights
-    : officeHighlights;
-
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-[#07111f] text-white">
       <SiteHeader />
-      <div role="note" className="border-b border-amber-300/20 bg-amber-300/10 px-4 py-3 text-center text-sm leading-6 text-amber-100">
-        AVOfis kuruluş öncesi geliştirme aşamasındadır. Bu portal henüz aktif hukukî danışmanlık veya dosya kabulü sunmamaktadır.
-      </div>
-
-      <section className="relative overflow-hidden">
-        <div className="container-shell grid gap-14 pb-20 pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:pb-28 lg:pt-20">
+      <section className="relative overflow-hidden border-b border-white/10">
+        <div aria-hidden="true" className="pointer-events-none absolute -right-32 -top-48 h-[40rem] w-[40rem] rounded-full bg-sky-300/[.07] blur-3xl" />
+        <div className="container-shell relative grid gap-12 py-20 md:py-24 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,.8fr)]">
           <div className="max-w-3xl">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-sky-400/20 bg-sky-400/10 px-4 py-2 text-sm text-sky-200">
-              <BadgeCheck className="h-4 w-4" />
-              Açık erişim araştırma + profesyonel çalışma katmanı
+            <p className="inline-flex items-center gap-2 rounded-full border border-sky-300/30 bg-sky-300/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-sky-200">
+              <Scale className="h-4 w-4" aria-hidden="true" />
+              Avrupa · Hollanda · Türkiye · Sınır ötesi işlemler
+            </p>
+            <h1 className="mt-7 text-4xl font-semibold leading-[1.15] tracking-tight sm:text-5xl lg:text-6xl">
+              Hukukî sürecinizi doğru bilgiyle başlatın.
+            </h1>
+            <p className="mt-7 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+              17 hukukî ve idarî hizmet alanı, 14 hedef kitle ve 12 özgün işlem
+              rotası. Ülkenizi, ilgili kurumu ve belge ihtiyacınızı belirlemek
+              için açık hazırlık bilgilerine ulaşın.
+            </p>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Link href="/baslangic" className="inline-flex min-h-12 items-center gap-3 rounded-xl bg-sky-200 px-6 py-3 text-sm font-semibold text-slate-950 hover:bg-white">
+                Sorununuza göre başlayın <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+              <Link href="/hizmetler" className="inline-flex min-h-12 items-center rounded-xl border border-sky-200/40 px-6 py-3 text-sm font-semibold text-sky-100 hover:bg-sky-300/10">
+                17 hizmeti inceleyin
+              </Link>
             </div>
-
-            {isAdmin && !authLoading ? (
-              <div className="mb-4 flex flex-wrap items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (editMode) {
-                      cancelHeroEditMode();
-                    } else {
-                      openHeroEditMode();
-                    }
-                  }}
-                  className="rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-2 text-sm font-medium text-amber-200"
-                >
-                  {editMode ? "Düzenlemeyi Kapat" : "Düzenleme Modu"}
-                </button>
-
-                {heroSaving ? (
-                  <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200">
-                    Kaydediliyor...
-                  </div>
-                ) : null}
-
-                {heroMessage ? (
-                  <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200">
-                    {heroMessage}
-                  </div>
-                ) : null}
-              </div>
-            ) : null}
-
-            <EditableText
-              value={cmsContent?.hero?.title || ""}
-              defaultValue={defaultHeroTitle}
-              tag="h1"
-              className="max-w-4xl text-4xl font-semibold tracking-tight text-white md:text-6xl md:leading-[1.05]"
-              inputClassName="w-full max-w-4xl rounded-2xl border border-amber-400/30 bg-white/5 px-5 py-4 text-3xl font-semibold tracking-tight text-white outline-none md:text-5xl"
-              placeholder="Hero başlık"
-              onSave={async (nextValue) => {
-                if (!editMode) return;
-                await saveHeroField("title", nextValue);
-              }}
-            />
-
-            <div className="mt-6">
-              <EditableText
-                value={cmsContent?.hero?.subtitle || ""}
-                defaultValue={defaultHeroSubtitle}
-                tag="p"
-                multiline
-                rows={5}
-                className="max-w-2xl text-base leading-8 text-slate-300 md:text-lg"
-                inputClassName="w-full max-w-2xl rounded-2xl border border-amber-400/30 bg-white/5 px-5 py-4 text-base leading-8 text-slate-200 outline-none"
-                placeholder="Hero açıklama"
-                onSave={async (nextValue) => {
-                  if (!editMode) return;
-                  await saveHeroField("subtitle", nextValue);
-                }}
-              />
-            </div>
-
-            <div className="mt-8">
-              <EditableList
-                items={currentFeaturePills}
-                className="flex flex-wrap gap-3"
-                itemClassName="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200"
-                placeholder="Özellik etiketi"
-                onSave={async (nextItems) => {
-                  await saveContentField(["featurePills"], nextItems);
-                }}
-              />
-            </div>
-
-            <div className="mt-10 flex flex-wrap gap-4">
-              <a
-                href="/baslangic"
-                className="inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-4 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
-              >
-                Sorununuza Göre Başlayın
-                <ArrowRight className="h-4 w-4" />
-              </a>
-              <a
-                href="#arastirma"
-                className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-6 py-4 text-sm font-semibold text-white transition hover:border-white/20 hover:bg-white/10"
-              >
-                Platformu Keşfet
-                <ChevronRight className="h-4 w-4" />
-              </a>
-            </div>
-
-            <p className="mt-10 max-w-2xl text-sm leading-7 text-slate-400">
-              İlk adımda ülke ve konunuzu seçerek kişisel bilgi vermeden hazırlık kontrol listesi oluşturabilirsiniz.
-              AVOfis henüz müşteri dosyası kabul etmiyor.
+            <p className="mt-8 text-xs leading-6 text-amber-200">
+              AVOfis kuruluş öncesi geliştirme aşamasındadır. Bu portal kişiye
+              özel hukukî danışmanlık, avukatlık, dosya kabulü, ücretli hizmet,
+              meslekî temsil veya resmî başvuru sunulduğu anlamına gelmez.
+              Kişisel belgelerinizi kamu sayfalarına göndermeyin.
             </p>
           </div>
-
-          <div className="relative">
-            <div className="absolute -left-10 top-10 h-28 w-28 rounded-full bg-sky-400/20 blur-3xl" />
-            <div className="absolute -right-4 bottom-10 h-32 w-32 rounded-full bg-blue-500/20 blur-3xl" />
-
-            <div className="relative rounded-[28px] border border-white/10 bg-white/5 p-4 shadow-2xl shadow-black/30 backdrop-blur-xl">
-              <div className="rounded-[24px] border border-white/10 bg-[#081321] p-4">
-                <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                  <div>
-                    <div className="text-sm font-semibold text-white">
-                      Araştırma Paneli
-                    </div>
-                    <div className="text-xs text-slate-400">
-                      İçtihat + mevzuat + topluluk akışı
-                    </div>
-                  </div>
-                  <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
-                    Geliştirme örneği
-                  </div>
-                </div>
-
-                <div className="mt-4 rounded-2xl border border-white/10 bg-slate-900/80 p-4">
-                  <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-300">
-                    <Search className="h-4 w-4 text-sky-300" />
-                    Karar, kanun, konu, ofis, ilan veya forum başlığı ara...
-                  </div>
-
-                  <div className="mt-4 grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
-                    <div className="space-y-4">
-                      <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                        <div className="flex items-start justify-between gap-4">
-                          <div>
-                            <div className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                              İçtihat sonucu
-                            </div>
-                            <div className="mt-2 text-base font-semibold text-white">
-                              Yargıtay 9. HD · İşçilik alacaklarında hesaplama
-                              yöntemi
-                            </div>
-                            <p className="mt-2 text-sm leading-6 text-slate-300">
-                              Karar özeti, ilgili mevzuat maddeleri, benzer
-                              kararlar ve forum tartışmaları aynı akışta.
-                            </p>
-                          </div>
-                          <div className="rounded-xl border border-sky-400/20 bg-sky-400/10 p-3">
-                            <BookOpen className="h-5 w-5 text-sky-300" />
-                          </div>
-                        </div>
-                        <div className="mt-4 flex flex-wrap gap-2 text-xs text-slate-300">
-                          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-                            İş Hukuku
-                          </span>
-                          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-                            Ücret Alacağı
-                          </span>
-                          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">
-                            Emsal Kümeleri
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                          <div className="flex items-center gap-3">
-                            <Scale className="h-5 w-5 text-indigo-300" />
-                            <div className="text-sm font-semibold">
-                              İlgili mevzuat
-                            </div>
-                          </div>
-                          <div className="mt-3 text-sm leading-6 text-slate-300">
-                            TBK madde bağlantıları ve değişiklik geçmişi tek
-                            görünümde.
-                          </div>
-                        </div>
-                        <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                          <div className="flex items-center gap-3">
-                            <MessageSquareMore className="h-5 w-5 text-cyan-300" />
-                            <div className="text-sm font-semibold">
-                              Topluluk yorumu
-                            </div>
-                          </div>
-                          <div className="mt-3 text-sm leading-6 text-slate-300">
-                            Konuya ait forum başlıkları ve uzman katkıları
-                            bağlantılı.
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                      <div className="text-sm font-semibold">
-                        Profesyonel Çalışma Alanı
-                      </div>
-                      <div className="mt-1 text-xs text-slate-400">
-                        Aynı dosyada üretim ve takip
-                      </div>
-
-                      <div className="mt-4 space-y-3">
-                        {[
-                          { label: "Dosya analizi oluşturuldu", icon: Workflow },
-                          { label: "İstinaf taslağı hazırlandı", icon: FileText },
-                          { label: "Ekip görevi atandı", icon: Users2 },
-                          { label: "Süre hesabı eklendi", icon: Clock3 }
-                        ].map((item) => {
-                          const Icon = item.icon;
-                          return (
-                            <div
-                              key={item.label}
-                              className="flex items-center gap-3 rounded-xl border border-white/10 bg-slate-950/50 px-3 py-3"
-                            >
-                              <div className="rounded-lg border border-white/10 bg-white/5 p-2">
-                                <Icon className="h-4 w-4 text-sky-300" />
-                              </div>
-                              <div className="text-sm text-slate-200">
-                                {item.label}
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-
-                      <div className="mt-4 rounded-xl border border-emerald-400/15 bg-emerald-400/10 p-4 text-sm text-emerald-200">
-                        Connect cüzdanı, bildirimler ve dosya geçmişi aynı
-                        panelde görünür.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-y border-white/10 bg-black/20 py-6">
-        <div className="container-shell flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <div className="text-sm font-medium text-white">
-              Açık erişim bilgi katmanı + üyelik tabanlı profesyonel alan
-            </div>
-            <div className="text-sm text-slate-400">
-              Hukuk araştırmasını, üretimi ve kariyer ağını tek yapı altında
-              toplar.
-            </div>
-          </div>
-          <div className="flex flex-wrap items-center gap-3 text-sm text-slate-300">
-            <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">
-              Şeffaf yapı
-            </span>
-            <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">
-              Güvenli veri yönetimi
-            </span>
-            <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">
-              Yönetilebilir içerik sistemi
-            </span>
-          </div>
-        </div>
-      </section>
-
-      <ModuleGrid />
-
-      <section id="arastirma" className="bg-black/20 py-24">
-        <div className="container-shell grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
-          <div>
-            <SectionTitle
-              eyebrow={cmsContent?.sections?.research?.eyebrow || "Araştırma katmanı"}
-              title={
-                cmsContent?.sections?.research?.title ||
-                "İçtihat ve mevzuat erişimini çalışılabilir bir hukuk deneyimine dönüştürür."
-              }
-              text={
-                cmsContent?.sections?.research?.text ||
-                "Karar arama, mevzuat görüntüleme, konu filtreleri, benzer içerikler, notlar, kayıt listeleri ve ilişkili topluluk tartışmaları tek düzende sunulur."
-              }
-              editable
-              onSaveEyebrow={async (nextValue) => {
-                await saveContentField(["sections", "research", "eyebrow"], nextValue);
-              }}
-              onSaveTitle={async (nextValue) => {
-                await saveContentField(["sections", "research", "title"], nextValue);
-              }}
-              onSaveText={async (nextValue) => {
-                await saveContentField(["sections", "research", "text"], nextValue);
-              }}
-            />
-
-            <div className="mt-8">
-              <EditableCardGrid
-                items={currentResearchCards}
-                className="space-y-4"
-                cardClassName="rounded-2xl border border-white/10 bg-white/5 p-5"
-                titleClassName="text-base font-semibold text-white"
-                textClassName="mt-2 text-sm leading-7 text-slate-300"
-                titlePlaceholder="Araştırma kartı başlığı"
-                textPlaceholder="Araştırma kartı açıklaması"
-                onSave={async (nextItems) => {
-                  await saveContentField(["researchCards"], nextItems);
-                }}
-              />
-            </div>
-          </div>
-
-          <div className="rounded-[28px] border border-white/10 bg-[#0a1525] p-5 shadow-2xl shadow-black/25">
-            <div className="grid gap-5 md:grid-cols-[1fr_0.82fr]">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-sm font-semibold text-white">
-                      İçtihat Arama
-                    </div>
-                    <div className="text-xs text-slate-400">
-                      Mahkeme, konu, tarih ve sonuç tipi filtreleri
-                    </div>
-                  </div>
-                  <FileSearch className="h-5 w-5 text-sky-300" />
-                </div>
-                <div className="mt-4 space-y-3 text-sm">
-                  {[
-                    "Yargıtay / Danıştay / AYM filtreleri",
-                    "Karar özeti ve tam metin görünümü",
-                    "Emsal karar önerileri",
-                    "Kişisel not ve kayıt listeleri"
-                  ].map((item) => (
-                    <div
-                      key={item}
-                      className="rounded-xl border border-white/10 bg-slate-950/50 px-4 py-3 text-slate-200"
-                    >
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="space-y-5">
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                  <div className="flex items-center gap-3">
-                    <Scale className="h-5 w-5 text-indigo-300" />
-                    <div>
-                      <div className="text-sm font-semibold text-white">
-                        Mevzuat görünümü
-                      </div>
-                      <div className="text-xs text-slate-400">
-                        Madde bazlı arama ve değişiklik geçmişi
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mt-4 h-28 rounded-2xl border border-dashed border-white/10 bg-slate-950/50 p-4 text-sm leading-6 text-slate-300">
-                    TBK · Madde bazlı görünüm
-                    <br />
-                    Eski / yeni metin karşılaştırması
-                    <br />
-                    İlişkili içtihat bağlantıları
-                  </div>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                  <div className="flex items-center gap-3">
-                    <Layers3 className="h-5 w-5 text-cyan-300" />
-                    <div>
-                      <div className="text-sm font-semibold text-white">
-                        Birleşik arama
-                      </div>
-                      <div className="text-xs text-slate-400">
-                        İçtihat + mevzuat + forum + ofis + ilan
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mt-4 grid grid-cols-2 gap-2 text-xs text-slate-300">
-                    {[
-                      "Global search",
-                      "Kaydedilen aramalar",
-                      "Arama alarmı",
-                      "Filtre geçmişi"
-                    ].map((tag) => (
-                      <div
-                        key={tag}
-                        className="rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2.5"
-                      >
-                        {tag}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="container-shell py-24">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
-          <div className="rounded-[28px] border border-white/10 bg-white/5 p-8">
-            <div className="mb-6 flex items-center gap-3">
-              <div className="rounded-2xl border border-white/10 bg-slate-950/50 p-3">
-                <FileText className="h-5 w-5 text-sky-300" />
-              </div>
-              <div>
-                <div className="text-xl font-semibold text-white">
-                  Taslak Üretim ve Dosya Analizi
-                </div>
-                <div className="text-sm text-slate-400">
-                  Hukuki metin üretimi ve dosya değerlendirme motoru
-                </div>
-              </div>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2">
+          <aside className="self-center rounded-[28px] border border-sky-300/20 bg-white/[.05] p-7 shadow-2xl sm:p-9"
+            aria-labelledby="overview-heading">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-sky-300">
+              İlk bakışta AVOfis
+            </p>
+            <h2 id="overview-heading" className="mt-3 text-2xl font-semibold">Tek bir hukukî işlem haritası</h2>
+            <div className="mt-7 grid grid-cols-2 gap-4">
               {[
-                "Dava dilekçesi",
-                "Cevap dilekçesi",
-                "Savunma",
-                "İstinaf / temyiz",
-                "Sözleşme",
-                "Hukuki görüş",
-                "Risk analizi",
-                "Olay kronolojisi"
-              ].map((item) => (
-                <div
-                  key={item}
-                  className="rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-4 text-sm text-slate-200"
-                >
-                  {item}
+                { n: "17", t: "Hizmet alanı", Icon: Scale },
+                { n: "14", t: "Hedef kitle", Icon: UsersRound },
+                { n: "12", t: "İşlem rotası", Icon: Globe2 },
+                { n: "6", t: "Dil hedefi", Icon: BookOpen }
+              ].map(({ n, t, Icon }) => (
+                <div key={t} className="rounded-xl border border-white/10 bg-[#07111f]/70 p-4">
+                  <Icon className="h-5 w-5 text-sky-300" aria-hidden="true" />
+                  <p className="mt-3 text-3xl font-semibold">{n}</p>
+                  <p className="mt-1 text-xs leading-5 text-slate-300">{t}</p>
                 </div>
               ))}
             </div>
-
-            <p className="mt-6 text-sm leading-7 text-slate-300">
-              Belge yükleme, hukuki sorun tespiti, içtihat önerisi, mevzuat
-              bağlantıları ve üretim akışı tek çalışma yüzeyinde ilerler.
+            <p className="mt-6 text-xs leading-6 text-slate-400">
+              Sayılar kaynak kataloğunun kapsamıdır, bağımsız hukukî veya
+              teknik kabul oranı değildir. Altı dilin hukukî insan incelemesi beklenmektedir.
             </p>
-          </div>
-
-          <div className="rounded-[28px] border border-white/10 bg-white/5 p-8">
-            <div className="mb-6 flex items-center gap-3">
-              <div className="rounded-2xl border border-white/10 bg-slate-950/50 p-3">
-                <Users2 className="h-5 w-5 text-sky-300" />
-              </div>
-              <div>
-                <div className="text-xl font-semibold text-white">
-                  Profesyonel Workspace
-                </div>
-                <div className="text-sm text-slate-400">
-                  Takım çalışması, belge yönetimi ve görev takibi
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              {[
-                "Dosya klasörleri ve paylaşılan belgeler",
-                "Görev atama, süre takibi ve not sistemi",
-                "Versiyon geçmişi ve ortak çalışma düzeni",
-                "Mesajlaşma, bildirim ve çalışma akışları"
-              ].map((item) => (
-                <div
-                  key={item}
-                  className="flex items-start gap-3 rounded-2xl border border-white/10 bg-slate-950/50 p-4"
-                >
-                  <ShieldCheck className="mt-0.5 h-5 w-5 text-emerald-300" />
-                  <div className="text-sm leading-7 text-slate-200">
-                    {item}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6 rounded-2xl border border-sky-400/15 bg-sky-400/10 p-4 text-sm leading-7 text-sky-100">
-              Rol bazlı erişim, güvenli veri yönetimi ve ekip içi işbirliği
-              mantığıyla tasarlanmıştır.
-            </div>
-          </div>
+          </aside>
         </div>
       </section>
 
-      <section id="kariyer" className="bg-black/20 py-24">
+      <section id="hizmetler" className="container-shell py-16 md:py-20">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.17em] text-sky-300">Hizmetler</p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight">17 özgün hukukî ve idarî alan</h2>
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300">
+              Her alan için hedef kitle, işlem öncesi kontrol ve kaynak sınırı ayrı hazırlanır.
+            </p>
+          </div>
+          <Link href="/hizmetler" className="text-sm text-sky-200 underline underline-offset-4">Bütün hizmetler</Link>
+        </div>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {SERVICES.map((service, i) => (
+            <Link key={service.slug} href={"/hizmetler/" + service.slug}
+              className="group flex flex-col rounded-2xl border border-white/10 bg-white/[.04] p-6 transition hover:border-sky-300/50 hover:bg-sky-300/[.06]">
+              <span className="text-xs font-semibold text-sky-300">HİZMET {String(i + 1).padStart(2, "0")}</span>
+              <h3 className="mt-3 text-lg font-semibold">{service.title}</h3>
+              <p className="mt-3 flex-1 text-sm leading-7 text-slate-300">{service.summary}</p>
+              <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-sky-200">
+                Hazırlık bilgisini inceleyin <ArrowRight className="h-4 w-4 group-hover:translate-x-1" aria-hidden="true" />
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-y border-white/10 bg-white/[.025] py-16">
         <div className="container-shell">
-          <SectionTitle
-            eyebrow={cmsContent?.sections?.career?.eyebrow || "Kariyer ağı"}
-            title={
-              cmsContent?.sections?.career?.title ||
-              "Stajyerler ve hukuk büroları için güçlü, şeffaf ve ölçülebilir bir eşleşme alanı."
-            }
-            text={
-              cmsContent?.sections?.career?.text ||
-              "İlan yayınlama, başvuru, aday değerlendirme, ofis görünürlüğü, kariyer içerikleri ve profil bazlı eşleşme önerileri aynı modülde ilerler."
-            }
-            editable
-            onSaveEyebrow={async (nextValue) => {
-              await saveContentField(["sections", "career", "eyebrow"], nextValue);
-            }}
-            onSaveTitle={async (nextValue) => {
-              await saveContentField(["sections", "career", "title"], nextValue);
-            }}
-            onSaveText={async (nextValue) => {
-              await saveContentField(["sections", "career", "text"], nextValue);
-            }}
-          />
-
-          <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_1fr_0.9fr]">
-            <div className="lg:col-span-2">
-              <EditableColumnList
-                items={currentCareerColumns}
-                className="grid gap-6 lg:grid-cols-2"
-                renderColumn={(column, index) => (
-                  <div
-                    key={column.title}
-                    className="rounded-[28px] border border-white/10 bg-white/5 p-7"
-                  >
-                    <div className="mb-5 flex items-center gap-3">
-                      <div className="rounded-2xl border border-white/10 bg-slate-950/50 p-3">
-                        {index === 0 ? (
-                          <GraduationCap className="h-5 w-5 text-sky-300" />
-                        ) : (
-                          <Building2 className="h-5 w-5 text-sky-300" />
-                        )}
-                      </div>
-                      <div className="text-xl font-semibold text-white">
-                        {column.title}
-                      </div>
-                    </div>
-
-                    <div className="space-y-3">
-                      {column.points.map((point, pointIndex) => (
-                        <div
-                          key={`${point}-${pointIndex}`}
-                          className="rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-4 text-sm leading-7 text-slate-200"
-                        >
-                          {point}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                onSave={async (nextItems) => {
-                  await saveContentField(["careerColumns"], nextItems);
-                }}
-              />
-            </div>
-
-            <div className="rounded-[28px] border border-white/10 bg-gradient-to-b from-sky-400/10 to-white/5 p-7">
-              <div className="text-xl font-semibold text-white">
-                Planlanan kariyer özellikleri
-              </div>
-              <div className="mt-6 grid grid-cols-2 gap-4">
-                {[
-                  { value: "Planlanan", label: "İlan listeleme" },
-                  { value: "Planlanan", label: "Ofis profilleri" },
-                  { value: "Planlanan", label: "Başvuru takibi" },
-                  { value: "Planlanan", label: "Aday eşleşmesi" }
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="rounded-2xl border border-white/10 bg-slate-950/50 p-4"
-                  >
-                    <div className="text-2xl font-semibold text-white">
-                      {item.value}
-                    </div>
-                    <div className="mt-1 text-xs text-slate-400">
-                      {item.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-6 rounded-2xl border border-white/10 bg-slate-950/50 p-4 text-sm leading-7 text-slate-300">
-                Başvuru pipeline, mesajlaşma, kısa liste ve ofis görünürlüğü
-                aynı kariyer omurgasına bağlıdır.
-              </div>
-            </div>
+          <div className="flex items-center gap-3 text-sky-200">
+            <UsersRound className="h-6 w-6" aria-hidden="true" />
+            <h2 className="text-2xl font-semibold text-white">14 farklı kullanıcı ve ihtiyaç grubu</h2>
           </div>
+          <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-300">
+            Konular yalnız belli bir vatandaşlığa veya meslek grubuna özgü değildir.
+            Yetki ve ülke şartları her işlemde ayrıca incelenir.
+          </p>
+          <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {audiencesAll.map((item) => (
+              <article key={item.slug} className="rounded-xl border border-white/10 bg-[#07111f]/70 p-5">
+                <h3 className="font-semibold">{item.title.tr}</h3>
+                <p className="mt-2 text-xs leading-6 text-slate-300">{item.lead.tr}</p>
+              </article>
+            ))}
+          </div>
+          <Link href="/katalog" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-sky-200 underline">
+            Altı dilde hizmet kataloğunu inceleyin <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
         </div>
       </section>
 
-      <section id="topluluk" className="container-shell py-24">
-        <div className="grid gap-10 lg:grid-cols-[0.92fr_1.08fr]">
-          <div>
-            <SectionTitle
-              eyebrow={cmsContent?.sections?.community?.eyebrow || "Forum ve topluluk"}
-              title={
-                cmsContent?.sections?.community?.title ||
-                "Hukuk profesyonelleri, akademisyenler ve öğrenciler için yaşayan bilgi ağı."
-              }
-              text={
-                cmsContent?.sections?.community?.text ||
-                "Soru-cevap, mevzuat yorumları, içtihat değerlendirmeleri, staj deneyimleri ve mesleki tartışmalar kontrollü moderasyon yapısıyla gelişir."
-              }
-              editable
-              onSaveEyebrow={async (nextValue) => {
-                await saveContentField(["sections", "community", "eyebrow"], nextValue);
-              }}
-              onSaveTitle={async (nextValue) => {
-                await saveContentField(["sections", "community", "title"], nextValue);
-              }}
-              onSaveText={async (nextValue) => {
-                await saveContentField(["sections", "community", "text"], nextValue);
-              }}
-            />
-            <div className="mt-8 space-y-4">
-              {[
-                "Medeni hukuk, ceza hukuku, idare hukuku, iş hukuku ve diğer uzmanlık alanları",
-                "En iyi cevap, oylama, etiketleme, takip ve raporlama sistemi",
-                "Uzman profilleri için planlanan doğrulama süreci",
-                "İçtihat ve mevzuat sayfalarıyla bağlantılı tartışmalar"
-              ].map((item) => (
-                <div
-                  key={item}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm leading-7 text-slate-300"
-                >
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-[28px] border border-white/10 bg-white/5 p-6">
-            <EditableMetaCardGrid
-              items={currentCommunityCards}
-              className="grid gap-5 md:grid-cols-2"
-              cardClassName="rounded-[24px] border border-white/10 bg-slate-950/50 p-5"
-              titleClassName="text-base font-semibold text-white"
-              metaClassName="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300"
-              textClassName="mt-3 text-sm leading-7 text-slate-300"
-              titlePlaceholder="Topluluk kartı başlığı"
-              metaPlaceholder="Kart meta bilgisi"
-              textPlaceholder="Topluluk kartı açıklaması"
-              onSave={async (nextItems) => {
-                await saveContentField(["communityCards"], nextItems);
-              }}
-            />
-          </div>
+      <section id="islem-yollari" className="container-shell py-16">
+        <div className="flex items-center gap-3 text-sky-200">
+          <FileSearch className="h-6 w-6" aria-hidden="true" />
+          <h2 className="text-2xl font-semibold text-white">12 işlem rotası</h2>
+        </div>
+        <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-300">
+          Belge, oturum, iş, eğitim, konut ve sınır ötesi işlemlerde resmî
+          koşulları ve belge hazırlığını öğrenin; burada kişisel veri alınmaz.
+        </p>
+        <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {journeys.map((journey, i) => (
+            <Link href="/islemler" key={journey.id}
+              className="rounded-xl border border-white/10 bg-white/[.04] p-5 hover:border-sky-300/50">
+              <p className="text-xs text-sky-300">İŞLEM {String(i + 1).padStart(2, "0")}</p>
+              <h3 className="mt-2 font-semibold">{journey.title.tr}</h3>
+              <p className="mt-2 text-xs leading-6 text-slate-300">{journey.preparation.tr}</p>
+            </Link>
+          ))}
         </div>
       </section>
 
-      <section id="ofisler" className="bg-black/20 py-24">
+      <section className="border-y border-white/10 bg-[#0b1c30] py-16">
         <div className="container-shell">
-          <SectionTitle
-            eyebrow={cmsContent?.sections?.offices?.eyebrow || "Ofis profilleri"}
-            title={
-              cmsContent?.sections?.offices?.title ||
-              "Hukuk büroları için modern, güvenilir ve görünür bir profesyonel vitrin."
-            }
-            text={
-              cmsContent?.sections?.offices?.text ||
-              "Ofis uzmanlık alanları, ekip yapısı, staj ilanları, doğrulanması hedeflenen profil bilgileri ve işbirliği olanakları tek profilde sunulur."
-            }
-            editable
-            onSaveEyebrow={async (nextValue) => {
-              await saveContentField(["sections", "offices", "eyebrow"], nextValue);
-            }}
-            onSaveTitle={async (nextValue) => {
-              await saveContentField(["sections", "offices", "title"], nextValue);
-            }}
-            onSaveText={async (nextValue) => {
-              await saveContentField(["sections", "offices", "text"], nextValue);
-            }}
-          />
-
-          <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_1fr_1fr]">
-            <div className="rounded-[28px] border border-white/10 bg-white/5 p-7 lg:col-span-2">
-              <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-5">
-                <div>
-                  <div className="text-xl font-semibold text-white">
-                    Örnek ofis görünümü
-                  </div>
-                  <div className="text-sm text-slate-400">
-                    Kurumsal profil · uzmanlık alanı · ekip · ilanlar
-                  </div>
-                </div>
-                <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-300">
-                  Temsili profil
-                </div>
-              </div>
-              <div className="mt-6 grid gap-4 md:grid-cols-[0.8fr_1.2fr]">
-                <div className="rounded-2xl border border-white/10 bg-slate-950/50 p-5">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-lg font-semibold text-white">
-                    AH
-                  </div>
-                  <div className="mt-4 text-lg font-semibold text-white">
-                    Örnek kurum profili
-                  </div>
-                  <div className="mt-1 text-sm text-slate-400">
-                    Temsili görünüm · Gerçek kurum kaydı değildir
-                  </div>
-                </div>
-                <EditableList
-                  items={currentOfficeHighlights}
-                  className="grid gap-3"
-                  itemClassName="rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-4 text-sm text-slate-200"
-                  placeholder="Ofis öne çıkan maddesi"
-                  onSave={async (nextItems) => {
-                    await saveContentField(["officeHighlights"], nextItems);
-                  }}
-                />
-              </div>
-            </div>
-
-            <div className="rounded-[28px] border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-7">
-              <div className="text-xl font-semibold text-white">
-                Platform avantajları
-              </div>
-              <div className="mt-5 space-y-3">
-                {[
-                  "Merkezi hukuk araştırması",
-                  "Hızlı belge üretimi",
-                  "Güvenli ekip işbirliği",
-                  "Ölçülebilir kariyer dönüşümü",
-                  "Topluluk ve uzman katkısı",
-                  "Admin panelden yönetilebilir içerik"
-                ].map((item) => (
-                  <div
-                    key={item}
-                    className="rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-4 text-sm text-slate-200"
-                  >
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </div>
+          <h2 className="text-2xl font-semibold">İşleminizi nasıl hazırlarsınız?</h2>
+          <div className="mt-7 grid gap-5 md:grid-cols-3">
+            {steps.map((item) => (
+              <article key={item.n} className="rounded-2xl border border-white/10 bg-white/[.04] p-6">
+                <p className="text-3xl font-semibold text-sky-300">{item.n}</p>
+                <h3 className="mt-4 text-lg font-semibold">{item.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-slate-300">{item.description}</p>
+                <Link href={item.href} className="mt-5 inline-flex text-sm text-sky-200 underline">İncele</Link>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-gradient-to-r from-sky-400/15 via-white/5 to-indigo-400/15 py-20">
-        <div className="container-shell flex flex-col items-start justify-between gap-8 rounded-[32px] border border-white/10 bg-black/20 px-6 py-10 md:flex-row md:items-center">
+      <section className="container-shell grid gap-8 py-16 lg:grid-cols-3">
+        {[
+          { title: "Hukukî bilgi ve resmî kaynaklar", note: "Mevzuat, içtihat ve yetkili kurumlarla ilgili tarihli, teyit gerektiren kaynaklar.", href: "/bilgi", Icon: BookOpen },
+          { title: "Belge ve dosya hazırlığı", note: "Hassas bilgilerin güvenli kanala alınmadan önce korunması ve format hazırlığı.", href: "/belge-hazirlik", Icon: FileCheck2 },
+          { title: "Hukukî ve veri koruma sınırları", note: "Yetki, kişisel veri, temsil, ödeme, insan onayı ve yayın koşullarının şeffaf açıklaması.", href: "/uyum", Icon: ShieldCheck }
+        ].map(({ title, note, href, Icon }) => (
+          <Link href={href} key={title} className="rounded-2xl border border-white/10 bg-white/5 p-6 hover:border-sky-300/40">
+            <Icon className="h-7 w-7 text-sky-300" aria-hidden="true" />
+            <h3 className="mt-5 text-lg font-semibold">{title}</h3>
+            <p className="mt-3 text-sm leading-7 text-slate-300">{note}</p>
+            <span className="mt-5 inline-flex text-sm text-sky-200 underline">Ayrıntılı bilgi</span>
+          </Link>
+        ))}
+      </section>
+      <section className="container-shell pb-20">
+        <div className="flex flex-wrap items-center justify-between gap-5 rounded-2xl border border-sky-300/25 bg-sky-300/[.06] p-7">
           <div>
-            <div className="text-3xl font-semibold tracking-tight text-white">
-              AvOfis ile modern hukuk çalışma düzenine geçin.
+            <div className="flex items-center gap-3"><Landmark className="h-6 w-6 text-sky-200" aria-hidden="true" />
+              <h2 className="text-lg font-semibold">Gerçek yetki ve güvenli yayın ilkesi</h2>
             </div>
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300 md:text-base">
-              Araştırma, üretim, kariyer, topluluk ve yönetim katmanlarını tek
-              bir platformda birleştiren ölçeklenebilir hukuk altyapısını
-              kullanın.
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300">
+              Kamuya açık sayfalar genel bilgi verir. İzinli müşteri işlemleri ve
+              kurum entegrasyonları bağımsız teknik, meslekî ve hukukî onay bekler.
             </p>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <a
-              href="/auth/register"
-              className="rounded-2xl bg-white px-6 py-4 text-sm font-semibold text-slate-950 hover:bg-slate-100"
-            >
-              Hesap Oluştur
-            </a>
-            <a
-              href="/auth/login"
-              className="rounded-2xl border border-white/10 bg-white/5 px-6 py-4 text-sm font-semibold text-white hover:bg-white/10"
-            >
-              Giriş Yap
-            </a>
-          </div>
+          <Link href="/ilerleme" className="inline-flex min-h-11 items-center rounded-xl border border-sky-300/40 px-5 py-3 text-sm font-semibold text-sky-200">
+            Doğrulanabilir geliştirme durumu
+          </Link>
         </div>
       </section>
-
       <SiteFooter />
     </main>
   );
