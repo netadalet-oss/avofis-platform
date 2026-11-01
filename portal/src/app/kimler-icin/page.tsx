@@ -74,7 +74,7 @@ export default function AudiencesPage() {
                   const journey = journeysById.get(id);
                   return journey ? (
                     <li key={id}>
-                      <Link href={"/islemler#" + id}
+                      <Link href={"/islemler/" + id}
                         className="text-sky-200 underline underline-offset-4">
                         {journey.title.tr}
                       </Link>
