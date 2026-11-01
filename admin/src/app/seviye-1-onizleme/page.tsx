@@ -27,9 +27,8 @@ const staffModules = [
 ] as const;
 
 const backendModules = [
-  "admin","analytics","auth","careers","cases","cms","connect",
-  "forum","messaging","notifications","offices","statutes",
-  "support","workspace"
+  "admin","analytics","auth","cases","cms","messaging",
+  "notifications","statutes","support","workspace"
 ] as const;
 
 const workstreams = [
