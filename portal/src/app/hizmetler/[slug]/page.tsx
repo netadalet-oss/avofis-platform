@@ -13,8 +13,8 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const service = findService(params.slug);
   return service
-    ? { title: `${service.title} | AVOfis`, description: service.summary }
-    : { title: "Sayfa bulunamadı | AVOfis" };
+    ? { title: `${service.title} | AVOfis`, description: service.summary, robots: { index: false, follow: false } }
+    : { title: "Sayfa bulunamadı | AVOfis", robots: { index: false, follow: false } };
 }
 
 export default function HizmetBilgiPage({ params }: { params: { slug: string } }) {
