@@ -151,7 +151,7 @@ export default function HomePage() {
         </p>
         <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {journeys.map((journey, i) => (
-            <Link href="/islemler" key={journey.id}
+            <Link href={"/islemler/" + journey.id} key={journey.id}
               className="rounded-xl border border-white/10 bg-white/[.04] p-5 hover:border-sky-300/50">
               <p className="text-xs text-sky-300">İŞLEM {String(i + 1).padStart(2, "0")}</p>
               <h3 className="mt-2 font-semibold">{journey.title.tr}</h3>

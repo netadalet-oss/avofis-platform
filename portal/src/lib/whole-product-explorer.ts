@@ -13,7 +13,7 @@ export function previewInternalHref(
   }
   return kind === "service"
     ? "/hizmetler/" + selectedId
-    : "/islemler#" + selectedId;
+    : "/islemler/" + selectedId;
 }
 
 export function previewSelectionExists(
