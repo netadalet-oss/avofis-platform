@@ -1,0 +1,205 @@
+{
+  "level": "L3",
+  "scope": "historical source/SDK evidence only",
+  "inherited_groups": 8,
+  "new_attempts": 16,
+  "groups": [
+    {
+      "id": "L0-A518-INDEPENDENT-BUNDLE",
+      "attempts": [
+        {
+          "attempt": 1,
+          "utc": "2026-11-01T00:21:31.305265+00:00",
+          "result": "UNRESOLVED",
+          "method": "explicit mounted filename and extension search",
+          "matches": []
+        },
+        {
+          "attempt": 2,
+          "utc": "2026-11-01T00:21:31.305520+00:00",
+          "result": "UNRESOLVED",
+          "method": "independent combined ZIP manifest filename search",
+          "matches": []
+        }
+      ],
+      "closed": false,
+      "carry_forward": true
+    },
+    {
+      "id": "L0-A514-HANDOFF",
+      "attempts": [
+        {
+          "attempt": 1,
+          "utc": "2026-11-01T00:21:31.308860+00:00",
+          "result": "UNRESOLVED",
+          "method": "explicit mounted filename and extension search",
+          "matches": []
+        },
+        {
+          "attempt": 2,
+          "utc": "2026-11-01T00:21:31.308990+00:00",
+          "result": "UNRESOLVED",
+          "method": "independent combined ZIP manifest filename search",
+          "matches": []
+        }
+      ],
+      "closed": false,
+      "carry_forward": true
+    },
+    {
+      "id": "L0-REAL-ANDROID-SOURCE",
+      "attempts": [
+        {
+          "attempt": 1,
+          "utc": "2026-11-01T00:21:31.309066+00:00",
+          "result": "UNRESOLVED",
+          "method": "special-instructions ZIP Android project member lookup",
+          "matches": []
+        },
+        {
+          "attempt": 2,
+          "utc": "2026-11-01T00:21:31.309145+00:00",
+          "result": "UNRESOLVED",
+          "method": "combined historical ZIP Android project member lookup",
+          "matches": []
+        }
+      ],
+      "closed": false,
+      "carry_forward": true
+    },
+    {
+      "id": "L0-ANDROID-SDK-DEVICE",
+      "attempts": [
+        {
+          "attempt": 1,
+          "utc": "2026-11-01T00:21:31.309337+00:00",
+          "result": "UNRESOLVED",
+          "method": "executable resolution",
+          "tools": {
+            "adb": null,
+            "gradle": null,
+            "sdkmanager": null
+          }
+        },
+        {
+          "attempt": 2,
+          "utc": "2026-11-01T00:21:31.309408+00:00",
+          "result": "UNRESOLVED",
+          "method": "specific API 35 installed SDK artifact check",
+          "paths_checked": 3,
+          "sdk_found": false
+        }
+      ],
+      "closed": false,
+      "carry_forward": true
+    },
+    {
+      "id": "L0-ISOLATED-POSTGRES-RLS",
+      "attempts": [
+        {
+          "attempt": 1,
+          "utc": "2026-11-01T00:21:31.309517+00:00",
+          "result": "UNRESOLVED",
+          "method": "local postgresql toolchain existence",
+          "tools": {
+            "psql": null,
+            "postgres": null,
+            "initdb": null,
+            "pg_ctl": null
+          }
+        },
+        {
+          "attempt": 2,
+          "utc": "2026-11-01T00:21:31.309537+00:00",
+          "result": "UNRESOLVED",
+          "method": "local unix postgres socket inspection without connection",
+          "sockets": []
+        }
+      ],
+      "closed": false,
+      "carry_forward": true
+    },
+    {
+      "id": "L1-CANONICAL-13-PROFILES",
+      "attempts": [
+        {
+          "attempt": 1,
+          "utc": "2026-11-01T00:21:31.310574+00:00",
+          "result": "UNRESOLVED",
+          "method": "instruction prose inspection for enumerated canonical IDs",
+          "count_mentions": [
+            "LarenLex gerçek bir Android hukuk hizmeti ve çalışma alanı olarak 14 ana LX sistemi, 69 alt grup, 453 A2 işlevi, 52 mantıksal veri nesnesi, ",
+            "1. **Yapılacak işlemler:** 52 mantıksal nesne, 81 önerilen ilişki, 102 operasyon/73 yol, 13 yetki profili, 12 disabled adapter; OpenAPI ve e",
+            "#### LX-027 — 13 yetki profili ve 16 personel modülü",
+            "**A4 tasarımı:** 52 mantıksal veri nesnesi, 81 önerilen ilişki, 102 önerilen API işlemi (73 yol), 13 yetki profili, 12 başlangıçta devre dış"
+          ],
+          "canonical_id_registry": "NOT_PRESENT"
+        },
+        {
+          "attempt": 2,
+          "utc": "2026-11-01T00:21:31.310603+00:00",
+          "result": "UNRESOLVED",
+          "method": "L1/L2 domain-registry provenance check",
+          "source_exists": true,
+          "canonical_id_registry": "NOT_VERIFIED_FROM_PRIMARY_SOURCE"
+        }
+      ],
+      "closed": false,
+      "carry_forward": true
+    },
+    {
+      "id": "L1-CANONICAL-52-ENTITIES",
+      "attempts": [
+        {
+          "attempt": 1,
+          "utc": "2026-11-01T00:21:31.311350+00:00",
+          "result": "UNRESOLVED",
+          "method": "instruction prose inspection for enumerated canonical IDs",
+          "count_mentions": [
+            "LarenLex gerçek bir Android hukuk hizmeti ve çalışma alanı olarak 14 ana LX sistemi, 69 alt grup, 453 A2 işlevi, 52 mantıksal veri nesnesi, ",
+            "1. **Yapılacak işlemler:** 52 mantıksal nesne, 81 önerilen ilişki, 102 operasyon/73 yol, 13 yetki profili, 12 disabled adapter; OpenAPI ve e",
+            "1. **Yapılacak işlemler:** A4 52 mantıksal nesneye ilişkiyi koruyarak tenant, principal, müşteri, matter, belge taslağı, personel ataması, r",
+            "#### LX-026 — Bütün 52 veri nesnesini yürütme durumuna ayır",
+            "3. **Kapanış kanıtı ve teslim:** 52 nesne durum matrisi ve boş kalan bağımlılıklar.",
+            "**A4 tasarımı:** 52 mantıksal veri nesnesi, 81 önerilen ilişki, 102 önerilen API işlemi (73 yol), 13 yetki profili, 12 başlangıçta devre dış"
+          ],
+          "canonical_id_registry": "NOT_PRESENT"
+        },
+        {
+          "attempt": 2,
+          "utc": "2026-11-01T00:21:31.311371+00:00",
+          "result": "UNRESOLVED",
+          "method": "L1/L2 domain-registry provenance check",
+          "source_exists": true,
+          "canonical_id_registry": "NOT_VERIFIED_FROM_PRIMARY_SOURCE"
+        }
+      ],
+      "closed": false,
+      "carry_forward": true
+    },
+    {
+      "id": "L1-REAL-ANDROID-BUILD-EVIDENCE",
+      "attempts": [
+        {
+          "attempt": 1,
+          "utc": "2026-11-01T00:21:31.311419+00:00",
+          "result": "UNRESOLVED",
+          "method": "Gradle runner and authentic source build artifact check",
+          "gradle_runner": null,
+          "authentic_android_apk_available": false
+        },
+        {
+          "attempt": 2,
+          "utc": "2026-11-01T00:21:31.311623+00:00",
+          "result": "UNRESOLVED",
+          "method": "historic source handoff APK scan",
+          "historic_apks": [],
+          "not_counted_new_l3_source": true
+        }
+      ],
+      "closed": false,
+      "carry_forward": true
+    }
+  ],
+  "policy": "These checks never authorize Git publication, production operations or real Android acceptance."
+}
