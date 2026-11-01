@@ -28,7 +28,7 @@ test("canonical whole product inventory never grants acceptance or processing",(
  for(const k of ["realCustomerIntake","payments","officialSubmission","productionAuthorization"])
   assert.equal(contract[k],false,k);
  assert.equal(contract.staffModuleSlugs.length,16);
- assert.equal(contract.apiModuleSlugs.length,14);
+ assert.equal(contract.apiModuleSlugs.length,10);
  assert.equal(contract.services,17);
  assert.equal(contract.audiences,14);
  assert.equal(contract.journeys,12);
