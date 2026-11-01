@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const report = [
   {
     title: "Bu dönem ne değişti?",
-    body: "Açık hizmet kataloğu ve kişisel verisiz hazırlık ekranları korundu. Kamu altbilgisindeki içerik yazma yolu kaldırıldı; giriş sonrası yönlendirmeler yalnız güvenli iç sayfalara sınırlandırıldı.",
+    body: "17 hizmet, 14 hedef kitle ve 12 işlem rotası esas alınarak kamu ana sayfası yenilendi. Talimat dışı eski iş ilanı, forum, kredi ve ofis profili modülleri ile ilişkili kodlar geliştirme dalından çıkarıldı.",
   },
   {
     title: "Şimdi neredeyiz?",
