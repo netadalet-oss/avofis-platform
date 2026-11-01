@@ -1,11 +1,7 @@
 import Link from "next/link";
+import { STAFF_TOP_LEVEL } from "@/lib/staff-module-directory";
 
-const sections = [
-  "Gelen işler","Ön değerlendirme","Dosyalar","Takvim",
-  "Belgeler","Dilekçeler","Hukuk araştırması","Yargı",
-  "IND","Mesajlar","Faturalama","Ödemeler",
-  "Raporlama","Denetim","Kişiler","Ayarlar"
-];
+
 
 export default function AdminHome() {
   return (
@@ -20,10 +16,13 @@ export default function AdminHome() {
             Bu panel talimatnamenin 16 personel modülünün ana işlevlerini gösterir. Gerçek müşteri verileri ve üretim işlemleri bağımsız yetki ve güvenlik kabulüne kadar kapalıdır.
           </p>
           <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {sections.map((section) => (
-              <div key={section} className="rounded-2xl border border-white/10 bg-slate-950/50 p-4 text-sm text-slate-200">
-                {section}
-              </div>
+            {STAFF_TOP_LEVEL.map((module) => (
+              <Link href={"/personel/" + module.slug} key={module.slug}
+                className="rounded-2xl border border-white/10 bg-slate-950/50 p-5 text-sm text-slate-200 hover:border-sky-300/50">
+                <h2 className="font-semibold text-white">{module.title}</h2>
+                <p className="mt-2 text-xs leading-6 text-slate-300">{module.scope}</p>
+                <span className="mt-3 inline-block text-xs text-sky-200">Ana işlevi inceleyin</span>
+              </Link>
             ))}
           </div>
         </div>
