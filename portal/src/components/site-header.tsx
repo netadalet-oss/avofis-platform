@@ -4,7 +4,7 @@ import { navigation } from "@/lib/site";
 
 /**
  * Canonical AVOfis public navigation only.
- * No legacy career/forum/credit products or browser-side CMS writer.
+ * Limited to canonical legal and administrative information pages.
  */
 export function SiteHeader() {
   return (
