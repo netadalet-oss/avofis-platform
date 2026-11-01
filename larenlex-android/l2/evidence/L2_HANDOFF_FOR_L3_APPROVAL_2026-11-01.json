@@ -1,0 +1,50 @@
+{
+  "product": "LarenLex Android",
+  "level": "L2",
+  "date": "2026-11-01",
+  "user_approval_received_for_L1_to_L2": true,
+  "development_cycle": "DELIVERED_ALL_MODULES",
+  "coverage": {
+    "modules": 14,
+    "subgroups": 69,
+    "A2_feature_ids": 453,
+    "historical_A4_operations": 102,
+    "new_synthetic_API_route_templates": 10
+  },
+  "local_verification": {
+    "standard_unittest_pass": 64,
+    "optimized_unittest_pass": 64,
+    "chromium_mobile_and_desktop": "PASS",
+    "browser_network_access": "NONE",
+    "zip_manifest": "VERIFIED"
+  },
+  "repository": {
+    "branch": "work/larenlex-android",
+    "path": "larenlex-android/l2",
+    "main_merged": false
+  },
+  "preview": "larenlex-android/l2/preview/LARENLEX_ANDROID_L2_BUTUN_UYGULAMA_ONIZLEME.html",
+  "evidence": "larenlex-android/l2/evidence/L2_TECHNICAL_EVIDENCE.json",
+  "carry_forward": "larenlex-android/l2/evidence/L2_PREVIOUS_LEVEL_RETRIES.json",
+  "carry_groups": 8,
+  "minimum_new_attempts_each": 2,
+  "independent_acceptance": {
+    "real_android_apk": "NOT_VERIFIED",
+    "real_android_git_history": "NOT_VERIFIED",
+    "real_auth_service": "NOT_CONNECTED",
+    "postgres_rls": "NOT_RUN_IN_REAL_ENGINE",
+    "production_API": "NOT_CONNECTED",
+    "legal_multilingual": "NOT_ACCEPTED",
+    "github_actions": "NOT_YET_VERIFIED"
+  },
+  "next_level": "L3",
+  "transition": "PENDING_USER_BUTTON_APPROVAL",
+  "constraints": [
+    "No real customer records",
+    "No secrets in public repo",
+    "No production migrations",
+    "No automatic main merge",
+    "No signing, payments, legal filing or publication"
+  ],
+  "note": "L2 level completion means horizontal synthetic engineering deliverable, not independent technical or legal acceptance; failed inherited gates carry to L3."
+}
