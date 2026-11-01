@@ -23,7 +23,11 @@ const stageAudiences = audiences.map(item => ({
 const stageJourneys = journeys.map(item => ({
   id: item.id,
   title: item.title.tr,
-  serviceSlugs: journeyServiceSlugs[item.id] ?? []
+  serviceSlugs: journeyServiceSlugs[item.id] ?? [],
+  fields: item.fields.map(field => ({
+    key: field.key, label: field.label.tr,
+    options: field.options.map(option => ({value: option.value, label: option.label.tr}))
+  }))
 }));
 const stageServices = SERVICES.map(item => ({ slug: item.slug, title: item.title }));
 validateStageTwoNavigation(stageAudiences, stageJourneys, stageServices);
