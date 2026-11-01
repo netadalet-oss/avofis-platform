@@ -230,6 +230,38 @@
           "result": "SUCCESS"
         }
       ]
+    },
+    {
+      "id": "AV044_R572_CI_STALE_EXPECTATION",
+      "areas": [
+        "A2",
+        "A6"
+      ],
+      "status": "OPEN_CI_ASSERTION_TOOL_BLOCKED",
+      "detail": "AV-044/R-572 audience links now go directly to the actual /islemler/[id] route. Existing portal HTTP CI workflow still asserts a removed /islemler#id list anchor, causing a false-negative check despite successful Next.js build and audience source tests. The workflow update was blocked by the connected tool safety gate; no bypass attempted.",
+      "evidence": [
+        "https://github.com/netadalet-oss/avofis-platform/actions/runs/41288338209",
+        "https://github.com/netadalet-oss/avofis-platform/pull/14",
+        "https://github.com/netadalet-oss/avofis-platform/pull/15",
+        "Code: portal/src/app/kimler-icin/page.tsx",
+        "Regression: portal/tests/audience-service-map.test.cjs",
+        "Obsolete exact assertion: .github/workflows/seviye1-footer-progress.yml: /islemler#ind-decision-objection"
+      ],
+      "level1Attempts": [
+        {
+          "method": "Replace anchor link with actual static detail path and add source regression",
+          "result": "SOURCE_TEST_SUCCESS_HTTP_WORKFLOW_STALE_ASSERTION_FAIL"
+        },
+        {
+          "method": "Update stale HTTP expectation to /islemler/ind-decision-objection",
+          "result": "BLOCKED_BY_GITHUB_TOOL_SAFETY_GATE_NO_WRITE"
+        }
+      ],
+      "nextActions": [
+        "Authorized workflow review/update without circumventing safety controls",
+        "Rerun exact-HEAD portal HTTP proof",
+        "Verify 12 routes in real browser and retain historical failed CI"
+      ]
     }
   ]
 }
