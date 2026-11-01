@@ -5,6 +5,9 @@ on:
       - "admin/src/app/seviye-1-onizleme/**"
       - "admin/src/app/page.tsx"
       - "admin/src/app/layout.tsx"
+      - "admin/src/app/*/page.tsx"
+      - "admin/src/components/AdminSectionBridge.tsx"
+      - "admin/tests/admin-legacy-bridge.test.cjs"
       - "admin/tests/whole-product-admin-preview.test.cjs"
       - "admin/src/app/personel/**"
       - "admin/src/lib/staff-module-directory.ts"
@@ -20,6 +23,9 @@ on:
       - "admin/src/app/seviye-1-onizleme/**"
       - "admin/src/app/page.tsx"
       - "admin/src/app/layout.tsx"
+      - "admin/src/app/*/page.tsx"
+      - "admin/src/components/AdminSectionBridge.tsx"
+      - "admin/tests/admin-legacy-bridge.test.cjs"
       - "admin/tests/whole-product-admin-preview.test.cjs"
       - "admin/src/app/personel/**"
       - "admin/src/lib/staff-module-directory.ts"
@@ -89,3 +95,10 @@ jobs:
           status="$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3001/personel/unknown-module)"
           test "$status" = "404"
           echo '16 staff module main routes: PASS'
+          for section in analytics audit careers cases dashboard forum media menus notifications roles settings statutes users; do
+            curl -fsS "http://127.0.0.1:3001/$section" > /tmp/avofis-admin-legacy-bridge.html
+            grep -q 'Bu bölümün ana modül yolları' /tmp/avofis-admin-legacy-bridge.html
+            grep -q 'Yerel, sentetik ana akışı deneyin' /tmp/avofis-admin-legacy-bridge.html
+            grep -q 'noindex' /tmp/avofis-admin-legacy-bridge.html
+          done
+          echo '13 linked legacy admin routes: PASS'
