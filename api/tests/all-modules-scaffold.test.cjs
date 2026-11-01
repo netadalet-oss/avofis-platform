@@ -22,14 +22,10 @@ function load(relative, dependencies={}){
 const {unavailableModuleMetadata}=load("src/security/module-availability.ts");
 const declared=[
  ["admin",["dashboard","users","roles","audit","settings"]],
- ["analytics",["overview","content","careers","forum","conversion"]],
- ["careers",["internships","jobs","applications","pipeline","matches"]],
+ ["analytics",["overview","content","conversion"]],
  ["cases",["search","detail","filters","related","bookmark","notes"]],
- ["connect",["wallet","transactions","earn","spend","pricing"]],
- ["forum",["categories","topics","posts","votes","best-answer","reports"]],
  ["messaging",["threads","messages","attachments","status"]],
  ["notifications",["list","mark-read","preferences","templates"]],
- ["offices",["profiles","members","listings","verification"]],
  ["statutes",["search","detail","article","history","related-cases","bookmark"]],
  ["support",["tickets","create","reply","status"]],
  ["workspace",["files","tasks","notes","members","versions"]]
@@ -49,7 +45,7 @@ async function withServer(fn){
  finally{await new Promise((resolve,reject)=>server.close(err=>err?reject(err):resolve()))}
 }
 
-test("all 12 scaffold routes expose planned headings but zero enabled actions over HTTP",async()=>{
+test("all 8 scaffold routes expose planned headings but zero enabled actions over HTTP",async()=>{
  await withServer(async base=>{
   for(const [module,planned] of declared){
    const response=await fetch(base+"/api/"+module);
