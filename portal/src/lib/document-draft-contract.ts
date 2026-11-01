@@ -1,4 +1,6 @@
 import {validatePreparation,isPreparationReadyForReview,type PreparationDraft} from "./document-preparation.ts";
+import {activeReleaseEvidence,decideRelease} from "./release-authorization.ts";
+import {publicCustomerTransactionsAuthorized} from "./public-release-status.ts";
 export type CreateDraft={draft:PreparationDraft;case_id:string|null};
 export type PatchDraft={id:string;revision:number;draft:PreparationDraft;status:"draft"|"review_requested"|"withdrawn";consent_to_staff:boolean};
 const object=(v:unknown):v is Record<string,unknown>=>v!==null&&typeof v==="object"&&!Array.isArray(v);
@@ -30,11 +32,20 @@ export function documentDraftStageEnabled(e:Record<string,string|undefined>):boo
   if(u.protocol!=="https:"||u.port!==""||u.pathname!=="/"||u.search||u.hash||
      u.username||u.password||u.hostname!==ref+".supabase.co")return false;
  }catch{return false;}
- if(e.AVOFIS_DOCUMENT_DRAFT_ENV==="production")
-  return e.VERCEL_ENV==="production"&&
+ if(e.AVOFIS_DOCUMENT_DRAFT_ENV==="production") {
+  // Environment switches are not an owner/DP/legal/security approval.
+  // Check the same signed release record used by the intake/payment gates.
+  const humanRelease=decideRelease({
+   legalReady:e.AVOFIS_LEGAL_READY==="true",
+   intakeEnabled:e.AVOFIS_INTAKE_ENABLED==="true",
+   clientIntakeEnabled:e.NEXT_PUBLIC_AVOFIS_INTAKE_ENABLED==="true",
+   paymentEnabled:false
+  },activeReleaseEvidence,publicCustomerTransactionsAuthorized).intakeAllowed;
+  return humanRelease&&e.VERCEL_ENV==="production"&&
    e.AVOFIS_DOCUMENT_DRAFT_PRODUCTION_ENABLED==="true"&&
    e.AVOFIS_DOCUMENT_DRAFT_SECURITY_REVIEWED==="true"&&
    e.AVOFIS_DOCUMENT_DRAFT_STAGING_PROJECT_REF!==ref;
+ }
  if(e.AVOFIS_DOCUMENT_DRAFT_ENV==="staging")
   return e.VERCEL_ENV!=="production"&&
    e.AVOFIS_DOCUMENT_DRAFT_STAGING_ENABLED==="true"&&

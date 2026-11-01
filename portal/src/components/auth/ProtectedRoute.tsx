@@ -3,6 +3,7 @@
 import { useEffect, type ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
+import { DEFAULT_LOGIN_DESTINATION, safePortalReturnPath } from "@/lib/safe-login-redirect";
 
 export function ProtectedRoute({ children }: { children: ReactNode }) {
   const router = useRouter();
@@ -11,7 +12,9 @@ export function ProtectedRoute({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
-      const next = pathname ? `?next=${encodeURIComponent(pathname)}` : "";
+      const safePath = safePortalReturnPath(pathname);
+      const next = safePath === DEFAULT_LOGIN_DESTINATION
+        ? "" : `?next=${encodeURIComponent(safePath)}`;
       router.replace(`/auth/login${next}`);
     }
   }, [isAuthenticated, loading, pathname, router]);

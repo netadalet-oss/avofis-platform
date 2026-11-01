@@ -5,6 +5,7 @@ import { PageFrame } from "@/components/avofis/PageFrame";
 import { CaseTracking } from "@/components/avofis/CaseTracking";
 import { ClientDeliverables } from "@/components/avofis/ClientDeliverables";
 import { supabase } from "@/lib/supabase";
+import { clientWorkspaceReleased } from "@/lib/client-workspace-release";
 import { useUser } from "@/hooks/useUser";
 import { usePortalLanguage } from "@/hooks/usePortalLanguage";
 import { clientText } from "@/lib/client-text";
@@ -15,7 +16,7 @@ type Agreement={id:string;case_id:string;legal_text:string;agreement_version:str
 type Payment={id:string;case_id:string;status:string;amount_eur_cents:number;checkout_url:string;};
 type Message={id:string;case_id:string;sender_id:string;body:string;created_at:string;};
 type Document={name:string;id:string|null;created_at:string;};
-const live=process.env.NEXT_PUBLIC_AVOFIS_CLIENT_PORTAL_ENABLED==="true";
+const live=clientWorkspaceReleased(process.env.NEXT_PUBLIC_AVOFIS_CLIENT_PORTAL_ENABLED==="true");
 export default function ClientPage(){
  const {user,session,loading:authLoading}=useUser();
  const lang=usePortalLanguage(),t=clientText[lang],locale=lang==="nl"?"nl-NL":lang==="en"?"en-GB":"tr-TR";
@@ -50,17 +51,17 @@ export default function ClientPage(){
  }
  useEffect(()=>{if(user&&live)void refresh();},[user?.id]);
  useEffect(()=>{
-  if(!selected||!user)return;
+  if(!live||!selected||!user)return;
   void supabase.storage.from("avofis-private").list(selected+"/"+user.id,{limit:100}).then(({data,error})=>{if(!error)setDocuments((data||[]) as Document[]);});
  },[selected,user?.id]);
  async function acceptContract(){
-   if(!current||!agreement||!accepted||signedName.trim().length<3)return;
+   if(!live||!current||!agreement||!accepted||signedName.trim().length<3)return;
    setBusy(true);setFeedback("");
    const {error}=await supabase.rpc("avofis_accept_agreement",{p_case:current.id,p_signature:signedName.trim()});
    setFeedback(error?t.agreementFailed:t.agreementSaved);await refresh();setBusy(false);
  }
  async function uploadDocument(e:React.ChangeEvent<HTMLInputElement>){
-  const file=e.target.files?.[0];if(!file||!user||!current||!agreement?.signed_at)return;
+  const file=e.target.files?.[0];if(!live||!file||!user||!current||!agreement?.signed_at)return;
   e.target.value="";
   if(file.size>10*1024*1024||!["application/pdf","image/png","image/jpeg","image/webp"].includes(file.type)){setFeedback(t.fileInvalid);return;}
   setBusy(true);setFeedback("");
@@ -73,13 +74,13 @@ export default function ClientPage(){
   setBusy(false);
  }
  async function download(name:string){
-   if(!user||!current)return;
+   if(!live||!user||!current)return;
    const {data,error}=await supabase.storage.from("avofis-private").createSignedUrl(current.id+"/"+user.id+"/"+name,60);
    if(error||!data?.signedUrl){setFeedback(t.downloadFailed);return;}
    window.open(data.signedUrl,"_blank","noopener,noreferrer");
  }
  async function sendMessage(e:FormEvent){
-  e.preventDefault();if(!user||!current||!note.trim())return;
+  e.preventDefault();if(!live||!user||!current||!note.trim())return;
   setBusy(true);
   const {error}=await supabase.from("avofis_messages").insert({case_id:current.id,sender_id:user.id,body:note.trim().slice(0,1500)});
   setFeedback(error?t.messageFailed:t.messageSaved);
@@ -87,7 +88,7 @@ export default function ClientPage(){
   await refresh();setBusy(false);
  }
  async function pay(){
-  if(!session||!current||!agreement?.signed_at)return;
+  if(!live||!session||!current||!agreement?.signed_at)return;
   setBusy(true);setFeedback("");
   try{
    const response=await fetch("/api/payments/checkout",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+session.access_token},body:JSON.stringify({caseId:current.id})});
