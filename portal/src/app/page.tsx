@@ -8,7 +8,6 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SERVICES } from "@/lib/service-catalog";
 import { audiences } from "@/lib/avofis-site";
-import { extraAudiences } from "@/lib/avofis-expanded";
 import { journeys } from "@/lib/journeys";
 
 export const metadata: Metadata = {
@@ -17,7 +16,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false }
 };
 
-const audiencesAll = [...audiences, ...extraAudiences];
+const audiencesAll = audiences;
 const steps = [
   { n: "01", title: "Konunuzu belirleyin", description: "Ülke, işlem türü, ilgili kurum ve belge ihtiyacını kişisel bilgi vermeden ayırın.", href: "/baslangic" },
   { n: "02", title: "Hazırlık şartlarını inceleyin", description: "Resmî kaynak, olası süre, belge türü ve profesyonel yetki gereksinimlerini kontrol edin.", href: "/islemler" },
