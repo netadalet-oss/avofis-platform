@@ -30,3 +30,14 @@
 - Bağımsız Supabase staging henüz kanıtlanmadı; 7 canlı public RLS güvenlik hatası ve bir Auth uyarısı; gerçek kurucu/meslekî yetki, DPO/GDPR, sözleşme, ücret, altı dilin hukukî insan onayı açık.
 - `main`, production Vercel, üretim Supabase, gerçek ödeme ve resmî kurum gönderimi değiştirilmedi.
 - **Seviye 1: IN_PROGRESS; bağımsız R kabul 0/594, canlı R kabul 0/594.** Bu dosya tüm modüllerin son ayrıntılarına ulaşıldığı veya Seviye 2 geçiş onayı verildiği anlamına gelmez.
+
+## 01.11.2026 — AV-044 tamamlayıcı temel işlev, 14 benzersiz hedef kitle
+
+- Gerçek derlenen `/kimler-icin` (dosya: `portal/src/app/kimler-icin/page.tsx`) ile 14 kitle için özgün başlık, ihtiyaçlar ve mevcut 17 hizmete kanonik slug bağlantıları verilir. Ana sayfadaki 14 kitle kartı ilgili sayfa başlığına gider; menü gerçek route kullanır.
+- Kaynak `portal/src/lib/avofis-site.ts` **zaten** `extraAudiences` adlı beş kaydı içeriyordu. Önceki ana sayfa bu beş kaydı tekrar ekliyordu: **14 yerine 19 liste öğesi**. Yeni route/testte görülüp düzeltilmiş gerçek regresyondur. Ana sayfa ve hedef kitle sayfası artık aynı kaynak `audiences` koleksiyonunu bir defa kullanır.
+- İki hizmetin (bağımsız sınır ötesi uzman koordinasyonu ve ceza/şikâyet/trafik) 14 kitlenin hiçbirinde bağlantısı yoktu; ihtiyaçla uyumlu `hukuki-destek-arayanlar` kitlesine eklendi. `portal/tests/audience-service-map.test.cjs` kitle benzersizliğini, 17/17 hizmetin en az bir kitleyle ilişkisini ve kişisel veri girişi olmadığını sınar.
+- İlk CI sürümünde [portal suite #41259643793](https://github.com/netadalet-oss/avofis-platform/actions/runs/41259643793) ve [API suite #41259643802](https://github.com/netadalet-oss/avofis-platform/actions/runs/41259643802) **FAIL**: `19 !== 14` kaynak veri çoğaltması. Aynı hata ikinci kez denenmedi; asıl kaynak kullanımı düzeltildi.
+- Düzeltilmiş kod/test HEAD `43332562edf95b9d9f940770ef3f9db078ca2d02`: [Next.js build / 14 kitle + 17 hizmet gerçek yerel HTTP #41259763798](https://github.com/netadalet-oss/avofis-platform/actions/runs/41259763798), [API/admin/portal fonksiyon regresyonu #41259763753](https://github.com/netadalet-oss/avofis-platform/actions/runs/41259763753), [B01/B02 sentetik PostgreSQL #41259763739](https://github.com/netadalet-oss/avofis-platform/actions/runs/41259763739) — **3/3 SUCCESS**.
+- `portal/`, `admin/`, `api/` dizinlerinin aynı temiz kaynak Git ağaçlarından iki ayrı gelişim dalına eşitlenmesi bu üst seviye gezinme işlevinin PR #14 ve #15'te kaynak koda eşit dağılmasını sağlar. Testler gerçek localhost HTTP'dir; üretim Vercel yayını değildir.
+
+**Kabul/sınır:** 0/594 bağımsız R, 0/594 canlı R; yedi eski canlı RLS bulgusu ve staging, hukukî yetki, dil insan imzaları çözülmedi. Bu sentetik/kamu rehberi işlevi hukukî görüş, müşteri kabulü veya temsil yetkisi vermez. Seviye 1 devam ediyor.
