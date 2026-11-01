@@ -132,7 +132,7 @@ export default function WholeProductLevelOnePreview() {
             <ol className="mt-4 grid gap-2 text-sm text-slate-300 md:grid-cols-2">
               {journeys.map(journey => (
                 <li key={journey.id}>
-                  <Link href={"/islemler#" + journey.id} className="underline underline-offset-4">
+                  <Link href={"/islemler/" + journey.id} className="underline underline-offset-4">
                     {journey.title.tr}
                   </Link>
                 </li>

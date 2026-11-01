@@ -13,7 +13,7 @@ test("only known service/journey ids can become local links",()=>{
  const services=["hukuki-danismanlik","belge-apostil-tercume"];
  const journeys=["tr-to-nl","other"];
  assert.equal(previewInternalHref("service",services[0],services),"/hizmetler/hukuki-danismanlik");
- assert.equal(previewInternalHref("journey",journeys[0],journeys),"/islemler#tr-to-nl");
+ assert.equal(previewInternalHref("journey",journeys[0],journeys),"/islemler/tr-to-nl");
  assert.equal(previewSelectionExists("tr-to-nl",journeys.map(id=>({id}))),true);
  assert.equal(previewSelectionExists("not-known",journeys.map(id=>({id}))),false);
  for(const invalid of ["javascript:alert(1)","//evil.invalid","../admin","foo%2Fbar",

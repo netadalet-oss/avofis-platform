@@ -33,6 +33,10 @@ on:
       - "portal/src/components/WholeProductExplorer.tsx"
       - "portal/src/lib/whole-product-explorer.ts"
       - "portal/tests/whole-product-explorer.test.cjs"
+      - "portal/src/app/islemler/[id]/page.tsx"
+      - "portal/src/components/JourneyPreparationView.tsx"
+      - "portal/src/app/islemler/page.tsx"
+      - "portal/tests/journey-detail-routes.test.cjs"
       - "portal/src/components/ServicePreparationChecklist.tsx"
       - "portal/src/app/hizmetler/[slug]/page.tsx"
       - "portal/src/app/hizmetler/page.tsx"
@@ -79,6 +83,10 @@ on:
       - "portal/src/components/WholeProductExplorer.tsx"
       - "portal/src/lib/whole-product-explorer.ts"
       - "portal/tests/whole-product-explorer.test.cjs"
+      - "portal/src/app/islemler/[id]/page.tsx"
+      - "portal/src/components/JourneyPreparationView.tsx"
+      - "portal/src/app/islemler/page.tsx"
+      - "portal/tests/journey-detail-routes.test.cjs"
       - "portal/src/components/ServicePreparationChecklist.tsx"
       - "portal/src/app/hizmetler/[slug]/page.tsx"
       - "portal/src/app/hizmetler/page.tsx"
@@ -196,3 +204,12 @@ jobs:
           grep -q '/belge-hazirlik' /tmp/avofis-audiences.html
           grep -q 'noindex' /tmp/avofis-audiences.html
           echo 'All 14 audience mappings HTTP: PASS'
+          # Representative actual Next.js detail routes and unknown-ID failure.
+          for id in tr-to-nl ind-decision-objection unpaid-wages; do
+            curl -fsS "http://127.0.0.1:3000/islemler/$id" > /tmp/avofis-journey-detail.html
+            grep -q 'İşleme özel hazırlık soruları' /tmp/avofis-journey-detail.html
+            grep -q 'Seçimleri sıfırla' /tmp/avofis-journey-detail.html
+            grep -q 'noindex' /tmp/avofis-journey-detail.html
+          done
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3000/islemler/not-a-journey)" = "404"
+          echo 'Twelve typed journey routes and three real HTML samples: PASS'
