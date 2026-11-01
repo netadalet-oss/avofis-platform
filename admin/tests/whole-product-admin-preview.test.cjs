@@ -44,3 +44,8 @@ test("the preview is no-PII, no-auth, no-Supabase and remains nonindexed",()=>{
 test("the admin home provides a path to the comprehensive preview",()=>{
   assert.match(home,/href="\/seviye-1-onizleme"/);
 });
+
+test("all admin routes inherit noindex until independent publication signoff",()=>{
+ const layout=fs.readFileSync(path.join(root,"src/app/layout.tsx"),"utf8");
+ assert.match(layout,/robots:\s*\{\s*index:\s*false,\s*follow:\s*false\s*\}/);
+});
