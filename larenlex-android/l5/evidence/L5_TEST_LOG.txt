@@ -10,6 +10,6 @@ test_redirect_and_origin_and_host_rejected (test_integration.L5Integration.test_
 test_tenant_customer_staff_mfa_assignment (test_integration.L5Integration.test_tenant_customer_staff_mfa_assignment) ... ok
 
 ----------------------------------------------------------------------
-Ran 10 tests in 2.545s
+Ran 10 tests in 2.567s
 
 OK
