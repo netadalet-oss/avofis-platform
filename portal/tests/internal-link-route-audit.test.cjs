@@ -21,11 +21,13 @@ test("R-072: every published canonical navigation/footer link resolves to a real
   assert.ok(links.length >= 20, "The canonical public navigation/footer inventory unexpectedly shrank");
   for (const item of links) {
     assert.ok(typeof item.label === "string" && item.label.trim(), "Link requires an accessible label");
-    assert.match(item.href, /^\\/[a-z0-9\\-/]*(?:#[a-z0-9-]+)?$/, item.href);
+    assert.ok(item.href.startsWith("/") && !item.href.startsWith("//"), "Only local pages: " + item.href);
     const destination = new URL(item.href, "https://avofis.example.invalid");
     assert.equal(destination.origin, "https://avofis.example.invalid", item.href);
     const pathname = decodeURIComponent(destination.pathname);
-    const pageFile = path.join(root, "src/app", pathname.replace(/^\\//, ""), "page.tsx");
+    assert.match(pathname, /^[/a-z0-9-]+$/, pathname);
+    assert.match(destination.hash, /^$|^#[a-z0-9-]+$/, item.href);
+    const pageFile = path.join(root, "src/app", pathname.slice(1), "page.tsx");
     assert.ok(fs.existsSync(pageFile), "Broken internal page route: " + item.href);
     if (destination.hash) {
       const fragment = decodeURIComponent(destination.hash.slice(1));
