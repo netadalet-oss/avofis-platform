@@ -32,7 +32,7 @@ class OriginBarrier:
 
     def __call__(self, env, start_response):
         host = env.get('HTTP_HOST', '')
-        if not re.fullmatch(r'127\.0\.0\.1:\d{1,5}', host) or env.get('HTTP_ORIGIN') or env.get('HTTP_ACCESS_CONTROL_REQUEST_METHOD'):
+        if not re.fullmatch(r'(?:127\.0\.0\.1|10\.0\.2\.2):\d{1,5}', host) or env.get('HTTP_ORIGIN') or env.get('HTTP_ACCESS_CONTROL_REQUEST_METHOD'):
             payload = b'{"error":"origin unavailable","real_backend_connected":false}'
             start_response('403 Forbidden', [
                 ('Content-Type','application/json; charset=utf-8'),
