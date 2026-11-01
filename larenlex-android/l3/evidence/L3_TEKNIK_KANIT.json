@@ -1,0 +1,53 @@
+{
+  "product": "LarenLex Android",
+  "level": "L3",
+  "stage": "ALL_MODULES_NATIVE_SOURCE_AND_OFFLINE_PREVIEW_DELIVERED",
+  "date": "2026-11-01",
+  "authenticated_history": "UNAVAILABLE",
+  "whole_product": {
+    "modules": 14,
+    "subgroups": 69,
+    "feature_identities": 453,
+    "staff_areas": 16,
+    "independent_acceptance": false
+  },
+  "android": {
+    "app_id": "nl.larenlex.app",
+    "source_scaffold": "CREATED",
+    "gradle_assemble": "NOT_RUN_SDK_AND_GRADLE_UNAVAILABLE",
+    "apk": "NOT_CREATED",
+    "android_device": "NOT_TESTED",
+    "keystore": "SOURCE_ONLY_NOT_DEVICE_TESTED",
+    "pdf_renderer": "SOURCE_ONLY_NOT_DEVICE_TESTED",
+    "network_permission": false,
+    "webview_bridge": false,
+    "backup_enabled": false
+  },
+  "local_tests": {
+    "java_policy_javac": "PASS",
+    "example_docx_zip_xml": "PASS",
+    "browser_mobile_390px": "PASS",
+    "browser_desktop_1280px": "PASS",
+    "browser_320px_200percent_text": "PASS",
+    "browser_module_navigation": "14/14",
+    "browser_staff": "16/16",
+    "combined_test_script_exit": 0
+  },
+  "previous_debts": {
+    "inherited_groups": 8,
+    "fresh_checks": 16,
+    "resolved_groups": 0,
+    "evidence": "evidence/L3_PREVIOUS_LEVEL_RETRIES.json"
+  },
+  "frontend": "preview/LARENLEX_ANDROID_L3_BUTUN_UYGULAMA_ONIZLEME.html",
+  "status": "L3_DEVELOPMENT_CYCLE_DELIVERED_NOT_INDEPENDENT_TECHNICAL_ACCEPTANCE",
+  "production_writes": false,
+  "legal_acceptance": false,
+  "real_api_accepted": false,
+  "release_permission": false,
+  "notes": [
+    "Actual Android APK cannot be shown because no Android SDK/Gradle",
+    "Native screens use canonical feature metadata; feature implementation/acceptance not implied",
+    "No existing out-of-scope L2 mock server copied into Android app"
+  ]
+}
