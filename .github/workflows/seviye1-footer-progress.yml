@@ -42,6 +42,7 @@ on:
       - "portal/src/lib/avofis-expanded.ts"
       - "portal/src/lib/site.ts"
       - "portal/tests/audience-service-map.test.cjs"
+      - "portal/src/lib/audience-journey-map.ts"
       - ".github/workflows/seviye1-footer-progress.yml"
   push:
     branches:
@@ -87,6 +88,7 @@ on:
       - "portal/src/lib/avofis-expanded.ts"
       - "portal/src/lib/site.ts"
       - "portal/tests/audience-service-map.test.cjs"
+      - "portal/src/lib/audience-journey-map.ts"
       - ".github/workflows/seviye1-footer-progress.yml"
 permissions:
   contents: read
@@ -190,5 +192,7 @@ jobs:
           grep -q '14 özgün kullanıcı ve ihtiyaç grubu' /tmp/avofis-audiences.html
           grep -q 'ceza-sikayet-trafik' /tmp/avofis-audiences.html
           grep -q 'avrupa-turkiye-hukuki-uzman-koordinasyonu' /tmp/avofis-audiences.html
+          grep -q '/islemler#ind-decision-objection' /tmp/avofis-audiences.html
+          grep -q '/belge-hazirlik' /tmp/avofis-audiences.html
           grep -q 'noindex' /tmp/avofis-audiences.html
           echo 'All 14 audience mappings HTTP: PASS'
