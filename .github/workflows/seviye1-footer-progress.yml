@@ -32,6 +32,7 @@ on:
       - "portal/tests/whole-product-explorer.test.cjs"
       - "portal/src/components/ServicePreparationChecklist.tsx"
       - "portal/src/app/hizmetler/[slug]/page.tsx"
+      - "portal/src/app/hizmetler/page.tsx"
       - "portal/tests/service-preparation-checklist.test.cjs"
       - ".github/workflows/seviye1-footer-progress.yml"
   push:
@@ -68,6 +69,7 @@ on:
       - "portal/tests/whole-product-explorer.test.cjs"
       - "portal/src/components/ServicePreparationChecklist.tsx"
       - "portal/src/app/hizmetler/[slug]/page.tsx"
+      - "portal/src/app/hizmetler/page.tsx"
       - "portal/tests/service-preparation-checklist.test.cjs"
       - ".github/workflows/seviye1-footer-progress.yml"
 permissions:
@@ -153,5 +155,6 @@ jobs:
             grep -q 'İlk hazırlık adımlarını gözden geçirin' /tmp/avofis-service-checklist.html
             grep -q 'type="checkbox"' /tmp/avofis-service-checklist.html
             grep -q 'Seçimleri sıfırla' /tmp/avofis-service-checklist.html
+            grep -q 'noindex' /tmp/avofis-service-checklist.html
           done
           echo 'Three representative service checklist HTTP previews: PASS'
