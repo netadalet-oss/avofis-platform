@@ -94,3 +94,48 @@ test("Stage 2 shared A0-A6 contract covers every workstream without inventing an
   assert.equal(contract.controls.productionDeploymentAuthorized,false);
   assert.ok(contract.carryover.some(item=>item.id==="PORTAL_STALE_ANCHOR_CI"));
 });
+
+test("Stage 2 all 12 real routes validate categorical form completion without free-text or case data",()=>{
+  const flow=load("src/lib/stage-two-preparation.ts");
+  assert.equal(journeys.length,12);
+  for(const journey of journeys){
+    const fields=journey.fields.map(field=>({
+      key:field.key,label:field.label.tr,
+      options:field.options.map(option=>({value:option.value,label:option.label.tr}))
+    }));
+    const initial=flow.safeStageTwoPreparation(fields,{});
+    assert.equal(initial.total,fields.length,journey.id);
+    assert.equal(initial.answered,0,journey.id);
+    assert.equal(initial.complete,false,journey.id);
+    let current={};
+    for(const field of fields){
+      const chosen=field.options[0];
+      current=flow.updateStageTwoPreparation(fields,current,field.key,chosen.value);
+    }
+    const done=flow.safeStageTwoPreparation(fields,current);
+    assert.equal(done.complete,true,journey.id);
+    assert.equal(done.answered,fields.length,journey.id);
+    assert.deepEqual(done.selections.map(item=>item.chosen),fields.map(f=>f.options[0].label));
+    assert.deepEqual(flow.updateStageTwoPreparation(fields,current,"__proto__","evil"),current);
+    assert.deepEqual(flow.updateStageTwoPreparation(fields,current,fields[0].key,"arbitrary"),current);
+    const forged=flow.safeStageTwoPreparation(fields,{...current,__proto__:"secret",arbitrary:"PII"});
+    assert.deepEqual(forged.selections,done.selections);
+    const cleared=flow.updateStageTwoPreparation(fields,current,fields[0].key,"");
+    assert.equal(flow.safeStageTwoPreparation(fields,cleared).complete,false);
+  }
+});
+test("Stage 2 end-to-end UI exposes only local completion and guarded per-journey answers",()=>{
+  const page=fs.readFileSync(path.join(root,"src/app/seviye-2-akis/page.tsx"),"utf8");
+  const view=fs.readFileSync(path.join(root,"src/components/StageTwoPublicFlow.tsx"),"utf8");
+  assert.match(page,/fields: item\.fields\.map/);
+  for(const expected of ["safeStageTwoPreparation","updateStageTwoPreparation",
+    "setAnswers({})","setShowLocalResult(false)",
+    "disabled={!preparation.complete}","showLocalResult && preparation.complete",
+    "preparation.selections.map","Yerel hazırlık özeti"]) {
+    assert.ok(view.includes(expected),expected);
+  }
+  for(const bad of ["fetch(","localStorage","sessionStorage","createClient(","<textarea",
+    "type=\"file\"","type=\"text\"","<form",".insert(",".upsert("]) {
+    assert.equal(view.includes(bad),false,bad);
+  }
+});
