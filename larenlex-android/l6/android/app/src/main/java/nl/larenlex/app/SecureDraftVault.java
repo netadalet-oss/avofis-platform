@@ -43,7 +43,10 @@ public final class SecureDraftVault {
     }
     private String fileName(String matterId, String draftId) {
         if (!valid(matterId)||!valid(draftId)) throw new IllegalArgumentException("Invalid draft reference");
-        return "draft_" + matterId + "_" + draftId + ".enc";
+        // The legacy shared file path could be overwritten by another local account.
+        // Preserve the existing Keystore key alias, but scope ciphertext filenames.
+        // Legacy unscoped data are not opened, deleted or silently migrated.
+        return DraftFileNamespace.fileName(alias, matterId, draftId);
     }
     private byte[] aad(String matter, String draft, long revision) {
         return (alias + ":" + matter + ":" + draft + ":" + revision).getBytes(StandardCharsets.UTF_8);
