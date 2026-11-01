@@ -6,15 +6,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-/** Minimal offline DOCX sample. No legal submission, external network, or personal data. */
+/** User-authored, bounded, offline DOCX written only to a user-selected SAF stream. */
 public final class DraftDocxWriter {
     private DraftDocxWriter() { }
-    private static String xml(String s) {
-        if (s == null || s.length() > 500) throw new IllegalArgumentException("Invalid document title");
-        StringBuilder out = new StringBuilder();
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if ((c < 32 && c != '\n' && c != '\t') || Character.isSurrogate(c)) throw new IllegalArgumentException("Control character");
+
+    static String xmlText(String s) {
+        StringBuilder out = new StringBuilder(s.length() + 32);
+        for (int i=0; i<s.length(); i++) {
+            char c=s.charAt(i);
             switch (c) {
                 case '&': out.append("&amp;"); break;
                 case '<': out.append("&lt;"); break;
@@ -26,17 +25,42 @@ public final class DraftDocxWriter {
         }
         return out.toString();
     }
-    private static void put(ZipOutputStream zip, String name, String text) throws IOException {
+
+    private static void put(ZipOutputStream zip, String name, String xml) throws IOException {
         zip.putNextEntry(new ZipEntry(name));
-        zip.write(text.getBytes(StandardCharsets.UTF_8));
+        zip.write(xml.getBytes(StandardCharsets.UTF_8));
         zip.closeEntry();
     }
-    public static void writeExample(OutputStream destination, String title) throws IOException {
-        // The caller owns the output stream and must have explicitly selected the SAF URI.
+
+    public static void write(OutputStream destination, DocumentDraft draft) throws IOException {
+        if (destination == null || draft == null) throw new IllegalArgumentException("Geçersiz belge");
+        // The caller owns the SAF destination; never close or transfer ownership here.
+        StringBuilder document = new StringBuilder(draft.body.length() * 2 + 1024);
+        document.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        document.append("<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body>");
+        document.append("<w:p><w:pPr><w:pStyle w:val=\"Title\"/></w:pPr><w:r><w:t xml:space=\"preserve\">");
+        document.append(xmlText(draft.title));
+        document.append("</w:t></w:r></w:p>");
+        for (String line : draft.body.split("\n", -1)) {
+            document.append("<w:p><w:r><w:t xml:space=\"preserve\">");
+            document.append(xmlText(line));
+            document.append("</w:t></w:r></w:p>");
+        }
+        document.append("<w:sectPr/></w:body></w:document>");
         ZipOutputStream zip = new ZipOutputStream(destination, StandardCharsets.UTF_8);
-        put(zip, "[Content_Types].xml", "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\"><Default Extension=\"rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/><Default Extension=\"xml\" ContentType=\"application/xml\"/><Override PartName=\"/word/document.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml\"/></Types>");
-        put(zip, "_rels/.rels", "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\"><Relationship Id=\"rId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument\" Target=\"word/document.xml\"/></Relationships>");
-        put(zip, "word/document.xml", "<?xml version=\"1.0\" encoding=\"UTF-8\"?><w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p><w:r><w:t>" + xml(title) + "</w:t></w:r></w:p><w:p><w:r><w:t>Yalnız sentetik örnek; hukukî inceleme ve onay gerektirir.</w:t></w:r></w:p><w:sectPr/></w:body></w:document>");
+        put(zip, "[Content_Types].xml",
+          "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\"><Default Extension=\"rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/><Default Extension=\"xml\" ContentType=\"application/xml\"/><Override PartName=\"/word/document.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml\"/></Types>");
+        put(zip, "_rels/.rels",
+          "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\"><Relationship Id=\"rId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument\" Target=\"word/document.xml\"/></Relationships>");
+        put(zip, "word/document.xml", document.toString());
         zip.finish();
+        zip.flush();
+    }
+
+    /** Legacy sample export stays explicitly synthetic. */
+    public static void writeExample(OutputStream destination, String title) throws IOException {
+        write(destination, new DocumentDraft(
+            title == null || title.trim().isEmpty() ? "Sentetik belge" : title.substring(0, Math.min(title.length(), DocumentDraft.MAX_TITLE)),
+            "Yalnız sentetik örnek; hukukî inceleme ve onay gerektirir."));
     }
 }

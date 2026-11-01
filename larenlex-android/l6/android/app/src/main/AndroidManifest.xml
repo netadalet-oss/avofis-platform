@@ -6,6 +6,7 @@
     <activity android:name=".L5IntegrationActivity" android:exported="false"/>
     <activity android:name=".L6ReadinessActivity" android:exported="false"/>
     <activity android:name=".L4LegalFlowsActivity" android:exported="false"/>
+    <activity android:name=".DocumentComposerActivity" android:exported="false"/>
     <activity android:name=".MainActivity" android:exported="true" android:excludeFromRecents="false">
       <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
     </activity>

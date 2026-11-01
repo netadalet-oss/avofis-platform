@@ -90,6 +90,7 @@ public final class MainActivity extends Activity {
         action("L5: Entegrasyon, güvenlik ve kanıt durumu", () -> startActivity(new Intent(this, L5IntegrationActivity.class)));
         action("L6: Cihaz, erişilebilirlik ve yayın hazırlığı", () -> startActivity(new Intent(this, L6ReadinessActivity.class)));
         action("L4: Hizmetler, diller, hukukî rotalar ve kurumlar", () -> startActivity(new Intent(this, L4LegalFlowsActivity.class)));
+        action("Belge düzenleyici — DOCX/PDF", () -> startActivity(new Intent(this, DocumentComposerActivity.class)));
         action("Personel alanları (16 tanım)", this::showStaff);
         action("Veri ve gizlilik sınırları", this::showPrivacy);
     }
@@ -122,6 +123,7 @@ public final class MainActivity extends Activity {
         action("‹ Alt grup", () -> showGroup(selectedModule, selectedGroup));
         column.addView(text("Bu işlev kaynak envanterinde tanımlıdır; gerçek hesap, başvuru veya sunucu işlemi burada yürütülmez.", 15, INK, false));
         exportTitle = featureId + " — Sentetik örnek taslak";
+        action("Belge düzenleyicisini aç (bağımsız araç)", () -> startActivity(new Intent(this, DocumentComposerActivity.class)));
         action("Örnek DOCX oluştur (kullanıcı dosya seçer)", () -> requestExport(CREATE_DOCX, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "LarenLex-ornek.docx"));
         action("Örnek PDF oluştur (kullanıcı dosya seçer)", () -> requestExport(CREATE_PDF, "application/pdf", "LarenLex-ornek.pdf"));
         column.addView(text("Örnek belge kişisel veri içermez. Resmî hukukî süre veya mahkeme kararı hesaplanmaz. Dışa aktarım yalnız açık kullanıcı seçiminden sonra yapılır.", 13, GOLD, false));
