@@ -125,10 +125,14 @@ export default function HomePage() {
           </p>
           <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {audiencesAll.map((item) => (
-              <article key={item.slug} className="rounded-xl border border-white/10 bg-[#07111f]/70 p-5">
+              <Link href={"/kimler-icin#" + item.slug} key={item.slug}
+                className="rounded-xl border border-white/10 bg-[#07111f]/70 p-5 transition hover:border-sky-300/50">
                 <h3 className="font-semibold">{item.title.tr}</h3>
                 <p className="mt-2 text-xs leading-6 text-slate-300">{item.lead.tr}</p>
-              </article>
+                <span className="mt-4 inline-block text-xs font-semibold text-sky-200">
+                  İlgili hizmetleri inceleyin
+                </span>
+              </Link>
             ))}
           </div>
           <Link href="/katalog" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-sky-200 underline">
