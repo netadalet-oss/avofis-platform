@@ -12,11 +12,14 @@ const modules = [
   "reporting","audit","people","settings"
 ];
 test("the 16 canonical staff modules have exactly one safe first-level card",()=>{
-  const start=page.indexOf("const staffModules = [");
-  const end=page.indexOf("] as const;",start);
-  assert.ok(start>=0 && end>start);
-  const block=page.slice(start,end);
-  const names=[...block.matchAll(/\["([a-z]+)",/g)].map(x=>x[1]);
+  const directory=fs.readFileSync(path.join(root,"src/lib/staff-module-directory.ts"),"utf8");
+  const names=[...directory.matchAll(/\\{\\s*slug:"([a-z]+)"/g)].map(x=>x[1]);
+  assert.equal(names.length,16);
+  assert.ok(page.includes('import { STAFF_TOP_LEVEL } from "@/lib/staff-module-directory"'));
+  assert.ok(page.includes("const staffModules = STAFF_TOP_LEVEL;"));
+  assert.doesNotMatch(page,/const staffModules = \\[/);
+  assert.match(page,/staffModules\\.map\\(\\(module,i\\)/);
+  assert.match(page,/href=\\{"\\/personel\\/" \\+ module\\.slug\\}/);
   assert.deepEqual(names,modules);
   assert.match(page,/staffModules\.map/);
   assert.match(page,/İşlem ve yetki kabulü bekliyor/);
