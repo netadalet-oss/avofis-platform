@@ -1,0 +1,277 @@
+{
+  "product": "LarenLex Android",
+  "level": "L2",
+  "updated_utc": "2026-11-01T00:11:13.023693+00:00",
+  "user_approval_L1_to_L2": true,
+  "scope": {
+    "systems": 14,
+    "subgroups": 69,
+    "source_A2_functions": 453,
+    "historical_A4_operations": 102,
+    "new_synthetic_route_templates": 10
+  },
+  "technical_work": {
+    "offline_wsgi_endpoint_templates": 10,
+    "source_feature_records_created_in_test": 453,
+    "all_14_module_crud_in_test": true,
+    "bearer_tokens": "SYNTHETIC_IN_PROCESS_ONLY",
+    "tenant_ownership_and_staff_mfa": "SQLITE_REFERENCE_CHECKED",
+    "document_tokens": "SYNTHETIC_HMAC_ONLY",
+    "postgres_schema": "DRAFT_NOT_EXECUTED",
+    "real_auth": "NOT_CONNECTED",
+    "android_client": "NOT_BUILT"
+  },
+  "tests": {
+    "standard": {
+      "status": "PASS",
+      "return_code": 0,
+      "count": 64
+    },
+    "python_optimized": {
+      "status": "PASS",
+      "return_code": 0,
+      "count": 64
+    },
+    "compileall": {
+      "status": "PASS",
+      "return_code": 0
+    },
+    "browser": {
+      "status": "PASS",
+      "observations": [
+        {
+          "view": "mobile",
+          "width": 390,
+          "module_cards": 14,
+          "errors": [],
+          "overflow": false,
+          "screenshot": "LARENLEX_ANDROID_L2_MOBILE_EKRAN.png",
+          "synthetic_post": 201,
+          "cross_tenant_denial": 404
+        },
+        {
+          "view": "desktop",
+          "width": 1440,
+          "module_cards": 14,
+          "errors": [],
+          "overflow": false,
+          "screenshot": "LARENLEX_ANDROID_L2_DESKTOP_EKRAN.png",
+          "synthetic_post": 201,
+          "cross_tenant_denial": 404
+        }
+      ],
+      "browser": "system chromium, playwright, set_content; offline DOM"
+    }
+  },
+  "carried_previous_level_blockers": {
+    "date": "2026-11-01T00:08:00.017698+00:00",
+    "product": "LarenLex Android",
+    "level": "L2",
+    "note": "Two distinct inspections per carried gate. Candidate references do not prove accepted real source. No secret inspection, live or external writes.",
+    "previous_level_gate_groups": [
+      {
+        "id": "L0-A518-INDEPENDENT-BUNDLE",
+        "attempts": [
+          {
+            "utc": "2026-11-01T00:08:00.009366+00:00",
+            "method": "isolated mounted directory concrete file search",
+            "evidence": [],
+            "result": "BLOCKED_OR_UNAVAILABLE",
+            "exit_code": 2
+          },
+          {
+            "utc": "2026-11-01T00:08:00.009385+00:00",
+            "method": "authoritative ZIP nested-member concrete file search",
+            "evidence": [],
+            "result": "BLOCKED_OR_UNAVAILABLE",
+            "exit_code": 2
+          }
+        ],
+        "open_after_attempts": true,
+        "carried_to_next_level_if_open": true
+      },
+      {
+        "id": "L0-A514-HANDOFF",
+        "attempts": [
+          {
+            "utc": "2026-11-01T00:08:00.011185+00:00",
+            "method": "isolated mounted directory concrete file search",
+            "evidence": [],
+            "result": "BLOCKED_OR_UNAVAILABLE",
+            "exit_code": 2
+          },
+          {
+            "utc": "2026-11-01T00:08:00.011192+00:00",
+            "method": "authoritative ZIP nested-member concrete file search",
+            "evidence": [],
+            "result": "BLOCKED_OR_UNAVAILABLE",
+            "exit_code": 2
+          }
+        ],
+        "open_after_attempts": true,
+        "carried_to_next_level_if_open": true
+      },
+      {
+        "id": "L0-REAL-ANDROID-SOURCE",
+        "attempts": [
+          {
+            "utc": "2026-11-01T00:08:00.012946+00:00",
+            "method": "isolated mounted directory concrete file search",
+            "evidence": [],
+            "result": "BLOCKED_OR_UNAVAILABLE",
+            "exit_code": 2
+          },
+          {
+            "utc": "2026-11-01T00:08:00.012953+00:00",
+            "method": "authoritative ZIP nested-member concrete file search",
+            "evidence": [],
+            "result": "BLOCKED_OR_UNAVAILABLE",
+            "exit_code": 2
+          }
+        ],
+        "open_after_attempts": true,
+        "carried_to_next_level_if_open": true
+      },
+      {
+        "id": "L0-ANDROID-SDK-DEVICE",
+        "attempts": [
+          {
+            "utc": "2026-11-01T00:08:00.013135+00:00",
+            "method": "OS executable availability",
+            "evidence": {
+              "adb": false,
+              "gradle": false,
+              "sdkmanager": false,
+              "emulator": false
+            },
+            "result": "BLOCKED_OR_UNAVAILABLE",
+            "exit_code": 2
+          },
+          {
+            "utc": "2026-11-01T00:08:00.013137+00:00",
+            "method": "SDK environment paths",
+            "evidence": {
+              "ANDROID_HOME": false,
+              "ANDROID_SDK_ROOT": false
+            },
+            "result": "BLOCKED_OR_UNAVAILABLE",
+            "exit_code": 2
+          }
+        ],
+        "open_after_attempts": true,
+        "carried_to_next_level_if_open": true
+      },
+      {
+        "id": "L0-ISOLATED-POSTGRES-RLS",
+        "attempts": [
+          {
+            "utc": "2026-11-01T00:08:00.013365+00:00",
+            "method": "PostgreSQL executables",
+            "evidence": {
+              "psql": false,
+              "postgres": false,
+              "initdb": false,
+              "pg_ctl": false
+            },
+            "result": "BLOCKED_OR_UNAVAILABLE",
+            "exit_code": 2
+          },
+          {
+            "utc": "2026-11-01T00:08:00.013369+00:00",
+            "method": "container runtime availability only",
+            "evidence": {
+              "docker": false,
+              "podman": false
+            },
+            "result": "BLOCKED_OR_UNAVAILABLE",
+            "exit_code": 2
+          }
+        ],
+        "open_after_attempts": true,
+        "carried_to_next_level_if_open": true
+      },
+      {
+        "id": "L1-CANONICAL-13-PROFILES",
+        "attempts": [
+          {
+            "utc": "2026-11-01T00:08:00.017039+00:00",
+            "method": "local canonical filename search",
+            "evidence": [],
+            "result": "BLOCKED_OR_UNAVAILABLE",
+            "exit_code": 2
+          },
+          {
+            "utc": "2026-11-01T00:08:00.017048+00:00",
+            "method": "nested ZIP canonical filename search",
+            "evidence": [],
+            "result": "BLOCKED_OR_UNAVAILABLE",
+            "exit_code": 2
+          }
+        ],
+        "open_after_attempts": true,
+        "carried_to_next_level_if_open": true
+      },
+      {
+        "id": "L1-CANONICAL-52-ENTITIES",
+        "attempts": [
+          {
+            "utc": "2026-11-01T00:08:00.017051+00:00",
+            "method": "local canonical filename search",
+            "evidence": [],
+            "result": "BLOCKED_OR_UNAVAILABLE",
+            "exit_code": 2
+          },
+          {
+            "utc": "2026-11-01T00:08:00.017053+00:00",
+            "method": "nested ZIP canonical filename search",
+            "evidence": [],
+            "result": "BLOCKED_OR_UNAVAILABLE",
+            "exit_code": 2
+          }
+        ],
+        "open_after_attempts": true,
+        "carried_to_next_level_if_open": true
+      },
+      {
+        "id": "L1-REAL-ANDROID-BUILD-EVIDENCE",
+        "attempts": [
+          {
+            "utc": "2026-11-01T00:08:00.017690+00:00",
+            "method": "APK file existence scan",
+            "evidence": [],
+            "result": "BLOCKED_OR_UNAVAILABLE",
+            "exit_code": 2
+          },
+          {
+            "utc": "2026-11-01T00:08:00.017695+00:00",
+            "method": "toolchain binaries (insufficient alone)",
+            "evidence": {
+              "java": true,
+              "kotlinc": true
+            },
+            "result": "FOUND",
+            "exit_code": 0
+          }
+        ],
+        "open_after_attempts": true,
+        "carried_to_next_level_if_open": true
+      }
+    ],
+    "all_prior_gates_resolved": false,
+    "next_attempt_minimum_per_open_gate": 2
+  },
+  "acceptance": {
+    "whole_app_L2_development_cycle": "DELIVERED",
+    "independent_Android_build": "NOT_VERIFIED",
+    "independent_API_staging": "NOT_VERIFIED",
+    "independent_PostgreSQL_RLS": "NOT_VERIFIED",
+    "legal_and_translation": "NOT_VERIFIED",
+    "production_deployment": "NOT_AUTHORIZED"
+  },
+  "notes": [
+    "Historic A4 102 ops NOT identical to new L2 10 generic routes",
+    "Synthetic SQLite HMAC is not durable WORM or production authorization",
+    "Browser demo has local JS state and never calls Python WSGI API",
+    "GitHub CI must be checked separately; local execution is not GitHub CI"
+  ]
+}
