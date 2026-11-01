@@ -1,0 +1,121 @@
+{
+  "level": "L3",
+  "date": "2026-11-01",
+  "tasks": [
+    {
+      "task_id": "LX-030",
+      "task": "Android build zinciri",
+      "source_or_design_progress": "Android Studio Gradle configuration, appId, manifest and Java source scaffold",
+      "unverified_acceptance_conditions": "SDK 35, Gradle wrapper, assembled debug APK, merged manifest, device",
+      "paths": [
+        "android/app/build.gradle",
+        "android/settings.gradle"
+      ],
+      "independently_accepted": false
+    },
+    {
+      "task_id": "LX-031",
+      "task": "MainActivity ve WebView sınırı",
+      "source_or_design_progress": "Native navigation; no WebView, JS bridge, INTERNET permission or cleartext; URL gate reject-all",
+      "unverified_acceptance_conditions": "Android instrumentation and hostile deep link/device analysis",
+      "paths": [
+        "android/app/src/main/java/nl/larenlex/app/MainActivity.java",
+        "android/app/src/main/java/nl/larenlex/app/SafeUrlPolicy.java"
+      ],
+      "independently_accepted": false
+    },
+    {
+      "task_id": "LX-032",
+      "task": "Android Keystore taslak kasası",
+      "source_or_design_progress": "AES-256-GCM nonexportable device key source with AAD tenant/user/matter/draft/revision",
+      "unverified_acceptance_conditions": "Keystore device key invalidation, restore, crash, out-of-space and 2-user tests",
+      "paths": [
+        "android/app/src/main/java/nl/larenlex/app/SecureDraftVault.java"
+      ],
+      "independently_accepted": false
+    },
+    {
+      "task_id": "LX-033",
+      "task": "Native API sınırı",
+      "source_or_design_progress": "Fail-closed API client, page/schema and tenant/record display checks",
+      "unverified_acceptance_conditions": "Actual independent A4 server schema, issuer, OAuth PKCE, refresh and transport",
+      "paths": [
+        "android/app/src/main/java/nl/larenlex/app/NativeReadOnlyApiClient.java",
+        "android/app/src/main/java/nl/larenlex/app/NativeApiPageValidator.java",
+        "android/app/src/main/java/nl/larenlex/app/NativeApiRecordSchemaValidator.java"
+      ],
+      "independently_accepted": false
+    },
+    {
+      "task_id": "LX-034",
+      "task": "Yerel DOCX",
+      "source_or_design_progress": "Synthetic DOCX ZIP output and XML escaping source; JVM example validated",
+      "unverified_acceptance_conditions": "Real authorized case data, canonical templates, expert/language acceptance",
+      "paths": [
+        "android/app/src/main/java/nl/larenlex/app/DraftDocxWriter.java",
+        "android/app/src/main/java/nl/larenlex/app/CaseIndexDocxWriter.java"
+      ],
+      "independently_accepted": false
+    },
+    {
+      "task_id": "LX-035",
+      "task": "PDF ve kaydet/devam et",
+      "source_or_design_progress": "PDF example renderer source, encrypted draft vault and explicit user-initiated SAF export source",
+      "unverified_acceptance_conditions": "Real Android PDF output and lifecycle recovery, storage limits, revocation",
+      "paths": [
+        "android/app/src/main/java/nl/larenlex/app/PdfDraftWriter.java",
+        "android/app/src/main/java/nl/larenlex/app/SecureDraftVault.java"
+      ],
+      "independently_accepted": false
+    },
+    {
+      "task_id": "LX-036",
+      "task": "Takip tarihi / kanunî süre",
+      "source_or_design_progress": "ISO date validation and explicit reminder-only display, no legal deadline calculation",
+      "unverified_acceptance_conditions": "Legal expert review, DST/device/timezone validation",
+      "paths": [
+        "android/app/src/main/java/nl/larenlex/app/DeadlinePolicy.java"
+      ],
+      "independently_accepted": false
+    },
+    {
+      "task_id": "LX-037",
+      "task": "Uygulama kilidi ve oturum",
+      "source_or_design_progress": "FLAG_SECURE, default locked session boundary and revocation counter source",
+      "unverified_acceptance_conditions": "Actual IdP session/biometric integration, task switch, cache, notification, orientation and device tests",
+      "paths": [
+        "android/app/src/main/java/nl/larenlex/app/AppSessionBoundary.java",
+        "android/app/src/main/java/nl/larenlex/app/MainActivity.java"
+      ],
+      "independently_accepted": false
+    },
+    {
+      "task_id": "LX-038",
+      "task": "Mobil gezinim, tablet ve erişilebilirlik",
+      "source_or_design_progress": "14/69/453 native catalog; 16 staff areas; HTML preview tested desktop/mobile/320px at 200% text",
+      "unverified_acceptance_conditions": "Android device 320dp+, rotation, TalkBack focus and font size acceptance",
+      "paths": [
+        "android/app/src/main/assets/modules.json",
+        "android/app/src/main/java/nl/larenlex/app/MainActivity.java",
+        "preview/LARENLEX_ANDROID_L3_BUTUN_UYGULAMA_ONIZLEME.html"
+      ],
+      "independently_accepted": false
+    },
+    {
+      "task_id": "LX-039",
+      "task": "Veri aktarımı ve saklama",
+      "source_or_design_progress": "Manifest backup disabled; screenshot flag; no INTERNET, prototype says no real user data; synthetic export only",
+      "unverified_acceptance_conditions": "Actual Android device privacy verification and legal/data protection signoff",
+      "paths": [
+        "android/app/src/main/AndroidManifest.xml",
+        "android/app/src/main/res/xml/backup_rules.xml"
+      ],
+      "independently_accepted": false
+    }
+  ],
+  "all_14_systems_in_preview": true,
+  "all_453_feature_ids_in_catalog": true,
+  "release_ready": false,
+  "user_transition_approval": "NOT_YET_GIVEN_L3_TO_L4",
+  "description": "Task-specific work, NOT independent acceptance; unresolved criteria carry forward for at least two new attempts in L4."
+}
