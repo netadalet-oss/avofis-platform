@@ -21,6 +21,7 @@ on:
       - "portal/src/app/yonetim/page.tsx"
       - "portal/tests/client-workspace-release.test.cjs"
       - "portal/src/app/auth/update-password/page.tsx"
+      - "portal/src/app/auth/forgot-password/page.tsx"
       - "portal/tests/password-recovery-release-hold.test.cjs"
       - "portal/src/app/yonetim/ind-inceleme/page.tsx"
       - "portal/tests/ind-staff-release-hold.test.cjs"
@@ -58,6 +59,7 @@ on:
       - "portal/src/app/yonetim/page.tsx"
       - "portal/tests/client-workspace-release.test.cjs"
       - "portal/src/app/auth/update-password/page.tsx"
+      - "portal/src/app/auth/forgot-password/page.tsx"
       - "portal/tests/password-recovery-release-hold.test.cjs"
       - "portal/src/app/yonetim/ind-inceleme/page.tsx"
       - "portal/tests/ind-staff-release-hold.test.cjs"
@@ -127,6 +129,15 @@ jobs:
             exit 1
           fi
           echo 'Public auth unavailable HTTP: PASS'
+          curl -fsS http://127.0.0.1:3000/auth/forgot-password > /tmp/avofis-forgot-password.html
+          test -s /tmp/avofis-forgot-password.html
+          grep -q 'Parola kurtarma şu anda kapalı' /tmp/avofis-forgot-password.html
+          grep -q 'noindex' /tmp/avofis-forgot-password.html
+          if grep -Eq 'type="password"|type="email"|<form' /tmp/avofis-forgot-password.html; then
+            echo 'Unapproved account recovery form found' >&2
+            exit 1
+          fi
+          echo 'Closed account recovery HTTP: PASS'
           # Breadth-first whole-product preview is a real Next page, not a drawing.
           curl -fsS http://127.0.0.1:3000/seviye-1-onizleme > /tmp/avofis-s1-whole-preview.html
           test -s /tmp/avofis-s1-whole-preview.html
