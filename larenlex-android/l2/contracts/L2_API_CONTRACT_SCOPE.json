@@ -1,0 +1,1004 @@
+{
+  "product": "LarenLex Android",
+  "level": "L2",
+  "historical_a4_operations_source": "KAYNAK_KANIT/A5_18_102_API_COVERAGE.json",
+  "historical_a4_source_sha256": "db8be111f369b2b4056b949b07e6a8464f23e50a22a8b6a724929d9365544b7b",
+  "source_zip_sha256": "8049e3359b7822c458cb678431412e3f48e0d0f7dea1834a709859b7f4d5ff8c",
+  "historical_a4_status": "IDENTITY_VERIFIED_HISTORY_ONLY_NO_CURRENT_IMPLEMENTATION_CLAIM",
+  "a4_historical_102": [
+    {
+      "operationId": "catalogServices",
+      "method": "GET",
+      "path": "/api/v1/mobile/public/services",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "catalogServiceDetail",
+      "method": "GET",
+      "path": "/api/v1/mobile/public/services/{serviceId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "publicGuides",
+      "method": "GET",
+      "path": "/api/v1/mobile/public/guides",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "publicGuideDetail",
+      "method": "GET",
+      "path": "/api/v1/mobile/public/guides/{guideId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "publicProcedures",
+      "method": "GET",
+      "path": "/api/v1/mobile/public/procedures",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "publicForms",
+      "method": "GET",
+      "path": "/api/v1/mobile/public/forms",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "publicResearch",
+      "method": "GET",
+      "path": "/api/v1/mobile/public/ecli",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "publicContentSources",
+      "method": "GET",
+      "path": "/api/v1/mobile/public/sources",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "publicJurisdictions",
+      "method": "GET",
+      "path": "/api/v1/mobile/public/jurisdictions",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myProfileGet",
+      "method": "GET",
+      "path": "/api/v1/mobile/me/profile",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myProfilePatch",
+      "method": "PATCH",
+      "path": "/api/v1/mobile/me/profile",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myIntakesGet",
+      "method": "GET",
+      "path": "/api/v1/mobile/me/intakes",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myIntakeCreate",
+      "method": "POST",
+      "path": "/api/v1/mobile/me/intakes",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myIntakePatch",
+      "method": "PATCH",
+      "path": "/api/v1/mobile/me/intakes/{intakeId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myMattersList",
+      "method": "GET",
+      "path": "/api/v1/mobile/me/matters",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myMatterGet",
+      "method": "GET",
+      "path": "/api/v1/mobile/me/matters/{matterId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "matterTimeline",
+      "method": "GET",
+      "path": "/api/v1/mobile/me/matters/{matterId}/timeline",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "addTimelineEvent",
+      "method": "POST",
+      "path": "/api/v1/mobile/me/matters/{matterId}/timeline",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "matterEvidence",
+      "method": "GET",
+      "path": "/api/v1/mobile/me/matters/{matterId}/evidence",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "matterEvidenceAdd",
+      "method": "POST",
+      "path": "/api/v1/mobile/me/matters/{matterId}/evidence",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "matterChecklist",
+      "method": "GET",
+      "path": "/api/v1/mobile/me/matters/{matterId}/checklist",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "matterChecklistPatch",
+      "method": "PATCH",
+      "path": "/api/v1/mobile/me/matters/{matterId}/checklist/{itemId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myDraftList",
+      "method": "GET",
+      "path": "/api/v1/mobile/me/drafts",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myDraftCreate",
+      "method": "POST",
+      "path": "/api/v1/mobile/me/drafts",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myDraftGet",
+      "method": "GET",
+      "path": "/api/v1/mobile/me/drafts/{draftId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myDraftPatch",
+      "method": "PATCH",
+      "path": "/api/v1/mobile/me/drafts/{draftId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myDraftVersion",
+      "method": "POST",
+      "path": "/api/v1/mobile/me/drafts/{draftId}/versions",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myDraftVersions",
+      "method": "GET",
+      "path": "/api/v1/mobile/me/drafts/{draftId}/versions",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "requestReview",
+      "method": "POST",
+      "path": "/api/v1/mobile/me/drafts/{draftId}/review-requests",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myDraftExport",
+      "method": "POST",
+      "path": "/api/v1/mobile/me/drafts/{draftId}/export-requests",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myMessages",
+      "method": "GET",
+      "path": "/api/v1/mobile/me/matters/{matterId}/messages",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myMessageDraft",
+      "method": "POST",
+      "path": "/api/v1/mobile/me/matters/{matterId}/message-drafts",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myAttachments",
+      "method": "GET",
+      "path": "/api/v1/mobile/me/matters/{matterId}/attachments",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "uploadIntent",
+      "method": "POST",
+      "path": "/api/v1/mobile/me/matters/{matterId}/upload-intents",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "attachmentAccess",
+      "method": "POST",
+      "path": "/api/v1/mobile/me/matters/{matterId}/attachments/{attachmentId}/access-intents",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myInvoices",
+      "method": "GET",
+      "path": "/api/v1/mobile/me/invoices",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myInvoiceGet",
+      "method": "GET",
+      "path": "/api/v1/mobile/me/invoices/{invoiceId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myPayments",
+      "method": "GET",
+      "path": "/api/v1/mobile/me/payments",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myConsent",
+      "method": "GET",
+      "path": "/api/v1/mobile/me/consents",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myPrivacyRequest",
+      "method": "POST",
+      "path": "/api/v1/mobile/me/privacy-requests",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "myTasks",
+      "method": "GET",
+      "path": "/api/v1/mobile/me/tasks",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_inbox_list",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/inbox/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_inbox_detail",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/inbox/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_inbox_create",
+      "method": "POST",
+      "path": "/api/v1/mobile/staff/inbox/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_inbox_patch",
+      "method": "PATCH",
+      "path": "/api/v1/mobile/staff/inbox/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_triage_list",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/triage/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_triage_detail",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/triage/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_triage_create",
+      "method": "POST",
+      "path": "/api/v1/mobile/staff/triage/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_triage_patch",
+      "method": "PATCH",
+      "path": "/api/v1/mobile/staff/triage/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_matters_list",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/matters/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_matters_detail",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/matters/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_matters_create",
+      "method": "POST",
+      "path": "/api/v1/mobile/staff/matters/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_matters_patch",
+      "method": "PATCH",
+      "path": "/api/v1/mobile/staff/matters/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": true,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_calendar_list",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/calendar/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_calendar_detail",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/calendar/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_calendar_create",
+      "method": "POST",
+      "path": "/api/v1/mobile/staff/calendar/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_calendar_patch",
+      "method": "PATCH",
+      "path": "/api/v1/mobile/staff/calendar/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_documents_list",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/documents/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_documents_detail",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/documents/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_documents_create",
+      "method": "POST",
+      "path": "/api/v1/mobile/staff/documents/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_documents_patch",
+      "method": "PATCH",
+      "path": "/api/v1/mobile/staff/documents/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_pleadings_list",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/pleadings/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_pleadings_detail",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/pleadings/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_pleadings_create",
+      "method": "POST",
+      "path": "/api/v1/mobile/staff/pleadings/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_pleadings_patch",
+      "method": "PATCH",
+      "path": "/api/v1/mobile/staff/pleadings/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_research_list",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/research/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_research_detail",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/research/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_judicial_list",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/judicial/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_judicial_detail",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/judicial/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_ind_list",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/ind/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_ind_detail",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/ind/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_messages_list",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/messages/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_messages_detail",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/messages/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_messages_create",
+      "method": "POST",
+      "path": "/api/v1/mobile/staff/messages/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_messages_patch",
+      "method": "PATCH",
+      "path": "/api/v1/mobile/staff/messages/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_billing_list",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/billing/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_billing_detail",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/billing/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_billing_create",
+      "method": "POST",
+      "path": "/api/v1/mobile/staff/billing/records",
+      "historical_synthetic_RAM": false,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_billing_patch",
+      "method": "PATCH",
+      "path": "/api/v1/mobile/staff/billing/records/{recordId}",
+      "historical_synthetic_RAM": false,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_payables_list",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/payables/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_payables_detail",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/payables/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_payables_create",
+      "method": "POST",
+      "path": "/api/v1/mobile/staff/payables/records",
+      "historical_synthetic_RAM": false,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_payables_patch",
+      "method": "PATCH",
+      "path": "/api/v1/mobile/staff/payables/records/{recordId}",
+      "historical_synthetic_RAM": false,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_reporting_list",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/reporting/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_reporting_detail",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/reporting/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_audit_list",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/audit/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_audit_detail",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/audit/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_people_list",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/people/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_people_detail",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/people/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_people_create",
+      "method": "POST",
+      "path": "/api/v1/mobile/staff/people/records",
+      "historical_synthetic_RAM": false,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_people_patch",
+      "method": "PATCH",
+      "path": "/api/v1/mobile/staff/people/records/{recordId}",
+      "historical_synthetic_RAM": false,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_settings_list",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/settings/records",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_settings_detail",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/settings/records/{recordId}",
+      "historical_synthetic_RAM": true,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_settings_create",
+      "method": "POST",
+      "path": "/api/v1/mobile/staff/settings/records",
+      "historical_synthetic_RAM": false,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staff_settings_patch",
+      "method": "PATCH",
+      "path": "/api/v1/mobile/staff/settings/records/{recordId}",
+      "historical_synthetic_RAM": false,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staffGrantReview",
+      "method": "POST",
+      "path": "/api/v1/mobile/staff/people/grant-review-intents",
+      "historical_synthetic_RAM": false,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staffAuditQuery",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/audit/events",
+      "historical_synthetic_RAM": false,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staffDocumentReview",
+      "method": "POST",
+      "path": "/api/v1/mobile/staff/pleadings/reviews",
+      "historical_synthetic_RAM": false,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staffFinanceReview",
+      "method": "POST",
+      "path": "/api/v1/mobile/staff/payables/review-intents",
+      "historical_synthetic_RAM": false,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "indReadiness",
+      "method": "GET",
+      "path": "/api/v1/mobile/staff/ind/{indCode}/readiness",
+      "historical_synthetic_RAM": false,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "judicialReceiptReview",
+      "method": "POST",
+      "path": "/api/v1/mobile/staff/judicial/receipt-verification-intents",
+      "historical_synthetic_RAM": false,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    },
+    {
+      "operationId": "staffPublishReview",
+      "method": "POST",
+      "path": "/api/v1/mobile/staff/settings/publication-review-intents",
+      "historical_synthetic_RAM": false,
+      "historical_synthetic_SQLite_subset": false,
+      "verified_in_current_l2_runtime": false,
+      "independent_acceptance": false
+    }
+  ],
+  "new_l2_10_generic_route_templates": [
+    {
+      "method": "GET",
+      "route": "/v2/catalog",
+      "security": "PUBLIC_CATALOG_ONLY",
+      "in_process_wsgi_tested": true,
+      "real_postgres_auth_or_android_connected": false
+    },
+    {
+      "method": "GET",
+      "route": "/v2/session",
+      "security": "BEARER_SYNTHETIC",
+      "in_process_wsgi_tested": true,
+      "real_postgres_auth_or_android_connected": false
+    },
+    {
+      "method": "GET",
+      "route": "/v2/matters/{matter}/modules/{module}/records",
+      "security": "BEARER_MATTER_MODULE",
+      "in_process_wsgi_tested": true,
+      "real_postgres_auth_or_android_connected": false
+    },
+    {
+      "method": "POST",
+      "route": "/v2/matters/{matter}/modules/{module}/records",
+      "security": "BEARER_MATTER_MODULE",
+      "in_process_wsgi_tested": true,
+      "real_postgres_auth_or_android_connected": false
+    },
+    {
+      "method": "GET",
+      "route": "/v2/records/{record}",
+      "security": "BEARER_RECORD",
+      "in_process_wsgi_tested": true,
+      "real_postgres_auth_or_android_connected": false
+    },
+    {
+      "method": "PATCH",
+      "route": "/v2/records/{record}",
+      "security": "BEARER_RECORD_VERSION",
+      "in_process_wsgi_tested": true,
+      "real_postgres_auth_or_android_connected": false
+    },
+    {
+      "method": "DELETE",
+      "route": "/v2/records/{record}",
+      "security": "BEARER_RECORD_IF_MATCH",
+      "in_process_wsgi_tested": true,
+      "real_postgres_auth_or_android_connected": false
+    },
+    {
+      "method": "POST",
+      "route": "/v2/records/{record}/documents",
+      "security": "BEARER_DOCUMENT_METADATA",
+      "in_process_wsgi_tested": true,
+      "real_postgres_auth_or_android_connected": false
+    },
+    {
+      "method": "POST",
+      "route": "/v2/documents/{document}/grants",
+      "security": "BEARER_SIGNED_FIXTURE",
+      "in_process_wsgi_tested": true,
+      "real_postgres_auth_or_android_connected": false
+    },
+    {
+      "method": "POST",
+      "route": "/v2/documents/{document}/verify",
+      "security": "BEARER_SIGNED_FIXTURE",
+      "in_process_wsgi_tested": true,
+      "real_postgres_auth_or_android_connected": false
+    }
+  ],
+  "new_l2_14_module_coverage": "single authorization-aware parameterized module route, not 14*102 different endpoints",
+  "actual_mobile_api_client": "NOT_BUILT",
+  "production_api": "NOT_CONNECTED",
+  "independent_acceptance": "NOT_ESTABLISHED"
+}
