@@ -9,6 +9,9 @@ export default function AdminHome() {
       <div className="container-shell py-16">
         <div className="rounded-[28px] border border-white/10 bg-white/5 p-8">
           <h1 className="text-3xl font-semibold">AvOfis Admin</h1>
+          <Link href="/seviye-2-akis" className="mt-5 mr-3 inline-flex rounded-xl border border-sky-300/40 px-4 py-3 text-sm font-semibold text-sky-200 underline underline-offset-4">
+            Seviye 2 — 16 personel işlem akışını aç
+          </Link>
           <Link href="/seviye-1-onizleme" className="mt-5 inline-flex rounded-xl border border-sky-300/40 px-4 py-3 text-sm font-semibold text-sky-200 underline underline-offset-4">
             Seviye 1 — bütün yönetim ve API önizlemesini aç
           </Link>
