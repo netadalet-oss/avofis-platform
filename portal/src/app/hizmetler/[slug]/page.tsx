@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SERVICES, findService } from "@/lib/service-catalog";
+import { ServicePreparationChecklist } from "@/components/ServicePreparationChecklist";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -57,6 +58,8 @@ export default function HizmetBilgiPage({ params }: { params: { slug: string } }
             </p>
           </section>
         </div>
+        <ServicePreparationChecklist key={service.slug}
+          serviceSlug={service.slug} steps={service.preparation} />
         <section className="mt-9 rounded-[24px] border border-sky-400/20 bg-[#10213a]/70 p-6">
           <h2 className="text-xl font-semibold">Konunuza uygun ilk hazırlığı yapın</h2>
           <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-300">
