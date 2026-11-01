@@ -1,0 +1,116 @@
+{
+  "product": "AVOfis Platform",
+  "sourceAuthority": "AVOFIS_PORTAL_AYRI_TALIMATNAME_TESLIM.zip",
+  "method": "12-level whole-product breadth-first; level 2: entry/process/result and screen-to-screen navigation",
+  "stageOne": {
+    "status": "IN_PROGRESS_CARRYOVER",
+    "independentRAccepted": 0,
+    "liveRAccepted": 0
+  },
+  "levelTwo": {
+    "status": "IN_PROGRESS_NOT_ACCEPTED",
+    "scopeCounts": {
+      "avTasks": 101,
+      "rRequirements": 594,
+      "services": 17,
+      "audiences": 14,
+      "journeys": 12,
+      "staffModules": 16,
+      "apiModules": 10,
+      "indProcedures": 8
+    }
+  },
+  "horizontalAreas": [
+    {
+      "id": "A0",
+      "entry": "canonical source 101 AV / 594 R",
+      "process": "per-level trace and carryovers",
+      "result": "evidence register; no acceptance"
+    },
+    {
+      "id": "A1",
+      "entry": "identity and staging safety gate",
+      "process": "tenant/RLS/MFA/Storage review required",
+      "result": "NOT_AUTHORIZED; no production database access"
+    },
+    {
+      "id": "A2",
+      "entry": "14 audiences",
+      "process": "select among 12 canonical journeys then 17 service pages",
+      "result": "information-only; portal/src/app/seviye-2-akis/page.tsx"
+    },
+    {
+      "id": "A3",
+      "entry": "public journey and document-preparation pages",
+      "process": "categorical local preparation with no upload",
+      "result": "no client record, payment or official submission"
+    },
+    {
+      "id": "A4",
+      "entry": "16 canonical staff modules",
+      "process": "local synthetic prepare -> review -> reset",
+      "result": "admin/src/app/seviye-2-akis/page.tsx; no real CRM/DB"
+    },
+    {
+      "id": "A5",
+      "entry": "IND/justice/billing/payables planned modules",
+      "process": "professional authority and external adapters require approval",
+      "result": "all third-party, bank, legal and official actions CLOSED"
+    },
+    {
+      "id": "A6",
+      "entry": "GitHub branch CI and proof",
+      "process": "check exact commits, capture blockers, review real preview",
+      "result": "no stage/production/independent approval inferred"
+    }
+  ],
+  "apiFlow": {
+    "entry": "GET /api/program/flow-skeleton",
+    "modules": 10,
+    "stages": [
+      "ENTRY",
+      "SYNTHETIC_PREPARATION",
+      "HUMAN_REVIEW_REQUIRED",
+      "CLOSED_NO_TRANSACTION"
+    ],
+    "enabledOperations": []
+  },
+  "carryover": [
+    {
+      "id": "PORTAL_STALE_ANCHOR_CI",
+      "status": "UNRESOLVED",
+      "source": "Portal workflow still expects /islemler#ind-decision-objection; real link is /islemler/ind-decision-objection",
+      "note": "Workflow write previously denied by connected GitHub safety gate; do not use bypass"
+    },
+    {
+      "id": "LIVE_RLS_SEVEN",
+      "status": "NOT_VERIFIED_FIXED",
+      "note": "Production Supabase is read only; 7 prior advisor errors must be rechecked in authorized staging"
+    },
+    {
+      "id": "AUTH_LEAK_PASSWORD_WARNING",
+      "status": "OPEN_RECHECK_REQUIRED"
+    },
+    {
+      "id": "INDEPENDENT_STAGING_ABSENT",
+      "status": "BLOCKED_EXTERNAL"
+    },
+    {
+      "id": "LEGAL_GDPR_LANG_HUMAN_APPROVAL",
+      "status": "NOT_ACCEPTED"
+    },
+    {
+      "id": "LATEST_SHA_VERCEL_PREVIEW",
+      "status": "CHECK_ON_EACH_HEAD"
+    }
+  ],
+  "controls": {
+    "mainMergeAuthorized": false,
+    "productionDeploymentAuthorized": false,
+    "liveDatabaseWriteAuthorized": false,
+    "realPersonalDataAllowed": false,
+    "realPaymentAllowed": false,
+    "officialSubmissionAllowed": false,
+    "stageTwoIndependentAcceptance": false
+  }
+}
