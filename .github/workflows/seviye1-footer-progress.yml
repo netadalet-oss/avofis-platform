@@ -30,6 +30,9 @@ on:
       - "portal/src/components/WholeProductExplorer.tsx"
       - "portal/src/lib/whole-product-explorer.ts"
       - "portal/tests/whole-product-explorer.test.cjs"
+      - "portal/src/components/ServicePreparationChecklist.tsx"
+      - "portal/src/app/hizmetler/[slug]/page.tsx"
+      - "portal/tests/service-preparation-checklist.test.cjs"
       - ".github/workflows/seviye1-footer-progress.yml"
   push:
     branches:
@@ -63,6 +66,9 @@ on:
       - "portal/src/components/WholeProductExplorer.tsx"
       - "portal/src/lib/whole-product-explorer.ts"
       - "portal/tests/whole-product-explorer.test.cjs"
+      - "portal/src/components/ServicePreparationChecklist.tsx"
+      - "portal/src/app/hizmetler/[slug]/page.tsx"
+      - "portal/tests/service-preparation-checklist.test.cjs"
       - ".github/workflows/seviye1-footer-progress.yml"
 permissions:
   contents: read
@@ -140,3 +146,12 @@ jobs:
           assert.match(visible, /0\s*\/\s*594/);
           console.log('Whole-product S1 preview HTTP: PASS');
           NODE
+          # All public service detail pages are statically generated; verify
+          # that the real local checklist renders on representative subjects.
+          for slug in hukuki-danismanlik mahkeme-temsil belge-apostil-tercume; do
+            curl -fsS "http://127.0.0.1:3000/hizmetler/$slug" > /tmp/avofis-service-checklist.html
+            grep -q 'İlk hazırlık adımlarını gözden geçirin' /tmp/avofis-service-checklist.html
+            grep -q 'type="checkbox"' /tmp/avofis-service-checklist.html
+            grep -q 'Seçimleri sıfırla' /tmp/avofis-service-checklist.html
+          done
+          echo 'Three representative service checklist HTTP previews: PASS'
