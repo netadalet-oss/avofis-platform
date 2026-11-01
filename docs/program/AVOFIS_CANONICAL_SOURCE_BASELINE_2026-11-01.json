@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "product": "AVOfis Platform",
+  "sourceStatus": "USER_SUPPLIED_ORIGINAL_ZIP_VERIFIED",
+  "sourceFiles": {
+    "zip": "AVOFIS_PORTAL_AYRI_TALIMATNAME_TESLIM.zip",
+    "zipSha256": "7638cae4f270b81ccf0f8951f1e6e868e26b21ea746e1b1e8cc68e3492f36f1c",
+    "instruction": "AVOFIS_PORTAL_TEKIL_ANA_TALIMATNAME.md",
+    "instructionSha256": "99dd42a22ccd551e1ee5daf87454d58786f6f8df659255bbd786f23d996edb57",
+    "canonicalIndex": "DENETIM/AVOFIS_PORTAL_TALIMAT_KANONIK_IZ_DIZINI.json",
+    "canonicalIndexSha256": "f18b118b5aaef0530bc4eea93fe578c5a91025751b626929d5110cd2b16ba77f",
+    "rAcceptanceCsv": "KAYNAK_KANIT/AVOFIS_594_R_KABUL_BASLANGIC.csv",
+    "rAcceptanceCsvSha256": "1021272be28a3a6b932bb9a5cf96c549a913adbc2b11492ca6a3427b13060a07"
+  },
+  "integrity": {
+    "zipMembers": 10,
+    "checksumListedFileCount": 9,
+    "sha256ManifestEntriesVerified": 9,
+    "canonicalAvIdsUnique": 101,
+    "canonicalRIdsUnique": 594,
+    "rSections": 33,
+    "priorityP0": 324,
+    "priorityP1": 270,
+    "sourceIndependentAcceptanceAbsent": 594,
+    "sourceLiveAcceptanceAbsent": 594
+  },
+  "development": {
+    "stage": 1,
+    "stageStatus": "IN_PROGRESS",
+    "sourceIntegrityIsNotCodeCompliance": true,
+    "sourceIntegrityIsNotIndependentAcceptance": true,
+    "sourceIntegrityIsNotProductionAcceptance": true,
+    "sourceEvidenceNeedsPerRequirementCodeAndTestMapping": true,
+    "legacyCombinedAvOfisLarenLexZipRole": "HISTORICAL_REFERENCE_ONLY",
+    "separateAuthorizationRequiredFor": [
+      "main",
+      "production",
+      "PR_merge",
+      "external_payment",
+      "official_submission",
+      "legal_acceptance"
+    ]
+  },
+  "verificationDate": "2026-11-01",
+  "note": "Checksums and identity counts verified against user-supplied canonical ZIP; no new product or legal acceptance asserted. Full original source and R CSV remain in user-provided ZIP, not reproduced here."
+}
