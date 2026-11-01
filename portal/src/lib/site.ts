@@ -7,7 +7,7 @@ export const navigation: NavigationItem[] = [
   { label: "Kimler için?", href: "/kimler-icin" },
   { label: "İşlem yolları", href: "/islemler" },
   { label: "İlk hazırlık", href: "/baslangic" },
-  { label: "Hukuk rehberleri", href: "/bilgi/rehberler" },
+  { label: "Hukukî bilgi", href: "/bilgi" },
   { label: "Belge hazırlığı", href: "/belge-hazirlik" },
   { label: "Kurumsal ve uyum", href: "/uyum" },
   { label: "İletişim", href: "/iletisim" }
