@@ -51,3 +51,48 @@ test("Stage 2 common horizontal scope remains closed for all seven program areas
   assert.equal(contract.controls.realPaymentAllowed,false);
   assert.equal(contract.controls.officialSubmissionAllowed,false);
 });
+
+
+test("Stage 2 all 16 staff screens have valid, nontransactional cross-module handoffs",()=>{
+  const ts=require("typescript");
+  function moduleFromTypeScript(sourcePath,mocks={}){
+    const contents=fs.readFileSync(path.join(root,sourcePath),"utf8");
+    const script=ts.transpileModule(contents,{
+      fileName:sourcePath,
+      compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}
+    }).outputText;
+    const m={exports:{}};
+    new Function("module","exports","require",script)(m,m.exports,
+      name=>Object.hasOwn(mocks,name)?mocks[name]:require(name));
+    return m.exports;
+  }
+  const staff=moduleFromTypeScript("src/lib/staff-module-directory.ts");
+  const handoffs=moduleFromTypeScript("src/lib/staff-flow-handoffs.ts",{
+    "./staff-module-directory":staff
+  });
+  assert.equal(handoffs.validateStaffScreenHandoffs(),true);
+  assert.equal(Object.keys(handoffs.STAFF_SCREEN_HANDOFFS).length,16);
+  for(const module of staff.STAFF_TOP_LEVEL){
+    const next=handoffs.staffScreenHandoffs(module.slug);
+    assert.ok(next.length>0,module.slug);
+    assert.equal(new Set(next.map(item=>item.slug)).size,next.length,module.slug);
+    for(const item of next){
+      assert.ok(staff.staffModuleBySlug(item.slug),item.slug);
+      assert.equal(item.href,"/personel/"+item.slug);
+      assert.equal(item.status,"NAVIGATION_ONLY_NOT_AUTHORIZED");
+      assert.notEqual(item.slug,module.slug);
+    }
+  }
+  assert.deepEqual(handoffs.staffScreenHandoffs("../other"),[]);
+  const detail=fs.readFileSync(path.join(root,"src/app/personel/[module]/page.tsx"),"utf8");
+  assert.ok(detail.includes("staffScreenHandoffs(item.slug).map"));
+  assert.ok(detail.includes("href={next.href}"));
+  assert.ok(detail.includes('href="/seviye-2-akis"'));
+  assert.ok(page.includes("validateStaffScreenHandoffs()"));
+  assert.ok(page.includes("staffScreenHandoffs(module.slug).length"));
+  for(const forbidden of ["fetch(", "createClient(", "localStorage", "sessionStorage",
+     ".upsert(", ".insert(", "process.env", "sendBeacon"]){
+    const source=fs.readFileSync(path.join(root,"src/lib/staff-flow-handoffs.ts"),"utf8");
+    assert.equal(source.includes(forbidden),false,forbidden);
+  }
+});
