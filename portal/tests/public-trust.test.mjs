@@ -52,3 +52,21 @@ test("AV-025 / R-087: public contact copy cannot promise an unavailable client i
   assert.ok(contact.includes('href={"/basvuru?lang="+lang}'));
   assert.ok(contact.includes('href={"/auth/login?lang="+lang}'));
 });
+
+
+const documentPreparation = readFileSync(new URL("../src/app/belge-hazirlik/page.tsx", import.meta.url), "utf8");
+test("AV-049 / R-487: document category and open-security warning follow TR/NL/EN locale", () => {
+  for(const item of [
+    'tr:{event:"Olay",decision:"Karar"',
+    'nl:{event:"Gebeurtenis",decision:"Besluit"',
+    'en:{event:"Event",decision:"Decision"',
+    'L4 · DOCUMENTVEILIGHEID',
+    'L4 · DOCUMENT SAFETY',
+    '{names[lang][value]}',
+    '{t.risk}'
+  ]) assert.ok(documentPreparation.includes(item), "Missing locale-safe copy: "+item);
+  assert.equal(documentPreparation.includes('{names[value]}'), false);
+  for(const prohibited of ['fetch(', 'localStorage', 'sessionStorage', 'type="file"']) {
+    assert.equal(documentPreparation.includes(prohibited),false,"Public preparation must stay non-uploading: "+prohibited);
+  }
+});
