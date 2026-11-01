@@ -4,6 +4,7 @@ on:
     paths:
       - "admin/src/app/seviye-1-onizleme/**"
       - "admin/src/app/page.tsx"
+      - "admin/src/app/layout.tsx"
       - "admin/tests/whole-product-admin-preview.test.cjs"
       - "admin/src/app/personel/**"
       - "admin/src/lib/staff-module-directory.ts"
@@ -18,6 +19,7 @@ on:
     paths:
       - "admin/src/app/seviye-1-onizleme/**"
       - "admin/src/app/page.tsx"
+      - "admin/src/app/layout.tsx"
       - "admin/tests/whole-product-admin-preview.test.cjs"
       - "admin/src/app/personel/**"
       - "admin/src/lib/staff-module-directory.ts"
