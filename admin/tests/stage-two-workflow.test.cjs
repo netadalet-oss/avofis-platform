@@ -36,3 +36,18 @@ test("Stage 2 admin has no secrets, credentials, provider submission or fabricat
    assert.equal(page.includes(bad),false,bad);
  }
 });
+
+
+test("Stage 2 common horizontal scope remains closed for all seven program areas",()=>{
+  const contract=JSON.parse(fs.readFileSync(path.join(root,"../docs/program/AVOFIS_LEVEL2_HORIZONTAL_FLOW_CONTRACT_2026-11-01.json"),"utf8"));
+  assert.deepEqual(contract.horizontalAreas.map(area=>area.id),["A0","A1","A2","A3","A4","A5","A6"]);
+  assert.equal(contract.levelTwo.scopeCounts.staffModules,16);
+  assert.equal(contract.levelTwo.scopeCounts.apiModules,10);
+  assert.equal(contract.levelTwo.scopeCounts.indProcedures,8);
+  assert.deepEqual(contract.apiFlow.enabledOperations,[]);
+  assert.equal(contract.levelTwo.status,"IN_PROGRESS_NOT_ACCEPTED");
+  assert.equal(contract.controls.mainMergeAuthorized,false);
+  assert.equal(contract.controls.liveDatabaseWriteAuthorized,false);
+  assert.equal(contract.controls.realPaymentAllowed,false);
+  assert.equal(contract.controls.officialSubmissionAllowed,false);
+});
