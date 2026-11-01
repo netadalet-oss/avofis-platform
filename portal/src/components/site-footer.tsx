@@ -3,8 +3,7 @@ import { footerColumns } from "@/lib/site";
 
 /**
  * Seviye 1, B02 / AV-018: public footer is a reviewed static view.
- * Never derive CMS write authority from client-editable user_metadata.
- * Public content is not loaded from unapproved Supabase rows.
+ * Public content is static until verified editorial publication authorization.
  */
 export function SiteFooter() {
   return (
