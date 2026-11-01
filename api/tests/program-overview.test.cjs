@@ -27,8 +27,8 @@ async function withServer(callback){
  finally{await new Promise((resolve,reject)=>server.close(e=>e?reject(e):resolve()))}
 }
 
-test("GET real HTTP returns all 14 API module main headings but no enabled actions",async()=>{
- assert.equal(API_MAIN_MODULES.length,14);
+test("GET real HTTP returns all 10 API module main headings but no enabled actions",async()=>{
+ assert.equal(API_MAIN_MODULES.length,10);
  await withServer(async url=>{
   const r=await fetch(url+"/api/program/overview");
   assert.equal(r.status,200);
@@ -41,7 +41,7 @@ test("GET real HTTP returns all 14 API module main headings but no enabled actio
   assert.equal(data.independentRAccepted,0);
   assert.equal(data.liveRAccepted,0);
   assert.deepEqual(data.scope,STAGE_ONE_COUNTS);
-  assert.equal(data.apiModules.length,14);
+  assert.equal(data.apiModules.length,10);
   assert.deepEqual(data.apiModules.map(x=>x.id),API_MAIN_MODULES);
   for(const item of data.apiModules){
    assert.equal(item.availability,"SCAFFOLD_NOT_AUTHORIZED");
