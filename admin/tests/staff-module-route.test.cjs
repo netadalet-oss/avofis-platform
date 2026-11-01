@@ -33,7 +33,7 @@ test("one real restricted static module route per all 16 staff modules",()=>{
   assert.match(route,/STAFF_TOP_LEVEL\.map/);
   assert.match(route,/dynamicParams = false/);
   assert.match(route,/if \(!item\) notFound\(\)/);
-  assert.match(preview,/href=\{"\/personel\/" \+ slug\}/);
+  assert.ok(preview.includes('href={"/personel/" + module.slug}'), "Preview must link by canonical module slug");
 });
 
 test("all 16 module pages have safe nontransactional semantics",()=>{
