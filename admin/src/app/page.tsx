@@ -1,20 +1,10 @@
 import Link from "next/link";
 
 const sections = [
-  "Dashboard",
-  "Kullanıcı Yönetimi",
-  "Rol ve Yetki Yönetimi",
-  "CMS Sayfa Yönetimi",
-  "Menü Yönetimi",
-  "Medya Kütüphanesi",
-  "Forum Moderasyonu",
-  "İçtihat Yönetimi",
-  "Mevzuat Yönetimi",
-  "Kariyer Yönetimi",
-  "Bildirim Şablonları",
-  "Analitik",
-  "Audit Log",
-  "Sistem Ayarları"
+  "Gelen işler","Ön değerlendirme","Dosyalar","Takvim",
+  "Belgeler","Dilekçeler","Hukuk araştırması","Yargı",
+  "IND","Mesajlar","Faturalama","Ödemeler",
+  "Raporlama","Denetim","Kişiler","Ayarlar"
 ];
 
 export default function AdminHome() {
@@ -27,7 +17,7 @@ export default function AdminHome() {
             Seviye 1 — bütün yönetim ve API önizlemesini aç
           </Link>
           <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300">
-            Bu panel; dosya yüklemeden, GitHub kullanmadan, doğrudan web arayüzü üzerinden menü, başlık, blok, içerik ve görsel düzenleme mantığına göre tasarlanmıştır. Kalıcı kullanım için API ve veritabanı bağlantısı gereklidir.
+            Bu panel talimatnamenin 16 personel modülünün ana işlevlerini gösterir. Gerçek müşteri verileri ve üretim işlemleri bağımsız yetki ve güvenlik kabulüne kadar kapalıdır.
           </p>
           <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {sections.map((section) => (
