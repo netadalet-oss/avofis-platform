@@ -1,0 +1,75 @@
+{
+  "product": "LarenLex Android",
+  "level": "L4",
+  "date": "2026-11-01",
+  "evidence_type": "LOCAL_SOURCE_SYNTHETIC_AND_BROWSER_ONLY",
+  "source_special_manual_sha256": "78c79cf31ceb6033100881043057339d57ba9adfbc2f80dbb19ca300708cc74a",
+  "L4_android_java_classes": [
+    "L4LegalFlowsActivity.java",
+    "L4ProcessGate.java",
+    "L4CaseWorkflow.java",
+    "L4SourceFreshness.java"
+  ],
+  "source_coverage": {
+    "modules": 14,
+    "subgroups": 69,
+    "A2_features": 453,
+    "services": 17,
+    "audiences": 14,
+    "issue_route_slots_unverified": 12,
+    "guides_unverified": 16,
+    "corporate_pages_unverified": 7,
+    "document_lists_unverified": 8,
+    "IND": 8,
+    "G_gates": 4,
+    "J_judicial": 16,
+    "staff": 16,
+    "interface_languages": 6
+  },
+  "verification": [
+    {
+      "layer": "JSON source and Android manifest",
+      "result": "PASS",
+      "details": "all catalog counts, no INTERNET permission; unapproved/closed remains closed"
+    },
+    {
+      "layer": "javac pure Java policy",
+      "result": "PASS",
+      "details": "positive/negative case access, no external adapters, document review, status transitions, source freshness"
+    },
+    {
+      "layer": "Chromium local HTML mobile",
+      "result": "PASS",
+      "viewport": "390x844",
+      "screenshot": "preview/LARENLEX_L4_MOBILE_EKRAN.png"
+    },
+    {
+      "layer": "Chromium local HTML desktop",
+      "result": "PASS",
+      "viewport": "1280x900",
+      "screenshot": "preview/LARENLEX_L4_DESKTOP_EKRAN.png"
+    },
+    {
+      "layer": "Chromium 320 width enlarged text",
+      "result": "PASS",
+      "viewport": "320x800 + document font-size 32px",
+      "screenshot": "preview/LARENLEX_L4_SMALL_200PCT_EKRAN.png"
+    }
+  ],
+  "initial_browser_environment_error": "file:// blocked by administrator; test switched to set_content",
+  "verification_assertion_correction": "first browser expectation checked a different warning phrase; corrected to actual independent acceptance warning; final pass",
+  "verification_scope_limited": true,
+  "Android_Gradle_assembleDebug": "NOT_RUN_SDK_UNAVAILABLE",
+  "Android_Java_activity_compile": "NOT_RUN_ANDROID_SDK_UNAVAILABLE",
+  "Android_APK": "NOT_CREATED",
+  "Android_TalkBack": "NOT_RUN",
+  "six_language_human_legal_review": "NOT_PERFORMED",
+  "real_database_RLS": "NOT_RUN",
+  "real_institution_submission": "DISABLED",
+  "independent_legal_and_technical_acceptance": "NOT_ESTABLISHED",
+  "prior_debts": "20 new bounded attempts across 10 groups; no false closure",
+  "preview_sha256": "17f43f073a3a9ae38d9066d0d4615043b35fbcde4bb220992b7f70146b37ca53",
+  "github_branch": "netadalet-oss/avofis-platform/work/larenlex-android",
+  "github_L4_sync": "PENDING_AT_THIS_REPORT_SNAPSHOT",
+  "authorization": "No main merge, production data, sign, deployment, real payments or official filings"
+}
