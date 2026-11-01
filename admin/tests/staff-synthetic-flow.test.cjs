@@ -69,3 +69,12 @@ test("client demo never asks for credentials or writes to service, database or s
   const route=fs.readFileSync(path.join(root,"src/app/personel/[module]/page.tsx"),"utf8");
   assert.match(route,/StaffSyntheticDemonstration slug=\{item.slug\}/);
 });
+
+test("admin root metadata describes the current 16-module sandbox, not legacy moderation", () => {
+  const layout=fs.readFileSync(path.join(root,"src/app/layout.tsx"),"utf8");
+  assert.match(layout,/AVOfis \| Seviye 1 Personel ve Yönetim Önizlemesi/);
+  assert.match(layout,/16 AVOfis personel modülünün kişisel verisiz sentetik önizlemesi/);
+  assert.match(layout,/Gerçek müşteri ve personel işlemleri henüz açık değildir/);
+  assert.match(layout,/robots: \{ index: false, follow: false \}/);
+  assert.doesNotMatch(layout,/moderasyon|forum|kariyer/i);
+});
