@@ -28,14 +28,15 @@ test("public client login cannot take credentials or create a Supabase session",
   ]) assert.equal(page.includes(forbidden), false, forbidden);
 });
 
-test("client-controlled user metadata cannot show privileged CMS editing tools", () => {
+test("canonical public pages cannot expose a legacy CMS editor or client role grant", () => {
   assert.equal(PUBLIC_CMS_EDITING_ENABLED, false);
-  const header = read("components/site-header.tsx");
-  const home = read("app/page.tsx");
-  for (const [name, content, guardCount] of [["header", header, 1], ["home", home, 2]]) {
-    assert.ok(content.includes("const isAdmin = false;"), name);
-    assert.equal(content.includes("user_metadata?.role"), false, name);
-    assert.equal(content.split("if (!PUBLIC_CMS_EDITING_ENABLED)").length - 1, guardCount, name);
+  for (const path of ["components/site-header.tsx", "app/page.tsx"]) {
+    const page = read(path);
+    for (const bad of ["user_metadata", "EditModeProvider", "useEditMode",
+      ".upsert(", ".insert(", ".update(", "saveContentField",
+      "saveHeroField", "PUBLIC_CMS_CONTENT_READER_ENABLED"]) {
+      assert.equal(page.includes(bad), false, path + ": " + bad);
+    }
   }
 });
 
