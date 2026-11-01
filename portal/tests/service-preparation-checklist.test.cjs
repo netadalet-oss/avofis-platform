@@ -39,3 +39,9 @@ test("service checklist never collects free text, uses API or persists sensitive
   assert.equal(component.includes(prohibited),false,prohibited);
  }
 });
+
+test("all 17 unapproved service information routes and catalogue are nonindexed",()=>{
+ const page=fs.readFileSync(path.join(root,"src/app/hizmetler/page.tsx"),"utf8");
+ assert.match(page,/robots:\s*\{\s*index:\s*false,\s*follow:\s*false/);
+ assert.match(route,/robots:\s*\{\s*index:\s*false,\s*follow:\s*false/);
+});
