@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import { verifyAdminLoginAccess } from "@/lib/admin-login-access";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
@@ -28,7 +29,19 @@ export default function LoginPage() {
         return;
       }
 
+      const access = await verifyAdminLoginAccess(supabase);
+      if (!access.allowed) {
+        if (access.reason === "MFA_REQUIRED") {
+          router.replace("/mfa");
+          return;
+        }
+        await supabase.auth.signOut();
+        setMessage("Yönetici kimliği, yetkisi ve ikinci faktör doğrulanamadı.");
+        return;
+      }
       router.replace("/cms");
+    } catch {
+      setMessage("Yetki doğrulaması tamamlanamadı.");
     } finally {
       setLoading(false);
     }
