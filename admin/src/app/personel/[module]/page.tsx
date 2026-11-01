@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { STAFF_TOP_LEVEL, staffModuleBySlug } from "@/lib/staff-module-directory";
 import { StaffSyntheticDemonstration } from "@/components/StaffSyntheticDemonstration";
+import { staffScreenHandoffs } from "@/lib/staff-flow-handoffs";
 
 export const metadata: Metadata = {
   title: "AVOfis | Personel modülünün ana kapsamı",
@@ -47,6 +48,32 @@ export default function StaffModuleLevelOnePage({ params }: { params: { module: 
           </section>
         </div>
         <StaffSyntheticDemonstration slug={item.slug} />
+        <section className="mt-7 rounded-2xl border border-sky-300/20 bg-white/5 p-6"
+          aria-labelledby="staff-next-screen-heading">
+          <h2 id="staff-next-screen-heading" className="text-xl font-semibold">
+            Seviye 2 · Sonraki ilgili personel ekranları
+          </h2>
+          <p className="mt-3 text-sm leading-7 text-slate-300">
+            Aşağıdaki geçişler yalnız modül ekranlarının gezintisidir.
+            Dosya, kişi, görev, yetki, mesaj veya kurum bilgisi aktarılmaz.
+            Gerçek iş ataması ve işlem akışı için bağımsız insan ve sunucu onayı gerekir.
+          </p>
+          <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+            {staffScreenHandoffs(item.slug).map(next => (
+              <li key={next.slug} className="rounded-xl border border-white/15 p-4">
+                <h3 className="font-semibold">{next.title}</h3>
+                <p className="mt-2 text-sm text-slate-300">{next.scope}</p>
+                <p className="mt-2 text-xs text-amber-200">{next.status}</p>
+                <Link href={next.href} className="mt-3 inline-flex min-h-11 items-center text-sm text-sky-200 underline">
+                  Yalnız ilgili ekranı aç
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link href="/seviye-2-akis" className="mt-5 inline-flex min-h-11 items-center text-sm text-sky-200 underline">
+            Bütün 16 personel akışına dön
+          </Link>
+        </section>
         <section className="mt-7 rounded-2xl border border-amber-300/30 bg-amber-300/10 p-6">
           <h2 className="text-lg font-semibold">Güvenli işlem sınırı</h2>
           <p className="mt-3 text-sm leading-7 text-amber-100">
