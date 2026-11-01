@@ -51,8 +51,29 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
-      - name: Compile source only; no APK or signing
+          cache-read-only: false
+          cache-cleanup: never
+      - name: Compile source only; retry once only on dependency HTTP 429
+        shell: bash
         working-directory: larenlex-android/l6/android
-        run: gradle --no-daemon --console=plain :app:compileDebugJavaWithJavac
+        run: |
+          set -euo pipefail
+          for attempt in 1 2; do
+            log="${RUNNER_TEMP}/larenlex-gradle-attempt-${attempt}.log"
+            echo "Gradle Java compilation, attempt ${attempt}/2"
+            if gradle --no-daemon --console=plain --max-workers=2 :app:compileDebugJavaWithJavac > "$log" 2>&1; then
+              cat "$log"
+              echo 'Android Java compilation PASS; no APK or device test performed.'
+              exit 0
+            fi
+            cat "$log"
+            if [ "$attempt" -eq 1 ] && grep -Eiq 'Received status code 429|Too Many Requests' "$log"; then
+              echo 'Dependency server rate-limited this build; one bounded retry after 45 seconds.'
+              sleep 45
+            else
+              echo 'Build failed: no automatic retry for source errors or after second attempt.'
+              exit 1
+            fi
+          done
       - name: Evidence boundary
         run: echo 'Java compile is not an APK, signed release, A6 acceptance or A7 publication.'
