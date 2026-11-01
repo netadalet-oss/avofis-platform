@@ -1,0 +1,15 @@
+test_453_trace_and_102_history_not_accepted (test_artifact_contract.ArtifactContract.test_453_trace_and_102_history_not_accepted) ... ok
+test_debug_only_internet_and_release_closed (test_artifact_contract.ArtifactContract.test_debug_only_internet_and_release_closed) ... ok
+test_fourteen_modules_full_scope_and_453_ids (test_artifact_contract.ArtifactContract.test_fourteen_modules_full_scope_and_453_ids) ... ok
+test_preview_is_independent_offline_and_retains_l4 (test_artifact_contract.ArtifactContract.test_preview_is_independent_offline_and_retains_l4) ... ok
+test_two_new_attempts_every_previous_open_group (test_artifact_contract.ArtifactContract.test_two_new_attempts_every_previous_open_group) ... ok
+test_all_14_module_flows_and_453_feature_boundaries (test_integration.L5Integration.test_all_14_module_flows_and_453_feature_boundaries) ... ok
+test_l5_only_synthetic_no_real_external_adapters (test_integration.L5Integration.test_l5_only_synthetic_no_real_external_adapters) ... ok
+test_logout_401_no_cache_and_no_cors (test_integration.L5Integration.test_logout_401_no_cache_and_no_cors) ... ok
+test_redirect_and_origin_and_host_rejected (test_integration.L5Integration.test_redirect_and_origin_and_host_rejected) ... ok
+test_tenant_customer_staff_mfa_assignment (test_integration.L5Integration.test_tenant_customer_staff_mfa_assignment) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 2.545s
+
+OK
