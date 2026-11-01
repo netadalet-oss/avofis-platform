@@ -111,3 +111,10 @@ test("whole product preview does not collect data or claim completion", () => {
     "sessionStorage", "process.env"
   ]) assert.equal(page.includes(forbidden), false, forbidden);
 });
+
+test("progress page links to whole-product preview without stale latest-CI assertion",()=>{
+ const progress=fs.readFileSync(path.join(root,"src/app/ilerleme/page.tsx"),"utf8");
+ assert.match(progress,/href="\/seviye-1-onizleme"/);
+ assert.doesNotMatch(progress,/Son doğrulanan CI kodu: 856ea77d/);
+ assert.match(progress,/Her kodun CI sonucu ilgili GitHub PR/);
+});
