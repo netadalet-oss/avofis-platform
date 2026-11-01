@@ -5,5 +5,5 @@ export const analyticsRouter = Router();
 
 analyticsRouter.get("/", (_req, res) => {
   res.setHeader("Cache-Control", "no-store");
-  res.json(unavailableModuleMetadata("analytics", ["overview", "content", "careers", "forum", "conversion"]));
+  res.json(unavailableModuleMetadata("analytics", ["overview", "content", "conversion"]));
 });
