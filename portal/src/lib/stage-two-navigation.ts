@@ -4,6 +4,7 @@ export type StageTwoAudience = {
 };
 export type StageTwoJourney = {
   id: string; title: string; serviceSlugs: readonly string[];
+  fields?: readonly import("./stage-two-preparation").PreparationField[];
 };
 export type StageTwoService = { slug: string; title: string };
 
