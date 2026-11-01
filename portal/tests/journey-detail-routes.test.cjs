@@ -57,6 +57,14 @@ test("12 static detail pages are personal-data-free and reached from all public 
   }
 });
 
+test("R-503: localized public content exposes its actual language to assistive technology", () => {
+  const read = item => fs.readFileSync(path.join(root, item), "utf8");
+  const frame = read("src/components/avofis/PageFrame.tsx");
+  const languageHook = read("src/hooks/usePortalLanguage.ts");
+  assert.ok(frame.includes('<main lang={lang} className='), "Localized main landmark needs a language attribute");
+  assert.ok(languageHook.includes("document.documentElement.lang=selected"), "Page root must follow validated locale");
+});
+
 test("all twelve journey topics link only to real service catalogue slugs, in both directions", () => {
   const read = item => fs.readFileSync(path.join(root, item), "utf8");
   const file = "src/lib/journey-service-links.ts";
