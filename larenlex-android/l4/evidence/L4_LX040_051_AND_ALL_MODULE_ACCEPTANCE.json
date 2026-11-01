@@ -1,0 +1,310 @@
+{
+  "product": "LarenLex Android",
+  "stage": "L4",
+  "level_work_cycle": "DELIVERED_SUBJECT_TO_LAST_VALIDATION",
+  "L4_tasks": [
+    {
+      "lx": "LX-040",
+      "implemented_offline": "17/17 ana hizmet ve kaynak tanımı",
+      "still_open": "Ülke, meslekî yetki, sorumlu/ücret ve bağımsız hukukî onay bekliyor",
+      "technical_independent_acceptance": false,
+      "legal_human_acceptance": false,
+      "released": false
+    },
+    {
+      "lx": "LX-041",
+      "implemented_offline": "14/14 tarihî hedef kitle slug referansı; 12 kimliksiz eksik rota kayıt yeri",
+      "still_open": "12 özgün sorun rota URL/ID kaynağı yok; ilişkiler açılmadı",
+      "technical_independent_acceptance": false,
+      "legal_human_acceptance": false,
+      "released": false
+    },
+    {
+      "lx": "LX-042",
+      "implemented_offline": "16 rehber, 7 kurumsal sayfa, 8 belge listesi için kanıt modeli",
+      "still_open": "31 özgün içerik/URL/sürüm/insan onay kaydı yok",
+      "technical_independent_acceptance": false,
+      "legal_human_acceptance": false,
+      "released": false
+    },
+    {
+      "lx": "LX-043",
+      "implemented_offline": "Sentetik intake→triyaj→matter→delil→uzman→örnek dışa aktarma safhaları",
+      "still_open": "Gerçek bağımsız backend, RLS ve mobil API entegrasyonu yok",
+      "technical_independent_acceptance": false,
+      "legal_human_acceptance": false,
+      "released": false
+    },
+    {
+      "lx": "LX-044",
+      "implemented_offline": "16 personel modülün ID ve varsayılan read/write kapalı politikası",
+      "still_open": "Gerçek oturum, matter scope ve MFA kabulü yok",
+      "technical_independent_acceptance": false,
+      "legal_human_acceptance": false,
+      "released": false
+    },
+    {
+      "lx": "LX-045",
+      "implemented_offline": "Koşullu belge alanı ve insan onayı, resmî makbuzdan ayrı taslak statüsü",
+      "still_open": "İnsan hukukî onayı ve gerçek DOCX/PDF Android cihaz regresyonu yok",
+      "technical_independent_acceptance": false,
+      "legal_human_acceptance": false,
+      "released": false
+    },
+    {
+      "lx": "LX-046",
+      "implemented_offline": "TR/NL/DE/EN/AR/RU arayüz nav taslak çevirisi ve Arapça RTL",
+      "still_open": "Altı dilin hukukî çeviri/terminoloji incelemesi yok",
+      "technical_independent_acceptance": false,
+      "legal_human_acceptance": false,
+      "released": false
+    },
+    {
+      "lx": "LX-047",
+      "implemented_offline": "Tarayıcı mobil/desktop/320px ölçek tasarımı, Android en az 48dp buton",
+      "still_open": "TalkBack/Android gerçek cihaz WCAG 2.2 AA kabulü yok",
+      "technical_independent_acceptance": false,
+      "legal_human_acceptance": false,
+      "released": false
+    },
+    {
+      "lx": "LX-048",
+      "implemented_offline": "IND01–08, G1–G4 kaynak açıklamaları ve varsayılan gönderim yasağı",
+      "still_open": "Yazılı vekâlet, kişi/ülke/süre ve uzman onayı yok",
+      "technical_independent_acceptance": false,
+      "legal_human_acceptance": false,
+      "released": false
+    },
+    {
+      "lx": "LX-049",
+      "implemented_offline": "J01–16, Rechtspraak ve IND bilgileri; gerçek kurum işlemi kapalı",
+      "still_open": "Resmî adaptör/erişim/kimlik/kurum kabulü yok",
+      "technical_independent_acceptance": false,
+      "legal_human_acceptance": false,
+      "released": false
+    },
+    {
+      "lx": "LX-050",
+      "implemented_offline": "Finans ve ücret taslağı için üretim ödeme/PSP kesin kapalı politika",
+      "still_open": "Ücret, sağlayıcı, tüketici hakları ve gerçek ödeme onayları yok",
+      "technical_independent_acceptance": false,
+      "legal_human_acceptance": false,
+      "released": false
+    },
+    {
+      "lx": "LX-051",
+      "implemented_offline": "AVG/GDPR veri yakalama/DSAR/transfer varsayılan kapalı şema",
+      "still_open": "DPIA, DPA, veri sorumlusu, saklama ve uzman onayı yok",
+      "technical_independent_acceptance": false,
+      "legal_human_acceptance": false,
+      "released": false
+    }
+  ],
+  "14_module_matrix": [
+    {
+      "id": "LX-01",
+      "title": "Ürün, hukukî rol ve işletme yönetişimi",
+      "subgroups": 4,
+      "a2_features": 20,
+      "L4_mobile_navigation": "IMPLEMENTED_IN_ANDROID_SOURCE_AND_HTML_PREVIEW",
+      "L4_legal_content": "SOURCE_REGISTER_ONLY_NOT_HUMAN_APPROVED",
+      "L4_translation": "UI_NAV_DRAFT_NOT_LEGAL_APPROVED",
+      "L4_matter_privacy": "EXTERNAL_DATA_WRITE_DISABLED",
+      "L4_documents": "DRAFT_ONLY",
+      "device_accepted": false,
+      "independently_accepted": false
+    },
+    {
+      "id": "LX-02",
+      "title": "Mobil deneyim, marka ve erişilebilirlik",
+      "subgroups": 8,
+      "a2_features": 57,
+      "L4_mobile_navigation": "IMPLEMENTED_IN_ANDROID_SOURCE_AND_HTML_PREVIEW",
+      "L4_legal_content": "SOURCE_REGISTER_ONLY_NOT_HUMAN_APPROVED",
+      "L4_translation": "UI_NAV_DRAFT_NOT_LEGAL_APPROVED",
+      "L4_matter_privacy": "EXTERNAL_DATA_WRITE_DISABLED",
+      "L4_documents": "DRAFT_ONLY",
+      "device_accepted": false,
+      "independently_accepted": false
+    },
+    {
+      "id": "LX-03",
+      "title": "Hizmetler, hukukî bilgi ve kamu içerikleri",
+      "subgroups": 7,
+      "a2_features": 67,
+      "L4_mobile_navigation": "IMPLEMENTED_IN_ANDROID_SOURCE_AND_HTML_PREVIEW",
+      "L4_legal_content": "SOURCE_REGISTER_ONLY_NOT_HUMAN_APPROVED",
+      "L4_translation": "UI_NAV_DRAFT_NOT_LEGAL_APPROVED",
+      "L4_matter_privacy": "EXTERNAL_DATA_WRITE_DISABLED",
+      "L4_documents": "DRAFT_ONLY",
+      "device_accepted": false,
+      "independently_accepted": false
+    },
+    {
+      "id": "LX-04",
+      "title": "Başvuru, ilk değerlendirme ve süreç rehberi",
+      "subgroups": 4,
+      "a2_features": 21,
+      "L4_mobile_navigation": "IMPLEMENTED_IN_ANDROID_SOURCE_AND_HTML_PREVIEW",
+      "L4_legal_content": "SOURCE_REGISTER_ONLY_NOT_HUMAN_APPROVED",
+      "L4_translation": "UI_NAV_DRAFT_NOT_LEGAL_APPROVED",
+      "L4_matter_privacy": "EXTERNAL_DATA_WRITE_DISABLED",
+      "L4_documents": "DRAFT_ONLY",
+      "device_accepted": false,
+      "independently_accepted": false
+    },
+    {
+      "id": "LX-05",
+      "title": "Müşteri dosyası, kronoloji ve iletişim",
+      "subgroups": 5,
+      "a2_features": 26,
+      "L4_mobile_navigation": "IMPLEMENTED_IN_ANDROID_SOURCE_AND_HTML_PREVIEW",
+      "L4_legal_content": "SOURCE_REGISTER_ONLY_NOT_HUMAN_APPROVED",
+      "L4_translation": "UI_NAV_DRAFT_NOT_LEGAL_APPROVED",
+      "L4_matter_privacy": "EXTERNAL_DATA_WRITE_DISABLED",
+      "L4_documents": "DRAFT_ONLY",
+      "device_accepted": false,
+      "independently_accepted": false
+    },
+    {
+      "id": "LX-06",
+      "title": "Formlar, belge ve çıktı motoru",
+      "subgroups": 5,
+      "a2_features": 28,
+      "L4_mobile_navigation": "IMPLEMENTED_IN_ANDROID_SOURCE_AND_HTML_PREVIEW",
+      "L4_legal_content": "SOURCE_REGISTER_ONLY_NOT_HUMAN_APPROVED",
+      "L4_translation": "UI_NAV_DRAFT_NOT_LEGAL_APPROVED",
+      "L4_matter_privacy": "EXTERNAL_DATA_WRITE_DISABLED",
+      "L4_documents": "DRAFT_ONLY",
+      "device_accepted": false,
+      "independently_accepted": false
+    },
+    {
+      "id": "LX-07",
+      "title": "Kimlik, izin, GDPR ve cihaz güvenliği",
+      "subgroups": 5,
+      "a2_features": 28,
+      "L4_mobile_navigation": "IMPLEMENTED_IN_ANDROID_SOURCE_AND_HTML_PREVIEW",
+      "L4_legal_content": "SOURCE_REGISTER_ONLY_NOT_HUMAN_APPROVED",
+      "L4_translation": "UI_NAV_DRAFT_NOT_LEGAL_APPROVED",
+      "L4_matter_privacy": "EXTERNAL_DATA_WRITE_DISABLED",
+      "L4_documents": "DRAFT_ONLY",
+      "device_accepted": false,
+      "independently_accepted": false
+    },
+    {
+      "id": "LX-08",
+      "title": "Finans, muhasebe ve tüketici hakları",
+      "subgroups": 4,
+      "a2_features": 20,
+      "L4_mobile_navigation": "IMPLEMENTED_IN_ANDROID_SOURCE_AND_HTML_PREVIEW",
+      "L4_legal_content": "SOURCE_REGISTER_ONLY_NOT_HUMAN_APPROVED",
+      "L4_translation": "UI_NAV_DRAFT_NOT_LEGAL_APPROVED",
+      "L4_matter_privacy": "EXTERNAL_DATA_WRITE_DISABLED",
+      "L4_documents": "DRAFT_ONLY",
+      "device_accepted": false,
+      "independently_accepted": false
+    },
+    {
+      "id": "LX-09",
+      "title": "16 alanlı personel ve yönetim çalışma alanı",
+      "subgroups": 5,
+      "a2_features": 41,
+      "L4_mobile_navigation": "IMPLEMENTED_IN_ANDROID_SOURCE_AND_HTML_PREVIEW",
+      "L4_legal_content": "SOURCE_REGISTER_ONLY_NOT_HUMAN_APPROVED",
+      "L4_translation": "UI_NAV_DRAFT_NOT_LEGAL_APPROVED",
+      "L4_matter_privacy": "EXTERNAL_DATA_WRITE_DISABLED",
+      "L4_documents": "DRAFT_ONLY",
+      "device_accepted": false,
+      "independently_accepted": false
+    },
+    {
+      "id": "LX-10",
+      "title": "Altı dil, yerelleştirme ve RTL",
+      "subgroups": 4,
+      "a2_features": 21,
+      "L4_mobile_navigation": "IMPLEMENTED_IN_ANDROID_SOURCE_AND_HTML_PREVIEW",
+      "L4_legal_content": "SOURCE_REGISTER_ONLY_NOT_HUMAN_APPROVED",
+      "L4_translation": "UI_NAV_DRAFT_NOT_LEGAL_APPROVED",
+      "L4_matter_privacy": "EXTERNAL_DATA_WRITE_DISABLED",
+      "L4_documents": "DRAFT_ONLY",
+      "device_accepted": false,
+      "independently_accepted": false
+    },
+    {
+      "id": "LX-11",
+      "title": "Rechtspraak, IND ve resmî kurum bağlantıları",
+      "subgroups": 5,
+      "a2_features": 38,
+      "L4_mobile_navigation": "IMPLEMENTED_IN_ANDROID_SOURCE_AND_HTML_PREVIEW",
+      "L4_legal_content": "SOURCE_REGISTER_ONLY_NOT_HUMAN_APPROVED",
+      "L4_translation": "UI_NAV_DRAFT_NOT_LEGAL_APPROVED",
+      "L4_matter_privacy": "EXTERNAL_DATA_WRITE_DISABLED",
+      "L4_documents": "DRAFT_ONLY",
+      "device_accepted": false,
+      "independently_accepted": false
+    },
+    {
+      "id": "LX-12",
+      "title": "Android uygulaması, APK ve imzalama",
+      "subgroups": 4,
+      "a2_features": 20,
+      "L4_mobile_navigation": "IMPLEMENTED_IN_ANDROID_SOURCE_AND_HTML_PREVIEW",
+      "L4_legal_content": "SOURCE_REGISTER_ONLY_NOT_HUMAN_APPROVED",
+      "L4_translation": "UI_NAV_DRAFT_NOT_LEGAL_APPROVED",
+      "L4_matter_privacy": "EXTERNAL_DATA_WRITE_DISABLED",
+      "L4_documents": "DRAFT_ONLY",
+      "device_accepted": false,
+      "independently_accepted": false
+    },
+    {
+      "id": "LX-13",
+      "title": "Güvenlik QA, kanıt matrisi ve regresyon",
+      "subgroups": 5,
+      "a2_features": 38,
+      "L4_mobile_navigation": "IMPLEMENTED_IN_ANDROID_SOURCE_AND_HTML_PREVIEW",
+      "L4_legal_content": "SOURCE_REGISTER_ONLY_NOT_HUMAN_APPROVED",
+      "L4_translation": "UI_NAV_DRAFT_NOT_LEGAL_APPROVED",
+      "L4_matter_privacy": "EXTERNAL_DATA_WRITE_DISABLED",
+      "L4_documents": "DRAFT_ONLY",
+      "device_accepted": false,
+      "independently_accepted": false
+    },
+    {
+      "id": "LX-14",
+      "title": "İşletim, yayın ve genişleme",
+      "subgroups": 4,
+      "a2_features": 28,
+      "L4_mobile_navigation": "IMPLEMENTED_IN_ANDROID_SOURCE_AND_HTML_PREVIEW",
+      "L4_legal_content": "SOURCE_REGISTER_ONLY_NOT_HUMAN_APPROVED",
+      "L4_translation": "UI_NAV_DRAFT_NOT_LEGAL_APPROVED",
+      "L4_matter_privacy": "EXTERNAL_DATA_WRITE_DISABLED",
+      "L4_documents": "DRAFT_ONLY",
+      "device_accepted": false,
+      "independently_accepted": false
+    }
+  ],
+  "scope_counts": {
+    "modules": 14,
+    "subgroups": 69,
+    "A2": 453,
+    "services_source_titles": 17,
+    "audiences_reference_routes": 14,
+    "unverified_original_issue_routes": 12,
+    "guides_placeholder": 16,
+    "corporate_pages_placeholder": 7,
+    "document_lists_placeholder": 8,
+    "IND_procedures": 8,
+    "IND_gates": 4,
+    "J_tasks": 16,
+    "staff_modules": 16,
+    "ui_languages_unreviewed": 6
+  },
+  "explicit_nonclaims": [
+    "No real Android APK",
+    "No legal translation approval",
+    "No official submissions",
+    "No portal code reuse or production deployment",
+    "No PostgreSQL or mobile device acceptance"
+  ]
+}
