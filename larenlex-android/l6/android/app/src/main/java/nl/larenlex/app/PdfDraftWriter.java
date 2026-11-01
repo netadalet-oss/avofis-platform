@@ -11,15 +11,22 @@ import java.io.OutputStream;
 public final class PdfDraftWriter {
     private PdfDraftWriter() { }
     public static void writeExample(OutputStream out, String ignoredLabel) throws IOException {
-        try (PdfDocument pdf = new PdfDocument()) {
+        // Android PdfDocument has close(), but does not implement AutoCloseable.
+        PdfDocument pdf = new PdfDocument();
+        try {
             PdfDocument.PageInfo info = new PdfDocument.PageInfo.Builder(595, 842, 1).create();
             PdfDocument.Page page = pdf.startPage(info);
-            Canvas canvas = page.getCanvas();
-            Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG); paint.setColor(Color.BLACK);
-            paint.setTextSize(21); canvas.drawText("LarenLex - Sentetik Ornek", 42, 72, paint);
-            paint.setTextSize(12); canvas.drawText("Yalniz gelistirme gostergesi; hukuki inceleme gerekir.", 42, 118, paint);
-            pdf.finishPage(page);
+            try {
+                Canvas canvas = page.getCanvas();
+                Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG); paint.setColor(Color.BLACK);
+                paint.setTextSize(21); canvas.drawText("LarenLex - Sentetik Ornek", 42, 72, paint);
+                paint.setTextSize(12); canvas.drawText("Yalniz gelistirme gostergesi; hukuki inceleme gerekir.", 42, 118, paint);
+            } finally {
+                pdf.finishPage(page);
+            }
             pdf.writeTo(out);
+        } finally {
+            pdf.close();
         }
     }
 }
