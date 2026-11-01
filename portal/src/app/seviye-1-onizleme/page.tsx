@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { SERVICES } from "@/lib/service-catalog";
 import { audiences } from "@/lib/avofis-site";
 import { journeys } from "@/lib/journeys";
+import { WholeProductExplorer } from "@/components/WholeProductExplorer";
 import {
   AV_AREAS, R_SECTION_NAMES, STAFF_MODULE_SLUGS, IND_PROCEDURES,
   STAGE_COUNT, STAGE_ONE_STATUS, INDEPENDENT_R_ACCEPTANCE, LIVE_R_ACCEPTANCE
@@ -95,6 +96,11 @@ export default function WholeProductLevelOnePreview() {
             ))}
           </div>
         </section>
+
+        <WholeProductExplorer
+          services={SERVICES.map(item => ({ id: item.slug, title: item.title, summary: item.summary }))}
+          journeys={journeys.map(item => ({ id: item.id, title: item.title.tr, summary: item.preparation.tr }))}
+        />
 
         <section className="mt-12" aria-labelledby="service-count">
           <h2 id="service-count" className="text-2xl font-semibold">
