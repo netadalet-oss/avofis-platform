@@ -1,0 +1,7 @@
+<resources>
+  <style name="Theme.LarenLex" parent="android:style/Theme.Material.Light.NoActionBar">
+    <item name="android:fontFamily">sans</item>
+    <item name="android:colorAccent">#7A5D2F</item>
+    <item name="android:windowLightStatusBar">true</item>
+  </style>
+</resources>

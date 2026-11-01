@@ -1,0 +1,202 @@
+{
+  "level": "L5",
+  "new_attempts": 20,
+  "groups": [
+    {
+      "id": "L0-A514-HANDOFF",
+      "l5_attempts": [
+        {
+          "method": "A5.14 ZIP on local drive",
+          "result": "OPEN",
+          "evidence": [],
+          "time_utc": "2026-11-01T01:05:48.017334+00:00"
+        },
+        {
+          "method": "A5.14 source archive members",
+          "result": "OPEN",
+          "evidence": [],
+          "time_utc": "2026-11-01T01:05:48.017453+00:00"
+        }
+      ],
+      "status": "CARRY_FORWARD_NOT_ACCEPTED",
+      "note": "Potential references never close the blocker without canonical source and runtime evidence"
+    },
+    {
+      "id": "L0-A518-INDEPENDENT-BUNDLE",
+      "l5_attempts": [
+        {
+          "method": "A5.18 explicit file names",
+          "result": "OPEN",
+          "evidence": [],
+          "time_utc": "2026-11-01T01:05:48.015341+00:00"
+        },
+        {
+          "method": "ZIP Git bundle members",
+          "result": "OPEN",
+          "evidence": [],
+          "time_utc": "2026-11-01T01:05:48.015457+00:00"
+        }
+      ],
+      "status": "CARRY_FORWARD_NOT_ACCEPTED",
+      "note": "Potential references never close the blocker without canonical source and runtime evidence"
+    },
+    {
+      "id": "L0-ANDROID-SDK-DEVICE",
+      "l5_attempts": [
+        {
+          "method": "Android build executables",
+          "result": "OPEN",
+          "evidence": [],
+          "time_utc": "2026-11-01T01:05:48.019308+00:00"
+        },
+        {
+          "method": "Android SDK platform files",
+          "result": "OPEN",
+          "evidence": [],
+          "time_utc": "2026-11-01T01:05:48.019385+00:00"
+        }
+      ],
+      "status": "CARRY_FORWARD_NOT_ACCEPTED",
+      "note": "Potential references never close the blocker without canonical source and runtime evidence"
+    },
+    {
+      "id": "L0-ISOLATED-POSTGRES-RLS",
+      "l5_attempts": [
+        {
+          "method": "PostgreSQL executables",
+          "result": "OPEN",
+          "evidence": [],
+          "time_utc": "2026-11-01T01:05:48.019498+00:00"
+        },
+        {
+          "method": "local Postgres unix sockets",
+          "result": "OPEN",
+          "evidence": [],
+          "time_utc": "2026-11-01T01:05:48.019524+00:00"
+        }
+      ],
+      "status": "CARRY_FORWARD_NOT_ACCEPTED",
+      "note": "Potential references never close the blocker without canonical source and runtime evidence"
+    },
+    {
+      "id": "L0-REAL-ANDROID-SOURCE",
+      "l5_attempts": [
+        {
+          "method": "independent Android .git evidence",
+          "result": "CANDIDATE_NOT_YET_ACCEPTED",
+          "evidence": [
+            "/mnt/data/larenlex_stage/fake-git/.git/HEAD",
+            "/mnt/data/larenlex_stage/fake-android-source/.git/HEAD"
+          ],
+          "time_utc": "2026-11-01T01:05:48.019123+00:00"
+        },
+        {
+          "method": "authentic Android bundle references",
+          "result": "OPEN",
+          "evidence": [],
+          "time_utc": "2026-11-01T01:05:48.019133+00:00"
+        }
+      ],
+      "status": "CARRY_FORWARD_NOT_ACCEPTED",
+      "note": "Potential references never close the blocker without canonical source and runtime evidence"
+    },
+    {
+      "id": "L1-CANONICAL-13-PROFILES",
+      "l5_attempts": [
+        {
+          "method": "primary manual profile inventory",
+          "result": "OPEN",
+          "evidence": [],
+          "time_utc": "2026-11-01T01:05:48.019721+00:00"
+        },
+        {
+          "method": "ZIP profile registry filenames",
+          "result": "OPEN",
+          "evidence": [],
+          "time_utc": "2026-11-01T01:05:48.019725+00:00"
+        }
+      ],
+      "status": "CARRY_FORWARD_NOT_ACCEPTED",
+      "note": "Potential references never close the blocker without canonical source and runtime evidence"
+    },
+    {
+      "id": "L1-CANONICAL-52-ENTITIES",
+      "l5_attempts": [
+        {
+          "method": "primary manual 52 entity roster headings",
+          "result": "CANDIDATE_NOT_YET_ACCEPTED",
+          "evidence": [
+            "1. **Yapılacak işlemler:** 52 entity için design, schema drafted, migration executed, authorized CRUD, Android connected, legal accepted ayrımı kur; yalnız matter/draft denemelerini 52/52 uygulandı sanma."
+          ],
+          "time_utc": "2026-11-01T01:05:48.020724+00:00"
+        },
+        {
+          "method": "canonical entity registry member names",
+          "result": "OPEN",
+          "evidence": [],
+          "time_utc": "2026-11-01T01:05:48.020799+00:00"
+        }
+      ],
+      "status": "CARRY_FORWARD_NOT_ACCEPTED",
+      "note": "Potential references never close the blocker without canonical source and runtime evidence"
+    },
+    {
+      "id": "L1-REAL-ANDROID-BUILD-EVIDENCE",
+      "l5_attempts": [
+        {
+          "method": "Android build executables",
+          "result": "OPEN",
+          "evidence": [],
+          "time_utc": "2026-11-01T01:05:48.020896+00:00"
+        },
+        {
+          "method": "Android SDK platform files",
+          "result": "OPEN",
+          "evidence": [],
+          "time_utc": "2026-11-01T01:05:48.020944+00:00"
+        }
+      ],
+      "status": "CARRY_FORWARD_NOT_ACCEPTED",
+      "note": "Potential references never close the blocker without canonical source and runtime evidence"
+    },
+    {
+      "id": "L4-CANONICAL-GUIDE-PAGE-LIST-METADATA",
+      "l5_attempts": [
+        {
+          "method": "ZIP canonical guide URL catalog",
+          "result": "OPEN",
+          "evidence": [],
+          "time_utc": "2026-11-01T01:05:48.022054+00:00"
+        },
+        {
+          "method": "primary manual 16 guide complete URL definitions",
+          "result": "OPEN",
+          "evidence": [],
+          "time_utc": "2026-11-01T01:05:48.022420+00:00"
+        }
+      ],
+      "status": "CARRY_FORWARD_NOT_ACCEPTED",
+      "note": "Potential references never close the blocker without canonical source and runtime evidence"
+    },
+    {
+      "id": "L4-ORIGINAL-12-ISSUE-ROUTES",
+      "l5_attempts": [
+        {
+          "method": "L4 catalog route IDs",
+          "result": "OPEN",
+          "evidence": [],
+          "time_utc": "2026-11-01T01:05:48.020949+00:00"
+        },
+        {
+          "method": "manual v18 slug enumeration",
+          "result": "OPEN",
+          "evidence": [],
+          "time_utc": "2026-11-01T01:05:48.021964+00:00"
+        }
+      ],
+      "status": "CARRY_FORWARD_NOT_ACCEPTED",
+      "note": "Potential references never close the blocker without canonical source and runtime evidence"
+    }
+  ],
+  "independent_acceptance": false
+}

@@ -1,0 +1,224 @@
+{
+  "product": "LarenLex Android",
+  "level": "L6",
+  "android_package": "nl.larenlex.app",
+  "independent_A6_device_acceptance": false,
+  "A7_signing_permission": false,
+  "A7_publishing_permission": false,
+  "modules": [
+    {
+      "id": "LX-01",
+      "title": "Ürün, hukukî rol ve işletme yönetişimi",
+      "groups": 4,
+      "features": 20,
+      "device_test": "NOT_RUN",
+      "security_acceptance": "NOT_ESTABLISHED",
+      "legal_acceptance": "NOT_ESTABLISHED",
+      "release_status": "BLOCKED"
+    },
+    {
+      "id": "LX-02",
+      "title": "Mobil deneyim, marka ve erişilebilirlik",
+      "groups": 8,
+      "features": 57,
+      "device_test": "NOT_RUN",
+      "security_acceptance": "NOT_ESTABLISHED",
+      "legal_acceptance": "NOT_ESTABLISHED",
+      "release_status": "BLOCKED"
+    },
+    {
+      "id": "LX-03",
+      "title": "Hizmetler, hukukî bilgi ve kamu içerikleri",
+      "groups": 7,
+      "features": 67,
+      "device_test": "NOT_RUN",
+      "security_acceptance": "NOT_ESTABLISHED",
+      "legal_acceptance": "NOT_ESTABLISHED",
+      "release_status": "BLOCKED"
+    },
+    {
+      "id": "LX-04",
+      "title": "Başvuru, ilk değerlendirme ve süreç rehberi",
+      "groups": 4,
+      "features": 21,
+      "device_test": "NOT_RUN",
+      "security_acceptance": "NOT_ESTABLISHED",
+      "legal_acceptance": "NOT_ESTABLISHED",
+      "release_status": "BLOCKED"
+    },
+    {
+      "id": "LX-05",
+      "title": "Müşteri dosyası, kronoloji ve iletişim",
+      "groups": 5,
+      "features": 26,
+      "device_test": "NOT_RUN",
+      "security_acceptance": "NOT_ESTABLISHED",
+      "legal_acceptance": "NOT_ESTABLISHED",
+      "release_status": "BLOCKED"
+    },
+    {
+      "id": "LX-06",
+      "title": "Formlar, belge ve çıktı motoru",
+      "groups": 5,
+      "features": 28,
+      "device_test": "NOT_RUN",
+      "security_acceptance": "NOT_ESTABLISHED",
+      "legal_acceptance": "NOT_ESTABLISHED",
+      "release_status": "BLOCKED"
+    },
+    {
+      "id": "LX-07",
+      "title": "Kimlik, izin, GDPR ve cihaz güvenliği",
+      "groups": 5,
+      "features": 28,
+      "device_test": "NOT_RUN",
+      "security_acceptance": "NOT_ESTABLISHED",
+      "legal_acceptance": "NOT_ESTABLISHED",
+      "release_status": "BLOCKED"
+    },
+    {
+      "id": "LX-08",
+      "title": "Finans, muhasebe ve tüketici hakları",
+      "groups": 4,
+      "features": 20,
+      "device_test": "NOT_RUN",
+      "security_acceptance": "NOT_ESTABLISHED",
+      "legal_acceptance": "NOT_ESTABLISHED",
+      "release_status": "BLOCKED"
+    },
+    {
+      "id": "LX-09",
+      "title": "16 alanlı personel ve yönetim çalışma alanı",
+      "groups": 5,
+      "features": 41,
+      "device_test": "NOT_RUN",
+      "security_acceptance": "NOT_ESTABLISHED",
+      "legal_acceptance": "NOT_ESTABLISHED",
+      "release_status": "BLOCKED"
+    },
+    {
+      "id": "LX-10",
+      "title": "Altı dil, yerelleştirme ve RTL",
+      "groups": 4,
+      "features": 21,
+      "device_test": "NOT_RUN",
+      "security_acceptance": "NOT_ESTABLISHED",
+      "legal_acceptance": "NOT_ESTABLISHED",
+      "release_status": "BLOCKED"
+    },
+    {
+      "id": "LX-11",
+      "title": "Rechtspraak, IND ve resmî kurum bağlantıları",
+      "groups": 5,
+      "features": 38,
+      "device_test": "NOT_RUN",
+      "security_acceptance": "NOT_ESTABLISHED",
+      "legal_acceptance": "NOT_ESTABLISHED",
+      "release_status": "BLOCKED"
+    },
+    {
+      "id": "LX-12",
+      "title": "Android uygulaması, APK ve imzalama",
+      "groups": 4,
+      "features": 20,
+      "device_test": "NOT_RUN",
+      "security_acceptance": "NOT_ESTABLISHED",
+      "legal_acceptance": "NOT_ESTABLISHED",
+      "release_status": "BLOCKED"
+    },
+    {
+      "id": "LX-13",
+      "title": "Güvenlik QA, kanıt matrisi ve regresyon",
+      "groups": 5,
+      "features": 38,
+      "device_test": "NOT_RUN",
+      "security_acceptance": "NOT_ESTABLISHED",
+      "legal_acceptance": "NOT_ESTABLISHED",
+      "release_status": "BLOCKED"
+    },
+    {
+      "id": "LX-14",
+      "title": "İşletim, yayın ve genişleme",
+      "groups": 4,
+      "features": 28,
+      "device_test": "NOT_RUN",
+      "security_acceptance": "NOT_ESTABLISHED",
+      "legal_acceptance": "NOT_ESTABLISHED",
+      "release_status": "BLOCKED"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "A6-01",
+      "name": "Android API 26 / minSdk emülatör veya fiziksel cihaz",
+      "status": "DEVICE_OR_HUMAN_EVIDENCE_REQUIRED",
+      "actual_execution": "NOT_RUN"
+    },
+    {
+      "id": "A6-02",
+      "name": "Android API 29: kurulum ve uygulama yaşam döngüsü",
+      "status": "DEVICE_OR_HUMAN_EVIDENCE_REQUIRED",
+      "actual_execution": "NOT_RUN"
+    },
+    {
+      "id": "A6-03",
+      "name": "Android API 33: bildirim izni ve erişilebilir gezinim",
+      "status": "DEVICE_OR_HUMAN_EVIDENCE_REQUIRED",
+      "actual_execution": "NOT_RUN"
+    },
+    {
+      "id": "A6-04",
+      "name": "Android API 35 / targetSdk 35: cihaz matrisi",
+      "status": "DEVICE_OR_HUMAN_EVIDENCE_REQUIRED",
+      "actual_execution": "NOT_RUN"
+    },
+    {
+      "id": "A6-05",
+      "name": "Offline başlangıç ve bağlantı dönüşü",
+      "status": "DEVICE_OR_HUMAN_EVIDENCE_REQUIRED",
+      "actual_execution": "NOT_RUN"
+    },
+    {
+      "id": "A6-06",
+      "name": "Yükseltme / kaldırma / yeniden kurma ve oturum reddi",
+      "status": "DEVICE_OR_HUMAN_EVIDENCE_REQUIRED",
+      "actual_execution": "NOT_RUN"
+    },
+    {
+      "id": "A6-07",
+      "name": "Android Keystore: kayıp anahtar, kilit ve şifreli taslak",
+      "status": "DEVICE_OR_HUMAN_EVIDENCE_REQUIRED",
+      "actual_execution": "NOT_RUN"
+    },
+    {
+      "id": "A6-08",
+      "name": "Büyütülmüş yazı, TalkBack, odak sırası ve 320 dp",
+      "status": "DEVICE_OR_HUMAN_EVIDENCE_REQUIRED",
+      "actual_execution": "NOT_RUN"
+    },
+    {
+      "id": "A6-09",
+      "name": "TR/NL/DE/EN/AR/RU + Arapça RTL dil kontrolü",
+      "status": "DEVICE_OR_HUMAN_EVIDENCE_REQUIRED",
+      "actual_execution": "NOT_RUN"
+    },
+    {
+      "id": "A6-10",
+      "name": "İşlem başı süre/bellek/başlangıç hedefleri",
+      "status": "DEVICE_OR_HUMAN_EVIDENCE_REQUIRED",
+      "actual_execution": "NOT_RUN"
+    },
+    {
+      "id": "A6-11",
+      "name": "Kötü ağ, çökme ve yerel veri kurtarma",
+      "status": "DEVICE_OR_HUMAN_EVIDENCE_REQUIRED",
+      "actual_execution": "NOT_RUN"
+    },
+    {
+      "id": "A6-12",
+      "name": "APK hash / package ID / imza ve güncelleme zinciri",
+      "status": "DEVICE_OR_HUMAN_EVIDENCE_REQUIRED",
+      "actual_execution": "NOT_RUN"
+    }
+  ]
+}
