@@ -25,6 +25,9 @@ on:
       - "portal/src/lib/whole-product-levels.ts"
       - "portal/src/app/seviye-1-onizleme/**"
       - "portal/tests/whole-product-levels.test.cjs"
+      - "portal/src/components/WholeProductExplorer.tsx"
+      - "portal/src/lib/whole-product-explorer.ts"
+      - "portal/tests/whole-product-explorer.test.cjs"
       - ".github/workflows/seviye1-footer-progress.yml"
   push:
     branches:
@@ -53,6 +56,9 @@ on:
       - "portal/src/lib/whole-product-levels.ts"
       - "portal/src/app/seviye-1-onizleme/**"
       - "portal/tests/whole-product-levels.test.cjs"
+      - "portal/src/components/WholeProductExplorer.tsx"
+      - "portal/src/lib/whole-product-explorer.ts"
+      - "portal/tests/whole-product-explorer.test.cjs"
       - ".github/workflows/seviye1-footer-progress.yml"
 permissions:
   contents: read
