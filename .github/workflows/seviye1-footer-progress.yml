@@ -37,6 +37,11 @@ on:
       - "portal/src/app/hizmetler/[slug]/page.tsx"
       - "portal/src/app/hizmetler/page.tsx"
       - "portal/tests/service-preparation-checklist.test.cjs"
+      - "portal/src/app/kimler-icin/page.tsx"
+      - "portal/src/lib/avofis-site.ts"
+      - "portal/src/lib/avofis-expanded.ts"
+      - "portal/src/lib/site.ts"
+      - "portal/tests/audience-service-map.test.cjs"
       - ".github/workflows/seviye1-footer-progress.yml"
   push:
     branches:
@@ -77,6 +82,11 @@ on:
       - "portal/src/app/hizmetler/[slug]/page.tsx"
       - "portal/src/app/hizmetler/page.tsx"
       - "portal/tests/service-preparation-checklist.test.cjs"
+      - "portal/src/app/kimler-icin/page.tsx"
+      - "portal/src/lib/avofis-site.ts"
+      - "portal/src/lib/avofis-expanded.ts"
+      - "portal/src/lib/site.ts"
+      - "portal/tests/audience-service-map.test.cjs"
       - ".github/workflows/seviye1-footer-progress.yml"
 permissions:
   contents: read
@@ -176,3 +186,9 @@ jobs:
             grep -q 'noindex' /tmp/avofis-service-checklist.html
           done
           echo 'All 17 canonical service checklist HTTP previews: PASS'
+          curl -fsS http://127.0.0.1:3000/kimler-icin > /tmp/avofis-audiences.html
+          grep -q '14 özgün kullanıcı ve ihtiyaç grubu' /tmp/avofis-audiences.html
+          grep -q 'ceza-sikayet-trafik' /tmp/avofis-audiences.html
+          grep -q 'avrupa-turkiye-hukuki-uzman-koordinasyonu' /tmp/avofis-audiences.html
+          grep -q 'noindex' /tmp/avofis-audiences.html
+          echo 'All 14 audience mappings HTTP: PASS'
