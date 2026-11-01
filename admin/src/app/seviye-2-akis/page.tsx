@@ -1,12 +1,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { STAFF_TOP_LEVEL } from "@/lib/staff-module-directory";
+import { staffScreenHandoffs, validateStaffScreenHandoffs } from "@/lib/staff-flow-handoffs";
 
 export const metadata: Metadata = {
   title: "AVOfis | Seviye 2 Personel Akış İskeleti",
   description: "16 personel modülünde giriş, sentetik işlem ve kapalı sonuç geçişleri.",
   robots: { index: false, follow: false }
 };
+
+if (!validateStaffScreenHandoffs()) throw new Error("INVALID_STAGE_TWO_STAFF_SCREEN_NAVIGATION");
 
 /** Only canonical modules are shown. No API call or staff/customer records. */
 const stages = [
@@ -65,6 +68,9 @@ export default function StaffLevelTwoFlow() {
                   <div><dt className="font-semibold">Kapalı sonuç taslağı</dt>
                     <dd className="text-slate-300">{module.output}</dd></div>
                 </dl>
+                <p className="mt-3 text-xs text-slate-300">
+                  {staffScreenHandoffs(module.slug).length} sonraki ekran bağlantısı · kayıt devri yok
+                </p>
                 <Link href={"/personel/" + module.slug}
                   className="mt-5 inline-flex min-h-11 items-center text-sm text-sky-200 underline">
                   Modülün gerçek sentetik ekranına geç
