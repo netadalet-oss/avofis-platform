@@ -60,3 +60,29 @@ test("no public footer role authorization remains in the production source", () 
   assert.doesNotMatch(footer, /isAdmin\s*=|role\s*===\s*["']admin|authLoading/);
   assert.match(footer, /Aktif hukukî temsil veya müşteri dosyası kabulü sunulmaz/);
 });
+
+const footerLinks = fs.readFileSync(path.join(root, "src/lib/site.ts"), "utf8");
+const compliance = fs.readFileSync(path.join(root, "src/app/uyum/page.tsx"), "utf8");
+
+test("R-067/R-068 canonical public disclosure links lead to real pages or clearly pending sections", () => {
+  for (const target of ["/gizlilik", "/cerezler", "/iletisim", "/diller",
+    "/uyum#genel-sartlar", "/uyum#sikayet", "/uyum#erisilebilirlik",
+    "/uyum#tuketici-haklari"]) {
+    assert.ok(footerLinks.includes('href: "' + target + '"'), target);
+  }
+  assert.match(footer, /href=\{link.href\}/);
+  assert.match(footer, /Tescilli adres, şirket ve KVK\/sicil numarası/);
+  for (const id of ["genel-sartlar", "sikayet", "erisilebilirlik", "tuketici-haklari"]) {
+    assert.ok(compliance.includes('id: "' + id + '"'), id);
+  }
+  for (const notice of ["henüz onaylanmadı", "henüz açık değil",
+    "bağımsız test bekliyor", "işlem ve sözleşme kapalı",
+    "Bağımsız kabul: BEKLİYOR"]) {
+    assert.match(compliance.toLocaleLowerCase("tr-TR"),
+      new RegExp(notice.toLocaleLowerCase("tr-TR")), notice);
+  }
+  for (const forbidden of ["<form", "onSubmit", "fetch(", "signInWithPassword",
+    "createClient(", "user_metadata", ".upsert("]) {
+    assert.equal(compliance.includes(forbidden), false, forbidden);
+  }
+});
