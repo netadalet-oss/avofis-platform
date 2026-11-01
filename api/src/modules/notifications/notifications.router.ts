@@ -1,7 +1,9 @@
 import { Router } from "express";
+import { unavailableModuleMetadata } from "../../security/module-availability";
 
 export const notificationsRouter = Router();
 
 notificationsRouter.get("/", (_req, res) => {
-  res.json({ module: "notifications", actions: ["list", "mark-read", "preferences", "templates"] });
+  res.setHeader("Cache-Control", "no-store");
+  res.json(unavailableModuleMetadata("notifications", ["list", "mark-read", "preferences", "templates"]));
 });

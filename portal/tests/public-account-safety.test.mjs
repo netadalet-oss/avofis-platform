@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { PUBLIC_ACCOUNT_REGISTRATION_ENABLED, PUBLIC_CMS_EDITING_ENABLED } from "../src/lib/launch-gates.ts";
+import { PUBLIC_ACCOUNT_REGISTRATION_ENABLED, PUBLIC_ACCOUNT_LOGIN_ENABLED, PUBLIC_CMS_EDITING_ENABLED } from "../src/lib/launch-gates.ts";
 
 const read = (relative) => readFileSync(new URL("../src/" + relative, import.meta.url), "utf8");
 
@@ -16,14 +16,27 @@ test("all public professional registration and account creation remain closed", 
   }
 });
 
-test("client-controlled user metadata cannot show privileged CMS editing tools", () => {
+test("public client login cannot take credentials or create a Supabase session", () => {
+  assert.equal(PUBLIC_ACCOUNT_LOGIN_ENABLED, false);
+  const page = read("app/auth/login/page.tsx");
+  assert.ok(page.includes("Müşteri girişi şu anda kapalı"));
+  assert.ok(page.includes("PUBLIC_ACCOUNT_LOGIN_ENABLED"));
+  assert.ok(page.includes("robots: { index: false"));
+  for (const forbidden of [
+    "signInWithPassword(", "auth.getSession(", "auth.getUser(", "user_metadata",
+    ".from(", ".upsert(", "<form", "<input", "@/" + "lib/supabase"
+  ]) assert.equal(page.includes(forbidden), false, forbidden);
+});
+
+test("canonical public pages cannot expose a legacy CMS editor or client role grant", () => {
   assert.equal(PUBLIC_CMS_EDITING_ENABLED, false);
-  const header = read("components/site-header.tsx");
-  const home = read("app/page.tsx");
-  for (const [name, content, guardCount] of [["header", header, 1], ["home", home, 2]]) {
-    assert.ok(content.includes("const isAdmin = false;"), name);
-    assert.equal(content.includes("user_metadata?.role"), false, name);
-    assert.equal(content.split("if (!PUBLIC_CMS_EDITING_ENABLED)").length - 1, guardCount, name);
+  for (const path of ["components/site-header.tsx", "app/page.tsx"]) {
+    const page = read(path);
+    for (const bad of ["user_metadata", "EditModeProvider", "useEditMode",
+      ".upsert(", ".insert(", ".update(", "saveContentField",
+      "saveHeroField", "PUBLIC_CMS_CONTENT_READER_ENABLED"]) {
+      assert.equal(page.includes(bad), false, path + ": " + bad);
+    }
   }
 });
 
@@ -32,5 +45,6 @@ test("public launch gates cannot be enabled by environment alone", () => {
   assert.equal(source.includes("process.env"), false);
   assert.equal(source.includes("NEXT_PUBLIC_"), false);
   assert.ok(source.includes("PUBLIC_ACCOUNT_REGISTRATION_ENABLED = false"));
+  assert.ok(source.includes("PUBLIC_ACCOUNT_LOGIN_ENABLED = false"));
   assert.ok(source.includes("PUBLIC_CMS_EDITING_ENABLED = false"));
 });

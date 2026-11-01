@@ -1,0 +1,268 @@
+{
+  "schemaVersion": 1,
+  "product": "AVOfis",
+  "activeStage": 1,
+  "stageStatus": "IN_PROGRESS",
+  "independentAcceptedR": 0,
+  "liveAcceptedR": 0,
+  "sourceOfTruth": "AVOFIS_PORTAL_TEKIL_ANA_TALIMATNAME.md (separate AVOfis ZIP)",
+  "policy": {
+    "nextStageRetryMinimumPerCarriedItem": 2,
+    "independentEvidenceRequiredForEveryAttempt": true,
+    "failedTasksCannotBlockUnrelatedModuleDevelopment": true,
+    "stageBreadthIsNotIndependentOrLiveAcceptance": true,
+    "releaseActionsStillRequireSeparateAuthorization": true
+  },
+  "items": [
+    {
+      "id": "RLS_PUBLIC_7",
+      "areas": [
+        "A1",
+        "A3",
+        "A4"
+      ],
+      "status": "OPEN_EXTERNAL",
+      "detail": "Seven public RLS errors remain in connected production project; no write authorized.",
+      "evidence": [
+        "Supabase Security Advisor read-only 2026-11-01: 7 ERROR"
+      ],
+      "level1Attempts": []
+    },
+    {
+      "id": "STAGING_SUPABASE_ABSENT",
+      "areas": [
+        "A1",
+        "A6"
+      ],
+      "status": "OPEN_EXTERNAL",
+      "detail": "Supabase development branch list empty; a new branch could incur cost.",
+      "evidence": [
+        "Supabase list_branches read-only 2026-11-01: zero branches"
+      ],
+      "level1Attempts": []
+    },
+    {
+      "id": "MAIN_BRANCH_UNPROTECTED",
+      "areas": [
+        "A0",
+        "A6"
+      ],
+      "status": "OPEN_EXTERNAL",
+      "detail": "GitHub main protected=false; administration API protection view forbidden.",
+      "evidence": [
+        "https://github.com/netadalet-oss/avofis-platform/issues/16"
+      ],
+      "level1Attempts": []
+    },
+    {
+      "id": "HISTORICAL_ENV_FILE_REVIEW",
+      "areas": [
+        "A1",
+        "A6"
+      ],
+      "status": "OPEN_EXTERNAL",
+      "detail": "admin/.env.local untracked from development heads; historical Git copy not assessed and no token rotation verified.",
+      "evidence": [
+        "GitHub PR #14 and PR #15"
+      ],
+      "level1Attempts": []
+    },
+    {
+      "id": "DETERMINISTIC_DEPENDENCIES",
+      "areas": [
+        "A0",
+        "A6"
+      ],
+      "status": "OPEN_EXTERNAL",
+      "detail": "Committed package-lock.json absent; npm registry error observed historically.",
+      "evidence": [
+        "docs/program/SEVIYE1_UYGULAMA_API_GUNCEL_KANIT_2026-10-31.md"
+      ],
+      "level1Attempts": []
+    },
+    {
+      "id": "LEGAL_LINGUISTIC_FOUNDER_ACCEPTANCE",
+      "areas": [
+        "A2",
+        "A5",
+        "A6"
+      ],
+      "status": "OPEN_EXTERNAL",
+      "detail": "No signed company, professional representation, six-locale editorial and owner acceptance proof.",
+      "evidence": [
+        "Canonical AV-092 AV-096; B05-B18"
+      ],
+      "level1Attempts": []
+    },
+    {
+      "id": "PORTAL_PREVIEW_RENDER_TEXT",
+      "areas": [
+        "A0",
+        "A2",
+        "A6"
+      ],
+      "status": "REGRESSION_FIXED_IN_CODE",
+      "detail": "Early raw HTML grep failed with React separators; visible text validation later passed.",
+      "evidence": [
+        "https://github.com/netadalet-oss/avofis-platform/actions/runs/41253677665",
+        "https://github.com/netadalet-oss/avofis-platform/actions/runs/41253876627"
+      ],
+      "level1Attempts": [
+        {
+          "run": "41253677665",
+          "result": "FAILED"
+        },
+        {
+          "run": "41253876627",
+          "result": "SUCCESS"
+        }
+      ]
+    },
+    {
+      "id": "ADMIN_PREVIEW_NEXT_PAGE_EXPORT",
+      "areas": [
+        "A0",
+        "A4",
+        "A6"
+      ],
+      "status": "REGRESSION_FIXED_IN_CODE",
+      "detail": "Non-Next named export broke Next build; removed and independently rebuilt.",
+      "evidence": [
+        "https://github.com/netadalet-oss/avofis-platform/actions/runs/41253814753",
+        "https://github.com/netadalet-oss/avofis-platform/actions/runs/41253905512",
+        "https://github.com/netadalet-oss/avofis-platform/actions/runs/41254007538"
+      ],
+      "level1Attempts": [
+        {
+          "run": "41253814753",
+          "result": "FAILED"
+        },
+        {
+          "run": "41253905512",
+          "result": "FAILED"
+        },
+        {
+          "run": "41254007538",
+          "result": "SUCCESS"
+        }
+      ]
+    },
+    {
+      "id": "ADMIN_PREVIEW_HTTP_VISIBLE_TEXT",
+      "areas": [
+        "A0",
+        "A4",
+        "A6"
+      ],
+      "status": "REGRESSION_FIXED_IN_CODE",
+      "detail": "Initial SSR raw text comparison failed; visible rendered text check later succeeded.",
+      "evidence": [
+        "https://github.com/netadalet-oss/avofis-platform/actions/runs/41253905512",
+        "https://github.com/netadalet-oss/avofis-platform/actions/runs/41254007538"
+      ],
+      "level1Attempts": [
+        {
+          "run": "41253905512",
+          "result": "FAILED"
+        },
+        {
+          "run": "41254007538",
+          "result": "SUCCESS"
+        }
+      ]
+    },
+    {
+      "id": "STAFF_MODULE_HEADING_TEST",
+      "areas": [
+        "A4",
+        "A6"
+      ],
+      "status": "REGRESSION_FIXED_IN_CODE",
+      "detail": "Case-sensitive source assertion on Ana işlev failed; corrected and passed.",
+      "evidence": [
+        "https://github.com/netadalet-oss/avofis-platform/actions/runs/41254150584",
+        "https://github.com/netadalet-oss/avofis-platform/actions/runs/41254228132"
+      ],
+      "level1Attempts": [
+        {
+          "run": "41254150584",
+          "result": "FAILED"
+        },
+        {
+          "run": "41254228132",
+          "result": "SUCCESS"
+        }
+      ]
+    },
+    {
+      "id": "CURRENT_VERCEL_PREVIEW_HEAD_ABSENT",
+      "areas": [
+        "A0",
+        "A6"
+      ],
+      "status": "OPEN_EXTERNAL",
+      "detail": "Connected Vercel branch deployment list has no READY deployment for new whole-product code heads; old deployment URLs must not be sold as current.",
+      "evidence": [
+        "Vercel read-only deployment listing 2026-11-01"
+      ],
+      "level1Attempts": []
+    },
+    {
+      "id": "PORTAL_STALE_CI_EVIDENCE_ASSERTION",
+      "areas": [
+        "A0",
+        "A2",
+        "A6"
+      ],
+      "status": "REGRESSION_FIXED_IN_CODE",
+      "detail": "Public progress page originally embedded a stale latest CI SHA; after removing it a legacy source regression insisted it remain. Test was updated and verified with new CI.",
+      "evidence": [
+        "https://github.com/netadalet-oss/avofis-platform/actions/runs/41255979478",
+        "https://github.com/netadalet-oss/avofis-platform/actions/runs/41256065609"
+      ],
+      "level1Attempts": [
+        {
+          "run": "41255979478",
+          "result": "FAILED"
+        },
+        {
+          "run": "41256065609",
+          "result": "SUCCESS"
+        }
+      ]
+    },
+    {
+      "id": "AV044_R572_CI_STALE_EXPECTATION",
+      "areas": [
+        "A2",
+        "A6"
+      ],
+      "status": "REGRESSION_UNRESOLVED",
+      "detail": "AV-044/R-572 audience links now go directly to the actual /islemler/[id] route. Existing portal HTTP CI workflow still asserts a removed /islemler#id list anchor, causing a false-negative check despite successful Next.js build and audience source tests. The workflow update was blocked by the connected tool safety gate; no bypass attempted.",
+      "evidence": [
+        "https://github.com/netadalet-oss/avofis-platform/actions/runs/41288338209",
+        "https://github.com/netadalet-oss/avofis-platform/pull/14",
+        "https://github.com/netadalet-oss/avofis-platform/pull/15",
+        "Code: portal/src/app/kimler-icin/page.tsx",
+        "Regression: portal/tests/audience-service-map.test.cjs",
+        "Obsolete exact assertion: .github/workflows/seviye1-footer-progress.yml: /islemler#ind-decision-objection"
+      ],
+      "level1Attempts": [
+        {
+          "run": "41288338209",
+          "result": "FAILED"
+        }
+      ],
+      "nextActions": [
+        "Review stale HTTP workflow assertion through an authorized process",
+        "Run a genuinely changed HTTP validation on the exact commit once allowed",
+        "Retain historical 41288338209 failed evidence"
+      ],
+      "blockedToolAttempt": {
+        "kind": "WRITE_WORKFLOW_ASSERTION",
+        "result": "BLOCKED_BY_CONNECTED_GITHUB_TOOL_SAFETY",
+        "note": "No GitHub workflow write performed; tool denial does not count as a CI retry."
+      }
+    }
+  ]
+}

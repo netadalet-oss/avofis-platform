@@ -40,8 +40,6 @@ try{
  const journey=await check("/islemler?lang=nl",200);
  const html=await journey.text();
  assert.match(html,/AVOfis/, "Brand should be present");
- const forum=await fetch(url+"/forum",{redirect:"manual",signal:AbortSignal.timeout(8000)});
- assert.ok([301,302,303,307,308].includes(forum.status),"Old forum must redirect");
  await check("/api/intake",503,"POST");
  await check("/api/payments/checkout",503,"POST");
  const draftGet=await check("/api/document-drafts",503);

@@ -1,19 +1,26 @@
+/** Canonical AVOfis content: static information only, not a CMS publication approval. */
 export const homepageContent = {
-  page: "home",
-  hero: {
-    title: "Hukuk araştırması, belge üretimi ve kariyer ağı tek platformda.",
-    subtitle:
-      "İçtihat, mevzuat, dosya analizi, taslak üretimi, forum, ofis profilleri, staj eşleşmeleri ve profesyonel workspace deneyimi.",
-    ctaPrimary: "Platformu Keşfet",
-    ctaSecondary: "Modülleri İncele"
+  "page": "home",
+  "hero": {
+    "eyebrow": "AVOfis · Hukukî ve idarî işlem hazırlığı",
+    "title": "Hukukî sürecinizi doğru bilgiyle başlatın.",
+    "subtitle": "17 hukukî ve idarî hizmet, 14 hedef kitle ve 12 işlem rotası için kaynaklı genel bilgi, güvenli belge hazırlığı ve doğru uzman yönlendirmesi.",
+    "ctaPrimary": "Sorununuza göre başlayın",
+    "ctaSecondary": "17 hizmeti inceleyin"
   },
-  menu: [
-    "Modüller",
-    "İçtihat",
-    "Mevzuat",
-    "Kariyer",
-    "Forum",
-    "Ofisler",
-    "İstatistikler"
-  ]
-};
+  "menu": [
+    "Hizmetler",
+    "Hedef Kitleler",
+    "İşlem Yolları",
+    "Hukukî Bilgi",
+    "Belge Hazırlığı",
+    "Uyum",
+    "İletişim"
+  ],
+  "release": {
+    "personalDataIntake": false,
+    "officialSubmission": false,
+    "payments": false,
+    "professionalRepresentation": false
+  }
+} as const;

@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { paymentsReleased } from "@/lib/release-authorization";
 export const runtime="nodejs";
 export async function POST(request:NextRequest){
+ // Fail closed before reading request data, payment credentials or database state.
+ // Signed release evidence and security acceptance are mandatory for this endpoint.
+ if(!paymentsReleased())return new NextResponse(null,{status:503,headers:{"Cache-Control":"no-store"}});
  const mollie=process.env.MOLLIE_API_KEY,url=process.env.NEXT_PUBLIC_SUPABASE_URL,key=process.env.SUPABASE_SERVICE_ROLE_KEY;
  if(!mollie||!url||!key)return new NextResponse(null,{status:503});
  if(Number(request.headers.get("content-length")||0)>1000)return new NextResponse(null,{status:413});

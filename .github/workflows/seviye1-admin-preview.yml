@@ -1,0 +1,97 @@
+name: AVOfis S1 whole-product admin preview
+on:
+  pull_request:
+    paths:
+      - "admin/src/app/seviye-1-onizleme/**"
+      - "admin/src/app/page.tsx"
+      - "admin/src/app/layout.tsx"
+      - "admin/src/app/*/page.tsx"
+      - "admin/src/components/AdminSectionBridge.tsx"
+      - "admin/tests/admin-legacy-bridge.test.cjs"
+      - "admin/tests/whole-product-admin-preview.test.cjs"
+      - "admin/src/app/personel/**"
+      - "admin/src/lib/staff-module-directory.ts"
+      - "admin/tests/staff-module-route.test.cjs"
+      - "admin/src/lib/staff-synthetic-flow.ts"
+      - "admin/src/components/StaffSyntheticDemonstration.tsx"
+      - "admin/tests/staff-synthetic-flow.test.cjs"
+      - ".github/workflows/seviye1-admin-preview.yml"
+  push:
+    branches:
+      - work/avofis-uygulama-s1-20261031
+    paths:
+      - "admin/src/app/seviye-1-onizleme/**"
+      - "admin/src/app/page.tsx"
+      - "admin/src/app/layout.tsx"
+      - "admin/src/app/*/page.tsx"
+      - "admin/src/components/AdminSectionBridge.tsx"
+      - "admin/tests/admin-legacy-bridge.test.cjs"
+      - "admin/tests/whole-product-admin-preview.test.cjs"
+      - "admin/src/app/personel/**"
+      - "admin/src/lib/staff-module-directory.ts"
+      - "admin/tests/staff-module-route.test.cjs"
+      - "admin/src/lib/staff-synthetic-flow.ts"
+      - "admin/src/components/StaffSyntheticDemonstration.tsx"
+      - "admin/tests/staff-synthetic-flow.test.cjs"
+      - ".github/workflows/seviye1-admin-preview.yml"
+permissions:
+  contents: read
+jobs:
+  build-and-http-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      NEXT_PUBLIC_SUPABASE_URL: "https://example.invalid"
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: "synthetic-ci-only-not-a-real-key"
+    steps:
+      - name: Checkout reviewed exact code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Use Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+      - name: Install without dependency scripts
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Admin all-module source regressions
+        run: npm --workspace admin run test
+      - name: Build actual Next.js admin application
+        run: npm run build:admin
+      - name: HTTP verify safe full-product admin preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm --workspace admin run start > /tmp/avofis-admin-stage1-preview.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          for i in $(seq 1 50); do
+            if curl -fsS http://127.0.0.1:3001/seviye-1-onizleme > /tmp/avofis-admin-s1.html; then break; fi
+            sleep 1
+          done
+          test -s /tmp/avofis-admin-s1.html
+          # Assert visible Next HTML, stripping React dynamic text separators.
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const assert = require('node:assert/strict');
+          const raw = fs.readFileSync('/tmp/avofis-admin-s1.html', 'utf8');
+          const visible = raw.replace(/<!--[\s\S]*?-->/g, '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
+          for(const required of [
+            'Yönetim, API ve personel ana modülleri',
+            '16 personel modülünün ana noktaları',
+            '10 API modül iskeleti',
+            '0/594 bağımsız R kabul'
+          ]) assert.ok(visible.includes(required), 'Missing actual admin preview: '+required);
+          assert.match(raw, /noindex/);
+          assert.doesNotMatch(raw, /type="password"|<form/);
+          console.log('Whole product admin preview HTTP: PASS');
+          NODE
+          # Each of the canonical 16 personnel main routes must be real HTTP.
+          for module in inbox triage matters calendar documents pleadings research judicial ind messages billing payables reporting audit people settings; do
+            curl -fsS "http://127.0.0.1:3001/personel/$module" > /tmp/avofis-admin-personel.html
+            grep -q 'Statü: Seviye 1 ana iskelet' /tmp/avofis-admin-personel.html
+          done
+          status="$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3001/personel/unknown-module)"
+          test "$status" = "404"
+          echo '16 staff module main routes: PASS'

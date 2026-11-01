@@ -9,6 +9,8 @@ on:
       - 'tools/security/**'
       - 'docs/process/**'
       - 'tools/process/**'
+      - 'docs/program/AVOFIS_STAGE1_WHOLE_PRODUCT_CONTRACT_2026-11-01.json'
+      - 'docs/program/SEVIYE1_YATAY_DEVIR_RISK_DENEME_DEFTERI_2026-11-01.json'
       - '.github/workflows/api-verification.yml'
   push:
     branches:
@@ -24,6 +26,8 @@ on:
       - 'tools/security/**'
       - 'docs/process/**'
       - 'tools/process/**'
+      - 'docs/program/AVOFIS_STAGE1_WHOLE_PRODUCT_CONTRACT_2026-11-01.json'
+      - 'docs/program/SEVIYE1_YATAY_DEVIR_RISK_DENEME_DEFTERI_2026-11-01.json'
       - '.github/workflows/api-verification.yml'
 permissions:
   contents: read
@@ -41,6 +45,14 @@ jobs:
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '22'
+      - name: Tracked key/env filename regression (no content read)
+        run: node --test tools/security/tracked-file-gate.test.cjs
+      - name: Reject tracked local env and private key files
+        run: node tools/security/tracked-file-gate.cjs
+      - name: High-confidence secret-pattern regression (synthetic only)
+        run: node --test tools/security/tracked-content-secret-gate.test.cjs
+      - name: Redacted tracked plaintext secret scan
+        run: node tools/security/tracked-content-secret-gate.cjs
       - name: Install dependencies (without package scripts)
         run: npm install --ignore-scripts --no-audit --no-fund
       - name: TypeScript API build
@@ -55,6 +67,14 @@ jobs:
         run: npm run typecheck --workspace portal
       - name: Portal CMS role regression tests
         run: npm run test --workspace portal
+      - name: Evidence ledger and fresh per-stage carryover attempt integrity
+        run: node --test tools/process/whole-product-ledger.test.cjs
+      - name: Cross-branch canonical whole-product contract
+        run: node --test tools/process/whole-product-cross-branch-contract.test.cjs
+      - name: Whole-product 12-level breadth and carryover retries
+        run: node --test tools/process/whole-product-levels.test.cjs
+      - name: Canonical 594 R ledger and acceptance integrity
+        run: node --test tools/process/r594-ledger-integrity.test.cjs
       - name: RLS baseline integrity tests (no live DB connection)
         run: node --test tools/security/rls-readiness.test.cjs
       - name: RLS snapshot advisory (risk remains open)

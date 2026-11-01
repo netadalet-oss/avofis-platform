@@ -4,7 +4,11 @@ import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {supabase} from "@/lib/supabase";
 type TotpSetup={factorId:string;qr:string;secret:string};
-const mayEnroll=process.env.NEXT_PUBLIC_AVOFIS_STAFF_MFA_ENROLLMENT_ENABLED==="true";
+// AV-025 / B04 / P09: owner/security-approved staff staging is not ready.
+// A NEXT_PUBLIC environment variable can never substitute for signed approval.
+// Existing verified-factor challenge remains available to approved staff; this
+// prevents unreviewed enrollment UI, not Supabase provider-side enrollment.
+const mayEnroll=false;
 export default function StaffMfaPage(){
  const router=useRouter();
  const [factorId,setFactorId]=useState("");

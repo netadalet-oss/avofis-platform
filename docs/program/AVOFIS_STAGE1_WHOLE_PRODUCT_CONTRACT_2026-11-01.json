@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "product": "AVOfis",
+  "source": "Separate AVOfis canonical instruction ZIP only",
+  "levelCount": 12,
+  "activeLevel": 1,
+  "levelStatus": "IN_PROGRESS",
+  "areas": [
+    {
+      "id": "A0",
+      "avFrom": 1,
+      "avTo": 10
+    },
+    {
+      "id": "A1",
+      "avFrom": 11,
+      "avTo": 25
+    },
+    {
+      "id": "A2",
+      "avFrom": 26,
+      "avTo": 51
+    },
+    {
+      "id": "A3",
+      "avFrom": 52,
+      "avTo": 61
+    },
+    {
+      "id": "A4",
+      "avFrom": 62,
+      "avTo": 77
+    },
+    {
+      "id": "A5",
+      "avFrom": 78,
+      "avTo": 92
+    },
+    {
+      "id": "A6",
+      "avFrom": 93,
+      "avTo": 101
+    }
+  ],
+  "avTasks": 101,
+  "rRequirements": 594,
+  "rSections": 33,
+  "services": 17,
+  "audiences": 14,
+  "journeys": 12,
+  "indProcedures": 8,
+  "justiceTasks": 16,
+  "staffProtocols": 10,
+  "launchBlockers": 18,
+  "milestones": 13,
+  "languages": 6,
+  "staffModuleSlugs": [
+    "inbox",
+    "triage",
+    "matters",
+    "calendar",
+    "documents",
+    "pleadings",
+    "research",
+    "judicial",
+    "ind",
+    "messages",
+    "billing",
+    "payables",
+    "reporting",
+    "audit",
+    "people",
+    "settings"
+  ],
+  "apiModuleSlugs": [
+    "admin",
+    "analytics",
+    "auth",
+    "cases",
+    "cms",
+    "messaging",
+    "notifications",
+    "statutes",
+    "support",
+    "workspace"
+  ],
+  "carryoverAttemptsPerNewLevel": 2,
+  "independentRAccepted": 0,
+  "liveRAccepted": 0,
+  "realCustomerIntake": false,
+  "payments": false,
+  "officialSubmission": false,
+  "productionAuthorization": false,
+  "contractMeaning": "Breadth and foundational preview coverage ONLY; no legal, staging, server IAM, RLS, independent or live product acceptance."
+}
