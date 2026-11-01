@@ -79,3 +79,18 @@ test("Stage 2 real Next page and local selections link to real preparation, serv
     assert.equal(view.includes(prohibited),false,prohibited);
   }
 });
+
+
+test("Stage 2 shared A0-A6 contract covers every workstream without inventing any release",()=>{
+  const contract=JSON.parse(fs.readFileSync(path.join(root,"../docs/program/AVOFIS_LEVEL2_HORIZONTAL_FLOW_CONTRACT_2026-11-01.json"),"utf8"));
+  assert.deepEqual(contract.horizontalAreas.map(area=>area.id),["A0","A1","A2","A3","A4","A5","A6"]);
+  assert.equal(contract.levelTwo.scopeCounts.rRequirements,594);
+  assert.equal(contract.levelTwo.scopeCounts.audiences,14);
+  assert.equal(contract.levelTwo.scopeCounts.journeys,12);
+  assert.equal(contract.levelTwo.scopeCounts.services,17);
+  assert.equal(contract.levelTwo.status,"IN_PROGRESS_NOT_ACCEPTED");
+  assert.equal(contract.stageOne.independentRAccepted,0);
+  assert.equal(contract.stageOne.liveRAccepted,0);
+  assert.equal(contract.controls.productionDeploymentAuthorized,false);
+  assert.ok(contract.carryover.some(item=>item.id==="PORTAL_STALE_ANCHOR_CI"));
+});
