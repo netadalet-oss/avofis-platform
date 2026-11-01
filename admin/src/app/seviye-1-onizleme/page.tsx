@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { STAFF_TOP_LEVEL } from "@/lib/staff-module-directory";
 
 export const metadata: Metadata = {
   title: "AVOfis | Seviye 1 Yönetim ve Uygulama Önizlemesi",
@@ -7,24 +8,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false }
 };
 
-const staffModules = [
-  ["inbox", "Gelen işler", "Başvuruların güvenli karşılanması; henüz gerçek erişim yok"],
-  ["triage", "Ön değerlendirme", "Ülke, işlem, aciliyet ve uzman yönlendirmesi"],
-  ["matters", "Dosyalar", "Müşteri, tenant, atama ve dosya durumları"],
-  ["calendar", "Takvim", "Randevu ve resmî sürelerin ayrı izlenmesi"],
-  ["documents", "Belgeler", "Güvenli dosya, sürüm ve Storage erişimi"],
-  ["pleadings", "Dilekçeler", "Taslak, insan inceleme ve temsil izinleri"],
-  ["research", "Hukuk araştırması", "Kaynak, mevzuat ve geçerlilik denetimi"],
-  ["judicial", "Yargı", "J01–J16; resmî sistem erişimi ayrı kapalı"],
-  ["ind", "IND", "Sekiz işlem ve G1–G4 yetki kapıları"],
-  ["messages", "Mesajlar", "Atanmış dosyaya bağlı güvenli iletişim"],
-  ["billing", "Faturalama", "Onaylı ücret, sözleşme ve muhasebe"],
-  ["payables", "Ödemeler", "Çift onay ve iade/ödemeler; canlı işlem yok"],
-  ["reporting", "Raporlama", "Anonim ve yetkili faaliyet ölçümü"],
-  ["audit", "Denetim", "Değiştirilemez olay ve yetki izleri"],
-  ["people", "Kişiler", "Personel, müşteri ve doğrulanmış uzman rolleri"],
-  ["settings", "Ayarlar", "Yayın, roller, kurumlar ve ortam sınırları"]
-] as const;
+// AV-062–AV-077: show exactly the same canonical modules as the working staff routes.
+const staffModules = STAFF_TOP_LEVEL;
+
 
 const backendModules = [
   "admin","analytics","auth","cases","cms","messaging",
@@ -82,15 +68,15 @@ export default function AdminWholeProductPreview() {
         <section className="mt-12">
           <h2 className="text-2xl font-semibold">16 personel modülünün ana noktaları</h2>
           <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {staffModules.map(([slug,title,scope],i)=>(
-              <article key={slug} className="rounded-xl border border-white/15 bg-white/5 p-5">
+            {staffModules.map((module,i)=>(
+              <article key={module.slug} className="rounded-xl border border-white/15 bg-white/5 p-5">
                 <p className="text-xs font-semibold text-sky-300">
-                  AV-{String(62+i).padStart(3,"0")} · {slug}
+                  AV-{String(62+i).padStart(3,"0")} · {module.slug}
                 </p>
-                <h3 className="mt-2 font-semibold">{title}</h3>
-                <p className="mt-3 text-sm leading-6 text-slate-300">{scope}</p>
+                <h3 className="mt-2 font-semibold">{module.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-slate-300">{module.scope}</p>
                 <p className="mt-3 text-xs text-amber-200">İşlem ve yetki kabulü bekliyor</p>
-                <Link href={"/personel/" + slug} className="mt-4 inline-flex text-sm text-sky-200 underline underline-offset-4">
+                <Link href={"/personel/" + module.slug} className="mt-4 inline-flex text-sm text-sky-200 underline underline-offset-4">
                   Bu modülün ana ekranını aç
                 </Link>
               </article>
