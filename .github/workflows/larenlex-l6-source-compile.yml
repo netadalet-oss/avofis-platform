@@ -1,4 +1,4 @@
-name: LarenLex L6 source tests and unsigned Android Java compilation
+name: LarenLex L6 source tests and unsigned APK package verification
 on:
   push:
     branches: [work/larenlex-android]
@@ -75,5 +75,31 @@ jobs:
               exit 1
             fi
           done
+      - name: Package unsigned release APK (structural inspection only)
+        working-directory: larenlex-android/l6/android
+        shell: bash
+        run: |
+          set -euo pipefail
+          gradle --no-daemon --console=plain --max-workers=2 :app:assembleRelease
+          APK="app/build/outputs/apk/release/app-release-unsigned.apk"
+          test -s "$APK" || { echo 'Unsigned APK missing'; exit 1; }
+          unzip -tqq "$APK"
+          aapt dump badging "$APK" | grep -F "package: name='nl.larenlex.app'"
+          unzip -Z1 "$APK" | grep -Eq '^classes[0-9]*[.]dex
+
+          if apksigner verify "$APK" >/tmp/larenlex-apk-signature-check.log 2>&1; then
+            echo 'Unexpectedly signed APK: refusing to publish artifact'; exit 1
+          fi
+          echo 'APK intentionally unsigned and cannot be installed without separately authorized signing.'
+          sha256sum "$APK" | tee unsigned-apk-sha256.txt
+      - name: Archive unsigned package for inspection only
+        uses: actions/upload-artifact@v4
+        with:
+          name: larenlex-l6-unsigned-not-installable
+          path: |
+            larenlex-android/l6/android/app/build/outputs/apk/release/app-release-unsigned.apk
+            larenlex-android/l6/android/unsigned-apk-sha256.txt
+          if-no-files-found: error
+          retention-days: 3
       - name: Evidence boundary
-        run: echo 'Java compile is not an APK, signed release, A6 acceptance or A7 publication.'
+        run: echo 'Unsigned APK packaging is not installable, signed, device-tested, legally approved or published.'
