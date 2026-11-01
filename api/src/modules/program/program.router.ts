@@ -8,9 +8,8 @@ import { Router } from "express";
 export const programRouter = Router();
 
 export const API_MAIN_MODULES = [
-  "admin", "analytics", "auth", "careers", "cases", "cms", "connect",
-  "forum", "messaging", "notifications", "offices", "statutes",
-  "support", "workspace"
+  "admin", "analytics", "auth", "cases", "cms", "messaging",
+  "notifications", "statutes", "support", "workspace"
 ] as const;
 
 export const STAGE_ONE_COUNTS = {
@@ -21,7 +20,7 @@ export const STAGE_ONE_COUNTS = {
   audiences: 14,
   problemJourneys: 12,
   staffModules: 16,
-  apiModules: 14,
+  apiModules: 10,
   indProcedures: 8,
   justiceTasks: 16,
   staffProtocols: 10,
