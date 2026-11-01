@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const report = [
   {
     title: "Bu dönem ne değişti?",
-    body: "17 hizmet, 14 hedef kitle ve 12 işlem rotası esas alınarak kamu ana sayfası yenilendi. Talimat dışı eski iş ilanı, forum, kredi ve ofis profili modülleri ile ilişkili kodlar geliştirme dalından çıkarıldı.",
+    body: "17 hizmet, 14 hedef kitle ve 12 işlem rotası esas alınarak kamu ana sayfası yenilendi. Kamu sayfaları yalnız AVOfis hizmet, işlem ve hukukî hazırlık kapsamına göre düzenlendi.",
   },
   {
     title: "Şimdi neredeyiz?",
