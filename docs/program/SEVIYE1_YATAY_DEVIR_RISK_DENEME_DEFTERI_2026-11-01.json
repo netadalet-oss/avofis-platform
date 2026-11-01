@@ -206,6 +206,30 @@
         "Vercel read-only deployment listing 2026-11-01"
       ],
       "level1Attempts": []
+    },
+    {
+      "id": "PORTAL_STALE_CI_EVIDENCE_ASSERTION",
+      "areas": [
+        "A0",
+        "A2",
+        "A6"
+      ],
+      "status": "REGRESSION_FIXED_IN_CODE",
+      "detail": "Public progress page originally embedded a stale latest CI SHA; after removing it a legacy source regression insisted it remain. Test was updated and verified with new CI.",
+      "evidence": [
+        "https://github.com/netadalet-oss/avofis-platform/actions/runs/41255979478",
+        "https://github.com/netadalet-oss/avofis-platform/actions/runs/41256065609"
+      ],
+      "level1Attempts": [
+        {
+          "run": "41255979478",
+          "result": "FAILED"
+        },
+        {
+          "run": "41256065609",
+          "result": "SUCCESS"
+        }
+      ]
     }
   ]
 }
