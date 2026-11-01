@@ -52,7 +52,8 @@ public final class L4LegalFlowsActivity extends Activity {
         list.setPadding(px(16),px(18),px(16),px(30));
         list.setLayoutDirection("ar".equals(language)? View.LAYOUT_DIRECTION_RTL:View.LAYOUT_DIRECTION_LTR);
         s.addView(list); setContentView(s);
-        text(title,24,true,INK);text(detail,14,false,INK);
+        list.addView(LarenLexBrandHeader.create(this, title, 24));
+        text(detail,14,false,INK);
         text(label("preview")+" · Kaynak ve hukukî/çeviri onayı bekliyor.",13,true,GOLD);
     }
     private void text(String str,int sp,boolean bold,int color) {

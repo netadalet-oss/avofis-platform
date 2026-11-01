@@ -41,7 +41,7 @@ public final class L6ReadinessActivity extends Activity {
         content = new LinearLayout(this); content.setOrientation(LinearLayout.VERTICAL);
         content.setPadding(dp(18),dp(20),dp(18),dp(30));
         scroller.addView(content); setContentView(scroller);
-        text("LarenLex · A6/A7 hazırlık",24,true);
+        content.addView(LarenLexBrandHeader.create(this, "LarenLex · A6/A7 hazırlık", 24));
         text("L6 geliştirme ekranıdır. APK/cihaz, hukukî kabul, imza ve yayın doğrulanmadı.",16,false);
         text("Bu ekrandan üretim API, gerçek kişi verisi, imzalama veya yayın başlatılamaz.",15,true);
         try {

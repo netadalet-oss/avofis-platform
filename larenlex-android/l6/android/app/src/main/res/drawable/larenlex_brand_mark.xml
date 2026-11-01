@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Provisional LarenLex LL mark: original corporate logo artwork not supplied. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#112A43"
+        android:pathData="M18,6 L90,6 Q102,6 102,18 L102,90 Q102,102 90,102 L18,102 Q6,102 6,90 L6,18 Q6,6 18,6 Z"/>
+    <path android:fillColor="#D7B568"
+        android:pathData="M26,26 L39,26 L39,70 L55,70 L55,82 L26,82 Z"/>
+    <path android:fillColor="#F6F7F9"
+        android:pathData="M50,26 L63,26 L63,58 L82,58 L82,70 L50,70 Z"/>
+    <path android:fillColor="#D7B568"
+        android:pathData="M69,77 L82,77 L82,82 L69,82 Z"/>
+</vector>

@@ -59,8 +59,7 @@ public final class MainActivity extends Activity {
         column.setPadding(dp(18), dp(22), dp(18), dp(34));
         scroller.addView(column);
         setContentView(scroller);
-        TextView header = text(title, 25, INK, true);
-        column.addView(header);
+        column.addView(LarenLexBrandHeader.create(this, title, 25));
         column.addView(text(subtitle, 14, Color.DKGRAY, false));
         column.addView(text("GELİŞTİRME ÖNİZLEMESİ · Gerçek dosya, kurum veya sunucu bağlantısı yoktur.", 13, GOLD, true));
     }

@@ -106,3 +106,56 @@ jobs:
           retention-days: 3
       - name: Evidence boundary
         run: echo 'Unsigned APK packaging is not installable, signed, device-tested, legally approved or published.'
+  android-debug-package:
+    name: Temporary debug-signed APK for installation inspection (not release)
+    needs: [source-tests, android-java-compile]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Verify existing SDK (no license prompt)
+        shell: bash
+        run: |
+          set -euo pipefail
+          SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
+          test -f "$SDK/platforms/android-35/android.jar"
+          test -x "$SDK/build-tools/35.0.0/apksigner"
+          test -x "$SDK/build-tools/35.0.0/aapt"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+          cache-read-only: false
+          cache-cleanup: never
+      - name: Build debug-only APK with temporary runner debug certificate
+        shell: bash
+        working-directory: larenlex-android/l6/android
+        run: |
+          set -euo pipefail
+          gradle --no-daemon --console=plain --max-workers=2 :app:assembleDebug
+          APK=app/build/outputs/apk/debug/app-debug.apk
+          test -s "$APK"
+          unzip -tqq "$APK"
+          unzip -Z1 "$APK" | grep -Fqx classes.dex
+          SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
+          "$SDK/build-tools/35.0.0/aapt" dump badging "$APK" | grep -F "package: name='nl.larenlex.app'"
+          "$SDK/build-tools/35.0.0/aapt" dump badging "$APK" | grep -F "application-label:'LarenLex'"
+          "$SDK/build-tools/35.0.0/apksigner" verify --verbose "$APK"
+          "$SDK/build-tools/35.0.0/apksigner" verify --print-certs "$APK" > debug-cert-report.txt
+          grep -F 'CN=Android Debug' debug-cert-report.txt
+          sha256sum "$APK" | tee debug-apk-sha256.txt
+          echo 'DEBUG-ONLY APK. Do not use with actual client data or production accounts.'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: larenlex-l6-debug-installable-not-release
+          path: |
+            larenlex-android/l6/android/app/build/outputs/apk/debug/app-debug.apk
+            larenlex-android/l6/android/debug-apk-sha256.txt
+            larenlex-android/l6/android/debug-cert-report.txt
+          if-no-files-found: error
+          retention-days: 3
+      - name: Evidence boundary
+        run: echo 'Debug signing only. No production keystore, store upload, A6 device run, legal or A7 acceptance.'

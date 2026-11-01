@@ -22,7 +22,7 @@ public final class L5IntegrationActivity extends Activity {
         body.setPadding(24,24,24,24);
         body.setOrientation(LinearLayout.VERTICAL);
         scroll.addView(body);setContentView(scroll);
-        append(body,"LarenLex · L5 entegrasyon ve kanıt",21);
+        body.addView(LarenLexBrandHeader.create(this, "LarenLex · L5 entegrasyon ve kanıt", 21));
         append(body,"Çevrimdışı geliştirme ekranı. Canlı sunucu, ödeme, resmî kurum veya kabul yok.",14);
         try (InputStream stream = getAssets().open("l5_integration.json")) {
             ByteArrayOutputStream output = new ByteArrayOutputStream();
