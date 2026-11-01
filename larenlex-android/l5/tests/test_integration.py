@@ -71,6 +71,19 @@ class L5Integration(unittest.TestCase):
         a=self.client('owner')
         with self.assertRaises(ValueError):a.request('GET','/v2/catalog',extra_headers={'Origin':'https://other.invalid'})
         with self.assertRaises(ValueError):a.request('GET','/v2/catalog',extra_headers={'Host':'host.invalid'})
+        # Emulator's 10.0.2.2 address maps to host localhost in debug only.
+        import http.client
+        port = int(self.endpoint.rsplit(':', 1)[1])
+        conn = http.client.HTTPConnection('127.0.0.1', port, timeout=3)
+        try:
+            conn.request('GET', '/v2/catalog', headers={'Host':f'10.0.2.2:{port}'})
+            self.assertEqual(conn.getresponse().status, 200)
+        finally: conn.close()
+        conn = http.client.HTTPConnection('127.0.0.1', port, timeout=3)
+        try:
+            conn.request('GET', '/v2/catalog', headers={'Host':f'evil.invalid:{port}'})
+            self.assertEqual(conn.getresponse().status, 403)
+        finally: conn.close()
         for endpoint in ('https://example.org','http://other.invalid:1234','http://127.0.0.1:1234@evil.invalid'):
             with self.assertRaises(ValueError): L5NativeStyleClient(endpoint,'fixture')
 
