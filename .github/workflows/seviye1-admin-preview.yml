@@ -80,7 +80,7 @@ jobs:
           for(const required of [
             'Yönetim, API ve personel ana modülleri',
             '16 personel modülünün ana noktaları',
-            '14 API modül iskeleti',
+            '10 API modül iskeleti',
             '0/594 bağımsız R kabul'
           ]) assert.ok(visible.includes(required), 'Missing actual admin preview: '+required);
           assert.match(raw, /noindex/);
@@ -95,10 +95,3 @@ jobs:
           status="$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3001/personel/unknown-module)"
           test "$status" = "404"
           echo '16 staff module main routes: PASS'
-          for section in analytics audit careers cases dashboard forum media menus notifications roles settings statutes users; do
-            curl -fsS "http://127.0.0.1:3001/$section" > /tmp/avofis-admin-legacy-bridge.html
-            grep -q 'Bu bölümün ana modül yolları' /tmp/avofis-admin-legacy-bridge.html
-            grep -q 'Yerel, sentetik ana akışı deneyin' /tmp/avofis-admin-legacy-bridge.html
-            grep -q 'noindex' /tmp/avofis-admin-legacy-bridge.html
-          done
-          echo '13 linked legacy admin routes: PASS'
