@@ -3,6 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import { randomUUID } from "node:crypto";
 import { getJourney,validateJourneyDetails } from "@/lib/journeys";
 import { intakeReleased } from "@/lib/release-authorization";
+import { readJsonWithByteLimit, RequestBodyLimitError } from "@/lib/limited-json-request";
 
 export const runtime="nodejs";
 const countries=new Set(["Netherlands","Türkiye","Germany","Other"]);
@@ -12,9 +13,13 @@ export async function POST(request:NextRequest){
  if(!intakeReleased())return fail(503);
  const supabaseUrl=process.env.NEXT_PUBLIC_SUPABASE_URL,serviceKey=process.env.SUPABASE_SERVICE_ROLE_KEY,turnstileSecret=process.env.TURNSTILE_SECRET_KEY;
  if(!supabaseUrl||!serviceKey||!turnstileSecret)return fail(503);
- if(Number(request.headers.get("content-length")||0)>7000)return fail(413);
  let body:unknown;
- try{body=await request.json();}catch{return fail(400);}
+ try {
+  body=await readJsonWithByteLimit(request,7000);
+ } catch(error) {
+  return fail(error instanceof RequestBodyLimitError &&
+    error.code==="REQUEST_TOO_LARGE"?413:400);
+ }
  if(!body||typeof body!=="object"||Array.isArray(body))return fail(400);
  const data=body as Record<string,unknown>;
  const str=(key:string)=>typeof data[key]==="string"?String(data[key]).trim():"";

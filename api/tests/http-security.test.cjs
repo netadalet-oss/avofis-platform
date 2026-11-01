@@ -8,7 +8,6 @@ const fs = require('node:fs');
 const path = require('node:path');
 const ts = require('typescript');
 const express = require('express');
-const cors = require('cors');
 
 const API = path.resolve(__dirname, '..');
 function loadTs(relativePath, mocks = {}) {
@@ -27,6 +26,9 @@ function loadTs(relativePath, mocks = {}) {
   return mod.exports;
 }
 const { configuredCorsOrigins } = loadTs('src/security/cors-origin.ts');
+const { configureApiHttpSecurity, installApiErrorResponses } = loadTs('src/security/http-hardening.ts', {
+  './cors-origin': { configuredCorsOrigins },
+});
 const expectedSeed = { title: 'Test home page', menu: [{ label: 'Home', href: '/' }] };
 function createCmsApp(origins) {
   const { rejectUnverifiedCmsMutation } = loadTs('src/lib/cms-write-gate.ts');
@@ -35,9 +37,9 @@ function createCmsApp(origins) {
     '../../lib/cms-write-gate': { rejectUnverifiedCmsMutation },
   });
   const app = express();
-  app.use(cors({ origin: configuredCorsOrigins(origins) }));
-  app.use(express.json({ limit: '10mb' }));
+  configureApiHttpSecurity(app, origins);
   app.use('/api/cms', cmsRouter);
+  installApiErrorResponses(app);
   return app;
 }
 async function startServer(originConfiguration) {
@@ -108,4 +110,75 @@ test('empty CORS setting never allows browser origin', async () => {
     assert.equal(r.status, 200);
     assert.equal(r.headers.get('access-control-allow-origin'), null);
   });
+});
+
+test('oversized JSON request is rejected with HTTP 413 before CMS routing', async () => {
+  await withServer(allowed, async (url) => {
+    const canary = 'OVERSIZED_SECRET_NOT_FOR_RESPONSE';
+    const r = await fetch(url + '/api/cms/pages/home', {
+      method: 'POST',
+      headers: { Origin: allowed, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ canary, padding: 'x'.repeat(70 * 1024) }),
+    });
+    assert.equal(r.status, 413);
+    assert.equal(r.headers.get('x-powered-by'), null);
+    assert.equal(r.headers.get('x-content-type-options'), 'nosniff');
+    assert.doesNotMatch(await r.text(), /OVERSIZED_SECRET_NOT_FOR_RESPONSE/);
+  });
+});
+
+test('API response does not expose Express signature or permit origin wildcard', async () => {
+  await withServer(allowed, async (url) => {
+    const r = await fetch(url + '/api/cms/pages/home', { headers: { Origin: denied } });
+    assert.equal(r.status, 200);
+    assert.equal(r.headers.get('x-powered-by'), null);
+    assert.equal(r.headers.get('x-content-type-options'), 'nosniff');
+    assert.equal(r.headers.get('access-control-allow-origin'), null);
+    assert.equal(r.headers.get('access-control-allow-credentials'), null);
+  });
+});
+
+
+test('malformed JSON is a redacted 400 with no parser stack or echoed secret', async () => {
+  await withServer(allowed, async (url) => {
+    const canary = 'PARSER_CANARY_NEVER_REFLECTED';
+    const response = await fetch(url + '/api/cms/pages/home', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: '{"secret":"' + canary + '",'
+    });
+    assert.equal(response.status, 400);
+    assert.equal(response.headers.get('cache-control'), 'no-store');
+    assert.equal(response.headers.get('x-content-type-options'), 'nosniff');
+    assert.deepEqual(await response.json(), { error: 'INVALID_JSON' });
+  });
+});
+
+test('oversized input gets a static JSON 413 rather than Express HTML diagnostics', async () => {
+  await withServer(allowed, async (url) => {
+    const response = await fetch(url + '/api/cms/pages/home', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ payload: 'Y'.repeat(70 * 1024) })
+    });
+    assert.equal(response.status, 413);
+    assert.equal(response.headers.get('content-type')?.includes('application/json'), true);
+    assert.deepEqual(await response.json(), { error: 'REQUEST_TOO_LARGE' });
+  });
+});
+
+test('unexpected API exceptions are redacted without exposing internal error text', async () => {
+  const app = express();
+  configureApiHttpSecurity(app, allowed);
+  app.get('/throw', () => { throw Error('PRIVATE_INTERNAL_ERROR_CANARY'); });
+  installApiErrorResponses(app);
+  const server = app.listen(0, '127.0.0.1');
+  await once(server, 'listening');
+  try {
+    const response = await fetch('http://127.0.0.1:' + server.address().port + '/throw');
+    assert.equal(response.status, 500);
+    assert.deepEqual(await response.json(), { error: 'REQUEST_FAILED' });
+  } finally {
+    await new Promise(resolve => server.close(resolve));
+  }
 });

@@ -13,7 +13,7 @@ const footer = {
 };
 export function PageFrame({eyebrow,title,description,children,wide=false,lang="tr"}:Props){
   const t=footer[lang];
-  return <main className="avofis-theme min-h-screen">
+  return <main lang={lang} className="avofis-theme min-h-screen">
     <PublicNav lang={lang}/>
     <div className={"mx-auto w-full px-5 pb-16 pt-10 sm:px-7 sm:pt-12 "+(wide?"max-w-6xl":"max-w-4xl")}>
       <div className="max-w-3xl">

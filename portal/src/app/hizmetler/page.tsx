@@ -6,7 +6,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Hizmet alanları | AVOfis",
-  description: "AVOfis'in planlanan 17 hukukî ve idarî hizmet alanını, işlem öncesi hazırlık bilgilerini ve yetki sınırlarını inceleyin."
+  description: "AVOfis'in planlanan 17 hukukî ve idarî hizmet alanını, işlem öncesi hazırlık bilgilerini ve yetki sınırlarını inceleyin.",
+  robots: { index: false, follow: false }
 };
 
 export default function HizmetlerPage() {

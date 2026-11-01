@@ -8,6 +8,7 @@ import { getJourney } from "@/lib/journeys";
 import { staffText } from "@/lib/staff-text";
 import { usePortalLanguage } from "@/hooks/usePortalLanguage";
 import { supabase } from "@/lib/supabase";
+import { clientWorkspaceReleased } from "@/lib/client-workspace-release";
 import { useUser } from "@/hooks/useUser";
 import { ArrowLeft, FilePlus2, Inbox, LockKeyhole, MessageSquareText, RefreshCw, ShieldCheck } from "lucide-react";
 
@@ -25,14 +26,14 @@ export default function ManagementPage(){
  const [chosen,setChosen]=useState(""),[agreementText,setAgreementText]=useState(""),[version,setVersion]=useState("2026-10-v1"),[note,setNote]=useState("");
  const [busy,setBusy]=useState(false);
  const [fileNames,setFileNames]=useState<string[]>([]);
- const ready=process.env.NEXT_PUBLIC_AVOFIS_CLIENT_PORTAL_ENABLED==="true";
+ const ready=clientWorkspaceReleased(process.env.NEXT_PUBLIC_AVOFIS_CLIENT_PORTAL_ENABLED==="true");
  useEffect(()=>{
   const selectedCase=cases.find(c=>c.id===chosen);
-  if(!isStaff||!selectedCase){setFileNames([]);return;}
+  if(!ready||!isStaff||!selectedCase){setFileNames([]);return;}
   void supabase.storage.from("avofis-private").list(selectedCase.id+"/"+selectedCase.client_user_id,{limit:100}).then(({data,error})=>{if(!error)setFileNames((data||[]).map(f=>f.name));});
  },[chosen,isStaff,cases]);
  async function openStaffFile(name:string){
-  const selectedCase=cases.find(c=>c.id===chosen);if(!selectedCase)return;
+  const selectedCase=cases.find(c=>c.id===chosen);if(!ready||!selectedCase)return;
   const path=selectedCase.id+"/"+selectedCase.client_user_id+"/"+name;
   const {data,error}=await supabase.storage.from("avofis-private").createSignedUrl(path,60);
   if(error||!data?.signedUrl){setError(t.fileLinkError);return;}
@@ -40,6 +41,7 @@ export default function ManagementPage(){
  }
 
  async function load(){
+  if(!ready)return;
   setLoading(true);setError("");
   const results=await Promise.all([
     supabase.from("avofis_leads").select("id,full_name,email,service_key,country,summary,status,created_at,journey_key,intake_details").order("created_at",{ascending:false}).limit(100),
@@ -51,7 +53,7 @@ export default function ManagementPage(){
   else {setLeads(results[0].data as Lead[]||[]);setCases(results[1].data as Matter[]||[]);setMessages(results[2].data as Conversation[]||[]);setPayments(results[3].data as Payment[]||[]);}
   setLoading(false);
  }
- useEffect(()=>{if(!user){setIsStaff(null);setStaffRole(null);return;}void (async()=>{const {data,error}=await supabase.from("avofis_staff").select("role").eq("user_id",user.id).maybeSingle();setIsStaff(!error&&!!data);setStaffRole(data?.role==="admin"?"admin":data?.role==="operator"?"operator":null);if(data)await load();})();},[user?.id]);
+ useEffect(()=>{if(!ready||!user){setIsStaff(null);setStaffRole(null);return;}void (async()=>{const {data,error}=await supabase.from("avofis_staff").select("role").eq("user_id",user.id).maybeSingle();setIsStaff(!error&&!!data);setStaffRole(data?.role==="admin"?"admin":data?.role==="operator"?"operator":null);if(data)await load();})();},[user?.id]);
  async function createMatter(e:FormEvent){
   e.preventDefault();
   if(!isAdmin||!ready)return;
@@ -68,16 +70,18 @@ export default function ManagementPage(){
   if(error)setError(t.agreementError);else {setAgreementText("");await load();}setBusy(false);
  }
  async function sendMessage(e:FormEvent){
-  e.preventDefault();if(!user||!chosen||!note.trim())return;
+  e.preventDefault();if(!ready||!user||!chosen||!note.trim())return;
   setBusy(true);
   const {error}=await supabase.from("avofis_messages").insert({sender_id:user.id,case_id:chosen,body:note.trim().slice(0,1500)});
   setError(error?t.messageError:"");if(!error){setNote("");await load();}setBusy(false);
  }
  async function markLead(id:string,status:string){
+   if(!ready||!isStaff)return;
    const {error}=await supabase.from("avofis_leads").update({status}).eq("id",id);
    if(error)setError(t.leadStatusError);else await load();
  }
  async function setCaseStatus(id:string,status:string){
+   if(!ready||!isStaff)return;
    const {error}=await supabase.from("avofis_cases").update({status}).eq("id",id);
    if(error)setError(t.caseStatusError);else await load();
  }

@@ -10,6 +10,19 @@ const gates=[
  ["Tüketici","Gerçek hizmet sözleşmesi, ücret/KDV/harç ayrımı, cayma/iptal ve iade"],
  ["Proje sahibi","Tarih ve kanıt referanslı ayrı canlıya geçiş imzası"]
 ] as const;
+
+/** R-068: navigable disclosure status, not approved policies or a customer complaint intake. */
+const disclosureStatus = [
+ { id: "genel-sartlar", title: "Genel şartlar — henüz onaylanmadı",
+   body: "Hizmet şartları, sözleşmenin tarafları, meslekî yetki, ücretler ve veri işleme hükümleri bağımsız incelemeden geçmedi. Bu sayfa yürürlükte hizmet sözleşmesi veya gerçek teklif değildir." },
+ { id: "sikayet", title: "Şikâyet ve itiraz kanalı — henüz açık değil",
+   body: "AVOfis için doğrulanmış bir şikâyet iletişim kanalı, yanıt politikası ve sorumlu kişi henüz yayımlanmadı. Bu sayfadan şikâyet veya kişisel bilgi alınmaz. Resmî süreye bağlı bir işlem varsa yetkili kuruma veya hukuk profesyoneline doğrudan başvurun." },
+ { id: "erisilebilirlik", title: "Erişilebilirlik — bağımsız test bekliyor",
+   body: "WCAG 2.2 AA, klavye ile kullanım, ekran okuyucu ve çok dilli erişilebilirlik kontrollerinin bütünü bağımsız olarak kabul edilmedi. Erişilebilirlik geri bildirim kanalı henüz doğrulanmadı." },
+ { id: "tuketici-haklari", title: "Tüketici hakları — işlem ve sözleşme kapalı",
+   body: "Hizmetin uygulanabilir cayma, iptal, iade, bedel ve şikâyet koşulları açılış öncesinde ayrı hukuki inceleme gerektirir. Henüz çevrim içi ücretli sözleşme, ödeme veya gerçek hizmet kabulü sunulmaz. Bu açıklama tüketicinin kanundan doğan haklarını sınırlandırmaz." }
+] as const;
+
 export default function ComplianceStatusPage(){
  return <main className="avofis-theme min-h-screen px-5 py-10 sm:px-8">
    <div className="mx-auto max-w-5xl">
@@ -28,6 +41,20 @@ export default function ComplianceStatusPage(){
        <p className="mt-2 text-sm leading-7 text-[#b9c5df]">{detail}</p>
        <p className="mt-3 text-xs font-semibold text-[#f0d56d]">İnsan kanıtı / onay: BEKLİYOR</p>
      </article>)}
+    </section>
+    <section className="mt-10" aria-labelledby="disclosure-status-title">
+     <h2 id="disclosure-status-title" className="text-xl font-semibold">Politika ve haklara erişim — hazırlık durumu</h2>
+     <p className="mt-3 text-sm leading-7 text-[#b9c5df]">Bu başlıklar tamamlanmış politika, şikâyet sistemi veya erişilebilirlik sertifikası değildir. Yalnız mevcut eksikleri şeffaf biçimde gösterir.</p>
+     <div className="mt-5 grid gap-3 sm:grid-cols-2">
+      {disclosureStatus.map(item => (
+       <section id={item.id} key={item.id} aria-labelledby={item.id + "-baslik"}
+        className="avofis-card scroll-mt-24 rounded-xl border p-5">
+        <h3 id={item.id + "-baslik"} className="text-base font-semibold">{item.title}</h3>
+        <p className="mt-3 text-sm leading-7 text-[#b9c5df]">{item.body}</p>
+        <p className="mt-3 text-xs font-semibold text-[#f0d56d]">Bağımsız kabul: BEKLİYOR</p>
+       </section>
+      ))}
+     </div>
     </section>
     <div className="mt-7 flex flex-wrap gap-5 text-sm">
      <Link href="/gizlilik?lang=tr" className="text-[#dfbf59] underline">Gizlilik taslağı</Link>

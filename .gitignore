@@ -7,3 +7,10 @@ coverage/
 !.env.example
 *.pem
 *.key
+
+# Signing, TLS and credential containers must remain untracked
+*.p8
+*.p12
+*.pfx
+*.jks
+*.keystore

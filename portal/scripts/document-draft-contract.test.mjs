@@ -63,7 +63,15 @@ test("production document storage remains denied until correct project and secur
   AVOFIS_DOCUMENT_DRAFT_SECURITY_REVIEWED:"true",
   NEXT_PUBLIC_SUPABASE_URL:"https://"+ref+".supabase.co"
  };
- assert.equal(documentDraftStageEnabled(enabled),true);
+ // Even perfect production URLs and security-looking environment flags
+ // do not substitute for a separate signed owner / legal / DPO / security record.
+ assert.equal(documentDraftStageEnabled(enabled),false);
+ assert.equal(documentDraftStageEnabled({
+  ...enabled,
+  AVOFIS_LEGAL_READY:"true",
+  AVOFIS_INTAKE_ENABLED:"true",
+  NEXT_PUBLIC_AVOFIS_INTAKE_ENABLED:"true"
+ }),false);
  for(const bad of [
   {AVOFIS_DOCUMENT_DRAFT_PRODUCTION_ENABLED:"false"},
   {AVOFIS_DOCUMENT_DRAFT_SECURITY_REVIEWED:"false"},

@@ -1,0 +1,217 @@
+name: AVOfis S1 portal safety and public preview
+on:
+  pull_request:
+    paths:
+      - "portal/src/components/site-footer.tsx"
+      - "portal/src/app/ilerleme/**"
+      - "portal/tests/public-footer-security.test.cjs"
+      - "portal/src/app/api/payments/webhook/route.ts"
+      - "portal/tests/payment-webhook-closed.test.cjs"
+      - "portal/src/lib/document-draft-contract.ts"
+      - "portal/scripts/document-draft-contract.test.mjs"
+      - "portal/src/lib/safe-login-redirect.ts"
+      - "portal/src/app/auth/login/page.tsx"
+      - "portal/src/components/auth/ProtectedRoute.tsx"
+      - "portal/tests/login-redirect-safety.test.cjs"
+      - "portal/src/app/api/intake/route.ts"
+      - "portal/src/lib/limited-json-request.ts"
+      - "portal/tests/limited-json-request.test.cjs"
+      - "portal/src/lib/client-workspace-release.ts"
+      - "portal/src/app/musteri/page.tsx"
+      - "portal/src/app/yonetim/page.tsx"
+      - "portal/tests/client-workspace-release.test.cjs"
+      - "portal/src/app/auth/update-password/page.tsx"
+      - "portal/src/app/auth/forgot-password/page.tsx"
+      - "portal/tests/password-recovery-release-hold.test.cjs"
+      - "portal/src/app/yonetim/ind-inceleme/page.tsx"
+      - "portal/tests/ind-staff-release-hold.test.cjs"
+      - "portal/src/lib/whole-product-levels.ts"
+      - "portal/src/app/seviye-1-onizleme/**"
+      - "portal/tests/whole-product-levels.test.cjs"
+      - "portal/tests/whole-product-cross-branch-contract.test.cjs"
+      - "docs/program/AVOFIS_STAGE1_WHOLE_PRODUCT_CONTRACT_2026-11-01.json"
+      - "portal/src/components/WholeProductExplorer.tsx"
+      - "portal/src/lib/whole-product-explorer.ts"
+      - "portal/tests/whole-product-explorer.test.cjs"
+      - "portal/src/app/islemler/[id]/page.tsx"
+      - "portal/src/components/JourneyPreparationView.tsx"
+      - "portal/src/app/islemler/page.tsx"
+      - "portal/tests/journey-detail-routes.test.cjs"
+      - "portal/src/lib/journey-service-links.ts"
+      - "portal/src/components/ServicePreparationChecklist.tsx"
+      - "portal/src/app/hizmetler/[slug]/page.tsx"
+      - "portal/src/app/hizmetler/page.tsx"
+      - "portal/tests/service-preparation-checklist.test.cjs"
+      - "portal/src/app/kimler-icin/page.tsx"
+      - "portal/src/lib/avofis-site.ts"
+      - "portal/src/lib/avofis-expanded.ts"
+      - "portal/src/lib/site.ts"
+      - "portal/tests/audience-service-map.test.cjs"
+      - "portal/src/lib/audience-journey-map.ts"
+      - ".github/workflows/seviye1-footer-progress.yml"
+  push:
+    branches:
+      - work/avofis-portal-s1-20261031
+    paths:
+      - "portal/src/components/site-footer.tsx"
+      - "portal/src/app/ilerleme/**"
+      - "portal/tests/public-footer-security.test.cjs"
+      - "portal/src/app/api/payments/webhook/route.ts"
+      - "portal/tests/payment-webhook-closed.test.cjs"
+      - "portal/src/lib/document-draft-contract.ts"
+      - "portal/scripts/document-draft-contract.test.mjs"
+      - "portal/src/lib/safe-login-redirect.ts"
+      - "portal/src/app/auth/login/page.tsx"
+      - "portal/src/components/auth/ProtectedRoute.tsx"
+      - "portal/tests/login-redirect-safety.test.cjs"
+      - "portal/src/app/api/intake/route.ts"
+      - "portal/src/lib/limited-json-request.ts"
+      - "portal/tests/limited-json-request.test.cjs"
+      - "portal/src/lib/client-workspace-release.ts"
+      - "portal/src/app/musteri/page.tsx"
+      - "portal/src/app/yonetim/page.tsx"
+      - "portal/tests/client-workspace-release.test.cjs"
+      - "portal/src/app/auth/update-password/page.tsx"
+      - "portal/src/app/auth/forgot-password/page.tsx"
+      - "portal/tests/password-recovery-release-hold.test.cjs"
+      - "portal/src/app/yonetim/ind-inceleme/page.tsx"
+      - "portal/tests/ind-staff-release-hold.test.cjs"
+      - "portal/src/lib/whole-product-levels.ts"
+      - "portal/src/app/seviye-1-onizleme/**"
+      - "portal/tests/whole-product-levels.test.cjs"
+      - "portal/tests/whole-product-cross-branch-contract.test.cjs"
+      - "docs/program/AVOFIS_STAGE1_WHOLE_PRODUCT_CONTRACT_2026-11-01.json"
+      - "portal/src/components/WholeProductExplorer.tsx"
+      - "portal/src/lib/whole-product-explorer.ts"
+      - "portal/tests/whole-product-explorer.test.cjs"
+      - "portal/src/app/islemler/[id]/page.tsx"
+      - "portal/src/components/JourneyPreparationView.tsx"
+      - "portal/src/app/islemler/page.tsx"
+      - "portal/tests/journey-detail-routes.test.cjs"
+      - "portal/src/lib/journey-service-links.ts"
+      - "portal/src/components/ServicePreparationChecklist.tsx"
+      - "portal/src/app/hizmetler/[slug]/page.tsx"
+      - "portal/src/app/hizmetler/page.tsx"
+      - "portal/tests/service-preparation-checklist.test.cjs"
+      - "portal/src/app/kimler-icin/page.tsx"
+      - "portal/src/lib/avofis-site.ts"
+      - "portal/src/lib/avofis-expanded.ts"
+      - "portal/src/lib/site.ts"
+      - "portal/tests/audience-service-map.test.cjs"
+      - "portal/src/lib/audience-journey-map.ts"
+      - ".github/workflows/seviye1-footer-progress.yml"
+permissions:
+  contents: read
+jobs:
+  negative-public-cms-and-http:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      NEXT_PUBLIC_SUPABASE_URL: "https://example.invalid"
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: "synthetic-ci-only-not-a-real-key"
+    steps:
+      - name: Checkout reviewed source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Use Node 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+      - name: Install without lifecycle scripts
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Portal negative source and role tests
+        run: npm run test --workspace portal
+      - name: Run public-trust checks
+        run: node --test portal/tests/public-trust.test.mjs
+      - name: Assert signed release barrier on production document drafts
+        run: node --test portal/scripts/document-draft-contract.test.mjs
+      - name: Build Next.js portal
+        run: npm run build:portal
+      - name: Verify real HTTP progress route
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm --workspace portal run start > /tmp/avofis-progress-http.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          for i in $(seq 1 50); do
+            if curl -fsS http://127.0.0.1:3000/ilerleme > /tmp/avofis-progress.html; then break; fi
+            sleep 1
+          done
+          test -s /tmp/avofis-progress.html
+          grep -q 'İlerleme ve Şeffaflık' /tmp/avofis-progress.html
+          grep -q 'Önemli sınır' /tmp/avofis-progress.html
+          grep -qi 'müşteri kabulü' /tmp/avofis-progress.html
+          echo 'Public progress HTTP: PASS'
+          # AV-025: the public auth page must be non-transactional over real HTTP.
+          curl -fsS http://127.0.0.1:3000/auth/login > /tmp/avofis-public-login.html
+          test -s /tmp/avofis-public-login.html
+          grep -q 'Müşteri girişi şu anda kapalı' /tmp/avofis-public-login.html
+          grep -q 'noindex' /tmp/avofis-public-login.html
+          if grep -Eq 'type="password"|name="password"|<form' /tmp/avofis-public-login.html; then
+            echo 'Unapproved login form found on public page' >&2
+            exit 1
+          fi
+          echo 'Public auth unavailable HTTP: PASS'
+          curl -fsS http://127.0.0.1:3000/auth/forgot-password > /tmp/avofis-forgot-password.html
+          test -s /tmp/avofis-forgot-password.html
+          grep -q 'Parola kurtarma şu anda kapalı' /tmp/avofis-forgot-password.html
+          grep -q 'noindex' /tmp/avofis-forgot-password.html
+          if grep -Eq 'type="password"|type="email"|<form' /tmp/avofis-forgot-password.html; then
+            echo 'Unapproved account recovery form found' >&2
+            exit 1
+          fi
+          echo 'Closed account recovery HTTP: PASS'
+          # Breadth-first whole-product preview is a real Next page, not a drawing.
+          curl -fsS http://127.0.0.1:3000/seviye-1-onizleme > /tmp/avofis-s1-whole-preview.html
+          test -s /tmp/avofis-s1-whole-preview.html
+          # React SSR may interleave <!-- --> separators into dynamic numbers.
+          # Compare visible text after stripping HTML instead of brittle raw grep.
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const assert = require('node:assert/strict');
+          const raw = fs.readFileSync('/tmp/avofis-s1-whole-preview.html', 'utf8');
+          const visible = raw.replace(/<!--[\s\S]*?-->/g, '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
+          for (const required of [
+            'bütün ürün kapsamı önizlemesi',
+            '17 hizmet alanı',
+            '14 hedef kitle',
+            '12 işlem rotası',
+            '16 personel modülü',
+            '33 gereksinim bölümü'
+          ]) assert.ok(visible.includes(required), 'Missing visible overview: ' + required);
+          assert.match(visible, /0\s*\/\s*594/);
+          console.log('Whole-product S1 preview HTTP: PASS');
+          NODE
+          # All public service detail pages are statically generated; verify
+          # that the real local checklist renders on representative subjects.
+          # Exact canonical source; do not accept a merely representative sample.
+          mapfile -t service_slugs < <(grep -E '^[[:space:]]*"slug": "[a-z0-9-]+"' portal/src/lib/service-catalog.ts | sed -E 's/^[[:space:]]*"slug": "([^"]+)".*/\1/')
+          test "${#service_slugs[@]}" -eq 17
+          for slug in "${service_slugs[@]}"; do
+            curl -fsS "http://127.0.0.1:3000/hizmetler/$slug" > /tmp/avofis-service-checklist.html
+            grep -q 'İlk hazırlık adımlarını gözden geçirin' /tmp/avofis-service-checklist.html
+            grep -q 'type="checkbox"' /tmp/avofis-service-checklist.html
+            grep -q 'Seçimleri sıfırla' /tmp/avofis-service-checklist.html
+            grep -q 'noindex' /tmp/avofis-service-checklist.html
+          done
+          echo 'All 17 canonical service checklist HTTP previews: PASS'
+          curl -fsS http://127.0.0.1:3000/kimler-icin > /tmp/avofis-audiences.html
+          grep -q '14 özgün kullanıcı ve ihtiyaç grubu' /tmp/avofis-audiences.html
+          grep -q 'ceza-sikayet-trafik' /tmp/avofis-audiences.html
+          grep -q 'avrupa-turkiye-hukuki-uzman-koordinasyonu' /tmp/avofis-audiences.html
+          grep -q '/islemler#ind-decision-objection' /tmp/avofis-audiences.html
+          grep -q '/belge-hazirlik' /tmp/avofis-audiences.html
+          grep -q 'noindex' /tmp/avofis-audiences.html
+          echo 'All 14 audience mappings HTTP: PASS'
+          # Representative actual Next.js detail routes and unknown-ID failure.
+          for id in tr-to-nl ind-decision-objection unpaid-wages; do
+            curl -fsS "http://127.0.0.1:3000/islemler/$id" > /tmp/avofis-journey-detail.html
+            grep -q 'İşleme özel hazırlık soruları' /tmp/avofis-journey-detail.html
+            grep -q 'Seçimleri sıfırla' /tmp/avofis-journey-detail.html
+            grep -q 'noindex' /tmp/avofis-journey-detail.html
+          done
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3000/islemler/not-a-journey)" = "404"
+          echo 'Twelve typed journey routes and three real HTML samples: PASS'

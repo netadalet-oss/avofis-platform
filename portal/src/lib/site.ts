@@ -1,136 +1,41 @@
-import {
-  Bell,
-  Briefcase,
-  Building2,
-  FileSearch,
-  FileText,
-  Gavel,
-  LineChart,
-  MessageSquareMore,
-  Scale,
-  ShieldCheck,
-  Users2,
-  Workflow,
-  type LucideIcon,
-} from "lucide-react";
-
-export type NavigationItem = {
-  label: string;
-  href: string;
-};
-
-export type ModuleItem = {
-  icon: LucideIcon;
-  title: string;
-  text: string;
-};
-
-export type StatItem = {
-  value: string;
-  label: string;
-};
-
-export type FooterColumn = {
-  title: string;
-  links: string[];
-};
+/** AVOfis public navigation, restricted to the canonical 17-service portal. */
+export type NavigationItem = { label: string; href: string };
+export type FooterLink = { label: string; href: string };
+export type FooterColumn = { title: string; links: FooterLink[] };
 
 export const navigation: NavigationItem[] = [
-  { label: "Sorununuza Göre Başlayın", href: "/baslangic" },
   { label: "Hizmetler", href: "/hizmetler" },
-  { label: "Modüller", href: "#moduller" },
-  { label: "İçtihat", href: "#arastirma" },
-  { label: "Mevzuat", href: "#arastirma" },
-  { label: "Kariyer", href: "#kariyer" },
-  { label: "Forum", href: "#topluluk" },
-  { label: "Ofisler", href: "#ofisler" },
+  { label: "Kimler için?", href: "/kimler-icin" },
+  { label: "İşlem yolları", href: "/islemler" },
+  { label: "İşlem akışı önizlemesi", href: "/seviye-2-akis" },
+  { label: "İlk hazırlık", href: "/baslangic" },
+  { label: "Hukukî bilgi", href: "/bilgi" },
+  { label: "Belge hazırlığı", href: "/belge-hazirlik" },
+  { label: "Kurumsal ve uyum", href: "/uyum" },
+  { label: "İletişim", href: "/iletisim" }
 ];
 
-export const modules: ModuleItem[] = [
-  {
-    icon: FileSearch,
-    title: "İçtihat Araştırma",
-    text: "Karar arama, filtreleme, emsal kümeleri, ilgili mevzuat ve paylaşım.",
-  },
-  {
-    icon: Scale,
-    title: "Mevzuat Modülü",
-    text: "Madde bazlı görüntüleme, değişiklik geçmişi, ilişkili mevzuat ve yorum katmanı.",
-  },
-  {
-    icon: Workflow,
-    title: "Dosya Analizi",
-    text: "Belge yükleme, olay kronolojisi, hukuki sorun tespiti ve risk analizi.",
-  },
-  {
-    icon: FileText,
-    title: "Taslak Üretim",
-    text: "Dava dilekçesi, cevap, savunma, istinaf, temyiz, sözleşme ve görüş üretimi.",
-  },
-  {
-    icon: Briefcase,
-    title: "Kariyer ve Staj",
-    text: "Stajyer profilleri, ofis profilleri, ilanlar, başvurular ve eşleşme akışları.",
-  },
-  {
-    icon: MessageSquareMore,
-    title: "Forum ve Topluluk",
-    text: "Alan bazlı tartışmalar, soru-cevap, oylama, moderasyon ve uzman katkıları.",
-  },
-  {
-    icon: Users2,
-    title: "Profesyonel Workspace",
-    text: "Dosya klasörleri, görevler, notlar, ortak belge çalışması ve ekip rolleri.",
-  },
-  {
-    icon: LineChart,
-    title: "Analitik ve Yönetim",
-    text: "Kullanıcı, içerik, kariyer dönüşümü ve modül performansı takibi.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Güvenlik ve Uyum",
-    text: "Rol bazlı erişim, audit log, KVKK kayıtları ve güvenli veri yönetimi.",
-  },
-  {
-    icon: Building2,
-    title: "Ofis Profilleri",
-    text: "Doğrulanmış ofis görünürlüğü, ekip profilleri ve uzmanlık alanı sunumu.",
-  },
-  {
-    icon: Bell,
-    title: "Bildirim Sistemi",
-    text: "Platform içi, e-posta ve olay tabanlı bildirim merkezi.",
-  },
-  {
-    icon: Gavel,
-    title: "Connect Ekonomisi",
-    text: "İlan, görünürlük ve premium işlemler için platform içi kredi modeli.",
-  },
-];
-
-// Yayınlanmış ve kaynağı doğrulanmış metrik olmadan istatistik gösterilmez.
-export const stats: StatItem[] = [];
-
-
+/** AV-018 / R-067–R-068: only reviewed, real internal pages and clearly pending disclosures. */
 export const footerColumns: FooterColumn[] = [
-  {
-    title: "Platform",
-    links: ["Ana Sayfa", "Modüller", "İçtihat", "Mevzuat", "Forum", "Kariyer"],
-  },
-  {
-    title: "Kurumsal",
-    links: ["Hakkında", "Yayın İlkeleri", "Güvenlik", "Gizlilik", "İletişim"],
-  },
-  {
-    title: "Destek",
-    links: ["Yardım Merkezi", "Sık Sorulan Sorular", "Kullanım Şartları", "KVKK"],
-  },
+  { title: "Hizmet ve işlem", links: [
+    { label: "17 hizmet alanı", href: "/hizmetler" },
+    { label: "14 hedef kitle", href: "/kimler-icin" },
+    { label: "12 sorun rotası", href: "/islemler" }
+  ] },
+  { title: "Hukukî bilgi", links: [
+    { label: "Bilgi ve kaynak rehberleri", href: "/bilgi" },
+    { label: "Yargı ve resmî kaynaklar", href: "/yargi-baglantilari" },
+    { label: "Belge hazırlık bilgisi", href: "/belge-hazirlik" }
+  ] },
+  { title: "Şeffaflık ve haklar", links: [
+    { label: "Gizlilik (taslak)", href: "/gizlilik" },
+    { label: "Çerezler (taslak)", href: "/cerezler" },
+    { label: "Genel şartların durumu", href: "/uyum#genel-sartlar" },
+    { label: "Şikâyet kanalı durumu", href: "/uyum#sikayet" },
+    { label: "Erişilebilirlik durumu", href: "/uyum#erisilebilirlik" },
+    { label: "Tüketici hakları durumu", href: "/uyum#tuketici-haklari" },
+    { label: "İletişim kanalı durumu", href: "/iletisim" },
+    { label: "Geliştirme durumu", href: "/ilerleme" },
+    { label: "Dil kapsamı ve insan incelemesi", href: "/diller" }
+  ] }
 ];
-
-export const defaultSiteContent = {
-  navigation,
-  modules,
-  stats,
-  footerColumns,
-};
