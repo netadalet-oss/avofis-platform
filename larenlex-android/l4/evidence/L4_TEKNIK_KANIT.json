@@ -70,6 +70,8 @@
   "prior_debts": "20 new bounded attempts across 10 groups; no false closure",
   "preview_sha256": "17f43f073a3a9ae38d9066d0d4615043b35fbcde4bb220992b7f70146b37ca53",
   "github_branch": "netadalet-oss/avofis-platform/work/larenlex-android",
-  "github_L4_sync": "PENDING_AT_THIS_REPORT_SNAPSHOT",
-  "authorization": "No main merge, production data, sign, deployment, real payments or official filings"
+  "github_L4_sync": "VERIFIED_40_L4_TEXT_FILES_AND_4_MATCHING_GIT_BLOB_SHAS",
+  "authorization": "No main merge, production data, sign, deployment, real payments or official filings",
+  "github_source_snapshot_head": "12475c0c743bcd51bd96a8e7a95ca8ce7602c703",
+  "github_ci_successful_l4_run_id": null
 }
