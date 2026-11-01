@@ -10,6 +10,7 @@ on:
       - 'docs/process/**'
       - 'tools/process/**'
       - 'docs/program/AVOFIS_STAGE1_WHOLE_PRODUCT_CONTRACT_2026-11-01.json'
+      - 'docs/program/SEVIYE1_YATAY_DEVIR_RISK_DENEME_DEFTERI_2026-11-01.json'
       - '.github/workflows/api-verification.yml'
   push:
     branches:
@@ -26,6 +27,7 @@ on:
       - 'docs/process/**'
       - 'tools/process/**'
       - 'docs/program/AVOFIS_STAGE1_WHOLE_PRODUCT_CONTRACT_2026-11-01.json'
+      - 'docs/program/SEVIYE1_YATAY_DEVIR_RISK_DENEME_DEFTERI_2026-11-01.json'
       - '.github/workflows/api-verification.yml'
 permissions:
   contents: read
