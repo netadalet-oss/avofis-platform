@@ -8,7 +8,6 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SERVICES } from "@/lib/service-catalog";
 import { audiences } from "@/lib/avofis-site";
-import { extraAudiences } from "@/lib/avofis-expanded";
 import { journeys } from "@/lib/journeys";
 
 export const metadata: Metadata = {
@@ -17,7 +16,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false }
 };
 
-const audiencesAll = [...audiences, ...extraAudiences];
+const audiencesAll = audiences;
 const steps = [
   { n: "01", title: "Konunuzu belirleyin", description: "Ülke, işlem türü, ilgili kurum ve belge ihtiyacını kişisel bilgi vermeden ayırın.", href: "/baslangic" },
   { n: "02", title: "Hazırlık şartlarını inceleyin", description: "Resmî kaynak, olası süre, belge türü ve profesyonel yetki gereksinimlerini kontrol edin.", href: "/islemler" },
@@ -125,10 +124,14 @@ export default function HomePage() {
           </p>
           <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {audiencesAll.map((item) => (
-              <article key={item.slug} className="rounded-xl border border-white/10 bg-[#07111f]/70 p-5">
+              <Link href={"/kimler-icin#" + item.slug} key={item.slug}
+                className="rounded-xl border border-white/10 bg-[#07111f]/70 p-5 transition hover:border-sky-300/50">
                 <h3 className="font-semibold">{item.title.tr}</h3>
                 <p className="mt-2 text-xs leading-6 text-slate-300">{item.lead.tr}</p>
-              </article>
+                <span className="mt-4 inline-block text-xs font-semibold text-sky-200">
+                  İlgili hizmetleri inceleyin
+                </span>
+              </Link>
             ))}
           </div>
           <Link href="/katalog" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-sky-200 underline">

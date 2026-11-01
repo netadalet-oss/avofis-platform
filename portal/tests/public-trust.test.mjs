@@ -22,7 +22,7 @@ test("canonical public homepage is solely AVOfis 17/14/12 service, audience and 
   }
 });
 test("public navigation only links real canonical information pages and does not edit CMS", () => {
-  for (const href of ["/hizmetler","/katalog","/islemler","/baslangic",
+  for (const href of ["/hizmetler","/kimler-icin","/islemler","/baslangic",
     "/bilgi/rehberler","/belge-hazirlik","/uyum","/iletisim"]) {
     assert.ok(nav.includes('href: "'+href+'"'),href);
   }

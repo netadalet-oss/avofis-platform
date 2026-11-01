@@ -4,7 +4,7 @@ export type FooterColumn = { title: string; links: string[] };
 
 export const navigation: NavigationItem[] = [
   { label: "Hizmetler", href: "/hizmetler" },
-  { label: "Kimler için?", href: "/katalog" },
+  { label: "Kimler için?", href: "/kimler-icin" },
   { label: "İşlem yolları", href: "/islemler" },
   { label: "İlk hazırlık", href: "/baslangic" },
   { label: "Hukuk rehberleri", href: "/bilgi/rehberler" },
