@@ -23,7 +23,8 @@ test("cross-branch canonical contract equals exact app/portal AV, R, staff and A
  assert.equal(contract.rRequirements,plan.R_IDS.length);
  assert.deepEqual(contract.staffModuleSlugs,plan.STAFF_MODULES);
  assert.deepEqual(contract.staffModuleSlugs,staff);
- assert.deepEqual(contract.apiModuleSlugs,apiModules);\n assert.equal(apiModules.length,10);
+ assert.deepEqual(contract.apiModuleSlugs,apiModules);
+ assert.equal(apiModules.length,10);
 });
 test("cross-branch release and retry model does not create phantom authorization",()=>{
  assert.equal(contract.carryoverAttemptsPerNewLevel,2);
