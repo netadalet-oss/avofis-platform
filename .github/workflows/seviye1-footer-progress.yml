@@ -165,11 +165,14 @@ jobs:
           NODE
           # All public service detail pages are statically generated; verify
           # that the real local checklist renders on representative subjects.
-          for slug in hukuki-danismanlik mahkeme-temsil belge-apostil-tercume; do
+          # Exact canonical source; do not accept a merely representative sample.
+          mapfile -t service_slugs < <(grep -E '^[[:space:]]*"slug": "[a-z0-9-]+"' portal/src/lib/service-catalog.ts | sed -E 's/^[[:space:]]*"slug": "([^"]+)".*/\1/')
+          test "${#service_slugs[@]}" -eq 17
+          for slug in "${service_slugs[@]}"; do
             curl -fsS "http://127.0.0.1:3000/hizmetler/$slug" > /tmp/avofis-service-checklist.html
             grep -q 'İlk hazırlık adımlarını gözden geçirin' /tmp/avofis-service-checklist.html
             grep -q 'type="checkbox"' /tmp/avofis-service-checklist.html
             grep -q 'Seçimleri sıfırla' /tmp/avofis-service-checklist.html
             grep -q 'noindex' /tmp/avofis-service-checklist.html
           done
-          echo 'Three representative service checklist HTTP previews: PASS'
+          echo 'All 17 canonical service checklist HTTP previews: PASS'
