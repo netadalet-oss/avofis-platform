@@ -84,3 +84,35 @@ test("module overview source contains no database or credential operations",()=>
  const server=fs.readFileSync(path.join(root,"src/server.ts"),"utf8");
  assert.match(server,/app\.use\("\/api\/program", programRouter\)/);
 });
+
+test("Stage 2 ten-module flow exposes entry, synthetic process and closed result over real HTTP",async()=>{
+ assert.deepEqual([...flow.exports.PROGRAM_FLOW_STAGES],[
+   "ENTRY","SYNTHETIC_PREPARATION","HUMAN_REVIEW_REQUIRED","CLOSED_NO_TRANSACTION"
+ ]);
+ await withServer(async url=>{
+   const r=await fetch(url+"/api/program/flow-skeleton");
+   assert.equal(r.status,200);
+   assert.match(r.headers.get("cache-control"),/no-store/);
+   assert.match(r.headers.get("x-content-type-options"),/nosniff/);
+   const data=await r.json();
+   assert.equal(data.developmentLevel,2);
+   assert.equal(data.flowStatus,"PREVIEW_ONLY_NOT_ACCEPTED");
+   assert.equal(data.modules.length,10);
+   assert.deepEqual(data.modules.map(m=>m.module),API_MAIN_MODULES);
+   assert.equal(data.realClientOperationsEnabled,false);
+   assert.equal(data.externalActionsEnabled,false);
+   assert.equal(data.independentRAccepted,0);
+   assert.equal(data.liveRAccepted,0);
+   for(const m of data.modules){
+     assert.deepEqual(m.flow,flow.exports.PROGRAM_FLOW_STAGES);
+     assert.deepEqual(m.enabledOperations,[]);
+     assert.equal(m.entry,"/api/program/overview");
+     assert.equal(m.result,"SCAFFOLD_NOT_AUTHORIZED");
+   }
+   for(const method of ["POST","PUT","PATCH","DELETE"]){
+     const blocked=await fetch(url+"/api/program/flow-skeleton",{method});
+     assert.equal(blocked.status,404,method);
+   }
+ });
+ assert.throws(()=>flow.exports.programFlowSkeleton(["fake"]),/INVENTORY/);
+});
