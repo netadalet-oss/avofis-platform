@@ -46,7 +46,7 @@ export function staffScreenHandoffs(slug: string): StaffHandoff[] {
 }
 
 export function validateStaffScreenHandoffs(): boolean {
-  const slugs = STAFF_TOP_LEVEL.map(item => item.slug);
+  const slugs: string[] = STAFF_TOP_LEVEL.map(item => item.slug);
   if(slugs.length !== 16 || new Set(slugs).size !== 16 ||
      Object.keys(STAFF_SCREEN_HANDOFFS).length !== 16 ||
      Object.keys(STAFF_SCREEN_HANDOFFS).some(slug => !slugs.includes(slug))) return false;
