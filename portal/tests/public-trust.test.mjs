@@ -32,3 +32,23 @@ test("public navigation only links real canonical information pages and does not
     assert.equal(header.includes(forbidden),false,forbidden);
   }
 });
+
+
+const contact = readFileSync(new URL("../src/app/iletisim/page.tsx", import.meta.url), "utf8");
+test("AV-025 / R-087: public contact copy cannot promise an unavailable client inbox", () => {
+  for (const text of [
+    "Müşteri hesabı ve dosya içi mesajlaşma henüz etkin değildir.",
+    "Klantaccounts en dossierberichten zijn nog niet actief.",
+    "Client accounts and case messaging are not yet active.",
+    "Ön başvuru (kapalı)",
+    "Aanvraag (gesloten)",
+    "Enquiries (closed)"
+  ]) assert.ok(contact.includes(text), "Missing truthful release statement: " + text);
+  for (const misleading of [
+    "mesajlarınızı dosyanız üzerinden iletebilirsiniz",
+    "dan kunt u daarin berichten versturen",
+    "you can send messages through that case"
+  ]) assert.equal(contact.includes(misleading), false, misleading);
+  assert.ok(contact.includes('href={"/basvuru?lang="+lang}'));
+  assert.ok(contact.includes('href={"/auth/login?lang="+lang}'));
+});
