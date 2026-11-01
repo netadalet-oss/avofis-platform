@@ -24,3 +24,14 @@ test("public closed page remains usable independently of credentials",()=>{
  assert.match(c,/PUBLIC_ACCOUNT_LOGIN_ENABLED/);
  assert.doesNotMatch(c,/NEXT_PUBLIC_AVOFIS_(?:CLIENT_PORTAL|LOGIN)_ENABLED/);
 });
+
+test("forgot-password public page never falsely advertises functioning recovery",()=>{
+ const page=read("src/app/auth/forgot-password/page.tsx");
+ assert.match(page,/Parola kurtarma şu anda kapalı/);
+ assert.match(page,/robots:\s*\{\s*index:\s*false,\s*follow:\s*false/);
+ assert.match(page,/e-posta, parola veya kişisel belge istenmez/);
+ for(const bad of ["<form","<input","auth.resetPasswordForEmail","supabase",
+  "fetch(","process.env","type=\"password\""]){
+  assert.equal(page.includes(bad),false,bad);
+ }
+});
