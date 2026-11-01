@@ -23,6 +23,8 @@ const expanded = load("src/lib/avofis-expanded.ts");
 const site = load("src/lib/avofis-site.ts", { "./avofis-expanded": expanded });
 const catalog = load("src/lib/service-catalog.ts");
 const groups = site.audiences;
+const journeyIds = new Set(load("src/lib/journeys.ts").journeys.map(j => j.id));
+const firstPaths = load("src/lib/audience-journey-map.ts").audienceFirstPaths;
 test("AV-044: fourteen unique audiences link to all seventeen canonical services", () => {
   const services = new Set(catalog.SERVICES.map(s => s.slug));
   const audiences = new Set(groups.map(a => a.slug));
@@ -42,6 +44,28 @@ test("AV-044: fourteen unique audiences link to all seventeen canonical services
   }
   assert.deepEqual([...mapped].sort(), [...services].sort());
 });
+test("AV-044: all 14 audiences map to real 12 issue routes and privacy-safe document preparation", () => {
+  assert.equal(journeyIds.size, 12);
+  assert.deepEqual(Object.keys(firstPaths).sort(), groups.map(g => g.slug).sort());
+  const used = new Set();
+  for (const group of groups) {
+    const list = firstPaths[group.slug];
+    assert.ok(list.length > 0, group.slug);
+    assert.equal(new Set(list).size, list.length);
+    for (const id of list) {
+      assert.ok(journeyIds.has(id), group.slug + " -> " + id);
+      used.add(id);
+    }
+  }
+  assert.deepEqual([...used].sort(), [...journeyIds].sort());
+  const page = fs.readFileSync(path.join(root, "src/app/kimler-icin/page.tsx"), "utf8");
+  assert.match(page, /audienceFirstPaths\[group\.slug\]/);
+  assert.match(page, /journeysById\.get\(id\)/);
+  assert.match(page, /href=\{"\/islemler#" \+ id\}/);
+  assert.match(page, /href="\/belge-hazirlik"/);
+  assert.match(page, /hukukî uygunluk/);
+});
+
 test("audience overview is in actual public navigation, local and privacy-safe", () => {
   const page = fs.readFileSync(path.join(root, "src/app/kimler-icin/page.tsx"), "utf8");
   const home = fs.readFileSync(path.join(root, "src/app/page.tsx"), "utf8");

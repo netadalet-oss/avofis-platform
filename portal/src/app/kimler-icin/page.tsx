@@ -4,6 +4,8 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { audiences } from "@/lib/avofis-site";
 import { SERVICES } from "@/lib/service-catalog";
+import { journeys } from "@/lib/journeys";
+import { audienceFirstPaths } from "@/lib/audience-journey-map";
 
 export const metadata: Metadata = {
   title: "Kimler için? | AVOfis",
@@ -13,6 +15,7 @@ export const metadata: Metadata = {
 
 const groups = audiences;
 const servicesBySlug = new Map(SERVICES.map(item => [item.slug, item] as const));
+const journeysById = new Map(journeys.map(item => [item.id, item] as const));
 
 export default function AudiencesPage() {
   return (
@@ -58,6 +61,32 @@ export default function AudiencesPage() {
               <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-slate-300">
                 {group.needs.map(need => <li key={need.tr}>{need.tr}</li>)}
               </ul>
+              <h3 className="mt-5 text-sm font-semibold text-white">
+                Soruna göre örnek ilk bilgi rotaları
+              </h3>
+              <p className="mt-2 text-xs leading-6 text-slate-400">
+                Bunlar yalnız olası araştırma başlıklarıdır. Bir rotanın gösterilmesi
+                hukukî uygunluk, resmî süre, başvuru hakkı veya temsil yetkisi
+                hakkında değerlendirme değildir.
+              </p>
+              <ul className="mt-3 space-y-2 text-sm">
+                {(audienceFirstPaths[group.slug] ?? []).map(id => {
+                  const journey = journeysById.get(id);
+                  return journey ? (
+                    <li key={id}>
+                      <Link href={"/islemler#" + id}
+                        className="text-sky-200 underline underline-offset-4">
+                        {journey.title.tr}
+                      </Link>
+                    </li>
+                  ) : null;
+                })}
+              </ul>
+              <div className="mt-5 text-sm">
+                <Link href="/belge-hazirlik" className="text-sky-200 underline underline-offset-4">
+                  Belge türü ve veri gizliliği hazırlığı
+                </Link>
+              </div>
               <h3 className="mt-5 text-sm font-semibold text-white">İlgili hizmetler</h3>
               <ul className="mt-3 flex flex-wrap gap-2">
                 {group.serviceSlugs.map(slug => {
