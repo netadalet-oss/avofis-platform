@@ -2,8 +2,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "AvOfis Admin",
-  description: "CMS, moderasyon, kullanıcı ve sistem yönetimi"
+  title: "AvOfis | Yönetim Masası",
+  description: "Başvuru inceleme, iş ve teslim yönetimi, hukuk yayınları ve topluluk moderasyonu."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
