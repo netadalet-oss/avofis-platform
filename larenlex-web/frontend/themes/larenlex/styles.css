@@ -1,0 +1,7 @@
+:root { --ref-panel: #030A22; --ref-panel-2: #04102C; --ref-panel-3: #071738; --ref-gold: #dfbf59; --ref-gold-strong: #f0d56d; }
+html,body{background:var(--ref-panel);color:#f5f7fb;font-family:Inter,system-ui,sans-serif}
+.shell{padding:20px;max-width:1500px;margin:auto;background:var(--ref-panel);color:#f5f7fb}
+h1,h2,h3,a{color:var(--ref-gold-strong)}
+a:focus-visible{outline:3px solid var(--ref-gold)}
+.modules{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:15px;width:100%}
+.card { background: linear-gradient(145deg, rgba(4,13,38,.99), rgba(1,4,15,.998)); border:1px solid #8b783e;border-radius:14px;padding:17px; }
