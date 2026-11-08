@@ -4,9 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import {
   ArrowRight, ArrowUpRight, BookOpen, Briefcase, Check, ChevronDown,
-  ChevronRight, ClipboardList, FileText, FolderOpen, Gavel, Menu,
-  MessageSquare, Newspaper, Search, ShieldCheck, Scale, Users,
-  Wallet, X, type LucideIcon
+  ChevronRight, FileText, FolderOpen, Menu, MessageSquare,
+  Newspaper, Search, Scale, Users, Wallet, X, type LucideIcon
 } from "lucide-react";
 import {
   findPortalService, portalGroups, portalHighlights,
