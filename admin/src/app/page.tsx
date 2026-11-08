@@ -1,9 +1,5 @@
 import Link from "next/link";
-import {
-  ArrowRight, BookOpen, Briefcase, CheckCheck, ClipboardCheck,
-  CreditCard, FileText, FolderOpen, MessageCircle, Newspaper,
-  Scale, Settings2, ShieldCheck, Users
-} from "lucide-react";
+import { ArrowRight, Scale } from "lucide-react";
 
 type AdminTile = { title: string; description: string; href?: string };
 const workTiles: AdminTile[] = [
