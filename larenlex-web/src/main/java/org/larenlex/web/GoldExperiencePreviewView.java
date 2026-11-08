@@ -87,7 +87,7 @@ public class GoldExperiencePreviewView extends VerticalLayout {
   stats.setWidthFull();
   stats.add(stat("25","Modül tasarımı"),stat("554","Gerçek kart / yayın kapalı"),
       stat("1.016","Form envanteri"),stat("1.101","Kontrol eki"));
-  stats.setFlexWrap(FlexLayout.FlexWrap.WRAP);
+  stats.getStyle().set("flex-wrap","wrap");
   stage.add(stats);
   stage.add(new H3("Görüntülenebilecek alanlar — rol tasarımı"));
   FlexLayout tiles=new FlexLayout();
