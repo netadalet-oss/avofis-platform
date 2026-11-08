@@ -4,8 +4,8 @@ import { AuthProvider } from "@/components/providers/AuthProvider";
 import { EditModeProvider } from "@/components/providers/EditModeProvider";
 
 export const metadata: Metadata = {
-  title: "AvOfis",
-  description: "Hukuk araştırması, belge üretimi, topluluk ve kariyer platformu",
+  title: "AvOfis | Hukuki Hizmetler ve Bilgi Platformu",
+  description: "Hukuki hizmet talebi, iş ve teklifler, dosya takibi, makaleler, hukuk haberleri ve soru-cevap.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
