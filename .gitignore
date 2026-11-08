@@ -1,0 +1,16 @@
+# LarenLex / AvOfis migration security defaults
+# Existing tracked files are NOT automatically untracked by .gitignore.
+**/.env
+**/.env.*
+!**/.env.example
+**/node_modules/
+**/target/
+**/build/
+**/.next/
+**/.idea/
+**/*.key
+**/*.pem
+**/*.p12
+# Original v86 archive remains in verified transfer only, not git
+AVOfis_v86_TUM_CALISMALAR_TEK_ZIP_*.zip
+LarenLex_*KUMULATIF*.zip
