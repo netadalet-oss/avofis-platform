@@ -5,7 +5,7 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.server.auth.AnonymousAllowed;
+import jakarta.annotation.security.RolesAllowed;
 import java.util.*;
 
 /**
@@ -15,7 +15,7 @@ import java.util.*;
  * user's cumulative transfer ZIP, not in this public GitHub repository.
  */
 @Route("experience-preview")
-@AnonymousAllowed
+@RolesAllowed("ADMIN")
 public class GoldExperiencePreviewView extends VerticalLayout {
  private static final String[] ROLES = {"Ziyaretçi","Başvurucu","Profesyonel / uzman",
   "Operasyon yöneticisi","Sistem yöneticisi","Hukukî denetçi",
