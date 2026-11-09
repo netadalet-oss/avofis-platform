@@ -4,10 +4,10 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.router.*;
-import com.vaadin.flow.server.auth.AnonymousAllowed;
+import jakarta.annotation.security.RolesAllowed;
 import java.util.*;
 /** Zero-customer-data screen design: the final UX structure without operational privileges. */
-@Route("module-screens") @AnonymousAllowed
+@Route("module-screens") @RolesAllowed("ADMIN")
 public class ModuleScreensView extends VerticalLayout implements HasUrlParameter<String> {
  private final CatalogService catalog;
  private final VerticalLayout panel=new VerticalLayout();
