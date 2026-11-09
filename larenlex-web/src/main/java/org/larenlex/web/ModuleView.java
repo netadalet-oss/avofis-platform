@@ -2,8 +2,8 @@ package org.larenlex.web;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
-import com.vaadin.flow.server.auth.AnonymousAllowed;
-@Route("m") @AnonymousAllowed
+import jakarta.annotation.security.RolesAllowed;
+@Route("m") @RolesAllowed("ADMIN")
 public class ModuleView extends VerticalLayout implements HasUrlParameter<String> {
  private final CatalogService data;
  public ModuleView(CatalogService data){this.data=data;addClassName("shell");}
