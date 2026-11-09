@@ -103,6 +103,8 @@ public final class CaseEngine {
         if(request.suggestedBudgetCents()!=null)positiveAmount(request.suggestedBudgetCents(),"budget");
         final String summary=required(request.businessSummary(),"businessSummary",2000);
         final String signature=service+"\u0000"+country+"\u0000"+summary+"\u0000"+String.valueOf(request.suggestedBudgetCents());
+        final String summary=required(request.businessSummary(),"businessSummary",2000);
+        final String signature=service+"\u0000"+country+"\u0000"+summary+"\u0000"+String.valueOf(request.suggestedBudgetCents());
         final String clientKey=principal.subject()+"|"+tenant+"|"+required(idempotencyKey,"idempotencyKey",140);
         synchronized(submissions){
             String prior=submissions.get(clientKey);
@@ -114,7 +116,7 @@ public final class CaseEngine {
             }
             MutableCase c=new MutableCase();c.id=UUID.randomUUID().toString();c.tenant=tenant;
             c.owner=principal.subject();c.serviceId=service;c.country=country;
-            c.budget=request.suggestedBudgetCents();c.submissionSignature=signature;
+            c.budget=request.suggestedBudgetCents();c.submissionSignature=signature;c.submissionSignature=signature;
             c.history.add(new Audit(0,clock.instant(),principal.subject(),null,null,Stage.SUBMITTED));
             cases.put(c.id,c);submissions.put(clientKey,c.id);
             return view(c);

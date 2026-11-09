@@ -35,6 +35,9 @@ public final class CaseEngineSelfTest {
     new CaseEngine.Submission("tenant-A","P1/123","NL","Changed request data",25000L),
     "req-001"),"idempotency key payload collision rejected");
   fails(IllegalStateException.class,()->engine.submit(owner,
+    new CaseEngine.Submission("tenant-A","P1/123","NL","Changed request data",25000L),
+    "req-001"),"idempotency key payload collision rejected");
+  fails(IllegalStateException.class,()->engine.submit(owner,
       new CaseEngine.Submission("tenant-A","P9/999","NL","test",null),"bad"),"unknown service");
   fails(SecurityException.class,()->engine.submit(otherTenant,request,"cross"),"cross tenant submit");
   fails(SecurityException.class,()->engine.read(outsider,"tenant-A",id),"same tenant non-owner blocked");
