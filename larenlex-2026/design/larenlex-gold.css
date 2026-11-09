@@ -1,0 +1,25 @@
+:root {
+  --ref-panel: #030A22;
+  --ref-panel-2: #04102C;
+  --ref-panel-3: #071738;
+  --ref-gold: #dfbf59;
+  --ref-gold-strong: #f0d56d;
+  --ref-text: #f7f4e8;
+  --ref-muted: #b8bfd1;
+}
+
+/* Exact LarenLex Gold contract — do not approximate the specified color values. */
+html, body { background: var(--ref-panel); color: var(--ref-text); }
+.larenlex-shell, .larenlex-sidebar { background: var(--ref-panel); }
+.larenlex-panel { background: var(--ref-panel-2); }
+.larenlex-panel-raised { background: var(--ref-panel-3); }
+.card, .larenlex-card {
+  background: linear-gradient(145deg, rgba(4,13,38,.99), rgba(1,4,15,.998));
+  border: 1px solid rgba(223,191,89,.28);
+  border-radius: 14px;
+}
+.larenlex-gold { color: var(--ref-gold); }
+.larenlex-emphasis { color: var(--ref-gold-strong); }
+.larenlex-btn-primary { color: var(--ref-panel); background: var(--ref-gold); }
+.larenlex-btn-primary:hover { background: var(--ref-gold-strong); }
+.larenlex-focus:focus-visible, :focus-visible { outline: 2px solid var(--ref-gold-strong); outline-offset: 2px; }

@@ -1,0 +1,20 @@
+-- New LarenLex PostgreSQL schema; NOT any AVOfis v87 source. All privileged operations default disabled.
+CREATE TABLE legal_card(id text PRIMARY KEY,part text NOT NULL,number integer NOT NULL,title text NOT NULL,category text NOT NULL DEFAULT '',source_path text NOT NULL,sha256 char(64) NOT NULL,legal_status text NOT NULL DEFAULT 'HUKUKI_ONAY_BEKLIYOR',publication_status text NOT NULL DEFAULT 'PRIVATE_UNREVIEWED',CONSTRAINT publication_approval CHECK(publication_status<>'PUBLISHED' OR legal_status='APPROVED_BY_AUTHORIZED_REVIEWER'));
+CREATE TABLE private_card_body(card_id text PRIMARY KEY REFERENCES legal_card(id),full_text text NOT NULL,content_sha256 char(64) NOT NULL);
+CREATE TABLE source_document(source_part varchar(3) NOT NULL,source_path text NOT NULL,group_name text NOT NULL,name text NOT NULL,sha256 char(64) NOT NULL,size_bytes bigint NOT NULL,visibility text NOT NULL DEFAULT 'PRIVATE_UNREVIEWED',PRIMARY KEY(source_part,source_path));
+CREATE VIEW public_card_catalog AS SELECT id,part,number,title,category,source_path,sha256,legal_status,publication_status FROM legal_card;
+CREATE TABLE organization(id uuid PRIMARY KEY,name text NOT NULL);
+CREATE TABLE app_user(id uuid PRIMARY KEY,identity_subject text UNIQUE NOT NULL);
+CREATE TABLE client_case(id uuid PRIMARY KEY,tenant_id uuid REFERENCES organization(id) NOT NULL,title text NOT NULL,status text NOT NULL DEFAULT 'DRAFT_APPLICATION');
+CREATE TABLE case_acl(case_id uuid REFERENCES client_case(id) NOT NULL,user_id uuid REFERENCES app_user(id) NOT NULL,PRIMARY KEY(case_id,user_id));
+CREATE TABLE case_document(id uuid PRIMARY KEY,case_id uuid REFERENCES client_case(id) NOT NULL,tenant_id uuid REFERENCES organization(id) NOT NULL,storage_key text NOT NULL,content_sha256 char(64) NOT NULL);
+CREATE TABLE free_intake(id uuid PRIMARY KEY,tenant_id uuid REFERENCES organization(id),decision text NOT NULL DEFAULT 'HUMAN_REVIEW_REQUIRED',charge_cents bigint NOT NULL DEFAULT 0,CHECK(charge_cents=0));
+CREATE TABLE service_permission(country text NOT NULL,service text NOT NULL,activity text NOT NULL,verified boolean NOT NULL DEFAULT false,PRIMARY KEY(country,service,activity));
+CREATE TABLE partner_credential(partner_id uuid NOT NULL,country text NOT NULL,license_verified boolean NOT NULL DEFAULT false,PRIMARY KEY(partner_id,country));
+CREATE TABLE agency_adapter(id uuid PRIMARY KEY,name text NOT NULL,permission_verified boolean NOT NULL DEFAULT false,enabled boolean NOT NULL DEFAULT false,CHECK(NOT enabled OR permission_verified));
+CREATE TABLE psp_adapter(id uuid PRIMARY KEY,name text NOT NULL,sandbox_verified boolean NOT NULL DEFAULT false,enabled boolean NOT NULL DEFAULT false,CHECK(NOT enabled OR sandbox_verified));
+CREATE TABLE audit_event(id bigserial PRIMARY KEY,at timestamptz NOT NULL DEFAULT now(),actor text NOT NULL,tenant_id uuid,activity text NOT NULL,result text NOT NULL);
+ALTER TABLE client_case ENABLE ROW LEVEL SECURITY; ALTER TABLE client_case FORCE ROW LEVEL SECURITY;
+CREATE POLICY case_tenant_gate ON client_case USING (tenant_id::text=current_setting('larenlex.tenant_id',true) AND EXISTS(SELECT 1 FROM case_acl acl JOIN app_user u ON u.id=acl.user_id WHERE acl.case_id=client_case.id AND u.identity_subject=current_setting('larenlex.user_sub',true)));
+ALTER TABLE case_document ENABLE ROW LEVEL SECURITY; ALTER TABLE case_document FORCE ROW LEVEL SECURITY;
+CREATE POLICY document_tenant_gate ON case_document USING (tenant_id::text=current_setting('larenlex.tenant_id',true) AND EXISTS(SELECT 1 FROM case_acl acl JOIN app_user u ON u.id=acl.user_id WHERE acl.case_id=case_document.case_id AND u.identity_subject=current_setting('larenlex.user_sub',true)));

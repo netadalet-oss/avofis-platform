@@ -1,0 +1,25 @@
+M01	Kamusal ana sayfa, tanıtım ve erişilebilirlik	Herkese açık erişim, menü ve yol gösterme
+M02	Kamu hukuk kütüphanesi ve kaynak araması	554 kart, hukuki onaylı bilgi, ECLI, kaynak sürümleri
+M03	Hizmet kataloğu ve ülke/yetki kapısı	NL/DE/BE/TR, konu ve işlem bazlı izin ayrımı
+M04	Başvuru alma ve ücretsiz ön değerlendirme	Anonim/kayıtlı başvuru, ücret öncesi ret
+M05	Kişisel ve kurumsal hesaplar	Kimlik, temsil ve dosya kısıtları
+M06	Teklif, bütçe, fiyat kalemleri	Upwork benzeri teklif karşılaştırma
+M07	Sözleşme, kilometre taşı, değişiklik	Kabul, sözleşme kapsamı, iptal/itiraz
+M08	Tahsilat, PSP, finans ve fatura	Müşteri fonuna izinsiz el koymama, iade
+M09	Dosya, evrak, versiyon, arşiv	UYAP benzeri ancak bağımsız dosya yönetimi
+M10	İş planı, görevler, sorumlular, takvim	Süre, SLA, fiziksel işlem, bildirim
+M11	Teslim, revizyon ve müşteri kabul	Çıktı sürümü, delil paketi, teslim hash
+M12	İç iletişim, güvenli mesaj ve bildirim	Gizlilik ve iletişim geçmişi
+M13	İç hukukçu/çalışan çalışma masası	Atanmış dosya, taslak ve ön kontrol
+M14	Admin/yönetim paneli	Yetkili role, MFA, dört göz ilkesi
+M15	Hukuki onay, yayın ve uygunluk denetimi	Şirket yetkisi, karşıt içtihat, meslek kuralı
+M16	Partner/advocaat/mali müşavir/tercüman	Ruhsat doğrulama, alt iş ve açık müşteri onayı
+M17	Kurum arayüzleri/izinli entegrasyon	API, manuel, fiziksel; UYAP izinsiz robot yok
+M18	Sınır ötesi işlem, vekalet ve temsil	Yetki kapsamı, ülke/kurum kuralı, süre
+M19	Göç, öğrenci, iş, aile, turizm danışmanlık	İlgili düzenlenmiş hizmet kontrolü
+M20	İhracat-ithalat, ticaret ve pazar eşleştirme	Şirketler, sözleşmeler, ticari bilgi
+M21	Çok dillilik, içerik yönetimi ve çeviri	TR/NL/EN/DE; kaynak sürüm/onay
+M22	Denetim izi, veri koruma, hak talepleri	GDPR, tenant izolasyonu, retention
+M23	Analitik, rapor, işlem ve finans izleme	Yönetişim göstergeleri; veri minimizasyonu
+M24	Geliştirici API, webhook ve mobil hazırlık	OpenAPI, sürümlendirme, rate limit
+M25	İşletim, yedek, izleme ve güvenlik	CI/CD, health, restore testi, incident

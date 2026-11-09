@@ -1,0 +1,555 @@
+id	group_id	group_name	name	description	form_count	control_count
+P1/123	calisma	İş ve Çalışma Hukuku	Belirli ve belirsiz süreli sözleşme koşullarının karşılaştırılması	İş sözleşmeleri, ücret, fesih ve çalışma koşulları	1	3
+P1/125	calisma	İş ve Çalışma Hukuku	Bordro–iş sözleşmesi–CAO ücret mutabakatı	İş sözleşmeleri, ücret, fesih ve çalışma koşulları	1	3
+P1/124	calisma	İş ve Çalışma Hukuku	Deneme süresi, rekabet yasağı ve gizlilik hükümlerinin üç ayrı kontrolü	İş sözleşmeleri, ücret, fesih ve çalışma koşulları	1	3
+P1/126	calisma	İş ve Çalışma Hukuku	Eksik ücret, vakantiebijslag ve fazla mesai alacağı	İş sözleşmeleri, ücret, fesih ve çalışma koşulları	1	3
+P1/127	calisma	İş ve Çalışma Hukuku	Fesih bildirimi ve iş sözleşmesinin sona ermesi denetimi	İş sözleşmeleri, ücret, fesih ve çalışma koşulları	1	3
+P1/130	calisma	İş ve Çalışma Hukuku	Hastalık bildirimi ve işverenle idarî yazışma	HR kayıtlarında teşhis bilgisi tutmama; varsa tıbbî belgeleri yalnız bedrijfsarts/arbodienst güvenli kanalına gönderme koşulu özellikle korunur	1	3
+P1/537	calisma	İş ve Çalışma Hukuku	Hastalık sonrası işe dönüşte re-integratie / Plan van Aanpak belgelerinin işveren–çalışan yazışma ve usul yönünü incelemek	İş sözleşmeleri, ücret, fesih ve çalışma koşulları	1	3
+P1/135	calisma	İş ve Çalışma Hukuku	İş sözleşmesinde ülke ve görev yeri değişikliği ek protokolü	A1, sosyal güvenlik uygulanacak ülke, vergi mukimliği, posting ve oturum/çalışma izni alanları bu ek protokolle tek başına çözülemez	1	3
+P1/138	calisma	İş ve Çalışma Hukuku	İş uyuşmazlığı delillerini kanton usulüne göre dosyalama	İş sözleşmeleri, ücret, fesih ve çalışma koşulları	1	3
+P1/122	calisma	İş ve Çalışma Hukuku	İşe başlamadan önce iş sözleşmesi risk incelemesi	İş sözleşmeleri, ücret, fesih ve çalışma koşulları	1	3
+P1/134	calisma	İş ve Çalışma Hukuku	İşten ayrılışta izin, ücret ve geçiş ödeneği hesabının ayrı denetimi	İş sözleşmeleri, ücret, fesih ve çalışma koşulları	1	3
+P1/129	calisma	İş ve Çalışma Hukuku	İşverenin uyarı, ihtar ve devamsızlık yazılarına işçi cevabı	Bir uyarı yazısına itiraz, mevcut derhal feshi veya mahkeme başvuru sürelerini kendiliğinden durdurmaz	1	3
+P1/136	calisma	İş ve Çalışma Hukuku	İşverenin zarar/ücret kesintisi/avans iddiasına karşı itiraz	İş sözleşmeleri, ücret, fesih ve çalışma koşulları	1	3
+P1/131	calisma	İş ve Çalışma Hukuku	İşyeri ayrımcılığı, taciz ve kötü muamele şikâyet dosyası	İş sözleşmeleri, ücret, fesih ve çalışma koşulları	1	3
+P1/137	calisma	İş ve Çalışma Hukuku	İşçi–işveren görüşmesini tarafların onayıyla tarafsız usulde organize etme	İş sözleşmeleri, ücret, fesih ve çalışma koşulları	1	3
+P1/139	calisma	İş ve Çalışma Hukuku	Kanton iş uyuşmazlığında izinli temsil ve usul hazırlığı	İş sözleşmeleri, ücret, fesih ve çalışma koşulları	1	3
+P4/140	calisma	İş ve Çalışma Hukuku	Küçük işletmenin müşteriyle hizmet ve mal satışı sözleşmeleri	İş sözleşmeleri, ücret, fesih ve çalışma koşulları	2	1
+P1/538	calisma	İş ve Çalışma Hukuku	Küçük işveren için işe alım, görev değişikliği ve personel yazıları	İşe alım mektubu, görev değişikliği ve disiplin uyarısı ayrı hukuki sonuçlar doğurur; tek belgeye “fesih kararı” etkisi verilmez	1	3
+P1/536	calisma	İş ve Çalışma Hukuku	Uitzendbureau–inlener–işçi üçgeninde ücret ve çalışma koşulları	İş sözleşmeleri, ücret, fesih ve çalışma koşulları	1	3
+P1/133	calisma	İş ve Çalışma Hukuku	Vardiya, izin ve fazla mesai uyuşmazlığında uzlaşma	İzin talebine itiraz ve fazla mesai ücreti farklı hukuki testlerdir. Bu kart, her fazla mesainin kanunen sabit oranla ödeneceğini varsaymaz	1	3
+P1/128	calisma	İş ve Çalışma Hukuku	Vaststellingsovereenkomst (VSO) ile karşılıklı fesih incelemesi	İş sözleşmeleri, ücret, fesih ve çalışma koşulları	1	3
+P1/132	calisma	İş ve Çalışma Hukuku	Ücret, işe dönüş veya fesih koşullarında işverenle müzakere	İş sözleşmeleri, ücret, fesih ve çalışma koşulları	1	3
+P3/48	oturum	Oturum ve Göç İşlemleri	Düzenli süreli oturum uzatması: uygunluk, evrak ve başvuru takvimi	IND, oturum izni, aile birleşimi ve göçmenlik işlemleri	1	2
+P3/49	oturum	Oturum ve Göç İşlemleri	Eş veya aile birleşimi dosyasının resmî başvuru belgelerini düzenlemek	Regulier partner başvuruları (evli/kayıtlı/eş olmayan partner); iltica nareis ve AB serbest dolaşımı kapsamındaki aile işlemlerinin ayrı rejim olduğunu göstermek	1	2
+P3/52	oturum	Oturum ve Göç İşlemleri	Hollanda’nın nihai karar mercii olduğu kısa kalış/transit vizesi reddine karşı IND nezdinde sadece kabul edilen özel	IND, oturum izni, aile birleşimi ve göçmenlik işlemleri	1	2
+P3/59	oturum	Oturum ve Göç İşlemleri	IND karar süreleri, ingebrekestelling ve niet-tijdig-beslissen takibi	IND, oturum izni, aile birleşimi ve göçmenlik işlemleri	1	2
+P3/58	oturum	Oturum ve Göç İşlemleri	IND’nin eksik evrak veya açıklama talebine cevap dosyası hazırlamak	Devam eden IND regulier başvurusu/bezwaar içinde bir aanvulbrief; mahkeme beroep dosyası için IND portali kullanılmaz	1	2
+P3/62	oturum	Oturum ve Göç İşlemleri	İkamet kararı, iş sözleşmesi ve sponsor bildirimlerindeki tutarsızlıkların giderilmesi	IND, oturum izni, aile birleşimi ve göçmenlik işlemleri	1	2
+P3/64	oturum	Oturum ve Göç İşlemleri	İltica, geri gönderme veya acil süre riski içeren dosyaları derhal uzman avukat kanalına yönlendirmek	IND, oturum izni, aile birleşimi ve göçmenlik işlemleri	1	2
+P3/61	oturum	Oturum ve Göç İşlemleri	İşveren-çalışan oturum/çalışma izni belge koordinasyonu	IND, oturum izni, aile birleşimi ve göçmenlik işlemleri	1	2
+P3/56	oturum	Oturum ve Göç İşlemleri	Kalıcı oturum başvurusu için ikamet geçmişi ve belge listesi çıkarmak	Regulier onbepaalde tijd (type II) ile EU-langdurig ingezetene (type V) ayrımını yapmak; başvuru yerine uygunluk/belge ön incelemesi	1	2
+P3/60	oturum	Oturum ve Göç İşlemleri	Kimlik, aile ve medeni hâl belgeleri için kaynak/tercüme/legalizasyon zinciri	IND, oturum izni, aile birleşimi ve göçmenlik işlemleri	1	2
+P3/50	oturum	Oturum ve Göç İşlemleri	MVV ve uzun süreli ikamet işlemlerinin başvuru sırasını açıklamak	MVV (D tipi giriş etiketi) ile Hollanda düzenli ikamet iznini ayırmak; uygunluk şartları ID531/49’da ayrıca değerlendirilir	1	2
+P3/57	oturum	Oturum ve Göç İşlemleri	Naturalisatie ile optie: vatandaşlık için idarî belge hazırlığı	IND, oturum izni, aile birleşimi ve göçmenlik işlemleri	1	2
+P3/54	oturum	Oturum ve Göç İşlemleri	Olumlu IND oturum kararıyla verilen izin başlangıç tarihi/arbeidsmarktaantekening uyuşmazlığında gerekçeli bezwaar	IND, oturum izni, aile birleşimi ve göçmenlik işlemleri	1	2
+P3/47	oturum	Oturum ve Göç İşlemleri	Oturum kartındaki çalışma ve serbest meslek şerhinin açıklanması ve gerekirse düzeltilmesi	IND, oturum izni, aile birleşimi ve göçmenlik işlemleri	1	2
+P3/55	oturum	Oturum ve Göç İşlemleri	Oturum kartının kaybı, çalınması, hasarı, hatalı verisi veya belgenin süresinin yenilenmesi	IND, oturum izni, aile birleşimi ve göçmenlik işlemleri	1	2
+P3/51	oturum	Oturum ve Göç İşlemleri	Schengen ret formundaki kod/gerekçelerin IND itirazı açılmadan önce analitik değerlendirilmesi	IND, oturum izni, aile birleşimi ve göçmenlik işlemleri	1	2
+P3/63	oturum	Oturum ve Göç İşlemleri	Sınır ötesi aile oturumu: ulusal aile, AB serbest dolaşım ve asiel-nareis ayrımı	IND, oturum izni, aile birleşimi ve göçmenlik işlemleri	1	2
+P3/53	oturum	Oturum ve Göç İşlemleri	Verilmiş fakat kapsamı, sınırlaması, süresi veya karara bağlanan unsuru ihtilaflı düzenli oturum kararına gerekçeli IND	IND, oturum izni, aile birleşimi ve göçmenlik işlemleri	1	2
+P5/114	sosyal	Sosyal Güvenlik ve Emeklilik	Anw nabestaandenuitkering ve ayrı wezenuitkering delil dosyası	UWV, SVB, AOW, SGK ve sosyal haklar	2	1
+P5/121	sosyal	Sosyal Güvenlik ve Emeklilik	AOW kararında ikamet, aile durumu ve gelir verisi düzeltme	UWV, SVB, AOW, SGK ve sosyal haklar	2	1
+P5/108	sosyal	Sosyal Güvenlik ve Emeklilik	AOW kesintisi veya eksik aylık hesabına ilişkin itiraz hazırlamak	UWV, SVB, AOW, SGK ve sosyal haklar	1	1
+P5/117	sosyal	Sosyal Güvenlik ve Emeklilik	AOW/Anw yurt dışı ödemesi, yaşam belgesi ve banka değişikliği takibi	UWV, SVB, AOW, SGK ve sosyal haklar	1	1
+P5/107	sosyal	Sosyal Güvenlik ve Emeklilik	Eksik AOW sigortalılık sürelerinin delille yeniden incelenmesi	UWV, SVB, AOW, SGK ve sosyal haklar	2	1
+P5/120	sosyal	Sosyal Güvenlik ve Emeklilik	Emeklilik başlangıcının sağlık sigortası, CAK ve vergilendirme etkisinin ön incelemesi	UWV, SVB, AOW, SGK ve sosyal haklar	1	1
+P5/105	sosyal	Sosyal Güvenlik ve Emeklilik	Hollanda AOW yaşlılık aylığı başvuru belgelerini hazırlamak	UWV, SVB, AOW, SGK ve sosyal haklar	1	1
+P5/113	sosyal	Sosyal Güvenlik ve Emeklilik	Hollanda ikametli Türk sigortalısının SGK yaşlılık tahsis belge koordinasyonu	UWV, SVB, AOW, SGK ve sosyal haklar	1	1
+P1/93	sosyal	Sosyal Güvenlik ve Emeklilik	İzinli UWV kararlarına karşı yazılı yetkiyle bezwaar sunmak	UWV, SVB, AOW, SGK ve sosyal haklar	1	3
+P5/539	sosyal	Sosyal Güvenlik ve Emeklilik	İşverenin çalışanı işyeri emeklilik fonuna hiç kaydetmemesi veya prim bildirimlerinin eksik olması uyuşmazlığında bordro	UWV, SVB, AOW, SGK ve sosyal haklar	1	1
+P5/118	sosyal	Sosyal Güvenlik ve Emeklilik	Levensbewijs yetkili makam, randevu ve teslim koordinasyonu	UWV, SVB, AOW, SGK ve sosyal haklar	2	1
+P1/103	sosyal	Sosyal Güvenlik ve Emeklilik	PD U1 ve sınır ötesi işsizlik sigortalılık dönemlerinin doğrulanması	UWV, SVB, AOW, SGK ve sosyal haklar	1	3
+P5/111	sosyal	Sosyal Güvenlik ve Emeklilik	SGK–SVB sosyal güvenlik sürelerinin karşılıklı teyidi ve hizmet birleştirme belge koordinasyonu	UWV, SVB, AOW, SGK ve sosyal haklar	1	1
+P5/116	sosyal	Sosyal Güvenlik ve Emeklilik	SVB kinderbijslag karar ve aile/çocuk yardımının belge denetimi	UWV, SVB, AOW, SGK ve sosyal haklar	2	1
+P5/119	sosyal	Sosyal Güvenlik ve Emeklilik	SVB posta ve dijital yazışma eksiklikleri	UWV, SVB, AOW, SGK ve sosyal haklar	2	1
+P5/115	sosyal	Sosyal Güvenlik ve Emeklilik	SVB'nin Anw ret veya geri ödeme kararlarını değerlendirmek	UWV, SVB, AOW, SGK ve sosyal haklar	1	1
+P5/109	sosyal	Sosyal Güvenlik ve Emeklilik	SVB'nin izinli kararlarına karşı yazılı yetkiyle bezwaar takip etmek	UWV, SVB, AOW, SGK ve sosyal haklar	1	1
+P1/104	sosyal	Sosyal Güvenlik ve Emeklilik	Sınır ötesi işsizlik: yetkili ülke, PD U1 ve PD U2 ayırımı	UWV, SVB, AOW, SGK ve sosyal haklar	1	3
+P5/112	sosyal	Sosyal Güvenlik ve Emeklilik	Türkiye ikametli eski Hollanda çalışanının AOW ilk başvuru dosyası	UWV, SVB, AOW, SGK ve sosyal haklar	1	1
+P5/110	sosyal	Sosyal Güvenlik ve Emeklilik	Türkiye–Hollanda çalışma süresi karşılaştırma cetveli	UWV, SVB, AOW, SGK ve sosyal haklar	2	1
+P1/101	sosyal	Sosyal Güvenlik ve Emeklilik	UWV bezwaar hoorzitting: dinlenilme, belge sunumu ve tutanak kontrolü	UWV, SVB, AOW, SGK ve sosyal haklar	1	3
+P1/100	sosyal	Sosyal Güvenlik ve Emeklilik	UWV dosyasına erişim: AVG, bezwaar dosyası ve işlem durumu ayrımı	UWV, SVB, AOW, SGK ve sosyal haklar	1	3
+P1/97	sosyal	Sosyal Güvenlik ve Emeklilik	UWV eksik belge isteminin usulî takibi ve tıbbî verinin ayrılması	UWV, SVB, AOW, SGK ve sosyal haklar	1	3
+P1/98	sosyal	Sosyal Güvenlik ve Emeklilik	UWV polisadministratie: işverenin çalışma ve ücret kayıtlarını karşılaştırma	UWV, SVB, AOW, SGK ve sosyal haklar	1	3
+P1/102	sosyal	Sosyal Güvenlik ve Emeklilik	UWV uyuşmazlığında üst yargı/uzman sevki ve süre koruma dosyası	UWV, SVB, AOW, SGK ve sosyal haklar	1	3
+P1/91	sosyal	Sosyal Güvenlik ve Emeklilik	UWV WW başvurusu için çalışma ve işten ayrılış kayıtlarını düzenlemek	UWV, SVB, AOW, SGK ve sosyal haklar	1	3
+P1/94	sosyal	Sosyal Güvenlik ve Emeklilik	UWV'nin geri ödeme veya cezai kesinti kararını incelemek	UWV, SVB, AOW, SGK ve sosyal haklar	1	3
+P1/96	sosyal	Sosyal Güvenlik ve Emeklilik	WIA değerlendirmesi: idarî, işyeri ve re-integratie belgelerinin hazırlanması	UWV, SVB, AOW, SGK ve sosyal haklar	1	3
+P1/99	sosyal	Sosyal Güvenlik ve Emeklilik	WW kararındaki çalışma, referteperiode ve dagloon hesaplarının denetimi	UWV, SVB, AOW, SGK ve sosyal haklar	1	3
+P1/92	sosyal	Sosyal Güvenlik ve Emeklilik	WW reddi veya kesilmesi kararına yönelik gerekçeli itiraz dosyası hazırlamak	UWV, SVB, AOW, SGK ve sosyal haklar	1	3
+P5/106	sosyal	Sosyal Güvenlik ve Emeklilik	Yurt dışında yaşayan AOW başvuranının yetkili merci tayini	UWV, SVB, AOW, SGK ve sosyal haklar	1	1
+P1/95	sosyal	Sosyal Güvenlik ve Emeklilik	Ziektewet (ZW) başvurusunda yetkili bildirimin ve evrakın hazırlanması	UWV, SVB, AOW, SGK ve sosyal haklar	1	3
+P2/65	vergi	Vergi ve Kamu Kararları	Aanslag-onderbouwing: hesap unsurları, ön ödemeler ve itiraz yolu denetimi	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/68	vergi	Vergi ve Kamu Kararları	Belastingboete, belastingrente ve invorderingsrente kararlarını ön ayrıştırma	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/77	vergi	Vergi ve Kamu Kararları	Belastingdienst ve Dienst Toeslagen idarî para cezalarının gerekçeli itiraz analizi	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/73	vergi	Vergi ve Kamu Kararları	Belastingontvanger: uitstel van betaling ve betalingsregeling talebi	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/33	vergi	Vergi ve Kamu Kararları	Belediye bezwaar dinleme oturumunda temsil ve hoorzitting	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/46	vergi	Vergi ve Kamu Kararları	Belediye Burgerzaken randevu koordinasyonu, kimlik kontrolü ve belge tesliminin ispatı	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/38	vergi	Vergi ve Kamu Kararları	Belediye harç, idarî ceza ve masraf kararlarının tür ayrımı	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/44	vergi	Vergi ve Kamu Kararları	Belediye işlem gecikmesi ve cevap yükümlülüğü takibi	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/32	vergi	Vergi ve Kamu Kararları	Belediye kararına karşı bezwaar: süre, hoorplicht ve dossierinzage	Gemeente besluituna karşı menfaat sahibi adına geçerli yazılı yetkiyle, doğru karar/kurum/tebliğ tarihi temelinde bezwaar dosyası hazırlanması	2	3
+P2/39	vergi	Vergi ve Kamu Kararları	Belediye vergileri ve yerel harçlar için gerekçeli itiraz	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/42	vergi	Vergi ve Kamu Kararları	Belediye Woo kamusal bilgi ve şahsî dosyaya erişim talepleri	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/45	vergi	Vergi ve Kamu Kararları	Belediye şikâyet dosyası ve lokale/Nationale ombudsman sevki	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/36	vergi	Vergi ve Kamu Kararları	BRP adresonderzoek: adresin fiilen kullanımı, zienswijze ve re’sen silme tehdidi	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/37	vergi	Vergi ve Kamu Kararları	BRP ikamet/yerleşim kaydı ret veya gecikmesi	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/34	vergi	Vergi ve Kamu Kararları	BRP kişisel veri ve tarihsel adres kaydı için rectificatieverzoek	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/35	vergi	Vergi ve Kamu Kararları	BRP uittreksel, burgerlijke stand afschrift ve uluslararası kullanılacak belge seçimi	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/67	vergi	Vergi ve Kamu Kararları	BTW ve vennootschapsbelasting için ayrı karar/ödeme itiraz kanallarının kontrolü	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/78	vergi	Vergi ve Kamu Kararları	DigiD Machtigen ve eHerkenning ketenmachtiging: kapsamlı ama sınırlı yetki kurulumu	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/70	vergi	Vergi ve Kamu Kararları	Fiilî çalışma, fiziksel bulunma ve vergi ikameti günlerinin ayrıştırılması	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/31	vergi	Vergi ve Kamu Kararları	Gemeente kararının gerekçe ve başvuru yolu denetimi	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/43	vergi	Vergi ve Kamu Kararları	Gemeente sosyal destek, Wmo, bijstand ve hizmet kararlarına bezwaar	Wmo 2015 destek kararı, Participatiewet sosyal yardım kararı veya belediye konut/hizmet kararında ayrı özel kanun rejimlerine göre itiraz dosyası hazırlama. Huurcommissie ve konut kira bedel	2	3
+P2/40	vergi	Vergi ve Kamu Kararları	Gemeente/Waa­ter­schap karma tahakkuk: afvalstoffenheffing, WOZ/OZB ve su idaresi ayrıştırması	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/72	vergi	Vergi ve Kamu Kararları	Hollanda–Türkiye gelir ve ikamet kayıtlarının çift kaynaklı karşılaştırılması	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/75	vergi	Vergi ve Kamu Kararları	Huurtoeslag ve zorgtoeslag geri alma kararında hesap ve orantılılık denetimi	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/71	vergi	Vergi ve Kamu Kararları	IB-aangifte belge toplama ve müvekkil onaylı hazırlık kontrolü	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/66	vergi	Vergi ve Kamu Kararları	Kesin gelir vergisi tahakkukuna karşı gerekçeli bezwaar ve vekâlet	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/543	vergi	Vergi ve Kamu Kararları	MRB ek tahakkuk, ceza ve ödeme itirazı	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/76	vergi	Vergi ve Kamu Kararları	Toeslagen beschikking bezwaar: avans, kesin hesap, iade borcu ve ceza ayrımı	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/74	vergi	Vergi ve Kamu Kararları	Vergi tahakkuku hesap ayrıntısı, gerekçe ve ilgili dosya belgelerini isteme	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/79	vergi	Vergi ve Kamu Kararları	Vergi/gelir düzeltmesinden sonra Toeslagen ve diğer kurum bildirimlerinin izlenmesi	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/41	vergi	Vergi ve Kamu Kararları	WOZ değerleme itirazı ve referans taşınmaz analizi	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/69	vergi	Vergi ve Kamu Kararları	Yanlış gelir, BRP adresi ve toeslagpartner aile kayıtlarını ilgili kayıt sahibinde düzeltme	Vergi, toeslagen, belediye ve idari kararlar	2	3
+P2/158	konut	Kira ve Gayrimenkul	Başlangıç kira bedelinin WWS/Huurcommissie denetimi	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/166	konut	Kira ve Gayrimenkul	Depozito mahsubu ve kiralananda hasar iddialarının kalem bazlı denetimi	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/179	konut	Kira ve Gayrimenkul	Gayrimenkul uzlaşması, fiyat indirimi ve sınırlandırılmış finale kwijting	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/173	konut	Kira ve Gayrimenkul	Gayrimenkul ön müzakeresi, ödeme ve finansman koşulları	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/174	konut	Kira ve Gayrimenkul	Gayrimenkulde satış bedeli, kapora, finansman şartı ve cezai şart itirazı	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/168	konut	Kira ve Gayrimenkul	Giriş ve çıkış teslim durumunun fotoğraf/tutanak üzerinden ispat karşılaştırması	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/163	konut	Kira ve Gayrimenkul	Haksız aracılık, anahtar ve sözleşme ücretlerinin iadesi	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/159	konut	Kira ve Gayrimenkul	Huurcommissie yıllık servis gideri ve ön ödeme hesaplaşması	Huurcommissie servis masrafı ve yıllık gider hesaplaşmasını karşılaştırmak	2	3
+P2/181	konut	Kira ve Gayrimenkul	İpotek veya finansman koşulu nedeniyle satış iptaline ilişkin sözleşmeyi değerlendirmek	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/170	konut	Kira ve Gayrimenkul	Kanton kira davasında yazılı temsil ve usul yetkisi	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/169	konut	Kira ve Gayrimenkul	Karşılıklı anlaşmalı kira sona erdirme ve çıkış protokolü	Ev sahibinin sözleşme feshi talebinde anlaşmaya dayalı çıkış protokolü hazırlamak	2	3
+P2/157	konut	Kira ve Gayrimenkul	Kira artışına itiraz: 2026 segment, sözleşme ve süre incelemesi	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/164	konut	Kira ve Gayrimenkul	Kira borcu: hesap dökümü, sürdürülebilir ödeme planı ve uzlaşma	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/156	konut	Kira ve Gayrimenkul	Kira güvence bedelinin iadesi ve hukuka aykırı mahsup	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/162	konut	Kira ve Gayrimenkul	Kira sona erdirme ve tahliye talebinin hukukî ön incelemesi	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/165	konut	Kira ve Gayrimenkul	Kiracıya sözleşme ihlali bildirimi ve orantılı ihtar	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/540	konut	Kira ve Gayrimenkul	Komşular arası gürültü, sınır, geçit ve ortak alan anlaşmazlığı	Komşular arasında sınır, gürültü, ortak geçit veya ortak alan kullanımı anlaşmazlığına ilişkin yazılı ihtar, delil listesi ve gönüllü uzlaşma dosyası hazırlamak	2	3
+P2/155	konut	Kira ve Gayrimenkul	Konut kira sözleşmesi ve özel şartlarının madde madde incelemesi	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/171	konut	Kira ve Gayrimenkul	Konut ve işyeri satış sözleşmesi şartları ve kırmızı bayrak incelemesi	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/161	konut	Kira ve Gayrimenkul	Nem, küf, sızıntı ve ısıtma için teknik delil ve bildirim dosyası	Nem, küf, sızıntı ve ısıtma sorunu için delil ve yazışmaları düzenlemek	2	3
+P2/178	konut	Kira ve Gayrimenkul	Noter ile tapu devri gününe ait gerekli evrakların koordinasyonunu yapmak	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/160	konut	Kira ve Gayrimenkul	Onderhoudsgebreken: yazılı bildirim, onarım ve kira indirimi	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/172	konut	Kira ve Gayrimenkul	Satıcının ayıp açıklamaları, teslim ve gizli ayıp denetimi	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/177	konut	Kira ve Gayrimenkul	Satış emlakçısı komisyonu ve bilgilendirme uyuşmazlığı	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/175	konut	Kira ve Gayrimenkul	Satıştan sonra ortaya çıkan rutubet, çatı ve tesisat ayıbının delillerini düzenlemek	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/183	konut	Kira ve Gayrimenkul	Tapu devri, resmî senet ve ayrılmış para hesabında noter koordinasyonu	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	2
+P2/176	konut	Kira ve Gayrimenkul	Taşınmaz gizli ayıp bildirimi, satıcıya inceleme hakkı ve tazminat	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/180	konut	Kira ve Gayrimenkul	Taşınmazla devredilecek demirbaş ve eşya listesi uyuşmazlığı	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P2/167	konut	Kira ve Gayrimenkul	VvE ortak gider, genel kurul kararı ve bütçe uyuşmazlığı	VvE ortak gider ve yönetim kararı uyuşmazlığında belge ve şikâyet hazırlamak	2	3
+P2/182	konut	Kira ve Gayrimenkul	Yurt dışındaki taşınmaz satışında iki ülke belge ve uzman koordinasyonu yürütmek	Kira ilişkileri, konut sorunları ve taşınmaz işlemleri	2	3
+P5/232	tuketici	Tüketici ve Abonelik	Ayrıntılı fatura, numara taşıma ve iptal koordinasyonu	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P4/289	tuketici	Tüketici ve Abonelik	Ayıplı tüketici satışında onarım, değiştirme ve bedel uzlaşması	Tüketici ile satıcı arasında onarım, ürün değişimi veya iade uzlaşması hazırlamak	2	1
+P4/277	tuketici	Tüketici ve Abonelik	Ayıplı veya eksik teslim edilen ürün için yasal talep yazısı hazırlamak	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P2/276	tuketici	Tüketici ve Abonelik	Belediyeden enerji desteği, bijzondere bijstand ve schuldhulpverlening	Alışveriş, garanti, enerji ve telekom sorunları	2	3
+P5/238	tuketici	Tüketici ve Abonelik	Cihaz taksit/kredi sözleşmesi ile telekom hizmet aboneliğinin ayrıştırılması	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P5/236	tuketici	Tüketici ve Abonelik	Dijital platform ve uygulama aboneliğinde fesih, cayma ve iade	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P2/270	tuketici	Tüketici ve Abonelik	Doorlopende incasso na beëindiging energieabonnement	Doorlopende incasso na beëindiging energieabonnement. Diğer kolun kartına veya master 554 tablosuna müdahale yoktur	2	3
+P2/267	tuketici	Tüketici ve Abonelik	Elektrik veya doğal gaz tedarikçisinin fatura gecikmesi sorunu için şikâyet oluşturmak	Alışveriş, garanti, enerji ve telekom sorunları	2	3
+P2/273	tuketici	Tüketici ve Abonelik	Enerji borcunda ödeme planı, korunma ve hesap mutabakatı	Enerji borcunda ödeme planı, korunma ve hesap mutabakatı. Diğer kolun kartına veya master 554 tablosuna müdahale yoktur	2	3
+P2/274	tuketici	Tüketici ve Abonelik	Enerji tedarikçisi uyuşmazlığında doğru şikâyet mercii	Enerji tedarikçisi uyuşmazlığında doğru şikâyet mercii. Diğer kolun kartına veya master 554 tablosuna müdahale yoktur	2	3
+P2/271	tuketici	Tüketici ve Abonelik	Enerjide erken fesih bedeli veya yeni tarife uygulamasına itiraz	Alışveriş, garanti, enerji ve telekom sorunları	2	2
+P5/234	tuketici	Tüketici ve Abonelik	Geschillencommissie Telecommunicatiediensten ve ACM ConsuWijzer koordinasyonu	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P4/291	tuketici	Tüketici ve Abonelik	Haksız veya sahte fatura ve tahsilat baskısına itiraz	Sözleşme hiç kurulmamış mı, mevcut borcun yalnız masraf/faiz kısmı mı haksız, tahsilat üçüncü kişi adına mı yapılıyor sorularını ayırma	2	1
+P5/228	tuketici	Tüketici ve Abonelik	İnternet hizmetinin yavaşlığı veya kesintisi nedeniyle ücret iadesi talebi hazırlamak	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P5/237	tuketici	Tüketici ve Abonelik	İptal sonrası otomatik tahsilat ve SEPA iadesi	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P2/272	tuketici	Tüketici ve Abonelik	İstem dışı tedarikçi değişikliği ve kurulmamış enerji sözleşmesi	İstem dışı tedarikçi değişikliği ve kurulmamış enerji sözleşmesi. Diğer kolun kartına veya master 554 tablosuna müdahale yoktur	2	3
+P4/288	tuketici	Tüketici ve Abonelik	İç şikâyet ve yetkili sektörel tüketici uyuşmazlık komisyonu	Sektör, karşı taraf tüzel kişiliği, tüketici sıfatı, kurum üyeliği, ilgili reglement sürümü ve yargı/ADR kesişimini somut dosyada denetleme	2	1
+P2/268	tuketici	Tüketici ve Abonelik	İçme suyu tüketim ve fatura uyuşmazlığı	Alışveriş, garanti, enerji ve telekom sorunları	2	2
+P2/275	tuketici	Tüketici ve Abonelik	Kiracıya yansıtılan gaz, elektrik, su ve servis giderleri	Kiracıya yansıtılan gaz, elektrik, su ve servis giderleri. Diğer kolun kartına veya master 554 tablosuna müdahale yoktur	2	3
+P4/283	tuketici	Tüketici ve Abonelik	Kredi kartı işlemine itiraz: chargeback ile yetkisiz işlemin ayrı usulleri	Kartla doğrudan satın alım, satıcıya ödenmiş meblağ, teslim/ayıp/iptal uyuşmazlığı ve kart hamilinin onaylamadığı işlem olgularını birbirinden ayırma	2	1
+P4/278	tuketici	Tüketici ve Abonelik	Mesafeli satışta cayma bildirimi, mal iadesi ve geri ödeme	İnternet alışverişinde cayma ve iade uyuşmazlığını incelemek	2	1
+P5/229	tuketici	Tüketici ve Abonelik	Mobil operatörün yanlış faturasına itiraz dosyalamak	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P4/282	tuketici	Tüketici ve Abonelik	Online pazar yerinde satıcı/platform sorumluluğu ve bilgi talebi	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P5/231	tuketici	Tüketici ve Abonelik	Operatörün haksız borç takibi veya tahsilat yazısına cevap hazırlamak	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P4/285	tuketici	Tüketici ve Abonelik	Opzegging sportschool, cursus en dienstenabonnementen	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P4/290	tuketici	Tüketici ve Abonelik	Particuliere tweedehands koop: gebrek, prijs en bewijs	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P4/280	tuketici	Tüketici ve Abonelik	Satıcının garanti şartı ve bedelsiz onarım yükümlülüğü	Satıcının garanti şartı ve onarım yükümlülüğü uyuşmazlığını dosyalamak	2	1
+P4/281	tuketici	Tüketici ve Abonelik	Taksitli alınan ayıplı üründe satıcı-kredi ilişkisi ve haklar	Taksitle satın alınan ürünün ayıbından doğan sorunları açıklamak	2	1
+P4/286	tuketici	Tüketici ve Abonelik	Tamirci, tadilatçı veya taşınma firmasının sözleşmeye aykırı hizmetini dosyalamak	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P2/269	tuketici	Tüketici ve Abonelik	Taşınma sonrası eski adrese ait enerji son hesabının düzeltilmesi	Alışveriş, garanti, enerji ve telekom sorunları	2	3
+P5/227	tuketici	Tüketici ve Abonelik	Telefon hattı sözleşmesi ve erken fesih bedelini incelemek	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P5/240	tuketici	Tüketici ve Abonelik	Telekom aboneliğini karşılıklı uzlaşmayla sona erdirme	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P5/239	tuketici	Tüketici ve Abonelik	Telekom kişisel verilerine erişim ve koşullu silme talebi	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P5/233	tuketici	Tüketici ve Abonelik	Telekom şirketinde iç şikâyet ve üst merciye hazırlık	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P4/287	tuketici	Tüketici ve Abonelik	Teslim, servis ve garanti kayıtlarından tüketici delil dosyası oluşturmak	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P5/235	tuketici	Tüketici ve Abonelik	TV, kablo, internet paketi ve bağlantı ücretleri için şikâyet hazırlamak	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P4/279	tuketici	Tüketici ve Abonelik	Yanlış teslim edilen ürün ve hatalı fatura — satıcı ile çözüm	Yanlış ürün ve hatalı fatura nedeniyle satıcıyla görüşme yürütmek	2	1
+P4/284	tuketici	Tüketici ve Abonelik	Yanıltıcı reklam ve sözleşmeye aykırı hizmet için doğru kuruma şikâyet	Aldatıcı reklam veya ayıplı hizmet için kurum şikâyeti hazırlamak	2	1
+P5/230	tuketici	Tüketici ve Abonelik	Yetkisiz telefon hattı veya abonelik; sözleşme kanıtı ve kimlik suistimali	Alışveriş, garanti, enerji ve telekom sorunları	2	1
+P5/214	banka	Banka, Kredi ve Sigorta	Araç sigortası — eksik hasar ödemesi / gerekçeli iç şikâyet	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P4/198	banka	Banka, Kredi ve Sigorta	Banka hesabının reddi, sınırlandırılması veya kapatılması şikâyet dosyası	Özel kişi / ticari işletme / stichting / verenigingsrekening; gewone rekening / basisbetaalrekening / Convenant ayrı. Yan dosyalar, aynı faaliyetle karıştırılmaz	2	1
+P4/202	banka	Banka, Kredi ve Sigorta	Banka ücret ve komisyonlarına itiraz, belge ve kısmi iade dosyası	Ödeme hesabı ve betaaldiensten raamovereenkomst / banka kartı / SWIFT / kur dönüşümü / kredi veya ipotek masrafı (ayrı). Yan dosyalar, aynı faaliyetle karıştırılmaz	2	1
+P4/205	banka	Banka, Kredi ve Sigorta	BKR CKI kaydı için maddî hata düzeltmesi ve şartlı silme başvurusu	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P4/199	banka	Banka, Kredi ve Sigorta	Bloke edilen veya geciken havalenin açıklanmasını ve belgelendirilmesini talep etmek	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P4/207	banka	Banka, Kredi ve Sigorta	Dolandırıcılık sonrası banka şikâyeti: kanıt teslim dosyası	Ödeme hizmetleri, kredi, poliçe ve tazminat	1	1
+P5/220	banka	Banka, Kredi ve Sigorta	Eksik sigorta tazminatı — kanıtlı karşılaştırma ve zarar cetveli	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P4/208	banka	Banka, Kredi ve Sigorta	Finans kuruluşunun iç şikâyet sürecini işletip gerekirse Kifid uygunluk kontrolü yapmak	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P4/212	banka	Banka, Kredi ve Sigorta	Finansal ürün satışı, kredi veya yatırım tavsiyesi ve aracılığına girmeden hak arama desteği vermek	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P4/200	banka	Banka, Kredi ve Sigorta	Hatalı transfer / mükerrer ödeme: iade ve düzeltme yazışması	Ödeme hizmetleri, kredi, poliçe ve tazminat	1	1
+P5/544	banka	Banka, Kredi ve Sigorta	Hayat sigortası lehtar ve ölüm tazminatı itirazı	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P4/211	banka	Banka, Kredi ve Sigorta	İpotek ödeme ve gecikme bildirimlerinin hukukî yazışma kısmını değerlendirmek	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P5/217	banka	Banka, Kredi ve Sigorta	İş kazası veya kaza tazminatına ilişkin belgeleri toplamak	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P4/209	banka	Banka, Kredi ve Sigorta	Kifid finansal şikâyet dosyasında yetki ve süre kabul kontrolü	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P5/213	banka	Banka, Kredi ve Sigorta	Konut sigortası hasar ret gerekçesi incelemesi	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P4/204	banka	Banka, Kredi ve Sigorta	Kredi başvurusu reddi: banka dosyası ve gerekçe/veri erişim talebi	Ödeme hizmetleri, kredi, poliçe ve tazminat	1	1
+P4/201	banka	Banka, Kredi ve Sigorta	Kredi sözleşmesinin masraf, faiz ve bildirim hükümlerini incelemek	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P4/203	banka	Banka, Kredi ve Sigorta	Kredi tahsilatı ve geri ödeme planı konusunda müşteri adına uzlaşma görüşmesine destek olmak	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P5/221	banka	Banka, Kredi ve Sigorta	Kusur dağılımı ve ekspertiz — iki ayrı itiraz hattı	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P5/226	banka	Banka, Kredi ve Sigorta	Mevcut poliçeden hak talebi — AFM ruhsat ve temsil sınırı	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P5/224	banka	Banka, Kredi ve Sigorta	Prim iadesi, fesih ve poliçe yenilemesi — geri ödeme dosyası	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P5/215	banka	Banka, Kredi ve Sigorta	Sağlık sigortası — teminat ve tedavi faturası ret şikâyeti	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P5/216	banka	Banka, Kredi ve Sigorta	Seyahat / annuleringsverzekering — ret dayanağı ve delil dosyası	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P5/222	banka	Banka, Kredi ve Sigorta	Sigorta iç şikâyeti ve Kifid uygunluk / başvuru dosyası	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P5/218	banka	Banka, Kredi ve Sigorta	Sigorta poliçesinin kapsam ve istisna hükümlerini açıklamak	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P5/223	banka	Banka, Kredi ve Sigorta	Sigortacıyla uzlaşma — teklif, ara ödeme ve nihai ibra denetimi	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P4/210	banka	Banka, Kredi ve Sigorta	Taksitli satış, BNPL veya tüketici kredisi ücretlerinin denetimi	Satış bedeli / kredinin toplam maliyeti / JKP / zorunlu ek hizmet / gecikme tahsilatı / erken kapama; ticari kredi ayrı. Yan dosyalar, aynı faaliyetle karıştırılmaz	2	1
+P5/219	banka	Banka, Kredi ve Sigorta	Yanlış sigorta primi veya haksız fesih/askı — gerekçeli cevap	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P4/206	banka	Banka, Kredi ve Sigorta	Yetkisiz kart / internet bankacılığı işlemi: güvenlik ve iade şikâyeti	Ödeme hizmetleri, kredi, poliçe ve tazminat	1	1
+P5/225	banka	Banka, Kredi ve Sigorta	Yurt dışında yaşayan sigortalının hak ve belge koordinasyonunu yürütmek	Ödeme hizmetleri, kredi, poliçe ve tazminat	2	1
+P4/294	borc	Alacak ve Borç İşlemleri	Alacak miktarı, vade ve ihtar geçmişini hesap tablosuna dönüştürmek	Alacak talepleri, hesap mutabakatı ve çözüm yolları	3	1
+P4/297	borc	Alacak ve Borç İşlemleri	Alacağın bir kısmında mutabakat sağlanmasına ilişkin anlaşma taslağı hazırlamak	Alacağın bir kısmında mutabakat sağlanmasına ilişkin anlaşma taslağı hazırlamak. Revizyon sınırı: Yalnız tartışılmış A bölümünün bedel/ifa/ibra şartlarının yazılı uzlaşması; B çekişmeli kala	2	1
+P4/305	borc	Alacak ve Borç İşlemleri	Borcun kapandığına dair yazılı ibra ve mutabakat metni hazırlamak	Alacak talepleri, hesap mutabakatı ve çözüm yolları	2	1
+P4/296	borc	Alacak ve Borç İşlemleri	Borçlu ile ödeme kolaylığı veya ihtilaf çözümü konusunda tarafların gönüllü görüşmesini desteklemek	Alacak talepleri, hesap mutabakatı ve çözüm yolları	2	1
+P4/298	borc	Alacak ve Borç İşlemleri	Borçlu taraf için haksız faiz, masraf veya tahsilat ücretine itiraz yazısı hazırlamak	Borçlunun Hollanda hukukundaki anapara ile sözleşmesel/kanunî faiz, buitengerechtelijke incassokosten, dosya ve mahkeme/icra giderlerinin ayrı hesap denetimi; ticari/özel tüketici sıfatı kar	2	1
+P4/293	borc	Alacak ve Borç İşlemleri	Borçlu tarafından gönderilen ödeme ve mahsup belgelerini karşılaştırmak	Alacak talepleri, hesap mutabakatı ve çözüm yolları	2	1
+P4/299	borc	Alacak ve Borç İşlemleri	Eski veya yanlış borç kaydının düzeltilmesi ve silinmesi talebini düzenlemek	Eski veya yanlış borç kaydının düzeltilmesi ve silinmesi talebini düzenlemek. Revizyon sınırı: Özel alacaklı/inkasso veri sorumlusunun bir gerçek kişiye ilişkin borç kimliği, bakiye, ödeme v	2	1
+P4/303	borc	Alacak ve Borç İşlemleri	Haciz ve ilamlı icra gerektiren dosyanın gerechtsdeurwaarder için evrakını hazırlamak	Alacak talepleri, hesap mutabakatı ve çözüm yolları	2	1
+P4/300	borc	Alacak ve Borç İşlemleri	Haksız üçüncü kişi tahsilatına yönelik Wki uyum kontrolü ve şikâyet dosyası hazırlamak	Yalnız Hollanda’da yerleşik gerçek kişiye yöneltilmiş profesyonel mahkeme dışı üçüncü kişi/devralınmış alacak tahsilatı iddiası; anaparanın esasına ilişkin dava değil. 01.10.2026 öncesi/sonr	2	1
+P4/302	borc	Alacak ve Borç İşlemleri	İcra edilebilir mahkeme kararı bulunup bulunmadığını hukukî ön değerlendirmeden geçirmek	Alacak talepleri, hesap mutabakatı ve çözüm yolları	2	1
+P4/304	borc	Alacak ve Borç İşlemleri	İcra görevlisinin masraf dökümü ve ödeme bildirimini açıklamak	Gerechtsdeurwaarder tarafından belirtilen ambtshandeling, Btag borçlu tarifesi, alacaklı özel sözleşmesi, verschotten, faiz ve ödeme/mahsup çizelgesini açıklama; müşteriye haciz başlatma yet	2	1
+P4/548	borc	Alacak ve Borç İşlemleri	Mahkeme hükmünün gönüllü ifası ve icra sınırı	Alacak talepleri, hesap mutabakatı ve çözüm yolları	2	1
+P4/292	borc	Alacak ve Borç İşlemleri	Müşterinin alacak iddiasını sözleşme, fatura ve dekontla doğrulamak	Alacak talepleri, hesap mutabakatı ve çözüm yolları	2	1
+P4/295	borc	Alacak ve Borç İşlemleri	Müşterinin kendi alacağı için göndereceği ödeme talep yazısını hazırlamak	Alacak talepleri, hesap mutabakatı ve çözüm yolları	2	1
+P4/307	borc	Alacak ve Borç İşlemleri	Türkiye'deki cebrî icra dosyası için evrak envanterini çıkarmak ve yetkili Türk avukatını yönlendirmek	Alacak talepleri, hesap mutabakatı ve çözüm yolları	2	1
+P4/306	borc	Alacak ve Borç İşlemleri	Wki kapsamındaki bağımsız üçüncü kişi tahsilatını üstlenmeme ve güvenli sevk	Alacak talepleri, hesap mutabakatı ve çözüm yolları	2	1
+P4/301	borc	Alacak ve Borç İşlemleri	Ödeme planı, taksit tarihi ve borcun kapanma belgesine ilişkin sözleşme taslağı hazırlamak	Ödeme planı, taksit tarihi ve borcun kapanma belgesine ilişkin sözleşme taslağı hazırlamak. Revizyon sınırı: Önceden doğrulanmış borç için iki tarafça kabul edilen vadeli ödeme planı. ID296	2	1
+P1/377	aile	Aile, Nüfus ve Miras	Ad, soyad ve tarih uyuşmazlığı için kaynak karşılaştırmalı açıklama dosyası	Kişinin Hollanda BRP veya medeni hâl kayıtları ile Türk belge veya eğitim kaydı arasındaki yazım, transliterasyon ve doğum/evlilik tarihi farklarını tek tek belgeleyerek ilgili kayıt sahibin	1	3
+P1/372	aile	Aile, Nüfus ve Miras	Aile adres ve medeni hâl değişikliklerinin doğru kurumlara bildirim koordinasyonu	Aile üyelerinin taşınma, birlikte/ayrı yaşama, evlenme/boşanma ve velayetle ilgili değişikliklerini hangi kamu/özel kuruma bizzat bildireceğini belgelemek ve alındıları izlemek; belediye BRP	1	3
+P1/370	aile	Aile, Nüfus ve Miras	Aile birleşimi için akrabalık, evlilik ve doğum delillerinin başvuru türüne göre düzenlenmesi	IND aile/partner, çocuk için düzenli oturum, AB hukuku ve iltica sonrasında nareis süreçleri arasından uygun yolu belirleyip ilişkilik/ebeveynlik belgelerinin kontrol listesini çıkarmak; otu	1	3
+P1/376	aile	Aile, Nüfus ve Miras	Aile içi uyuşmazlıkta risk, temsil çatışması ve güvenli uzman sevki	Aile üyesi veya eski partnerler arasındaki medeni hâl, çocuk bakımı, nafaka, miras veya malvarlığı uyuşmazlığında taraf sıfatını, aciliyeti, temsil çıkar çatışmasını ve doğru uzman kanalını	1	3
+P1/378	aile	Aile, Nüfus ve Miras	Apostil ve tercüme yükümlülüğünü belge türüne ve varış ülkesine göre belirleme	Doğum, evlenme, boşanma ve ölüm gibi medeni hâl belgelerinin Türkiye-Hollanda arasında hangi belge türüyle, hangi tasdik/tercüme koşullarıyla kabul edileceğini açıklamak; resmî apostil düzen	1	3
+P1/391	aile	Aile, Nüfus ve Miras	Cenaze nakil/taşıma/hizmet sözleşmesinde bedel ve ifa uyuşmazlığı	Nüfus belgeleri, medeni durum ve miras işlemleri	1	3
+P1/382	aile	Aile, Nüfus ve Miras	Cenaze sigortası poliçesi, hizmet kapsamı ve ödenmiş fatura denetimi	Cenaze sigortası poliçesini ve ödenen masrafları incelemek	1	3
+P1/383	aile	Aile, Nüfus ve Miras	Cenaze sigortası ret veya eksik ödeme kararına sigortacı şikâyeti	Cenaze sigortası ret veya eksik ödeme kararına şikâyet hazırlamak	1	3
+P1/389	aile	Aile, Nüfus ve Miras	Gönüllü mirasçı görüşmesi öncesi belge ve gündem hazırlığı	Mirasçıların aile içinde gönüllü mutabakat görüşmesi için ön belge hazırlamak	1	3
+P1/379	aile	Aile, Nüfus ve Miras	Hollanda ölüm kaydı için aileye belediye evrak rehberliği	Vefat edenin Hollanda'daki ölüm kayıt işlemleri için aileye belge rehberliği yapmak	1	3
+P1/368	aile	Aile, Nüfus ve Miras	Hollanda–Türkiye medeni hâl kayıt tutarsızlıklarının kaynak bazında tespiti	Hollanda BRP/medeni hâl senetleri ile Türkiye nüfus ve medeni hâl kayıtlarında ad-soyad, doğum tarihi, evlenme/boşanma tarihi ve ebeveyn bilgilerinin farklı görünmesinin kanıt tablosunu oluş	1	3
+P1/388	aile	Aile, Nüfus ve Miras	Hollanda–Türkiye ölüm belgesi ve nüfus kayıt aktarımı	Nüfus belgeleri, medeni durum ve miras işlemleri	1	3
+P1/381	aile	Aile, Nüfus ve Miras	Hollanda’dan Türkiye’ye cenaze nakil belgelerinin koordinasyonu	Cenazenin Türkiye'ye nakli konusunda cenaze şirketi ve konsolosluk belgelerini koordine etmek	1	3
+P1/374	aile	Aile, Nüfus ve Miras	Kinderbijslag ve kindgebonden budget için çocuk, bakım ve hane delillerinin hazırlanması	SVB kinderbijslag başvurusu ile Dienst Toeslagen kindgebonden budget başvurusunu/hesaplamasını ve gerekirse çocuk bakım/ayrılık belgelerini ayrı dosyalamak. Yardımın koşulsuz verileceğini ve	1	3
+P1/367	aile	Aile, Nüfus ve Miras	Medeni hâl kayıt örnekleri için iş bazlı belge listesi	Doğum, evlilik, boşanma ve ölüm için Hollanda veya Türkiye yetkili merciinden doğru afschrift/uittreksel örneğini istemek; BRP kayıt çıktısıyla medeni hâl senedi aynı değildir	1	3
+P1/369	aile	Aile, Nüfus ve Miras	Medeni hâl sicilindeki hatanın düzeltilmesi	Akte van de burgerlijke stand (resmî medeni hâl senedi) ile BRP persoonslijst (kişi kayıt verisi) karıştırılmadan düzeltme talebinin doğru merciye yönlendirilmesi	1	3
+P1/375	aile	Aile, Nüfus ve Miras	Miras veya mal paylaşımı anlaşmazlığında gönüllü uzlaşma	Mirasçılar arasında gönüllü görüşme için ortak olgu ve belge zemini kurulması; mal paylaşımı tescili, miras kabul/red beyanı veya taraf temsili yapılması değil	1	3
+P1/392	aile	Aile, Nüfus ve Miras	Mirasçı ve kurumların son ölüm bildirimlerinin takip edilmesi	Yetkili mirasçı ve kurumların son bildirim taleplerini takip etmek	1	3
+P1/390	aile	Aile, Nüfus ve Miras	Noter ve avukat yetki alanına giren miras ve taşınmaz devri koordinasyonu	Miras tespitine ve taşınmaz devrine dair noter/avukat yetkisine ayrılan işlemi uzmanla yürütme koordinasyonu yapmak	1	3
+P1/384	aile	Aile, Nüfus ve Miras	SVB Anw dul ve hak sahibi ödeneği için başvuru-belge hazırlığı	SVB Anw dul ve yetim ödeneği için aile ve sigortalılık belgelerini düzenlemek	1	3
+P1/373	aile	Aile, Nüfus ve Miras	Türkiye nüfus kayıtlarının yetkili makam üzerinden temini	Türk nüfus kayıt örneklerinin hak sahibi tarafından Nüfus Müdürlüğü/e-Devlet veya yetkili konsolosluk kanalıyla temini ve Hollanda alıcı kurumuna uygun sunumunun kontrolü	1	3
+P1/386	aile	Aile, Nüfus ve Miras	Vefat eden işçinin son ücret, izin ve ayrı ölüm ödeneğini belgelemek	Ölen kişinin Hollanda'daki işvereninden doğan son ücret/izin alacağını belgelemek	1	3
+P1/371	aile	Aile, Nüfus ve Miras	Yabancı evlilik ve boşanmanın Hollanda kaydına bildirilmesi	Yurt dışı evlilik veya boşanma olgusunun Hollanda ikamet belediyesindeki BRP’ye işlenmesi ile yabancı aktelerin Den Haag’da Hollanda aktesine dönüştürülmesinin ayrıştırılması	1	3
+P1/380	aile	Aile, Nüfus ve Miras	Yurtdışındaki ölümü Hollanda resmî makamlarına bildirme belge paketi	Nüfus belgeleri, medeni durum ve miras işlemleri	1	3
+P1/385	aile	Aile, Nüfus ve Miras	Ölüm sonrası AOW, banka, enerji ve belediye bildirim takibi	Nüfus belgeleri, medeni durum ve miras işlemleri	1	3
+P1/387	aile	Aile, Nüfus ve Miras	Ölüm sonrası banka hesabı erişimi için mirasçılık ve temsil belge kontrolü	Nüfus belgeleri, medeni durum ve miras işlemleri	1	3
+P4/144	ticaret	İşletme ve Ticaret	Bayi, acente veya komisyon sözleşmesinin hukukî maddelerini açıklamak	Bayi, acente veya komisyon sözleşmesinin hukukî maddelerini açıklamak	2	1
+P5/353	ticaret	İşletme ve Ticaret	Belediye harcı ve idarî ceza kararlarında ayrı itiraz dosyası	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P5/359	ticaret	İşletme ve Ticaret	Dernek üyeliği, aidat ve ALV kararlarının geçerlilik kontrolü	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P5/360	ticaret	İşletme ve Ticaret	Derneğin belediye subsidieverlening başvuru ve kesinleştirme dosyası	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P4/150	ticaret	İşletme ve Ticaret	Günlük AVG/GDPR hak talebi ve gizlilik şikâyetinin veri sorumlusu adına yönetimi	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P4/547	ticaret	İşletme ve Ticaret	Hollanda–Türkiye bağlantılı basit mal/hizmet tedarik sözleşmesinin ödeme, teslim, garanti ve uyuşmazlık hükümlerini Hollanda	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P5/356	ticaret	İşletme ve Ticaret	İş yeri kirasında ayıp, bakım yükümlülüğü ve kira bedeli	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P5/357	ticaret	İşletme ve Ticaret	İşletme telekom ve enerji faturalarına gerekçeli itiraz	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P4/154	ticaret	İşletme ve Ticaret	İşletmenin avukat gerektiren dosyasını düzenleyip bağımsız yetkili avukata sevk etmek	Avukat zorunlu ticari dosyanın bağımsız avukata sevki	2	1
+P4/147	ticaret	İşletme ve Ticaret	İşletmenin belediye ve KVK kayıtları için evrak hazırlamak	İşletmenin belediye ve KVK kayıtları için evrak hazırlamak	2	1
+P5/363	ticaret	İşletme ve Ticaret	İşletmenin idarî ret kararında itiraz ve dava öncesi değerlendirme	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P4/149	ticaret	İşletme ve Ticaret	İşletmenin izin veya ücret kararına karşı idarî başvuru dosyası hazırlamak	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P4/145	ticaret	İşletme ve Ticaret	İşletmenin müşteri şikâyetine maddeli ve belgeli cevap vermesi	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P4/152	ticaret	İşletme ve Ticaret	İşletmeye gelen standart ihtarnameyi değerlendirip cevap hazırlamak	Standart ticari ihtarnameye gerekçeli cevap	2	1
+P5/358	ticaret	İşletme ve Ticaret	İşveren bordro ve çalışma belgesi düzeltme/itiraz koordinasyonu	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P4/148	ticaret	İşletme ve Ticaret	KVK işletme bilgisi değişikliğine yönelik doldurma ve belge desteği	KVK işletme bilgisi değişikliğine yönelik doldurma ve belge desteği	2	1
+P4/146	ticaret	İşletme ve Ticaret	Mevcut ortaklar arasında görev, ödeme, yetki ve karar tutanağı	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P4/151	ticaret	İşletme ve Ticaret	Müşteri–işletme ayıplı hizmetinde giderim ve sınırlı sulh düzenlenmesi	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P4/546	ticaret	İşletme ve Ticaret	Ortakların kâr, görev, ödeme ve cari hesap uyuşmazlığında sınırlı uzlaşma	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P5/355	ticaret	İşletme ve Ticaret	Tedarikçiye karşı hizmet kalitesi ve teslim süresi ihtilafı	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P4/143	ticaret	İşletme ve Ticaret	Ticari alacak ve borçlar için gönüllü ödeme/uzlaşma şartlarının hazırlanması	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P4/142	ticaret	İşletme ve Ticaret	Ticari fatura ile teslim ve ödeme kayıtlarının uyuşmazlık incelemesi	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P5/364	ticaret	İşletme ve Ticaret	Vergi, gümrük ve sosyal güvenlik kararlarında yetkili itiraz yolu	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P4/153	ticaret	İşletme ve Ticaret	Yurt dışı müşteri uyuşmazlığında hukuk, mahkeme ve icra ülkesinin tespiti	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P5/362	ticaret	İşletme ve Ticaret	Şirket ticari borcunda hesap mutabakatı ve gönüllü ödeme protokolü	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P5/366	ticaret	İşletme ve Ticaret	Şirket uyuşmazlıklarında mahkeme türü ve avukat gerekliliği	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P5/365	ticaret	İşletme ve Ticaret	Şirket şikâyet kabul, esaslı cevap ve AVG yönlendirme kayıt sistemi	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P5/361	ticaret	İşletme ve Ticaret	Şirket/dernek adına sınırlı kurum yazışma vekâleti	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P4/141	ticaret	İşletme ve Ticaret	Şirketin tedarikçi, taşeron ve kira sözleşmelerini incelemek	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P5/354	ticaret	İşletme ve Ticaret	Şirket–müşteri iade, bedel ve ayıplı ifa uyuşmazlığı	Şirket ve işletme sözleşmeleri, ticari uyuşmazlıklar	2	1
+P3/489	sinir	Türkiye – Avrupa İşlemleri	Alman/Belçika satıcıdan ayıplı ürün iadesi ve kanunî garanti	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/474	sinir	Türkiye – Avrupa İşlemleri	Almanya / Belçika eski işveren ücret ve izin alacakları	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	4	2
+P3/494	sinir	Türkiye – Avrupa İşlemleri	Almanya RDG ve Belçika hukukî temsil sınırı – yetki ön kontrolü	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/485	sinir	Türkiye – Avrupa İşlemleri	Almanya ve Belçika geçmiş çalışma/sigorta dönemlerinin dökümünü isteme	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/495	sinir	Türkiye – Avrupa İşlemleri	Almanya veya Belçika'daki yetkili hukuk danışmanıyla gerekli hallerde sınırlı, kayıtlı, müşteri tarafından onaylı dosya	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	4	2
+P3/477	sinir	Türkiye – Avrupa İşlemleri	Almanya/Belçika banka veya ödeme kuruluşunun tüketici şikâyet kanalını tespit etmek	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/487	sinir	Türkiye – Avrupa İşlemleri	Almanya/Belçika eski işvereninden çalışma belgesi ve ücret dökümü talebini düzenlemek	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/482	sinir	Türkiye – Avrupa İşlemleri	Almanya/Belçika kamu dosyasının durumu, kayıt numarası, mevcut kararın sureti ve erişilebilir belgenin talebi	Almanya/Belçika kamu dosyasının durumu, kayıt numarası, mevcut kararın sureti ve erişilebilir belgenin talebi. Hukukî itiraz/dava veya gizli üçüncü kişi verilerine genel erişim yetkisi değil	3	2
+P3/493	sinir	Türkiye – Avrupa İşlemleri	Almanya/Belçika makamına uygun dilde başvuru dosyası	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/479	sinir	Türkiye – Avrupa İşlemleri	Almanya/Belçika sağlık sigortası prim veya hizmet yazışmasına idarî destek sağlamak	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/480	sinir	Türkiye – Avrupa İşlemleri	Almanya/Belçika sigorta şirketiyle hasar/ödeme uyuşmazlığının belge takibini koordine etmek	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/473	sinir	Türkiye – Avrupa İşlemleri	Almanya/Belçika sosyal sigorta geçmişinin Türkiye SGK kaydıyla karşılaştırma dosyasını hazırlamak	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	4	2
+P3/478	sinir	Türkiye – Avrupa İşlemleri	Almanya/Belçika'daki araç satıcısıyla anlaşmazlık için fatura, teslim ve garanti belgelerini düzenlemek	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/481	sinir	Türkiye – Avrupa İşlemleri	Almanya/Belçika’da ölüm sonrası sosyal yardım, cenaze sigortası veya emeklilik hakları için evrak hazırlamak	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	4	2
+P5/496	sinir	Türkiye – Avrupa İşlemleri	Alıcı kurumun belge türü ve güncellik şartlarını kesinleştirme	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	1
+P3/432	sinir	Türkiye – Avrupa İşlemleri	Araç satışından sonra ayıp, trafik cezası ve vergi borcunun belge bazlı ayrıştırılması	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P5/506	sinir	Türkiye – Avrupa İşlemleri	Belge paylaşımında hukukî dayanak ve müşteri yetki kapsamı	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	1
+P5/501	sinir	Türkiye – Avrupa İşlemleri	Belge reddinin gerekçesi ve eksikliklerin yazılı tespiti	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	1
+P5/504	sinir	Türkiye – Avrupa İşlemleri	Diploma, çalışma ve sosyal güvenlik kayıtlarını ülkeler arasında sunuma hazırlama	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	1
+P3/453	sinir	Türkiye – Avrupa İşlemleri	Eski Hollanda işvereninden bordro ve sözleşme delillerini toplama	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/551	sinir	Türkiye – Avrupa İşlemleri	Eski Hollanda sakininin hastane faturası ve tahsilat ihtilafının koordinasyonu	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/439	sinir	Türkiye – Avrupa İşlemleri	Gümrük uyuşmazlığında geçici taşıt, ithalat ve para cezasının ayrıştırılması	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/466	sinir	Türkiye – Avrupa İşlemleri	Hollanda abonelik bedeli iadesi, iptal sonrası tahsilat ve yetkisiz incasso	İade sebebini ayır: fesih sonrası ücret; mükerrer ödeme; hiç yetkilendirilmemiş SEPA incasso; önceden ödenmiş kullanılmayan hizmet. Abonelik hukuken bitmeden çekilen paranın banka yoluyla ge	2	2
+P3/470	sinir	Türkiye – Avrupa İşlemleri	Hollanda kurumu cevabının Türkçe açıklanması ve güvenli dosya kapanışı	Gerçek kurumsal cevabın orijinalini değiştirmeden, hukuki nitelik ve süre riski ayrımıyla anlaşılır Türkçe açıklama ve alındı kanıtı üretmek. Bu faaliyet resmî yeminli tercüme, mahkeme görüş	2	3
+P3/492	sinir	Türkiye – Avrupa İşlemleri	Hollanda–Almanya/Belçika bankalar arası havale ve ödeme gecikmesinde şikâyet belgelerini hazırlamak	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P5/499	sinir	Türkiye – Avrupa İşlemleri	Hollanda’dan Türkiye’ye resmî belge sunumu: aslın, apostilin ve tercümenin sırası	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	1
+P5/508	sinir	Türkiye – Avrupa İşlemleri	İdarî belge koordinasyonunu yeminli/noter tasdikli tercüme gibi sunmama	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	1
+P3/468	sinir	Türkiye – Avrupa İşlemleri	İdarî bezwaar için sınırlı vekâlet ve belge koordinasyonu	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/488	sinir	Türkiye – Avrupa İşlemleri	Komşu ülkedeki kira depozito, araç veya sigorta uyuşmazlığının evrakını hazırlamak	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/437	sinir	Türkiye – Avrupa İşlemleri	Mirasçılık belgesi ve tereke envanteri	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P5/503	sinir	Türkiye – Avrupa İşlemleri	Noter veya apostil makamı randevusu ve asıl belge teslimi koordinasyonu	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	1
+P3/458	sinir	Türkiye – Avrupa İşlemleri	RDW araç sicili ve devir yanlışlığı için Türkiye’den belge koordinasyonu	Nesnel kenteken/kentekenbewijs hatası; devredilmiş fakat halen kayıtlı araç; Hollanda dışına çıkmış araç; RDW kararına yönelik başvuru. Bunlar dört farklı yoldur. Mülkiyet ve sicilde kayıt a	2	2
+P5/507	sinir	Türkiye – Avrupa İşlemleri	Son evrak seti, tercüme gideri ve kurum yazışmalarının teslim kaydı	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	1
+P3/486	sinir	Türkiye – Avrupa İşlemleri	Sınır çalışanında yetkili sosyal güvenlik ülkesinin tespiti ön dosyası	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/490	sinir	Türkiye – Avrupa İşlemleri	Sınır ötesi yolcu taşımacılığı gecikme veya hizmet kusuru talebini belgelemek	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/430	sinir	Türkiye – Avrupa İşlemleri	Taşınmaz satışında noter/tapu resmî işlem koordinasyonu	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/443	sinir	Türkiye – Avrupa İşlemleri	Türk kamu kurumunun ret veya eksik belge yazısının Hollanda’daki müşteriye açıklanması	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	4	2
+P3/442	sinir	Türkiye – Avrupa İşlemleri	Türk konsolosluğu randevu, noterlik, tercüme ve tasdik işlemleri	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/420	sinir	Türkiye – Avrupa İşlemleri	Türkiye adres, doğum, evlilik veya ölüm kaydı tutarsızlığında açıklayıcı belgeyi hazırlamak	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/550	sinir	Türkiye – Avrupa İşlemleri	Türkiye banka hesabı kapatma, bloke ve şikâyet	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/445	sinir	Türkiye – Avrupa İşlemleri	Türkiye bağlantılı ölüm tescili, Formül C ve sınır ötesi cenaze nakli koordinasyonu	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/464	sinir	Türkiye – Avrupa İşlemleri	Türkiye ikametli kişinin Hollanda gümrük ek tahakkuku veya paket masrafına itiraz dosyası	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/465	sinir	Türkiye – Avrupa İşlemleri	Türkiye ikametli kişinin Hollanda telekom/banka/sigorta tüketici şikâyetini kurum bazında dosyalama	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/467	sinir	Türkiye – Avrupa İşlemleri	Türkiye ikametli müvekkil adına Hollanda’da günlük uyuşmazlıkta temsil yetkisini inceleme	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	1	2
+P3/455	sinir	Türkiye – Avrupa İşlemleri	Türkiye ikametli müşterinin Hollanda bankası hesap/bloke/transfer dosyasında şikâyet	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/419	sinir	Türkiye – Avrupa İşlemleri	Türkiye nüfus ve medeni hâl kayıtlarının Hollanda’ya sunulmak üzere temini	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/421	sinir	Türkiye – Avrupa İşlemleri	Türkiye SGK prim/hizmet dökümünün alınmasına ilişkin başvuru dosyası düzenlemek	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/426	sinir	Türkiye – Avrupa İşlemleri	Türkiye'de emlak vergisi, belediye harcı ve abonelik uyuşmazlığında evrak/bilgi koordinasyonu yapmak	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/441	sinir	Türkiye – Avrupa İşlemleri	Türkiye'de mahkeme, icra veya özel hukuk mütalaası için avukat seçimi ve dosya aktarımını koordine etmek	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/436	sinir	Türkiye – Avrupa İşlemleri	Türkiye'de tüketici satın alma, iade ve garanti uyuşmazlığında ilgili kurum ve avukat kanalını belirlemek	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/433	sinir	Türkiye – Avrupa İşlemleri	Türkiye'deki bankaya havale, kredi, kart veya bloke uyuşmazlığında yazışma evrakı düzenlemek	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/425	sinir	Türkiye – Avrupa İşlemleri	Türkiye'deki emekli maaşı, kesinti veya ödeme gecikmesi sorununun kurum yazışmasını koordine etmek	Ödeme aktarımı, SGK kesinti/yersiz ödeme, banka/PTT sorunu veya aylığın durdurulmasını inceleme. Aylığın başlangıç hesaplaması ID 424’e yönlendirilir	3	2
+P3/424	sinir	Türkiye – Avrupa İşlemleri	Türkiye'deki emeklilik/aylık hesabı uyuşmazlığında yerel uzman için delil dosyası hazırlamak	Tahsis edilmiş aylıkta hizmet günü, prime esas kazanç, aylık bağlama oranı, geçiş dönemi, başlangıç tarihi ve borçlanma farkını saptamak için karşılaştırmalı delil. Resmî SGK hesabını veya m	3	2
+P3/471	sinir	Türkiye – Avrupa İşlemleri	Türkiye'deki eski Almanya çalışanı için Deutsche Rentenversicherung emeklilik evraklarını toplamak	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/428	sinir	Türkiye – Avrupa İşlemleri	Türkiye'deki kiracı veya ev sahibiyle gönüllü uzlaşma görüşmesi için tarafları bir araya getirmek	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/440	sinir	Türkiye – Avrupa İşlemleri	Türkiye'deki mahkeme/ icra dosyasının mevcut durumunu yetkili Türk avukatı üzerinden takip ettirmek	Mevcut dava veya icra takibinin safahat raporunu yetkili avukattan temin ve iletme. Yeni dava/takip açma, dilekçe imzalama, haciz isteme, duruşmaya girme ve hukukî temsil bu kartta AVOfis ye	3	2
+P3/435	sinir	Türkiye – Avrupa İşlemleri	Türkiye'deki su/elektrik/doğalgaz şirketi fatura ve sözleşme itirazı belgelerini koordine etmek	Elektrik tedarik veya dağıtım faturası, doğal gaz dağıtım faturası ve belediye/su idaresi faturası için abone-hizmet dönemi-ölçüm-muhatap ayrımı. Tek bir EPDK başvurusu su idaresinin yerini	3	2
+P3/427	sinir	Türkiye – Avrupa İşlemleri	Türkiye'deki taşınmazın kira, depozito, tahsilat ve bakım uyuşmazlığı için uzaktan belge yönetmek	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/434	sinir	Türkiye – Avrupa İşlemleri	Türkiye'deki telekom fatura, abonelik ve numara uyuşmazlığında şikâyet dosyası hazırlamak	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/438	sinir	Türkiye – Avrupa İşlemleri	Türkiye'deki vergi dairesinden bilgi/borç dökümü istemine ilişkin evrakı yerel uzmanla koordine etmek	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/454	sinir	Türkiye – Avrupa İşlemleri	Türkiye'den Hollanda Belastingdienst vergi/ödenek kararına itiraz evrakı hazırlamak	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/460	sinir	Türkiye – Avrupa İşlemleri	Türkiye'ye taşındıktan sonra Hollanda enerji/telekom aboneliğinin açık kalmasına ilişkin itiraz hazırlamak	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/484	sinir	Türkiye – Avrupa İşlemleri	Türkiye–Almanya/Belçika dosyasında tercüme, apostil ve yazılı sonuç koordinasyonu sağlamak	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/423	sinir	Türkiye – Avrupa İşlemleri	Türkiye–Hollanda hizmet/sigortalılık dönemlerinin SGK–SVB arasında eşleştirilmesi	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	4	2
+P3/456	sinir	Türkiye – Avrupa İşlemleri	Türkiye’de ikamet eden alıcının Hollanda’dan aldığı ayıplı mal veya araç için satıcıya ihtar ve uzlaşma yazışması	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/431	sinir	Türkiye – Avrupa İşlemleri	Türkiye’de ikinci el araç satışında noter devri ve Güvenli Ödeme koordinasyonu	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/446	sinir	Türkiye – Avrupa İşlemleri	Türkiye’de tamamlanan işlem için sonuç dosyası, delil teslimi ve kalem bazlı masraf hesabı	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/429	sinir	Türkiye – Avrupa İşlemleri	Türkiye’de taşınmaz satışı öncesi tapu, takyidat ve belediye kayıt dosyası	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/444	sinir	Türkiye – Avrupa İşlemleri	Türkiye’de ticari ortak, satıcı veya tedarikçi uyuşmazlığının yerel avukata dosyalanması	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/449	sinir	Türkiye – Avrupa İşlemleri	Türkiye’de yaşayan dul eşin SVB Anw dosyası	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/447	sinir	Türkiye – Avrupa İşlemleri	Türkiye’de yaşayan eski Hollanda çalışanının AOW dosyasını kurma	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/476	sinir	Türkiye – Avrupa İşlemleri	Türkiye’de yaşayan eski kiracının Almanya veya Belçika’daki KONUT kira ilişkisinin kapanış hesabı	Türkiye’de yaşayan eski kiracının Almanya veya Belçika’daki KONUT kira ilişkisinin kapanış hesabı; ticari kiralama, bağımsız enerji aboneliği ve dava temsili hariç	3	2
+P3/452	sinir	Türkiye – Avrupa İşlemleri	Türkiye’de yaşayan eski çalışanın Hollanda işvereninden ücret ve kullanılmamış izin alacağı	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/553	sinir	Türkiye – Avrupa İşlemleri	Türkiye’de yaşayan kişinin Almanya veya Belçika’daki eski ikamet, nüfus, adres ve medeni hâl kayıtlarına ilişkin belge	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/463	sinir	Türkiye – Avrupa İşlemleri	Türkiye’de yaşayan malikin Hollanda kiracısıyla kira ve bakım müzakeresi	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/552	sinir	Türkiye – Avrupa İşlemleri	Türkiye’de yaşayan mükellefin Alman Finanzamt veya Belçika SPF Finances dosyasında karar ve belge kopyasını temin, tebliğ	Türkiye’de yaşayan mükellefin Alman Finanzamt veya Belçika SPF Finances dosyasında karar ve belge kopyasını temin, tebliğ tarihini belirleme, vergi uzmanına güvenli iletim. Vergi beyanı, ver	3	2
+P3/475	sinir	Türkiye – Avrupa İşlemleri	Türkiye’de yaşayan önceki çalışanın Almanya veya Belçika’daki işvereninden Arbeitszeugnis, bordro, çalışma/işsizlik belgesi	Türkiye’de yaşayan önceki çalışanın Almanya veya Belçika’daki işvereninden Arbeitszeugnis, bordro, çalışma/işsizlik belgesi ve Belçika sosyal belgelerini istemesi. Ücret alacağı/işe iade ve	3	2
+P3/472	sinir	Türkiye – Avrupa İşlemleri	Türkiye’de yaşayan, Belçika’da geçmişte çalışmış kişinin SGK üzerinden iki taraflı anlaşma kapsamında FPD/SFPD’ye iletilecek	Türkiye’de yaşayan, Belçika’da geçmişte çalışmış kişinin SGK üzerinden iki taraflı anlaşma kapsamında FPD/SFPD’ye iletilecek aylık başvuru evrakının hazırlanması; aylık bağlama garantisi vey	3	2
+P3/450	sinir	Türkiye – Avrupa İşlemleri	Türkiye’deki emeklinin Hollanda AOW aylığındaki kesinti veya hesap farkını dosyalama	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/549	sinir	Türkiye – Avrupa İşlemleri	Türkiye’deki eski işverenden ücret, izin ve çalışma belgesi taleplerinin uzaktan hazırlanması	Avrupa’da yaşayan kişinin Türkiye’deki işverene yönelik ücret, kullanılmamış yıllık izin ücreti ve çalışma belgesi delillerini sınıflandırıp Türkiye’de ruhsatlı avukata aktarmak. İşe iade, k	2	2
+P3/469	sinir	Türkiye – Avrupa İşlemleri	Türkiye’deki müşteri için Hollanda kurum randevusu ve iletişim desteği	Yüz yüze randevunun uygun kategori, kimlik, biyometri/şahsen hazır bulunma, mekân, giriş izni, ulaşım ve tercüman şartlarını organize etmek; yabancı kurum adına işlem yapıldığını veya giriş	2	2
+P3/461	sinir	Türkiye – Avrupa İşlemleri	Türkiye’deki yakınların vefat sonrası SVB/SGK haklarını ayırması	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/462	sinir	Türkiye – Avrupa İşlemleri	Türkiye’den belediye BRP/RNI kaydının düzeltilmesini takip	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/457	sinir	Türkiye – Avrupa İşlemleri	Türkiye’den Hollanda kira depozitosu ve son hesap uyuşmazlığı	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/451	sinir	Türkiye – Avrupa İşlemleri	Türkiye’den Hollanda meslekî emeklilik fonu veya sigortacıyla belge ve bilgi yazışması	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P5/498	sinir	Türkiye – Avrupa İşlemleri	Türkiye’den Hollanda’ya sunulacak belgelerde apostil gerekliliğini belirleme	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	1
+P3/554	sinir	Türkiye – Avrupa İşlemleri	Türkiye’den ilk Hollanda Schengen vizesi / MVV / oturum başvurusunda ülke, merci ve randevu koordinasyonu	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/448	sinir	Türkiye – Avrupa İşlemleri	Türkiye’den SVB’ye yaşam, çalışma, adres, medeni hâl ve sigortalılık belgeleri iletimi	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P3/459	sinir	Türkiye – Avrupa İşlemleri	Türkiye’ye taşınan kişinin NL sağlık sigortası iptali ve prim hesabı	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	2
+P5/500	sinir	Türkiye – Avrupa İşlemleri	Yabancı belgelerde kimlik ve tarih farklılıklarının delilli eşleştirilmesi	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	1
+P5/505	sinir	Türkiye – Avrupa İşlemleri	Yazılı kurum taleplerinin anlaşılır, sınırları belirtilmiş açıklaması	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	1
+P5/502	sinir	Türkiye – Avrupa İşlemleri	Yeminli tercüme gerektiğinde bağımsız yetkili tercüman koordinasyonu	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	1
+P3/422	sinir	Türkiye – Avrupa İşlemleri	Yurtdışı borçlanma başvurusunun müşteri tarafından yapılacak işlem belgelerini hazırlamak	3201 sayılı Kanun çerçevesinde yurtdışı çalışması/işsizlik/ev kadınlığı sürelerini belgeleyip resmî SGK borçlanma talep formuna hazırlık. Bu işlem aylık bağlama müracaatı ve kesin dönüş şart	3	2
+P5/497	sinir	Türkiye – Avrupa İşlemleri	Çok dilli doğum, evlilik, boşanma ve ölüm kayıtlarının temini	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	2	1
+P3/491	sinir	Türkiye – Avrupa İşlemleri	Ülkeler arası emeklilik, işsizlik veya sağlık sigortası evraklarını karşılaştırmak	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	3	2
+P3/483	sinir	Türkiye – Avrupa İşlemleri	Ülkelerin yerel hukukî yorum ve itiraz temsili gerektiren işlerini ilgili yetkili uzmanla yürütmek	Ülkeler arası vekâlet, kurum, belge ve hak işlemleri	4	2
+P3/532	sozlesme	Sözleşmeler ve Belgeler	AB vatandaşının üçüncü ülke vatandaşı aile üyesi: AB hukukuna göre ikamet değerlendirmesi	Sözleşme hazırlığı, ihtar ve resmî yazışma	1	2
+P5/342	sozlesme	Sözleşmeler ve Belgeler	Basit ticari tedarik ve alım-satım sözleşmesi	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P2/527	sozlesme	Sözleşmeler ve Belgeler	Belastingteruggave mutabakatı: aanslag, kas ödemesi, mahsup ve faiz yolları	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	3
+P5/334	sozlesme	Sözleşmeler ve Belgeler	Bireyler arasında para ödüncü sözleşmesi	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P2/530	sozlesme	Sözleşmeler ve Belgeler	Buitenlands belastingplichtige: C/M beyan, gelir kaynağı ve temsil yetkisi kontrolü	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	3
+P2/529	sozlesme	Sözleşmeler ve Belgeler	Dubbele belasting NL–TR: aynı gelir, mükellefiyet ve relief yöntemi ön matrisi	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	3
+P5/523	sozlesme	Sözleşmeler ve Belgeler	Eşya taşıma ve nakliye sözleşmesi	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P5/348	sozlesme	Sözleşmeler ve Belgeler	Gizlilik ve kişisel veri işleme hükümleri	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P3/534	sozlesme	Sözleşmeler ve Belgeler	Göçmenin işini kaybetmesi veya işveren değiştirmesi sonrasında IND bildirim ve oturum koşullarını dosya bazında incelemek	Sözleşme hazırlığı, ihtar ve resmî yazışma	1	2
+P3/531	sozlesme	Sözleşmeler ve Belgeler	Hollanda için ilk düzenli geçici oturum başvurusunda uygun ikamet türünü IND koşullarına göre ön incelemek ve eksiksiz evrak	Sadece ilk regulier bepaalde tijd başvurusu; aile, iş, öğrenim, araştırma, girişim ve insanî alt kategorilerin farklı form/başvuran koşulları ayırt edilir	1	2
+P3/533	sozlesme	Sözleşmeler ve Belgeler	Hollanda öğrenci veya araştırmacı oturumlarında okul/araştırma kuruluşu sponsorluğuna ait belgeleri kontrol etmek	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	2
+P3/535	sozlesme	Sözleşmeler ve Belgeler	IND tarafından tanınan sponsorun yetkili imzacı ve yazılı özel vekille yaptığı başvuru ya da statü/değişiklik bildiriminin	Sözleşme hazırlığı, ihtar ve resmî yazışma	1	2
+P5/345	sozlesme	Sözleşmeler ve Belgeler	İade, değişim ve teslim süresine ilişkin mutabakat	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P2/526	sozlesme	Sözleşmeler ve Belgeler	İdarî uyuşmazlıkta yetkili kurumla uzlaşma ve düzeltme önerisi	İdarenin kanunen çözüm geliştirme ve düzeltme takdirinin bulunduğu uyuşmazlıkta, müzakere gündemi ve uygulanabilir öneri hazırlanır; anlaşma kamu yetkisini veya üçüncü kişilerin haklarını aş	2	3
+P5/339	sozlesme	Sözleşmeler ve Belgeler	İki özel kişi arasında ikinci el eşya satış sözleşmesi	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P5/338	sozlesme	Sözleşmeler ve Belgeler	İkinci el araç satış sözleşmesi ve fiilî teslim	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P5/335	sozlesme	Sözleşmeler ve Belgeler	İş sözleşmesi veya ek protokol	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P5/337	sozlesme	Sözleşmeler ve Belgeler	İşyeri kira sözleşmesi madde ve koruma denetimi	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P5/344	sozlesme	Sözleşmeler ve Belgeler	Karşılıklı ibra ve sulh anlaşması	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P2/524	sozlesme	Sözleşmeler ve Belgeler	Kesinleşmiş idarî kararın herziening/intrekking talebi	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	3
+P5/347	sozlesme	Sözleşmeler ve Belgeler	Komisyon ve aracılık bedeli uyuşmazlığının çözüm protokolü	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P5/336	sozlesme	Sözleşmeler ve Belgeler	Konut kira sözleşmesi ve teslim tutanağı	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P5/522	sozlesme	Sözleşmeler ve Belgeler	Kurs ve eğitim hizmeti sözleşmesi	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P5/352	sozlesme	Sözleşmeler ve Belgeler	KVK şirket veya dernek tescili: yetkili kayıt dosyası	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P5/520	sozlesme	Sözleşmeler ve Belgeler	Küçük işletme genel işlem şartları (B2C/B2B)	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P2/528	sozlesme	Sözleşmeler ve Belgeler	Küçük işletmede BTW beyannamesi: fatura, rubrik ve ödeme mutabakatı	Küçük yerleşik işletmenin olağan BTW beyannamesine dayanak olarak satış/alış, banka, kas ve vergi rubriklerinin eşleştirilmesi. Bağımsız denetim veya assurance raporu değildir	2	3
+P2/525	sozlesme	Sözleşmeler ve Belgeler	Niet tijdig beslissen: ingebrekestelling ve usulî takip	Başvuru veya bezwaar hakkında süre geçmesine rağmen karar alınmadığında yazılı ihtar ve gerektiğinde niet tijdig beslissen davasını hazırlama; otomatik tazminat iddiası her işlemin sonucu de	2	3
+P5/349	sozlesme	Sözleşmeler ve Belgeler	Opzegging–ontbinding–herroeping ayrımı ve bildirim	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P5/346	sozlesme	Sözleşmeler ve Belgeler	Ortak gider ve ortak kullanım anlaşması	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P5/521	sozlesme	Sözleşmeler ve Belgeler	Ortak proje ve iş birliği sözleşmesi	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P5/350	sozlesme	Sözleşmeler ve Belgeler	Satıcı garanti ve sorumluluk beyanı denetimi	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P5/341	sozlesme	Sözleşmeler ve Belgeler	Serbest çalışan–müşteri hizmet sözleşmesi	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P5/340	sozlesme	Sözleşmeler ve Belgeler	Tamirat/tadilat ve maddi eser sözleşmesi	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P5/351	sozlesme	Sözleşmeler ve Belgeler	Zorunlu noterlik şeklinin tespiti ve notere sevk	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P5/343	sozlesme	Sözleşmeler ve Belgeler	Ödeme planı ve borç ikrarı	Sözleşme hazırlığı, ihtar ve resmî yazışma	2	1
+P2/196	ulasim	Araç, Ulaşım ve Seyahat	Araç bedeli/ücret iadesine ilişkin karşılıklı sulh ve ödeme-teslim protokolü	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/185	ulasim	Araç, Ulaşım ve Seyahat	Araç ilanındaki vaatler ile teslim edilen aracın özelliklerinin uyumsuzluğu	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/195	ulasim	Araç, Ulaşım ve Seyahat	Araç ithalatında taşıma, yabancı tescil ve gümrük evraklarının tamamlanması	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/189	ulasim	Araç, Ulaşım ve Seyahat	Araç kaporasının/rezervasyon ücretinin hukukî niteliği ve iadesi	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/541	ulasim	Araç, Ulaşım ve Seyahat	Araç kiralama, depozito ve hasar kesintisi	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/191	ulasim	Araç, Ulaşım ve Seyahat	Araç servis faturası, yaklaşık fiyat ve eksik/ayıplı işçilik uyuşmazlığı	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/190	ulasim	Araç, Ulaşım ve Seyahat	Araç teslim gecikmesinde koruyucu ihtar, ek süre ve şartlı fesih	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/187	ulasim	Araç, Ulaşım ve Seyahat	Arızalı araçta onarım, bedel indirimi veya sözleşmeden dönme	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/250	ulasim	Araç, Ulaşım ve Seyahat	Bilet acentesi veya yolcu arasında iade anlaşmazlığını çözmeye çalışmak	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/265	ulasim	Araç, Ulaşım ve Seyahat	Enerji sözleşmesini ve fesih bedelini inceleme	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	2
+P2/188	ulasim	Araç, Ulaşım ve Seyahat	Galerici–tüketici satımında kanunî uygunluk, ek garanti ve ispat yükü	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/249	ulasim	Araç, Ulaşım ve Seyahat	Geschillencommissie Openbaar Vervoer başvuru desteği	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P4/255	ulasim	Araç, Ulaşım ve Seyahat	Havayolu şirketinin bagaj kaybı, gecikme veya zararına ilişkin talep dosyası hazırlamak	Havayolu bagaj kayıp, gecikme veya hasarı talebi	2	1
+P2/184	ulasim	Araç, Ulaşım ve Seyahat	İkinci el araç satış sözleşmesi ve ön teslim kontrol protokolü	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/197	ulasim	Araç, Ulaşım ve Seyahat	Kanton mahkemesinde araç ayıbı veya özel alacak dosyası	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/186	ulasim	Araç, Ulaşım ve Seyahat	Kilometre düşürülmesi, gizli ayıp ve kilometre kayıtlarının teknik ispatı	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P4/259	ulasim	Araç, Ulaşım ve Seyahat	Kurye veya kargo şirketinin kayıp paket ve hasar uyuşmazlığını dosyalamak	Kurye veya kargo kaybı ve hasarında delil-tazminat	2	1
+P2/542	ulasim	Araç, Ulaşım ve Seyahat	Mevcut araç leasinginde ücret, kilometre, hasar ve fesih uyuşmazlığı	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/241	ulasim	Araç, Ulaşım ve Seyahat	NS tren bileti, gecikme ve sefer iptal şikâyetini hazırlamak	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P4/258	ulasim	Araç, Ulaşım ve Seyahat	Otel rezervasyonu iptali, haksız ücret ve ödeme geri alma şikâyetini düzenlemek	Otel rezervasyonunun iptali ve ücret iadesi	2	1
+P2/242	ulasim	Araç, Ulaşım ve Seyahat	Otobüs, tramvay ve metro bilet cezası veya ücret uyuşmazlığını incelemek	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/243	ulasim	Araç, Ulaşım ve Seyahat	OV-chipkaart ve OVpay yanlış yolculuk ücreti veya eksik check işlemi	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/247	ulasim	Araç, Ulaşım ve Seyahat	OV-fiets kira, geç iade, hasar, kayıp ve hırsızlık bedeli uyuşmazlığı	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/193	ulasim	Araç, Ulaşım ve Seyahat	RDW tescil/veri hatasının düzeltilmesi ve karara karşı itirazın ayrılması	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/194	ulasim	Araç, Ulaşım ve Seyahat	Satış sonrası vergi, BPM/MRB ve RDW tescil bedellerinin ayrıştırılması	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/192	ulasim	Araç, Ulaşım ve Seyahat	Sigortacı–onarım servisi hasar ve tazminat ihtilafı	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P4/264	ulasim	Araç, Ulaşım ve Seyahat	Taraflar arasında ücret iadesi veya yeni hizmet sunumu anlaşması hazırlamak	Seyahat ihtilafında sınırlı iade veya yeni hizmet sulhu	2	1
+P2/244	ulasim	Araç, Ulaşım ve Seyahat	Taşıma kartı bloke veya iade sorununda yazışma yürütmek	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P4/261	ulasim	Araç, Ulaşım ve Seyahat	Taşıyıcı şirketin ek vergi, masraf ve hizmet bedellerine itiraz etmek	Taşıyıcı ek vergi, masraf ve hizmet bedeli itirazı	2	1
+P4/260	ulasim	Araç, Ulaşım ve Seyahat	Teslim edildiği iddia edilen ancak ulaşmayan siparişte delil ve itiraz hazırlamak	Teslim edildi gösterilen kayıp kargo veya sipariş	2	1
+P2/248	ulasim	Araç, Ulaşım ve Seyahat	Toplu taşıma gecikmesi/hizmet kusuru ve tazminat talebi	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/246	ulasim	Araç, Ulaşım ve Seyahat	Toplu ulaşım aboneliğinin feshi ve ücret iadesi	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P4/257	ulasim	Araç, Ulaşım ve Seyahat	Tur operatörü ve seyahat acentesiyle hizmet kusuru anlaşmazlığını takip etmek	Tur operatörü ve acente hizmet kusuru uyuşmazlığı	2	1
+P4/262	ulasim	Araç, Ulaşım ve Seyahat	Ulaşım ve seyahat sigortasının geçerli talep yolunu belirlemek	Seyahat ve taşıma sigortasında doğru tazminat yolu	2	1
+P4/256	ulasim	Araç, Ulaşım ve Seyahat	Uluslararası otobüs taşıması iptal ve iade uyuşmazlığını incelemek	Uluslararası otobüs yolculuğu iptali ve ücret iadesi	2	1
+P4/254	ulasim	Araç, Ulaşım ve Seyahat	Uçuş gecikmesi için uygulanabilir yolcu hakkının belgelerini derlemek	Uçuş gecikmesi yolcu hakkı delillerinin hazırlanması	2	1
+P4/253	ulasim	Araç, Ulaşım ve Seyahat	Uçuş iptali nedeniyle para iadesi veya yolcu hakları talebini hazırlamak	Uçuş iptalinde iade veya alternatif taşıma başvurusu	2	1
+P2/266	ulasim	Araç, Ulaşım ve Seyahat	Yanlış enerji sayacı okuması ve yıllık hesaplaşma itirazı	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	2
+P2/251	ulasim	Araç, Ulaşım ve Seyahat	Yanlış güzergâh veya bilet türü ek ücretinin açıklanması ve düzeltilmesi	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/252	ulasim	Araç, Ulaşım ve Seyahat	Yolcu–taşıyıcı yazılı uzlaşma ve iade protokolü	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P2/245	ulasim	Araç, Ulaşım ve Seyahat	Öğrenci, yaşlı veya engelli ulaşım indirimi uyuşmazlığını dosyalamak	Araç alım satımı, toplu ulaşım ve yolculuk ihtilafları	2	3
+P4/263	ulasim	Araç, Ulaşım ve Seyahat	Şirketin müşteri hizmetleri ve uygun şikâyet kurullarıyla yazışma yapmak	Seyahat veya taşıma işletmesine iç şikâyet ve kurul yazışması	2	1
+P1/395	egitim	Eğitim ve Sağlık	CAK katkı payı ve idari ödeme kararına itiraz belgesi hazırlamak	Okul, diploma, hasta hakları ve sağlık işlemleri	1	3
+P1/400	egitim	Eğitim ve Sağlık	CIZ/Wlz veya belediye/Wmo değerlendirmesi için idarî belge envanteri ve ek yazısı	Okul, diploma, hasta hakları ve sağlık işlemleri	1	2
+P1/415	egitim	Eğitim ve Sağlık	DUO-besluit: gerekend vanaf bekendmaking bezwaartermijn en gemotiveerd bezwaarschrift	DUO kararına karşı idarî itirazın konu, süre, karar numarası ve delil bakımından hazırlanması; şikâyet, ödeme ihtarı, başvuruya cevap verilmemesi ve kararın içeriğine yönelen bezwaar yolları	1	3
+P1/399	egitim	Eğitim ve Sağlık	Engellilik hizmeti veya bakım desteği ret kararının gerekçesini incelemek	Okul, diploma, hasta hakları ve sağlık işlemleri	1	3
+P1/418	egitim	Eğitim ve Sağlık	Eğitim amaçlı Hollanda oturum izninde yetkili sponsorla belge envanteri ve koordinasyon	Öğrencinin eğitim amaçlı Hollanda oturumu için okul/üniversite tanınmış sponsoruna sunacağı giriş, kayıt, geçim ve belge tasdik envanterini düzenlemek; IND adına başvuru yapmak, göç danışman	1	3
+P1/545	egitim	Eğitim ve Sağlık	Hasta hizmeti, planlama veya idari usule ilişkin Wkkgz şikâyet başvurusu	Okul, diploma, hasta hakları ve sağlık işlemleri	1	2
+P1/402	egitim	Eğitim ve Sağlık	Hastanın kayıt erişimi, düzeltme veya şikâyet yazısını hazırlamak	Hastanın kayıt erişimi, düzeltme veya şikâyet yazısını hazırlamak	1	3
+P1/406	egitim	Eğitim ve Sağlık	Hasta–kurum fatura ve idarî iletişim uyuşmazlığında görüşme	Okul, diploma, hasta hakları ve sağlık işlemleri	1	3
+P1/411	egitim	Eğitim ve Sağlık	Hatalı eğitim faturası: DUO lesgeld, kurumsal collegegeld ve özel fatura ayrımı	Eğitim kurumundan gelen yanlış fatura için borcun hukukî niteliğini, kayıt/iptal tarihini, gerekçeyi, önceki ödemeyi ve kurumun yetkisini belirleyerek gerekçeli açıklama ve düzeltme talebi h	1	3
+P1/416	egitim	Eğitim ve Sağlık	Hatalı öğrenci kimlik, diploma ve doğum tarihi kaydının düzeltilmesi	Okul, diploma, hasta hakları ve sağlık işlemleri	1	3
+P1/407	egitim	Eğitim ve Sağlık	Hollanda kurumuna yabancı diploma ve transkript sunumu	Okul, diploma, hasta hakları ve sağlık işlemleri	1	3
+P1/408	egitim	Eğitim ve Sağlık	IDW diploma değerlendirmesi için asıl belge, not dökümü ve kimlik eşleştirme kontrolü	Yurt dışından alınmış diploma için IDW diplomawaardering başvurusunda gerekli diploma/transkript/tercüme/ad değişikliği evrakını belge asıllarıyla eşleştirerek temin planı yapmak; diplomaya	1	3
+P1/412	egitim	Eğitim ve Sağlık	Meslekî sertifika ve geçmiş eğitim belgelerinin temini	Okul, diploma, hasta hakları ve sağlık işlemleri	1	3
+P1/396	egitim	Eğitim ve Sağlık	Sağlık borcu ve prim gecikmesi için ödeme kolaylığı görüşmesi hazırlamak	Sağlık borcu ve prim gecikmesi için ödeme kolaylığı görüşmesi hazırlamak	1	3
+P1/401	egitim	Eğitim ve Sağlık	Sağlık kurumunun yanlış faturasına açıklama ve iade talebi hazırlamak	Okul, diploma, hasta hakları ve sağlık işlemleri	1	3
+P1/394	egitim	Eğitim ve Sağlık	Sağlık sigortacısının tedavi bedeli ret kararına şikâyet hazırlamak	Okul, diploma, hasta hakları ve sağlık işlemleri	1	3
+P1/405	egitim	Eğitim ve Sağlık	Sosyal destek başvurularına ilişkin kurum görüşmelerini organize etmek	Sosyal destek başvurularına ilişkin kurum görüşmelerini organize etmek	1	3
+P1/413	egitim	Eğitim ve Sağlık	Stajovereenkomst, leerdoel en stagevergoeding: werkelijke uitvoering toetsen	Staj sözleşmesinin öğrenme hedefi, gerçek günlük işler, gözetim, çalışma günleri, kabul edilen ücret/masraf ödemeleri ve varsa gizli işçilik ilişkisini ayırmak; yalnız başlığa bakarak işçili	1	3
+P1/403	egitim	Eğitim ve Sağlık	Tıbbî raporların içerik değiştirmeden dosya sırasını oluşturma ve teslim teyidi	Okul, diploma, hasta hakları ve sağlık işlemleri	1	2
+P1/417	egitim	Eğitim ve Sağlık	Uluslararası eğitim kurumu: belge gönderim ve kabul şartlarının koordinasyonu	Okul, diploma, hasta hakları ve sağlık işlemleri	1	3
+P1/398	egitim	Eğitim ve Sağlık	Wmo belediye yardım kararlarına karşı itiraz hazırlamak	Okul, diploma, hasta hakları ve sağlık işlemleri	1	3
+P1/404	egitim	Eğitim ve Sağlık	Yurt dışında yaşayan emeklinin sağlık sigortası katkı belgesi ve uluslararası kapsam dosyasını hazırlamak	Yurt dışında yaşayan emeklinin sağlık sigortası katkı belgesi ve uluslararası kapsam dosyasını hazırlamak	1	3
+P1/397	egitim	Eğitim ve Sağlık	Zorgtoeslag gelirine ilişkin eksik belgeyi tamamlama	Okul, diploma, hasta hakları ve sağlık işlemleri	1	3
+P1/393	egitim	Eğitim ve Sağlık	Zorgverzekering poliçe ve prim uyuşmazlığını incelemek	Zorgverzekering poliçe ve prim uyuşmazlığını incelemek	1	3
+P1/410	egitim	Eğitim ve Sağlık	Özel okul ve kurs sözleşmesinde bedenktijd, opzegging, ontbinding ve iade hesabı	Özel eğitim sağlayıcısı veya dil/kurs şirketiyle tüketici sözleşmesinde kurulma tarihi, uzaktan akit, cayma süresi, başlamış hizmet, olağan fesih ve ifa eksikliği nedeniyle sözleşmeden dönme	1	3
+P1/414	egitim	Eğitim ve Sağlık	Öğrenci konutu kira ve depozito uyuşmazlığında sözleşme, teslim ve tahsilat denetimi	Öğrenci odası/kampüs konutu bakımından kira sözleşmesinin türünü, kiralayan gerçek tüzel kişiyi, güvence bedelini, taşınmazın teslim ve hasar kayıtlarını, kiradan kaynaklanan başka uyuşmazlı	1	3
+P1/409	egitim	Eğitim ve Sağlık	Üniversite kayıt, collegegeld ve öğrenci statüsü kararlarında doğru şikâyet/itiraz rotası	Hbo/wo üniversite veya yüksekokul kararının kayıt, ilişik kesme, collegegeld iadesi, öğrenci statüsü yahut hizmet şikâyeti olduğunun ayrılması ve yalnız doğru usul kanalıyla gerekçeli yazılı	1	3
+P4/80	gumruk	Gümrük ve Dış Ticaret	Douane ek tahakkuk/ceza kararı: gümrük incelemesi ve bezwaar	İthalat, ihracat, taşınma eşyası ve gümrük kararları	1	1
+P4/88	gumruk	Gümrük ve Dış Ticaret	Douane kararının yeniden incelenmesi: eksik bilgi ve belge tamamlama	İthalat, ihracat, taşınma eşyası ve gümrük kararları	1	1
+P4/81	gumruk	Gümrük ve Dış Ticaret	Gümrük kararına karşı yazılı yetki belgesiyle bezwaar sunmak	Gümrük kararına yazılı vekâletle bezwaar	2	1
+P4/87	gumruk	Gümrük ve Dış Ticaret	Gümrük temsilcisi/taşıyıcı şirketle müşteri arasındaki ücret uyuşmazlığını dosyalamak	Gümrük müşavirliği/taşıyıcı işlem ücreti uyuşmazlığı	2	1
+P4/82	gumruk	Gümrük ve Dış Ticaret	Gümrük vergisi hesaplaması için fatura ve ödeme belgelerini karşılaştırmak	Gümrük vergisi hesaplama ve fatura karşılaştırma	2	1
+P4/89	gumruk	Gümrük ve Dış Ticaret	Gümrük yazışması sonrasında iade veya düzeltme talebinin takibi	İthalat, ihracat, taşınma eşyası ve gümrük kararları	1	1
+P4/86	gumruk	Gümrük ve Dış Ticaret	Gümrükte bekleyen paket veya eşyanın belge eksikliğini sorgulamak	Gümrükte beklediği bildirilen paket için belge eksikliği	2	1
+P4/84	gumruk	Gümrük ve Dış Ticaret	Kişisel eşya ithali ve taşınma eşyası muafiyet belgelerini düzenlemek	Taşınma eşyası gümrük muafiyet dosyası	2	1
+P4/90	gumruk	Gümrük ve Dış Ticaret	Ruhsatlı gümrük temsilciliği gerektiren beyan işlemlerinde müşterinin yetkili temsilciyle bağlantısını kurmak	İzinli gümrük temsilcisinin tespiti ve sevk koordinasyonu	2	1
+P4/83	gumruk	Gümrük ve Dış Ticaret	Yanlış ürün tarifesi veya GTİP sınıflandırmasına ilişkin iddia ve belgeleri hazırlamak	HS/GN/TARIC sınıflandırma uyuşmazlığı	2	1
+P4/85	gumruk	Gümrük ve Dış Ticaret	Yurt dışından araç ithalinde Douane, BPM ve RDW tescil belge listesi	İthalat, ihracat, taşınma eşyası ve gümrük kararları	1	1
+P1/513	veri	Kişisel Veriler ve Dijital Haklar	AVG cevapsızlık veya ret halinde AP şikâyet dosyası	AVG/GDPR, veri erişimi ve dijital hak talepleri	1	3
+P1/509	veri	Kişisel Veriler ve Dijital Haklar	Banka / operatörden AVG kişisel veri erişim talebi	AVG/GDPR, veri erişimi ve dijital hak talepleri	1	3
+P1/517	veri	Kişisel Veriler ve Dijital Haklar	Düzeltilmiş kayıtlara ilişkin yeni kararın ve yazılı teyidin takibi	Kayıtların düzeltilmesi sonrası güncel karar ve teyit mektubunun alınmasını takip etmek	1	3
+P1/511	veri	Kişisel Veriler ve Dijital Haklar	Gereksiz kişisel verinin silinmesi (AVG m.17)	gerçek kişinin (ilgili kişi) kendi verileri için silme talebi. Şirket ticari sırları, üçüncü kişi verisi, arşiv belgesinin tümü veya başka kişilerin hesapları otomatik kapsamda değildir. Baş	1	3
+P1/510	veri	Kişisel Veriler ve Dijital Haklar	Hatalı adres, kişi adı veya müşteri numarası için somut rectificatie başvurusu	Hatalı adres, isim veya müşteri numarasının düzeltilmesini talep etmek	1	3
+P1/514	veri	Kişisel Veriler ve Dijital Haklar	Hatalı BKR kredi kaydı ve ölçülülük incelemesi	AVG/GDPR, veri erişimi ve dijital hak talepleri	1	3
+P1/518	veri	Kişisel Veriler ve Dijital Haklar	İşletmenin müşteri verisi hakkında gündelik şikâyete ölçülü ve hukukî cevap yazısı	AVG/GDPR, veri erişimi ve dijital hak talepleri	1	2
+P1/515	veri	Kişisel Veriler ve Dijital Haklar	Kurumlar arası yanlış kimlik eşleşmesi için kayıt ve aktarım düzeltme desteği	Kişinin kurumlar arasında yanlış kimlikle eşleşmesi sorununa belge düzeltme desteği vermek	1	3
+P1/516	veri	Kişisel Veriler ve Dijital Haklar	Müşteri adına veri aktarımında vekâlet ve yetki kapsamı kontrolü	AVG/GDPR, veri erişimi ve dijital hak talepleri	1	2
+P1/512	veri	Kişisel Veriler ve Dijital Haklar	Sona eren sözleşmeden sonra gelen fatura ve kişisel veri kaydı itirazı	Sözleşmenin kapanmasına rağmen süren fatura ve veri kaydının düzeltilmesini istemek	1	3
+P1/519	veri	Kişisel Veriler ve Dijital Haklar	Önceki danışman görüşünün bağımsız ikinci incelemesi	Önceki danışmanın kişisel itibarı hakkında hüküm vermez; ilk görüşün varsayımlarını, dayandığı normları ve karşı argümanları denetleyerek ayrı görüş üretir	1	3
+P4/315	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Alıcı–satıcı bedel indirimi, iade ve tüketici hakkı ayrımı	Satıcı–alıcı arasında bedel indirimi veya iade protokolü hazırlamak	2	1
+P1/15	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Anlaşılır dilde hukukî görüş ve uygulanabilir müşteri özeti	Müşteriyle doğrulanmış olgular, uygulanabilir hukuk, risk ve yapılabilir ilk eylemleri sade cümlelerle açıklar; hukuki olasılığı gerçek kazanım sözüne dönüştürmez	1	3
+P4/321	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Arabuluculuk sıfatı üstlenmeden kayıtlı uzmana güvenli sevk	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P1/5	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Avukatlık tekeline girmeyen konularda gerekçeli yazılı hukukî görüş	Görüş yalnız verilen ve kaynağı denetlenen olgulara ilişkin koşullu analizdir. Mahkeme davasını açma, her mahkemede temsil, noterlik, deurwaarder tebliği veya ruhsatlı meslek işlemini üstlen	1	3
+P5/20	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Ayıplı tüketici malı, dijital içerik veya hizmette uygun çözüm talebi	Hollanda özel hukuk veya kurum usulü; yurt dışı unsuru ve fiilî yetki ayrı incelenir. Bu kart bir gerçek müvekkil başvurusu veya gönderilmiş yazı değildir	2	1
+P4/317	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Banka/sigorta iç şikâyet sürecinde çözüm görüşmesi ve tutanak | Parti 36	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P5/25	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Cevapsız şikâyet için hatırlatma, gerekçeli sonuç ve usul ayrımı	Hollanda özel hukuk veya kurum usulü; yurt dışı unsuru ve fiilî yetki ayrı incelenir. Bu kart bir gerçek müvekkil başvurusu veya gönderilmiş yazı değildir	2	1
+P1/16	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Danışmanlık dosyasını yazılı sonuç, teslim ve kapanış raporuyla kapatma	Yürütülen danışmanlık işini yazılı teslim, sonraki adım ve sonuç raporuyla kapatmak	1	3
+P1/12	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Delil, fatura, dekont ve mesajların güvenilir kronolojik envanteri	Asıl kanıtı değiştirmeden toplar, etiketler, tarihlendirir ve iddialarla eşler; sahtelik, bilirkişilik, adlî dijital inceleme ya da kanıt kesinliği kararı vermez	1	3
+P1/7	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Hak, yükümlülük, seçenek ve risklerin karşılaştırmalı karar matrisi	Müşterinin somut talebini birden çok çözüm yolunun olumlu/olumsuz yanlarıyla yazılı karşılaştırma; kazanma ihtimali için delilsiz yüzde verilmez	1	3
+P5/22	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Hizmet iptali, olağan fesih ve ihlale dayalı çözme	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P4/330	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Hollanda'daki mahkeme harcı ve tebligat masrafını resmî kaynaktan kontrol etmek	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	2
+P1/6	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Hukuk kaynağı, kurum rehberi ve ECLI kanıt zinciri kayıt sistemi	Mevzuat, düzenleyici rehber ve mahkeme kararı aynı ispat gücünde sayılmaz; her hukukî iddianın doğrudan kaynağı, sürüm tarihi ve tam metin erişimi ayrı kaydedilir	1	3
+P4/333	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	İcra dosyasının gerechtsdeurwaarder için hazırlanması ve teslim öncesi uygunluk denetimi	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P4/328	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	İdarî beroep gerekçelerinin hukuka ve delile bağlı hazırlanması	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P4/329	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	İdarî yargıda usule uygun yazılı yetkili temsil	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P5/23	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	İhtirazî kayıt, açık hak saklama ve stuiting ayrımı	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P1/1	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	İlk hukukî görüşme, olay takvimi ve talep formülasyonu	İlk temas, davayı kazanma vaadi veya kanunî temsil izni değildir. Olgu, ihtilaf, istenen sonuç, süre riski ve belge ihtiyacı kaydı oluşturur	1	3
+P1/9	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	İtiraz, zamanaşımı ve hak düşürücü sürelerdeki riskleri güncel resmî metinden belirlemek	Başvuru ve alacak süreleri için üç ayrı saat. Özgün işlem: İtiraz, zamanaşımı ve hak düşürücü sürelerdeki riskleri güncel resmî metinden belirlemek. V26 kuyrukta dosyası tespit edilememişti.	1	3
+P4/314	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	İş sözleşmesini anlaşmayla sona erdirme veya fesihsiz ücret ödeme planı | Parti 36	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P1/8	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	İşlem yol haritası, son gün ve belge kontrol planı	Bir olay için eylem sırasını, ilk acil süre kapısını, sorumlu kişiyi ve gönderim kanıtını içeren uygulanabilir kontrol planı; tek başına başvuru yerine geçmez	1	3
+P4/324	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Kanton davası veya cevap/verzoekschrift yazımında usul türüne göre taleplerin hazırlanması	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P4/323	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Kanton delil dosyası: kira, iş, tüketici ve küçük alacak iddialarının produktionlara bağlanması	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P4/327	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Kanton dosyasında üretim listesi, hesap cetveli ve süre kontrolü	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P4/326	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Kanton rol/duruşma günlüğü ve mahkeme yazışmalarının süre-kayıt denetimi	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P4/322	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Kantonrechter mutlak görev, dava değeri ve usul türü ön incelemesi	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P4/331	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Karar sonrası kanunen açık olan kanun yolu ve süre bilgilerini incelemek	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	2
+P5/17	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Karşı tarafa ilk gerekçe ve belirli belge istemi	Hollanda özel hukuk veya kurum usulü; yurt dışı unsuru ve fiilî yetki ayrı incelenir. Bu kart bir gerçek müvekkil başvurusu veya gönderilmiş yazı değildir	2	1
+P1/3	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Karşı tarafı, karar veren kurumu ve doğru şikâyet/başvuru kanalını tespit etmek	Doğru muhatap ve başvuru yolu eşleştirmesi. Özgün işlem: Karşı tarafı, karar veren kurumu ve doğru şikâyet/başvuru kanalını tespit etmek. V26 kuyrukta dosyası tespit edilememişti. Yüklenen k	1	3
+P4/313	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Kira depozitosu iade ve mahsup uyuşmazlığında şartlı sulh | Parti 36	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P4/316	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Komşuluk veya ticari ortaklık iletişim ve uzlaşı protokolü	Komşular veya ortaklar arasında yazılı iletişim ve uzlaşı protokolü oluşturmak	2	1
+P5/26	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Kurum yazısına yanıt ve eksik belge tamamlama	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P4/320	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Mahkeme bağlantısız gönüllü toplantı kolaylaştırıcılığı: iki taraf rızası, tarafsızlık ve gizlilik | Parti 37	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P5/29	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Müzakere başarısızsa seçenek ve risk raporu	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P5/28	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Müzakere tutanağı ve sulh protokolü	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P1/13	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Müşteri belgelerinde eksiklik, tarih ve içerik çelişkisi denetimi	Belgeleri değiştirmeden, eksik/imzasız sayfaları, sürüm farklarını, çelişen tarih/tutar/kimlik verilerini ve doğrulanamayan olguları kaydeder; adli bilirkişilik iddiası değildir	1	3
+P4/308	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Müşteri görüşmesi öncesi hedef, kabul eşiği ve delil riski planı	Müşterinin karşı tarafla görüşmesinden önce çözüm hedeflerini belirlemek	2	1
+P1/4	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Müşteri tarafından sağlanan karar, sözleşme ve tebligatları açıklamak	Üç belge türünü yanlış usul yaratmadan açıklama. Özgün işlem: Müşteri tarafından sağlanan karar, sözleşme ve tebligatları açıklamak. V26 kuyrukta dosyası tespit edilememişti. Yüklenen kaynak	1	3
+P1/10	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Müşterinin talep edebileceği çözüm ve karşı tarafın muhtemel itirazlarını analiz etmek	Çözüm–savunma–delil matrisi. Özgün işlem: Müşterinin talep edebileceği çözüm ve karşı tarafın muhtemel itirazlarını analiz etmek. V26 kuyrukta dosyası tespit edilememişti. Yüklenen kaynak ar	1	3
+P4/325	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Sivil kanton davasında yazılı yetkiyle temsil — kapsam ve sınırlar	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P5/24	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Sözleşme hükmü açıklaması ve hesap dökümü talebi	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P5/19	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Sözleşmeye aykırılıkta ifa ve düzeltme ihtarı	Hollanda özel hukuk veya kurum usulü; yurt dışı unsuru ve fiilî yetki ayrı incelenir. Bu kart bir gerçek müvekkil başvurusu veya gönderilmiş yazı değildir	2	1
+P4/309	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Taraf iddiaları, inkârları ve delilleri için karşılaştırmalı tablo	Tarafların yazılı iddia ve taleplerini karşılaştırma tablosuna dönüştürmek	2	1
+P4/311	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Tek tarafın danışmanı sıfatıyla uzlaşma müzakeresi ve sınırlı temsil | Parti 37	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P4/332	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Temsil yetkisi bulunmayan yargı işleminden önce yetkili avukat sevki hazırlamak	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P1/14	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Uyuşmazlık çözüm yolunu ayırma: müzakere, klacht, bezwaar veya dava	Uyuşmazlığın müzakere, idarî itiraz, şikâyet veya yetkili mahkeme yolunu açıklamak	1	3
+P1/2	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Uyuşmazlığın hukuk alanına, talep ve dava türüne göre tasnifi	İş; iş, sözleşme/tüketici, kira, idare/sosyal güvenlik veya aile-miras alanlarının ayrılmasıdır; temsil ruhsatı veya dava açma yetkisi tanımaz	1	3
+P4/310	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Uzlaşma teklifinden önce yetki, çıkar çatışması ve karşı tarafa doğru sıfat bildirimi | Parti 37	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P5/18	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Yanlış fatura veya istenmeyen ücret için gerekçeli itiraz mektubu düzenlemek	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P5/30	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Yazılı ve sınırlı vekâletle izinli kurum–müvekkil bilgi alışverişi	Hollanda özel hukuk veya kurum usulü; yurt dışı unsuru ve fiilî yetki ayrı incelenir. Bu kart bir gerçek müvekkil başvurusu veya gönderilmiş yazı değildir	2	1
+P5/27	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Çözüm görüşmesi daveti ve gündem	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P5/21	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Ödeme gecikmesi hakkında hesap mutabakatı ve ödeme hatırlatması hazırlamak	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P1/11	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	Ödenmemiş ücret, bedel, faiz veya masraf için açıklamalı hesap dökümü çıkarmak	Kalem bazlı alacak denetimi ve muacceliyet raporu. Özgün işlem: Ödenmemiş ücret, bedel, faiz veya masraf için açıklamalı hesap dökümü çıkarmak. V26 kuyrukta dosyası tespit edilememişti. Yükl	1	3
+P4/312	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	“Her iki tarafın da rızasıyla tarafsız kolaylaştırıcı olarak toplantı düzenlemek.” Kurum	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P4/319	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	“Taraflardan alınan onayı kaydedip son anlaşmayı imzaya hazırlamak	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
+P4/318	uyusmazlik	İtiraz ve Uyuşmazlık Çözümü	“Ödenmiş borcun kapatılması için mutabakat belgesi hazırlamak.” Tüketici, ticari veya özel alacak için	Başvuru, itiraz, müzakere, delil ve dava hazırlığı	2	1
