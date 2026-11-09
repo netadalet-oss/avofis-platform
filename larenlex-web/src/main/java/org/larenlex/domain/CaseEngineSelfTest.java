@@ -35,9 +35,6 @@ public final class CaseEngineSelfTest {
     new CaseEngine.Submission("tenant-A","P1/123","NL","Changed request data",25000L),
     "req-001"),"idempotency key payload collision rejected");
   fails(IllegalStateException.class,()->engine.submit(owner,
-    new CaseEngine.Submission("tenant-A","P1/123","NL","Changed request data",25000L),
-    "req-001"),"idempotency key payload collision rejected");
-  fails(IllegalStateException.class,()->engine.submit(owner,
       new CaseEngine.Submission("tenant-A","P9/999","NL","test",null),"bad"),"unknown service");
   fails(SecurityException.class,()->engine.submit(otherTenant,request,"cross"),"cross tenant submit");
   fails(SecurityException.class,()->engine.read(outsider,"tenant-A",id),"same tenant non-owner blocked");
@@ -94,11 +91,11 @@ public final class CaseEngineSelfTest {
   check(opened.stage()==CaseEngine.Stage.DELIVERED,"customer delivery accepted");
   fails(SecurityException.class,()->engine.execute(manager,"tenant-A",id,
      cmd(CaseEngine.Action.DRAFT_INVOICE,11,null,null,null)),"manager cannot draft invoice");
-  opened=engine.execute(finance,"tenant-A",id,
-     cmd(CaseEngine.Action.DRAFT_INVOICE,11,null,null,null));
-  check(opened.stage()==CaseEngine.Stage.INVOICE_DRAFTED&&opened.invoiceDraftCents()==45000L,
-    "invoice draft equals accepted quote");
-  check(opened.history().size()==13,"immutable audit events");
+  fails(IllegalStateException.class,()->engine.execute(finance,"tenant-A",id,
+     cmd(CaseEngine.Action.DRAFT_INVOICE,11,null,null,null)),"no invoice without audited milestone ledger");
+  check(opened.stage()==CaseEngine.Stage.DELIVERED&&opened.invoiceDraftCents()==null,
+    "invoice remains blocked without milestone verifier");
+  check(opened.history().size()==12,"immutable audit events");
   check(!engine.mayCollectPayment(),"payments disabled");
   check(!engine.maySendToInstitution(),"official adapters disabled");
   var req2=engine.submit(owner,new CaseEngine.Submission("tenant-A","P1/124","NL","review",null),"req-002");

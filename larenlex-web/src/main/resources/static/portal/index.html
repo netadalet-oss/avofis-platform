@@ -270,6 +270,9 @@ select,button,a{-webkit-tap-highlight-color:rgba(223,191,89,.13)}
 @media(max-width:610px){.case-tabs{margin:0 -5px}.case-tabs>button{padding:12px 11px;min-height:47px}.case-side-links{grid-template-columns:repeat(2,1fr)}.status-ribbon{align-items:flex-start;flex-direction:column;gap:4px}.review-checks{padding:10px 12px}.article-full{padding:18px}.article-full h2{font-size:24px}.action-inline .btn{width:100%;justify-content:center}.modal{padding:19px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 
+/* İşyeri ve başvurucu: aşama ve teslim görünümü. */
+.milestone-line{display:flex;justify-content:space-between;gap:18px;align-items:center;padding:16px 0;border-bottom:1px solid #e5e9ef}.milestone-line>div:first-child{display:grid;grid-template-columns:29px 1fr;column-gap:8px;align-items:start}.milestone-line strong{color:#13233c}.milestone-line small,.milestone-line p{grid-column:2;color:#58677b}.milestone-order{grid-row:span 3;background:#f1e8cb;color:#352c16;font-size:13px;border-radius:50%;width:26px;height:26px;display:grid;place-items:center}.milestone-actions{display:flex;flex-wrap:wrap;gap:7px}.milestone-admin-list{border:1px solid #dde3ec;border-radius:9px;margin:10px 0}.milestone-admin-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px}.milestone-admin-row+.milestone-admin-row{border-top:1px solid #e9ecf1}@media(max-width:700px){.milestone-line{align-items:start;flex-direction:column}.milestone-actions{width:100%}}
+
 .preview-clarifier{font-size:11px;color:#9facbf;padding:0 18px 22px;text-align:center;max-width:900px;margin:auto}
 </style>
 </head>
@@ -386,6 +389,7 @@ function caseDetail(id){const r=getRecord(id);if(!r)return notFound();const t=st
  if(r.status==='Sözleşme bekleniyor'&&r.offer)actions.push(`<button class="btn btn-dark" data-client-action="contract" data-record="${esc(r.id)}">Sözleşme koşullarını kabul et</button>`);
  if(r.status==='Teslim incelemede')actions.push(`<button class="btn btn-dark" data-client-action="accept" data-record="${esc(r.id)}">Teslimi kabul et</button><button class="btn btn-outline" data-client-action="revise" data-record="${esc(r.id)}">Revizyon iste</button>`);
  const docs=(r.documents||[]).map(d=>`<div class="doc-row"><strong>${esc(d.name)}</strong><small>${esc(d.when||'')}</small></div>`).join('');
+ const milestones=(r.milestones||[]).map((m,i)=>`<div class="milestone-line"><div><span class="milestone-order">${i+1}</span><strong>${esc(m.name)}</strong><small>${formatPrice(m.amount)} · ${esc(m.stage)}</small>${m.summary?`<p>${esc(m.summary)}</p>`:''}${m.reason?`<p>Revizyon: ${esc(m.reason)}</p>`:''}</div>${m.stage==='İncelemeye sunuldu'?`<div class="milestone-actions"><button class="btn btn-dark btn-sm" data-phase-action="accept" data-record="${esc(r.id)}" data-phase-id="${esc(m.id)}">Aşamayı kabul et</button><button class="btn btn-outline btn-sm" data-phase-action="revise" data-record="${esc(r.id)}" data-phase-id="${esc(m.id)}">Revizyon iste</button></div>`:''}</div>`).join('');
  const tasks=(r.tasks||[]).map(d=>`<div class="doc-row"><strong>${esc(d.title)}</strong><small>${esc(d.due?'Hedef: '+d.due:'Tarih belirlenmedi')}</small></div>`).join('');
  const messages=(r.messages||[]).map(m=>`<div class="message-bubble"><span>${esc(m.from)}</span><p>${esc(m.text)}</p></div>`).join('');
  const content=[
@@ -396,7 +400,7 @@ function caseDetail(id){const r=getRecord(id);if(!r)return notFound();const t=st
  `<h3>Teslim ve revizyon</h3>${r.deliveryNote?`<div class="panel-section"><h4>Çalışma teslimi</h4><p>${esc(r.deliveryNote)}</p><span class="status-badge">${esc(r.status)}</span></div>`:'<div class="empty-doc">Henüz teslim edilmiş çalışma bulunmuyor.</div>'}${r.revisionReason?`<p><strong>Revizyon talebi:</strong> ${esc(r.revisionReason)}</p>`:''}<div class="action-inline">${actions.filter(x=>x.includes('data-client-action="accept"')||x.includes('data-client-action="revise"')).join('')}</div>`,
  `<h3>Faturalar ve ödeme</h3>${r.invoiceDraft?`<div class="invoice-summary"><div><strong>Fatura hazırlığı</strong><small>İşin tamamlanan kapsamı</small></div><b>${formatPrice(r.invoiceDraft)}</b></div><p>Gerçek ödeme bağlantısı henüz bulunmuyor.</p>`:'<div class="empty-doc">Bu dosya için fatura veya tahsilat kaydı bulunmuyor.</div>'}<p>Ödeme yalnız doğrulanmış sözleşme ve yetkili ödeme sağlayıcısı üzerinden yapılır.</p>`,
  `<h3>Dosya mesajları</h3>${messages||'<div class="empty-doc">Henüz mesaj bulunmuyor.</div>'}<form class="case-message-form" data-record="${esc(r.id)}"><div class="field"><label for="case-message">Mesaj</label><textarea id="case-message" maxlength="600" required placeholder="Dosyanız hakkındaki mesajınızı yazın. Özel bilgi eklemeyin."></textarea></div><button class="btn btn-outline btn-sm">Mesaj ekle</button></form>`,
- `<h3>İş planı ve görevler</h3>${tasks||'<div class="empty-doc">Henüz atanmış görev bulunmuyor.</div>'}<a href="#/dosyalarim" class="inline-link">Tüm dosyalara dön ${icon('arrow')}</a>`
+ `<h3>İş aşamaları</h3>${milestones||'<div class="empty-doc">Henüz iş aşaması planlanmadı.</div>'}<h3 style="margin-top:24px">Görevler</h3>${tasks||'<div class="empty-doc">Henüz atanmış görev bulunmuyor.</div>'}<a href="#/dosyalarim" class="inline-link">Tüm dosyalara dön ${icon('arrow')}</a>`
  ];
  return `${head('Dosya '+r.id,r.name,['Dosyalarım',r.id])}<div class="container content-main"><div class="detail-grid"><div><div class="detail-panel"><div class="tabs case-tabs" role="tablist" aria-label="Dosya işlemleri">${tabs.map((name,i)=>`<button role="tab" aria-selected="${t===i}" data-case-tab="${i}" class="${t===i?'active':''}">${name}</button>`).join('')}</div><div class="tab-body" role="tabpanel">${content[t]||content[0]}</div></div></div><aside class="detail-aside"><div class="info-box"><h4>Dosya durumu</h4><p><span class="status-badge blue">${esc(r.status)}</span></p><p>${r.status==='Ücretsiz ret'?'İşlem ücret alınmadan kapatıldı.':'Bir sonraki aşama dosyanızın incelemesine bağlıdır.'}</p><a href="${hrefFor(byId[r.serviceId])}" class="inline-link">Hizmet ayrıntılarını aç →</a></div><div class="info-box"><h4>Dosya işlemleri</h4><div class="case-side-links"><button data-case-tab="1">Belgeler</button><button data-case-tab="2">Geçmiş</button><button data-case-tab="3">Teklif</button><button data-case-tab="4">Teslim</button><button data-case-tab="6">Mesajlar</button></div></div></aside></div></div>`;
 }
@@ -442,9 +446,9 @@ function publishDesk(){
  const pendingComments=drafts.flatMap(a=>(a.comments||[]).filter(c=>c.status==='İncelemede').map(c=>({id:c.id,type:'article',parent:a.id,title:a.title,content:c.text})))
   .concat(topics.flatMap(t=>t.replies.filter(c=>c.status==='İncelemede').map(c=>({id:c.id,type:'forum',parent:t.id,title:t.title,content:c.text}))));
  return `${head('Yayın yönetimi','Makaleler, haberler, forum konuları ve yorum incelemeleri.',['Yönetim','Yayınlar'])}<div class="container content-main"><div class="workspace-grid">${adminNav('yayin')}<section class="workspace-content"><div class="section-heading"><div><h2>Yayın ve moderasyon</h2><p>Yazar, editör ve hukukî inceleme işlemleri.</p></div><button class="btn btn-dark btn-sm" data-new-article>Yeni yazı</button></div><div class="workspace-cards"><div class="workspace-card"><b>${drafts.filter(x=>x.status==='İncelemede').length}</b><span>Yazı incelemesi</span></div><div class="workspace-card"><b>${topics.filter(x=>x.status==='İncelemede').length}</b><span>Forum incelemesi</span></div><div class="workspace-card"><b>${pendingComments.length}</b><span>Yorum incelemesi</span></div></div>
- <div class="panel-section"><h3>Makale ve haberler</h3>${drafts.length?drafts.map(a=>`<div class="review-list-item"><div><strong>${esc(a.title)}</strong><small>${esc(a.kind)} · ${esc(a.status)}</small></div>${a.status==='İncelemede'?`<button class="btn btn-outline btn-sm" data-editor-action="approve" data-editor-id="${esc(a.id)}">Yayın onayını işle</button>`:''}</div>`).join(''):'<div class="empty-doc">Henüz yazı bulunmuyor.</div>'}</div>
- <div class="panel-section"><h3>Forum konu incelemesi</h3>${topics.length?topics.map(t=>`<div class="review-list-item"><div><strong>${esc(t.title)}</strong><small>${esc(t.status)}</small></div>${t.status==='İncelemede'?`<button class="btn btn-outline btn-sm" data-topic-approve="${esc(t.id)}">Konuyu incele</button>`:''}</div>`).join(''):'<div class="empty-doc">İncelenecek forum konusu bulunmuyor.</div>'}</div>
- <div class="panel-section"><h3>Yorum incelemesi</h3>${pendingComments.length?pendingComments.map(c=>`<div class="review-list-item"><div><strong>${esc(c.title)}</strong><small>${esc(c.content.slice(0,120))}</small></div><button class="btn btn-outline btn-sm" data-comment-approve="${esc(c.parent)}|${esc(c.id)}|${esc(c.type)}">Yorumu onayla</button></div>`).join(''):'<div class="empty-doc">İnceleme bekleyen yorum bulunmuyor.</div>'}</div>
+ <div class="panel-section"><h3>Makale ve haberler</h3>${drafts.length?drafts.map(a=>`<div class="review-list-item"><div><strong>${esc(a.title)}</strong><small>${esc(a.kind)} · ${esc(a.status)}</small></div>${a.status==='İncelemede'?`<button class="btn btn-outline btn-sm" data-editor-action="review" data-editor-id="${esc(a.id)}">Hukukî incelemeyi tamamla</button>`:a.status==='Hukukî onaylandı'?`<button class="btn btn-dark btn-sm" data-editor-action="publish" data-editor-id="${esc(a.id)}">Yayımla</button>`:''}</div>`).join(''):'<div class="empty-doc">Henüz yazı bulunmuyor.</div>'}</div>
+ <div class="panel-section"><h3>Forum konu incelemesi</h3>${topics.length?topics.map(t=>`<div class="review-list-item"><div><strong>${esc(t.title)}</strong><small>${esc(t.status)}</small></div>${t.status==='İncelemede'?`<button class="btn btn-outline btn-sm" data-topic-approve="${esc(t.id)}">Konuyu incele</button>`:t.status==='Hukukî onaylandı'?`<button class="btn btn-dark btn-sm" data-topic-publish="${esc(t.id)}">Konuyu yayımla</button>`:''}</div>`).join(''):'<div class="empty-doc">İncelenecek forum konusu bulunmuyor.</div>'}</div>
+ <div class="panel-section"><h3>Yorum incelemesi</h3>${pendingComments.length?pendingComments.map(c=>`<div class="review-list-item"><div><strong>${esc(c.title)}</strong><small>${esc(c.content.slice(0,120))}</small></div><button class="btn btn-outline btn-sm" data-comment-approve="${esc(c.parent)}|${esc(c.id)}|${esc(c.type)}">Yorumu incele</button></div>`).join(''):'<div class="empty-doc">İnceleme bekleyen yorum bulunmuyor.</div>'}<div class="review-publish-pending">${drafts.flatMap(a=>(a.comments||[]).filter(c=>c.status==='Hukukî onaylandı').map(c=>({id:c.id,type:'article',parent:a.id,title:a.title}))).concat(topics.flatMap(t=>(t.replies||[]).filter(c=>c.status==='Hukukî onaylandı').map(c=>({id:c.id,type:'forum',parent:t.id,title:t.title})))).map(c=>`<div class="review-list-item"><strong>${esc(c.title)}</strong><button class="btn btn-dark btn-sm" data-comment-publish="${esc(c.parent)}|${esc(c.id)}|${esc(c.type)}">Yorumu yayımla</button></div>`).join('')}</div></div>
  </section></div></div>`;
 }
 function adminServices(){let matches=SERVICES.filter(s=>!state.query||clean(s.name+' '+s.id+' '+byGroup[s.group].name).includes(clean(state.query)));let rows=matches.slice(0,65);return `${head('Hizmet içerikleri','554 hizmetin iş tanımı, ilgili formları ve hukukî kontrol ekleri.',['Yönetim','Hizmet içerikleri'])}<div class="container content-main"><div class="workspace-grid"><nav class="workspace-nav"><a href="#/yonetim">${icon('list')} Başvuru inceleme</a><a href="#/yonetim/hizmetler" class="selected">${icon('file')} Hizmet içerikleri</a><a href="#/yonetim/kaynaklar/kontrol">${icon('check')} Kontrol ekleri</a><a href="#/yonetim/kaynaklar/plan">${icon('folder')} İş planları</a><a href="#/yayin-yonetimi">${icon('edit')} Yayın yönetimi</a></nav><div class="workspace-content"><div class="section-heading"><div><h2>Hizmet incelemeleri</h2><p>Hukukî onay ve yayıma hazırlık kayıtları, kaynaklarıyla birlikte korunur.</p></div><span class="pill">554 HİZMET</span></div><div class="result-toolbar"><span class="info">${matches.length} işlem</span><input id="catalog-search" type="search" placeholder="Hizmet veya hizmet kimliği ara" value="${esc(state.query)}" aria-label="Yönetim kataloğunda ara"/></div><div class="panel-section"><table class="list-table"><thead><tr><th>İşlem</th><th>Hizmet alanı</th><th>Kontrol ekleri</th><th></th></tr></thead><tbody>${rows.map(s=>`<tr><td>${esc(s.name)} </td><td>${esc(byGroup[s.group].name)}</td><td>${s.controls.length}</td><td><a href="#/yonetim/hizmet/${s.id.replace('/','-')}">İncele →</a></td></tr>`).join('')}</tbody></table>${matches.length>65?`<p class="muted-xs" style="margin-top:15px">İlk 65 kayıt gösteriliyor. Diğerleri için hizmet adında arama yapın.</p>`:''}</div></div></div></div>`;}
@@ -503,8 +507,11 @@ function selectAdmin(id){const r=getRecord(id);if(!r)return;
  <label><input type="checkbox" id="admin-license" ${r.licenseReviewed?'checked':''}/> Gereken meslekî yetki ve temsil şartları incelendi</label></fieldset>
  <div class="form-cols"><div class="field"><label for="admin-offer">Teklif bedeli (€)</label><input id="admin-offer" type="number" step="0.01" min="0" value="${esc(r.offer||'')}" placeholder="Tutar"/></div><div class="field"><label for="admin-scope-text">İş kapsamı</label><input id="admin-scope-text" maxlength="240" value="${esc(r.offerScope||'')}" placeholder="Teklif kapsamı"/></div></div>
  <div class="field"><label for="admin-delivery-note">Teslim açıklaması</label><textarea id="admin-delivery-note" maxlength="500" placeholder="Teslim edilen çalışmanın özeti">${esc(r.deliveryNote||'')}</textarea></div>
+ <div class="field"><label for="admin-phase">Yeni iş aşaması</label><input id="admin-phase" maxlength="140" placeholder="Aşama ve teslim adı"/></div>
+ <div class="field"><label for="admin-phase-budget">Aşama bütçesi (€)</label><input id="admin-phase-budget" type="number" min="0.01" step="0.01" placeholder="Bütçe"/></div>
+ ${(r.milestones||[]).length?`<div class="milestone-admin-list">${r.milestones.map(m=>`<div class="milestone-admin-row"><span>${esc(m.name)} · ${formatPrice(m.amount)} · ${esc(m.stage)}</span>${['Planlandı','Revizyon istendi'].includes(m.stage)?`<button class="btn btn-outline btn-sm" data-work-phase="submit" data-record="${esc(r.id)}" data-phase-id="${esc(m.id)}">Teslime sun</button>`:''}</div>`).join('')}</div>`:''}
  <div class="field"><label for="admin-task">Yeni görev</label><input id="admin-task" maxlength="160" placeholder="Görev tanımı"/></div>
- <div class="split-actions"><button data-save-admin="${esc(r.id)}" class="btn btn-dark" ${next.length?'':'disabled'}>İşlemi kaydet</button><button data-add-task="${esc(r.id)}" class="btn btn-outline">Görev ekle</button><button data-invoice-draft="${esc(r.id)}" class="btn btn-outline" ${r.status==='Tamamlandı'?'':'disabled'}>Fatura taslağı</button></div>
+ <div class="split-actions"><button data-save-admin="${esc(r.id)}" class="btn btn-dark" ${next.length?'':'disabled'}>İşlemi kaydet</button><button data-add-phase="${esc(r.id)}" class="btn btn-outline" ${r.status==='Çalışma aşamasında'?'':'disabled'}>Aşama ekle</button><button data-add-task="${esc(r.id)}" class="btn btn-outline">Görev ekle</button><button data-invoice-draft="${esc(r.id)}" class="btn btn-outline" ${r.status==='Tamamlandı'?'':'disabled'}>Fatura taslağı</button></div>
  <p class="help-text">İnceleme, sözleşme ve ödeme işlemlerinin gerçek kabulü ayrı yetki kontrollerine bağlıdır.</p>`);
 }
 function openModal(markup){const root=document.getElementById('modal-root');root.innerHTML=`<div class="modal-backdrop" role="presentation"><div class="modal" role="dialog" aria-modal="true">${markup}</div></div>`;let btn=root.querySelector('button');btn?.focus();}
@@ -520,7 +527,7 @@ function handleSubmit(form){
  priority:form.querySelector('#form-time').value,summary:form.querySelector('#form-summary').value.slice(0,800),
  kind:form.id==='submit-job'?'job':'application',status:'Ön incelemede',budget:normalizeAmount(budgetInput||'0'),
  offer:null,offerScope:'',contractAccepted:false,delivered:false,deliveryNote:'',revisionReason:'',invoiceDraft:null,
- documents:[],tasks:[],messages:[],scopeReviewed:false,conflictReviewed:false,licenseReviewed:false,
+ documents:[],tasks:[],milestones:[],messages:[],scopeReviewed:false,conflictReviewed:false,licenseReviewed:false,
  history:[]};
  addHistory(r,'Ücretsiz ön inceleme başvurusu alındı');state.records.push(r);state.caseTab=0;
  goto('#/dosya/'+encodeURIComponent(r.id));announce('Başvurunuz dosya listesine eklendi.');
@@ -539,6 +546,9 @@ function applyAdminChange(id){const r=getRecord(id);if(!r)return;
  if(next==='Teklif sunuldu'&&(!proposal||!scopeText)){announce('Teklif bedeli ve iş kapsamı gereklidir.');return;}
  if(next==='Çalışma aşamasında'&&!r.contractAccepted){announce('Sözleşme koşulları önce müşteri tarafından kabul edilmelidir.');return;}
  if(next==='Teslim incelemede'&&!delivery){announce('Teslim kapsamı ve açıklaması gereklidir.');return;}
+ if(next==='Teslim incelemede'&&(!r.milestones.length||r.milestones.some(m=>m.stage!=='Kabul edildi')||Math.abs(r.milestones.reduce((a,m)=>a+m.amount,0)-r.offer)>0.01)){
+  announce('İş aşamalarının tamamı ve teklif bütçesi müşteri tarafından kabul edilmelidir.');return;
+ }
  if(next==='Ücretsiz ret'&&proposal){announce('Ret işleminde ücret teklifi verilemez.');return;}
  r.scopeReviewed=scope;r.conflictReviewed=conflict;r.licenseReviewed=license;
  if(proposal&&next!=='Ücretsiz ret')r.offer=proposal;
@@ -547,6 +557,32 @@ function applyAdminChange(id){const r=getRecord(id);if(!r)return;
  if(next==='Ücretsiz ret'){r.offer=null;r.invoiceDraft=null;}
  r.status=next;addHistory(r,`Dosya aşaması: ${next}`);
  closeModal();update();announce('İşlem dosyası güncellendi.');
+}
+function phaseAction(id,phaseId,action){
+ const r=getRecord(id),m=r?.milestones?.find(x=>x.id===phaseId);if(!r||!m||m.stage!=='İncelemeye sunuldu')return announce('Aşama bu işlem için uygun değil.');
+ if(action==='accept'){m.stage='Kabul edildi';addHistory(r,'İş aşaması kabul edildi: '+m.name);}
+ else if(action==='revise'){
+  const reason=prompt('Aşama revizyonunun kapsamı (özel veri içermesin):');
+  if(!reason?.trim())return;m.reason=reason.trim().slice(0,300);m.stage='Revizyon istendi';addHistory(r,'İş aşaması revizyonu istendi: '+m.name);
+ }else return;
+ update();announce('İş aşaması güncellendi.');
+}
+function addPhase(id){
+ const r=getRecord(id),name=document.getElementById('admin-phase')?.value.trim(),amount=normalizeAmount(document.getElementById('admin-phase-budget')?.value);
+ if(!r||r.status!=='Çalışma aşamasında'||!r.contractAccepted)return announce('İşin sözleşmesi ve çalışma aşaması gerekli.');
+ if(!name||name.length>140||!amount)return announce('Aşama başlığı ve pozitif bütçesi gerekli.');
+ if((r.milestones||[]).length>=25)return announce('Bir dosyada en fazla 25 aşama tanımlanabilir.');
+ const total=r.milestones.reduce((a,m)=>a+m.amount,0);
+ if(total+amount>r.offer+0.001)return announce('Aşamaların toplamı teklif tutarını aşamaz.');
+ const next=r.milestones.length+1;r.milestones.push({id:'phase-'+next,name,amount,stage:'Planlandı',summary:'',reason:''});
+ addHistory(r,'Yeni iş aşaması tanımlandı: '+name);closeModal();update();announce('İş aşaması eklendi.');
+}
+function submitPhase(id,phaseId){
+ const r=getRecord(id),m=r?.milestones?.find(x=>x.id===phaseId);
+ if(!r||r.status!=='Çalışma aşamasında'||!m||!['Planlandı','Revizyon istendi'].includes(m.stage))return announce('İş aşaması teslime uygun değil.');
+ const summary=prompt('Aşamada teslim edilen çalışma (özel bilgi içermesin):');if(!summary?.trim())return;
+ m.summary=summary.trim().slice(0,450);m.stage='İncelemeye sunuldu';
+ addHistory(r,'İş aşaması müşteri incelemesine gönderildi: '+m.name);closeModal();update();announce('Aşama incelemeye sunuldu.');
 }
 function customerAction(id,action){const r=getRecord(id);if(!r)return;
  if(action==='offer'&&r.status==='Teklif sunuldu'&&r.offer){r.status='Sözleşme bekleniyor';addHistory(r,'Teklif incelenerek kabul edildi');}
@@ -560,7 +596,7 @@ function customerAction(id,action){const r=getRecord(id);if(!r)return;
  }else{announce('Bu işlem mevcut dosya aşamasında yapılamaz.');return;}
  update();announce('Dosya aşaması güncellendi.');
 }
-function eventClick(e){let el=e.target.closest('[data-group],[data-page-n],[data-detail-tab],[data-case-tab],[data-admin-record],[data-save-admin],[data-add-task],[data-invoice-draft],[data-client-action],[data-editor-action],[data-topic-approve],[data-comment-approve],[data-close-modal],[data-new-article],[data-open-forum],[data-reset-search],[data-preview-role]');
+function eventClick(e){let el=e.target.closest('[data-group],[data-page-n],[data-detail-tab],[data-case-tab],[data-admin-record],[data-save-admin],[data-add-task],[data-invoice-draft],[data-client-action],[data-editor-action],[data-topic-approve],[data-topic-publish],[data-comment-approve],[data-comment-publish],[data-close-modal],[data-new-article],[data-open-forum],[data-reset-search],[data-preview-role],[data-add-phase],[data-work-phase],[data-phase-action]');
  if(!el)return;
  if(el.dataset.group){state.group=el.dataset.group;state.page=1;state.query='';goto('#/hizmetler/'+(state.group==='all'?'':state.group));if(window.location.hash.endsWith('hizmetler/'))route();}
  else if(el.dataset.pageN){state.page=Number(el.dataset.pageN);update();}
@@ -569,11 +605,16 @@ function eventClick(e){let el=e.target.closest('[data-group],[data-page-n],[data
  else if(el.dataset.adminRecord){selectAdmin(el.dataset.adminRecord);}
  else if(el.dataset.saveAdmin)applyAdminChange(el.dataset.saveAdmin);
  else if(el.dataset.clientAction)customerAction(el.dataset.record,el.dataset.clientAction);
+ else if(el.dataset.addPhase)addPhase(el.dataset.addPhase);
+ else if(el.dataset.workPhase)submitPhase(el.dataset.record,el.dataset.phaseId);
+ else if(el.dataset.phaseAction)phaseAction(el.dataset.record,el.dataset.phaseId,el.dataset.phaseAction);
  else if(el.dataset.addTask){const r=getRecord(el.dataset.addTask);const v=document.getElementById('admin-task')?.value.trim();if(r&&v){r.tasks.push({title:v.slice(0,160),due:''});addHistory(r,'Yeni görev eklendi');closeModal();update();announce('Dosyaya görev eklendi.');}else announce('Görev tanımı girin.');}
- else if(el.dataset.invoiceDraft){const r=getRecord(el.dataset.invoiceDraft);if(r&&r.status==='Tamamlandı'&&r.offer){r.invoiceDraft=r.offer;addHistory(r,'Fatura hazırlığı oluşturuldu');closeModal();update();announce('Fatura hazırlığı eklendi; ödeme alınmadı.');}}
- else if(el.dataset.editorAction){const a=state.drafts.find(x=>x.id===el.dataset.editorId);if(a&&a.status==='İncelemede'){a.status='Yayımlandı';update();announce('Yayın incelemesi işlendi.');}}
- else if(el.dataset.topicApprove){const x=state.forumPosts.find(t=>t.id===el.dataset.topicApprove);if(x&&x.status==='İncelemede'){x.status='Yayımlandı';update();announce('Konu incelemesi işlendi.');}}
- else if(el.dataset.commentApprove){const [id,cid,type]=el.dataset.commentApprove.split('|');const parent=type==='article'?state.drafts.find(a=>a.id===id):state.forumPosts.find(a=>a.id===id);const reply=(type==='article'?parent?.comments:parent?.replies)?.find(c=>c.id===cid);if(reply&&reply.status==='İncelemede'){reply.status='Yayımlandı';update();announce('Yorum incelemesi işlendi.');}}
+ else if(el.dataset.invoiceDraft){const r=getRecord(el.dataset.invoiceDraft);if(r&&r.status==='Tamamlandı'&&r.offer&&r.milestones.length&&r.milestones.every(m=>m.stage==='Kabul edildi')&&Math.abs(r.milestones.reduce((a,m)=>a+m.amount,0)-r.offer)<0.01){r.invoiceDraft=r.offer;addHistory(r,'Fatura hazırlığı oluşturuldu');closeModal();update();announce('Fatura hazırlığı eklendi; ödeme alınmadı.');}}
+ else if(el.dataset.editorAction){const a=state.drafts.find(x=>x.id===el.dataset.editorId);if(a&&a.status==='İncelemede'&&el.dataset.editorAction==='review'){a.status='Hukukî onaylandı';update();announce('Hukukî inceleme kaydedildi.');}else if(a&&a.status==='Hukukî onaylandı'&&el.dataset.editorAction==='publish'){a.status='Yayımlandı';update();announce('Yayın yayımlandı.');}}
+ else if(el.dataset.topicApprove){const x=state.forumPosts.find(t=>t.id===el.dataset.topicApprove);if(x&&x.status==='İncelemede'){x.status='Hukukî onaylandı';update();announce('Konu incelemesi tamamlandı.');}}
+ else if(el.dataset.topicPublish){const x=state.forumPosts.find(t=>t.id===el.dataset.topicPublish);if(x&&x.status==='Hukukî onaylandı'){x.status='Yayımlandı';update();announce('Forum konusu yayımlandı.');}}
+ else if(el.dataset.commentApprove){const [id,cid,type]=el.dataset.commentApprove.split('|');const parent=type==='article'?state.drafts.find(a=>a.id===id):state.forumPosts.find(a=>a.id===id);const reply=(type==='article'?parent?.comments:parent?.replies)?.find(c=>c.id===cid);if(reply&&reply.status==='İncelemede'){reply.status='Hukukî onaylandı';update();announce('Yorum incelemesi tamamlandı.');}}
+ else if(el.dataset.commentPublish){const [id,cid,type]=el.dataset.commentPublish.split('|');const parent=type==='article'?state.drafts.find(a=>a.id===id):state.forumPosts.find(a=>a.id===id);const reply=(type==='article'?parent?.comments:parent?.replies)?.find(c=>c.id===cid);if(reply&&reply.status==='Hukukî onaylandı'&&parent?.status==='Yayımlandı'){reply.status='Yayımlandı';update();announce('Yorum yayımlandı.');}}
  else if(el.hasAttribute('data-close-modal'))closeModal();
  else if(el.hasAttribute('data-reset-search')){state.query='';state.page=1;update();}
  else if(el.hasAttribute('data-new-article'))openModal(`<div class="modal-head"><h2>Yayın taslağı</h2><button class="modal-close" data-close-modal>✕</button></div><form id="new-article"><div class="field"><label>Yayın türü</label><select name="kind"><option>Makale ve görüş</option><option>Hukuk haberi</option></select></div><div class="field"><label>Başlık</label><input name="title" maxlength="125" required placeholder="Yayın başlığı"/></div><div class="field"><label>Metin</label><textarea name="body" maxlength="1400" required placeholder="Makale veya haber içeriği"></textarea></div><button class="btn btn-dark">Taslak kaydet</button></form><p class="help-text">Yayın onayı verilene kadar taslak olarak kalır.</p>`);

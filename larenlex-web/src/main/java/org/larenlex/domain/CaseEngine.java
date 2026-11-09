@@ -38,14 +38,23 @@ public final class CaseEngine {
                            List<Audit> history) {}
 
     private static final long MAX_AMOUNT_CENTS = 10_000_000_000L;
+    @FunctionalInterface public interface InvoiceReadiness {
+        boolean ready(AccessPolicy.Principal actor, Snapshot c);
+    }
+    private final InvoiceReadiness invoiceReadiness;
     private final Predicate<String> publishedServiceKnown;
     private final Clock clock;
     private final ConcurrentMap<String,MutableCase> cases=new ConcurrentHashMap<>();
     private final ConcurrentMap<String,String> submissions=new ConcurrentHashMap<>();
 
     public CaseEngine(Predicate<String> serviceKnown, Clock clock) {
+        // Fail closed by default: no invoice until a separately audited workroom verifier exists.
+        this(serviceKnown,clock,(actor,c)->false);
+    }
+    public CaseEngine(Predicate<String> serviceKnown, Clock clock, InvoiceReadiness readiness) {
         this.publishedServiceKnown=Objects.requireNonNull(serviceKnown);
         this.clock=Objects.requireNonNull(clock);
+        this.invoiceReadiness=Objects.requireNonNull(readiness);
     }
     private static final class MutableCase {
         String id,tenant,owner,serviceId,country,offerScope,deliverySummary,submissionSignature;
@@ -103,8 +112,6 @@ public final class CaseEngine {
         if(request.suggestedBudgetCents()!=null)positiveAmount(request.suggestedBudgetCents(),"budget");
         final String summary=required(request.businessSummary(),"businessSummary",2000);
         final String signature=service+"\u0000"+country+"\u0000"+summary+"\u0000"+String.valueOf(request.suggestedBudgetCents());
-        final String summary=required(request.businessSummary(),"businessSummary",2000);
-        final String signature=service+"\u0000"+country+"\u0000"+summary+"\u0000"+String.valueOf(request.suggestedBudgetCents());
         final String clientKey=principal.subject()+"|"+tenant+"|"+required(idempotencyKey,"idempotencyKey",140);
         synchronized(submissions){
             String prior=submissions.get(clientKey);
@@ -116,7 +123,7 @@ public final class CaseEngine {
             }
             MutableCase c=new MutableCase();c.id=UUID.randomUUID().toString();c.tenant=tenant;
             c.owner=principal.subject();c.serviceId=service;c.country=country;
-            c.budget=request.suggestedBudgetCents();c.submissionSignature=signature;c.submissionSignature=signature;
+            c.budget=request.suggestedBudgetCents();c.submissionSignature=signature;
             c.history.add(new Audit(0,clock.instant(),principal.subject(),null,null,Stage.SUBMITTED));
             cases.put(c.id,c);submissions.put(clientKey,c.id);
             return view(c);
@@ -198,6 +205,7 @@ public final class CaseEngine {
                 case DRAFT_INVOICE -> {
                     permitted(isStaff(principal,c,AccessPolicy.Role.FINANCE));
                     expect(c.stage==Stage.DELIVERED&&c.offer!=null,"Delivered and agreed offer required");
+                    expect(invoiceReadiness.ready(principal,view(c)),"All contracted work phases must be accepted before invoice draft");
                     c.invoiceDraft=c.offer;c.stage=Stage.INVOICE_DRAFTED;
                 }
                 case REJECT_FREE -> {

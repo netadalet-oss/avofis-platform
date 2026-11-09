@@ -26,13 +26,23 @@ public final class PublicationSelfTest {
   yes(engine.listPublished().size()==1,"public list");
   yes(engine.readPublished(article.id()).title().equals("A legal article"),"read");
   fails(SecurityException.class,()->engine.withdraw(user,article.id(),2));
+  fails(IllegalArgumentException.class,()->engine.propose(user,PublicationEngine.Kind.COMMENT,"Unlinked","Comment",null));
+  var proposedComment=engine.proposeComment(user,article.id(),"Question about the article");
+  yes(proposedComment.parentId().equals(article.id()),"comment linked to approved source");
+  fails(NoSuchElementException.class,()->engine.readPublished(proposedComment.id()));
+  var reviewedComment=engine.review(reviewer,proposedComment.id(),0,true);
+  var publishedComment=engine.publish(publisher,reviewedComment.id(),1);
+  yes(engine.readPublished(publishedComment.id()).kind()==PublicationEngine.Kind.COMMENT,"moderated comment published");
   var withdrawn=engine.withdraw(publisher,article.id(),2);
   yes(withdrawn.stage()==PublicationEngine.Stage.WITHDRAWN,"withdrawn");
   fails(NoSuchElementException.class,()->engine.readPublished(article.id()));
+  fails(NoSuchElementException.class,()->engine.readPublished(proposedComment.id()));
+  yes(engine.listPublished().isEmpty(),"comments hidden when parent withdrawn");
   var topic=engine.propose(user,PublicationEngine.Kind.FORUM_TOPIC,"Service discussion","A community post",null);
   yes(topic.stage()==PublicationEngine.Stage.REVIEW_PENDING,"forum moderated");
   fails(NoSuchElementException.class,()->engine.readPublished(topic.id()));
   yes(engine.listPublished().isEmpty(),"no unapproved publication");
+  fails(NoSuchElementException.class,()->engine.proposeComment(user,topic.id(),"unpublished topic"));
   System.out.println("PUBLICATION TEST PASS: "+tests+" assertions, separation-of-duties and withdrawal");
  }
 }
